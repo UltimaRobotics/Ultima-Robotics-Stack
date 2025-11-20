@@ -1,0 +1,332 @@
+<!-- Page Header -->
+<div class="mb-8">
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-3xl text-neutral-900">Firmware Upgrade</h1>
+            <p class="mt-2 text-neutral-600">Manage and update your device firmware with comprehensive upgrade options</p>
+        </div>
+        <div class="flex items-center space-x-3">
+            <button id="refresh-firmware-btn" class="inline-flex items-center px-4 py-2 border border-neutral-300 rounded-md shadow-sm text-sm text-neutral-700 bg-white hover:bg-neutral-50">
+                <i class="fa-solid fa-refresh mr-2"></i>Refresh
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Current Firmware Information -->
+<div id="current-firmware-section" class="bg-white rounded-lg border border-neutral-200 p-6 mb-6">
+    <div class="flex items-center justify-between mb-6">
+        <h2 class="text-lg text-neutral-900 flex items-center">
+            <i class="fa-solid fa-info-circle mr-2 text-neutral-600"></i>
+            Current Firmware Information
+        </h2>
+        <div class="flex items-center space-x-2">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs bg-green-100 text-green-800">
+                <i class="fa-solid fa-circle mr-1"></i>Active
+            </span>
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs bg-blue-100 text-blue-800">Verified</span>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-neutral-50 rounded-lg p-4">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-sm text-neutral-600">Current Version</span>
+                <i class="fa-solid fa-code-branch text-neutral-400"></i>
+            </div>
+            <div id="current-version" class="text-2xl text-neutral-900">v2.4.7</div>
+            <div id="build-number" class="text-sm text-neutral-500 mt-1">Build #20250115</div>
+        </div>
+
+        <div class="bg-neutral-50 rounded-lg p-4">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-sm text-neutral-600">Device Model</span>
+                <i class="fa-solid fa-microchip text-neutral-400"></i>
+            </div>
+            <div id="device-model" class="text-lg text-neutral-900">UR-5000</div>
+            <div id="hardware-revision" class="text-sm text-neutral-500 mt-1">Rev C</div>
+        </div>
+
+        <div class="bg-neutral-50 rounded-lg p-4">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-sm text-neutral-600">Build Date</span>
+                <i class="fa-solid fa-calendar text-neutral-400"></i>
+            </div>
+            <div id="build-date" class="text-lg text-neutral-900">Jan 15, 2025</div>
+            <div id="build-time" class="text-sm text-neutral-500 mt-1">14:30:45 UTC</div>
+        </div>
+
+        <div class="bg-neutral-50 rounded-lg p-4">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-sm text-neutral-600">Uptime</span>
+                <i class="fa-solid fa-clock text-neutral-400"></i>
+            </div>
+            <div id="uptime" class="text-lg text-neutral-900">12 days</div>
+            <div id="uptime-description" class="text-sm text-neutral-500 mt-1">Since last reboot</div>
+        </div>
+    </div>
+</div>
+
+<!-- Firmware Upgrade Options -->
+<div id="firmware-upgrade-section" class="bg-white rounded-lg border border-neutral-200 mb-6">
+    <div class="p-4 border-b border-neutral-200 cursor-pointer" id="firmware-upgrade-header">
+        <div class="flex items-center justify-between">
+            <h2 class="text-lg text-neutral-900 flex items-center">
+                <i class="fa-solid fa-upload mr-2 text-neutral-600"></i>
+                Firmware Upgrade Options
+            </h2>
+            <i id="firmware-upgrade-chevron" class="fa-solid fa-chevron-down text-neutral-500 transform transition-transform duration-200"></i>
+        </div>
+    </div>
+
+    <div id="firmware-upgrade-content" class="hidden p-6">
+        <div class="space-y-8">
+            <!-- Upgrade Source Selection -->
+            <div id="upgrade-source" class="border border-neutral-200 rounded-lg p-6">
+                <h3 class="text-base text-neutral-900 mb-4">Upgrade Source</h3>
+                <div class="space-y-3">
+                    <!-- Upload Firmware File Option -->
+                    <div class="relative">
+                        <input id="upload-file" name="upgrade-source" type="radio" class="peer sr-only" checked />
+                        <label for="upload-file" class="flex items-center p-4 border border-neutral-200 rounded-lg cursor-pointer hover:bg-neutral-50 peer-checked:border-neutral-600 peer-checked:bg-neutral-50 transition-colors">
+                            <div class="flex items-center flex-1">
+                                <div class="w-5 h-5 border-2 border-neutral-300 rounded-full flex items-center justify-center peer-checked:border-neutral-600 peer-checked:bg-neutral-600 mr-3">
+                                    <div class="w-2 h-2 bg-white rounded-full opacity-0 peer-checked:opacity-100"></div>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fa-solid fa-upload text-neutral-600 mr-3"></i>
+                                    <div>
+                                        <div class="text-sm font-medium text-neutral-900">Upload Firmware File (Manual)</div>
+                                        <div class="text-sm text-neutral-500">Select and upload a firmware file from your local system</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- Check for Online Update Option -->
+                    <div class="relative">
+                        <input id="online-update" name="upgrade-source" type="radio" class="peer sr-only" />
+                        <label for="online-update" class="flex items-center p-4 border border-neutral-200 rounded-lg cursor-pointer hover:bg-neutral-50 peer-checked:border-neutral-600 peer-checked:bg-neutral-50 transition-colors">
+                            <div class="flex items-center flex-1">
+                                <div class="w-5 h-5 border-2 border-neutral-300 rounded-full flex items-center justify-center peer-checked:border-neutral-600 peer-checked:bg-neutral-600 mr-3">
+                                    <div class="w-2 h-2 bg-white rounded-full opacity-0 peer-checked:opacity-100"></div>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fa-solid fa-globe text-neutral-600 mr-3"></i>
+                                    <div>
+                                        <div class="text-sm font-medium text-neutral-900">Check for Online Update</div>
+                                        <div class="text-sm text-neutral-500">Search for and download the latest firmware version from the official server</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- TFTP Server Upload Option -->
+                    <div class="relative">
+                        <input id="tftp-update" name="upgrade-source" type="radio" class="peer sr-only" />
+                        <label for="tftp-update" class="flex items-center p-4 border border-neutral-200 rounded-lg cursor-pointer hover:bg-neutral-50 peer-checked:border-neutral-600 peer-checked:bg-neutral-50 transition-colors">
+                            <div class="flex items-center flex-1">
+                                <div class="w-5 h-5 border-2 border-neutral-300 rounded-full flex items-center justify-center peer-checked:border-neutral-600 peer-checked:bg-neutral-600 mr-3">
+                                    <div class="w-2 h-2 bg-white rounded-full opacity-0 peer-checked:opacity-100"></div>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fa-solid fa-server text-neutral-600 mr-3"></i>
+                                    <div>
+                                        <div class="text-sm font-medium text-neutral-900">TFTP Server Upload</div>
+                                        <div class="text-sm text-neutral-500">Upload firmware from a TFTP server on your local network</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- File Upload Section -->
+            <div id="file-upload-section" class="border border-neutral-200 rounded-lg p-6">
+                <h3 class="text-base text-neutral-900 mb-4">File Upload Configuration</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm text-neutral-700 mb-2">Select Firmware File</label>
+                        <div class="flex items-center justify-center w-full">
+                            <label for="firmware-file" id="firmware-drop-zone" class="flex flex-col items-center justify-center w-full h-32 border-2 border-neutral-300 border-dashed rounded-lg cursor-pointer bg-neutral-50 hover:bg-neutral-100 transition-colors">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <i id="upload-icon" class="fa-solid fa-cloud-upload-alt text-neutral-400 text-3xl mb-2"></i>
+                                    <p class="mb-2 text-sm text-neutral-500">
+                                        <span id="upload-text">Click to upload</span> or drag and drop
+                                    </p>
+                                    <p class="text-xs text-neutral-500">BIN, IMG, TRX files (MAX. 32MB)</p>
+                                </div>
+                                <input id="firmware-file" type="file" class="hidden" accept=".bin,.img,.trx" />
+                            </label>
+                        </div>
+                        <div class="mt-2 text-sm text-neutral-600">
+                            <span>Selected: </span><span id="selected-file">No file selected</span>
+                        </div>
+                    </div>
+
+                    <!-- Upload Progress Display -->
+                    <div id="manual-upload-progress-display" class="bg-green-50 border border-green-200 rounded-lg p-4 hidden">
+                        <h4 class="text-green-800 font-medium mb-3">Upload Progress</h4>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-green-700">Status:</span>
+                                <span id="manual-upload-status" class="text-sm font-medium text-green-800">Idle</span>
+                            </div>
+                            <div class="w-full bg-green-200 rounded-full h-2">
+                                <div id="manual-upload-progress-bar" class="bg-green-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                            <div class="flex items-center justify-between text-xs text-green-600">
+                                <span id="manual-upload-progress-text">0%</span>
+                                <span id="manual-upload-size-text">0 bytes</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-4">
+                        <div class="flex items-center">
+                            <input id="verify-signature" type="checkbox" class="h-4 w-4 text-neutral-600 border-neutral-300 rounded focus:ring-neutral-500" />
+                            <label for="verify-signature" class="ml-2 text-sm text-neutral-700">Verify Digital Signature</label>
+                        </div>
+                        <button id="verify-file-btn" class="inline-flex items-center px-4 py-2 border border-neutral-300 rounded-md shadow-sm text-sm text-neutral-700 bg-white hover:bg-neutral-50">
+                            <i class="fa-solid fa-check-circle mr-2"></i>Verify File Integrity
+                        </button>
+                        <button id="upload-firmware-btn" class="inline-flex items-center px-4 py-2 bg-green-600 text-white text-sm rounded-md hover:bg-green-700 hidden">
+                            <i class="fa-solid fa-upload mr-2"></i>Upload Firmware
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Online Update Section -->
+            <div id="online-update-section" class="border border-neutral-200 rounded-lg p-6 hidden">
+                <h3 class="text-base text-neutral-900 mb-4">Online Update Configuration</h3>
+                <div class="space-y-4">
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-info-circle text-blue-600 mr-2"></i>
+                            <span class="text-sm text-blue-800">Checking for available firmware updates...</span>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-neutral-700">Update Server:</span>
+                            <span class="text-sm text-neutral-900">firmware.ultima-robotics.com</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-neutral-700">Check Frequency:</span>
+                            <select class="text-sm border border-neutral-300 rounded px-2 py-1">
+                                <option>Daily</option>
+                                <option>Weekly</option>
+                                <option>Manual Only</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <button id="check-updates-btn" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700">
+                                <i class="fa-solid fa-refresh mr-2"></i>Check for Updates
+                            </button>
+                            <div class="flex items-center">
+                                <input id="auto-download" type="checkbox" class="h-4 w-4 text-blue-600 border-neutral-300 rounded focus:ring-blue-500" />
+                                <label for="auto-download" class="ml-2 text-sm text-neutral-700">Auto-download available updates</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TFTP Upload Section -->
+            <div id="tftp-upload-section" class="border border-neutral-200 rounded-lg p-6 hidden">
+                <h3 class="text-base text-neutral-900 mb-4">TFTP Server Configuration</h3>
+                <div class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm text-neutral-700 mb-2">TFTP Server IP</label>
+                            <input id="tftp-server-ip" type="text" placeholder="192.168.1.100" class="w-full px-3 py-2 border border-neutral-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500" />
+                        </div>
+                        <div>
+                            <label class="block text-sm text-neutral-700 mb-2">Port</label>
+                            <input id="tftp-port" type="number" placeholder="69" value="69" class="w-full px-3 py-2 border border-neutral-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500" />
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-neutral-700 mb-2">Firmware Filename</label>
+                        <input id="tftp-filename" type="text" placeholder="firmware.bin" class="w-full px-3 py-2 border border-neutral-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500" />
+                    </div>
+                    <div>
+                        <label class="block text-sm text-neutral-700 mb-2">Username</label>
+                        <input id="tftp-username" type="text" placeholder="admin" class="w-full px-3 py-2 border border-neutral-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500" />
+                    </div>
+                    <div>
+                        <label class="block text-sm text-neutral-700 mb-2">Password</label>
+                        <input id="tftp-password" type="password" placeholder="••••••••" class="w-full px-3 py-2 border border-neutral-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-neutral-500" />
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button id="test-tftp-connection-btn" class="inline-flex items-center px-4 py-2 border border-neutral-300 rounded-md shadow-sm text-sm text-neutral-700 bg-white hover:bg-neutral-50">
+                            <i class="fa-solid fa-network-wired mr-2"></i>Test Connection
+                        </button>
+                        <div class="flex items-center">
+                            <input id="verify-tftp-signature" type="checkbox" class="h-4 w-4 text-neutral-600 border-neutral-300 rounded focus:ring-neutral-500" />
+                            <label for="verify-tftp-signature" class="ml-2 text-sm text-neutral-700">Verify Digital Signature</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Upgrade Actions -->
+<div id="upgrade-actions-section" class="bg-white rounded-lg border border-neutral-200 mb-6">
+    <div class="p-4 border-b border-neutral-200 cursor-pointer" id="upgrade-actions-header">
+        <div class="flex items-center justify-between">
+            <h2 class="text-lg text-neutral-900 flex items-center">
+                <i class="fa-solid fa-play-circle mr-2 text-neutral-600"></i>
+                Upgrade Actions
+            </h2>
+            <i id="upgrade-actions-chevron" class="fa-solid fa-chevron-down text-neutral-500 transform transition-transform duration-200"></i>
+        </div>
+    </div>
+
+    <div id="upgrade-actions-content" class="hidden p-6">
+        <div class="space-y-6">
+            <div id="readiness-status-container" class="bg-green-50 rounded-lg p-4">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <p class="text-sm text-neutral-900">Upgrade Readiness Status</p>
+                        <p id="readiness-description" class="text-sm text-neutral-600">All systems ready for firmware upgrade</p>
+                    </div>
+                    <div class="flex items-center">
+                        <i id="readiness-icon" class="fa-solid fa-check-circle text-green-500 mr-2"></i>
+                        <span id="readiness-status" class="text-sm text-green-700">Ready</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <button id="start-upgrade-btn" class="inline-flex items-center px-6 py-3 bg-neutral-800 text-white text-sm rounded-md hover:bg-neutral-700">
+                        <i class="fa-solid fa-rocket mr-2"></i>Start Upgrade
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <div class="flex items-start">
+                    <i class="fa-solid fa-lightbulb text-blue-600 mt-0.5 mr-3"></i>
+                    <div>
+                        <p class="text-sm text-neutral-900">Quick Start Guide</p>
+                        <ol class="text-sm text-neutral-700 mt-1 space-y-1 list-decimal list-inside">
+                            <li>Ensure stable power supply and network connection</li>
+                            <li>Select firmware source and verify file integrity</li>
+                            <li>Configure backup and recovery options as needed</li>
+                            <li>Review all settings and click "Start Upgrade"</li>
+                            <li>Monitor progress and wait for automatic completion</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

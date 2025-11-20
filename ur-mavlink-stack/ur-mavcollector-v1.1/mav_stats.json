@@ -1,0 +1,7005 @@
+{
+  "collection_timestamp": 1760295921,
+  "parameters": [
+    {
+      "name": "ASPD_SCALE_1",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "ATT_EN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "BAT1_A_PER_V",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 15.391030311584473
+    },
+    {
+      "name": "BAT1_CAPACITY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "BAT1_I_CHANNEL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": null
+    },
+    {
+      "name": "BAT1_I_OVERWRITE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "BAT1_N_CELLS",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 8.407790785948902e-45
+    },
+    {
+      "name": "BAT1_R_INTERNAL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "BAT1_SOURCE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "BAT1_V_CHANNEL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": null
+    },
+    {
+      "name": "BAT1_V_CHARGED",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 4.800000190734863
+    },
+    {
+      "name": "BAT1_V_DIV",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 10.177939414978027
+    },
+    {
+      "name": "BAT1_V_EMPTY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 3.5999999046325684
+    },
+    {
+      "name": "BATMON_DRIVER_EN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "BAT_AVRG_CURRENT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 15.0
+    },
+    {
+      "name": "BAT_CRIT_THR",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.07000000029802322
+    },
+    {
+      "name": "BAT_EMERGEN_THR",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.05000000074505806
+    },
+    {
+      "name": "BAT_LOW_THR",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.15000000596046448
+    },
+    {
+      "name": "BAT_V_OFFS_CURR",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CAL_ACC0_ID",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 3.3061255058354707e-39
+    },
+    {
+      "name": "CAL_ACC0_PRIO",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 7.006492321624085e-44
+    },
+    {
+      "name": "CAL_ACC0_ROT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": null
+    },
+    {
+      "name": "CAL_ACC0_XOFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -0.07806313782930374
+    },
+    {
+      "name": "CAL_ACC0_XSCALE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0020006895065308
+    },
+    {
+      "name": "CAL_ACC0_YOFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.13482649624347687
+    },
+    {
+      "name": "CAL_ACC0_YSCALE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0050182342529297
+    },
+    {
+      "name": "CAL_ACC0_ZOFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -0.18822219967842102
+    },
+    {
+      "name": "CAL_ACC0_ZSCALE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.9903415441513062
+    },
+    {
+      "name": "CAL_ACC1_ID",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 3.306091874672327e-39
+    },
+    {
+      "name": "CAL_ACC1_PRIO",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 7.006492321624085e-44
+    },
+    {
+      "name": "CAL_ACC1_ROT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": null
+    },
+    {
+      "name": "CAL_ACC1_XOFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -0.14294719696044922
+    },
+    {
+      "name": "CAL_ACC1_XSCALE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "CAL_ACC1_YOFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -0.16259050369262695
+    },
+    {
+      "name": "CAL_ACC1_YSCALE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "CAL_ACC1_ZOFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.15883207321166992
+    },
+    {
+      "name": "CAL_ACC1_ZSCALE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "CAL_ACC2_ID",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.5612510788336376e-39
+    },
+    {
+      "name": "CAL_ACC2_PRIO",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 7.006492321624085e-44
+    },
+    {
+      "name": "CAL_ACC2_ROT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": null
+    },
+    {
+      "name": "CAL_ACC2_XOFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 3.293191432952881
+    },
+    {
+      "name": "CAL_ACC2_XSCALE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.9852204322814941
+    },
+    {
+      "name": "CAL_ACC2_YOFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -2.8376290798187256
+    },
+    {
+      "name": "CAL_ACC2_YSCALE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0403647422790527
+    },
+    {
+      "name": "CAL_ACC2_ZOFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 2.5674493312835693
+    },
+    {
+      "name": "CAL_ACC2_ZSCALE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0331782102584839
+    },
+    {
+      "name": "CAL_ACC3_ID",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "CAL_AIR_CMODEL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "CAL_AIR_TUBED_MM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.5
+    },
+    {
+      "name": "CAL_AIR_TUBELEN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.20000000298023224
+    },
+    {
+      "name": "CAL_BARO0_ID",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 5.601979278622107e-39
+    },
+    {
+      "name": "CAL_BARO0_OFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CAL_BARO0_PRIO",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 7.006492321624085e-44
+    },
+    {
+      "name": "CAL_BARO1_ID",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 5.602012909785251e-39
+    },
+    {
+      "name": "CAL_BARO1_OFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -19.0
+    },
+    {
+      "name": "CAL_BARO1_PRIO",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 7.006492321624085e-44
+    },
+    {
+      "name": "CAL_GYRO0_ID",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 3.3061255058354707e-39
+    },
+    {
+      "name": "CAL_GYRO0_PRIO",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 7.006492321624085e-44
+    },
+    {
+      "name": "CAL_GYRO0_ROT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": null
+    },
+    {
+      "name": "CAL_GYRO0_XOFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.006044012028723955
+    },
+    {
+      "name": "CAL_GYRO0_YOFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -0.019946498796343803
+    },
+    {
+      "name": "CAL_GYRO0_ZOFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0012506390921771526
+    },
+    {
+      "name": "CAL_GYRO1_ID",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 3.306091874672327e-39
+    },
+    {
+      "name": "CAL_GYRO1_PRIO",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 7.006492321624085e-44
+    },
+    {
+      "name": "CAL_GYRO1_ROT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": null
+    },
+    {
+      "name": "CAL_GYRO1_XOFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -0.005857761949300766
+    },
+    {
+      "name": "CAL_GYRO1_YOFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0018836896633729339
+    },
+    {
+      "name": "CAL_GYRO1_ZOFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.00802605226635933
+    },
+    {
+      "name": "CAL_GYRO2_ID",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "CAL_GYRO3_ID",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "CAL_MAG0_ID",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.5612510788336376e-39
+    },
+    {
+      "name": "CAL_MAG0_PITCH",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CAL_MAG0_PRIO",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 7.006492321624085e-44
+    },
+    {
+      "name": "CAL_MAG0_ROLL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CAL_MAG0_ROT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": null
+    },
+    {
+      "name": "CAL_MAG0_XCOMP",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CAL_MAG0_XODIAG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.011941912584006786
+    },
+    {
+      "name": "CAL_MAG0_XOFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -0.045302215963602066
+    },
+    {
+      "name": "CAL_MAG0_XSCALE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.9803993701934814
+    },
+    {
+      "name": "CAL_MAG0_YAW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CAL_MAG0_YCOMP",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CAL_MAG0_YODIAG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0276628565043211
+    },
+    {
+      "name": "CAL_MAG0_YOFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.07091446220874786
+    },
+    {
+      "name": "CAL_MAG0_YSCALE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.9935562610626221
+    },
+    {
+      "name": "CAL_MAG0_ZCOMP",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CAL_MAG0_ZODIAG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -0.002497316338121891
+    },
+    {
+      "name": "CAL_MAG0_ZOFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.035037413239479065
+    },
+    {
+      "name": "CAL_MAG0_ZSCALE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0026553869247437
+    },
+    {
+      "name": "CAL_MAG1_ID",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 8.308368659905057e-40
+    },
+    {
+      "name": "CAL_MAG1_PITCH",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CAL_MAG1_PRIO",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.0509738482436128e-43
+    },
+    {
+      "name": "CAL_MAG1_ROLL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CAL_MAG1_ROT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 8.407790785948902e-45
+    },
+    {
+      "name": "CAL_MAG1_XCOMP",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CAL_MAG1_XODIAG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0095106465741992
+    },
+    {
+      "name": "CAL_MAG1_XOFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -0.25064244866371155
+    },
+    {
+      "name": "CAL_MAG1_XSCALE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0304181575775146
+    },
+    {
+      "name": "CAL_MAG1_YAW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CAL_MAG1_YCOMP",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CAL_MAG1_YODIAG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -0.00733918184414506
+    },
+    {
+      "name": "CAL_MAG1_YOFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.05303284898400307
+    },
+    {
+      "name": "CAL_MAG1_YSCALE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.9887931942939758
+    },
+    {
+      "name": "CAL_MAG1_ZCOMP",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CAL_MAG1_ZODIAG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0036543826572597027
+    },
+    {
+      "name": "CAL_MAG1_ZOFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -0.13137562572956085
+    },
+    {
+      "name": "CAL_MAG1_ZSCALE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.9764747023582458
+    },
+    {
+      "name": "CAL_MAG2_ID",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "CAL_MAG2_ROT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": null
+    },
+    {
+      "name": "CAL_MAG3_ID",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "CAL_MAG3_ROT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": null
+    },
+    {
+      "name": "CAL_MAG_COMP_TYP",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "CAL_MAG_SIDES",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 8.828180325246348e-44
+    },
+    {
+      "name": "CAM_CAP_FBACK",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "CA_AIRFRAME",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "CA_FAILURE_MODE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "CA_METHOD",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 2.802596928649634e-45
+    },
+    {
+      "name": "CA_R0_SLEW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_R10_SLEW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_R11_SLEW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_R1_SLEW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_R2_SLEW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_R3_SLEW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_R4_SLEW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_R5_SLEW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_R6_SLEW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_R7_SLEW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_R8_SLEW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_R9_SLEW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR0_AX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR0_AY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR0_AZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "CA_ROTOR0_CT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 6.5
+    },
+    {
+      "name": "CA_ROTOR0_KM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.05000000074505806
+    },
+    {
+      "name": "CA_ROTOR0_PX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "CA_ROTOR0_PY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "CA_ROTOR0_PZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR10_AX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR10_AY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR10_AZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "CA_ROTOR10_CT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 6.5
+    },
+    {
+      "name": "CA_ROTOR10_KM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.05000000074505806
+    },
+    {
+      "name": "CA_ROTOR10_PX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR10_PY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR10_PZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR11_AX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR11_AY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR11_AZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "CA_ROTOR11_CT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 6.5
+    },
+    {
+      "name": "CA_ROTOR11_KM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.05000000074505806
+    },
+    {
+      "name": "CA_ROTOR11_PX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR11_PY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR11_PZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR1_AX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR1_AY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR1_AZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "CA_ROTOR1_CT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 6.5
+    },
+    {
+      "name": "CA_ROTOR1_KM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.05000000074505806
+    },
+    {
+      "name": "CA_ROTOR1_PX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "CA_ROTOR1_PY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "CA_ROTOR1_PZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR2_AX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR2_AY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR2_AZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "CA_ROTOR2_CT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 6.5
+    },
+    {
+      "name": "CA_ROTOR2_KM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -0.05000000074505806
+    },
+    {
+      "name": "CA_ROTOR2_PX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "CA_ROTOR2_PY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "CA_ROTOR2_PZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR3_AX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR3_AY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR3_AZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "CA_ROTOR3_CT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 6.5
+    },
+    {
+      "name": "CA_ROTOR3_KM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -0.05000000074505806
+    },
+    {
+      "name": "CA_ROTOR3_PX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "CA_ROTOR3_PY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "CA_ROTOR3_PZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR4_AX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR4_AY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR4_AZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "CA_ROTOR4_CT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 6.5
+    },
+    {
+      "name": "CA_ROTOR4_KM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.05000000074505806
+    },
+    {
+      "name": "CA_ROTOR4_PX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR4_PY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR4_PZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR5_AX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR5_AY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR5_AZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "CA_ROTOR5_CT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 6.5
+    },
+    {
+      "name": "CA_ROTOR5_KM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.05000000074505806
+    },
+    {
+      "name": "CA_ROTOR5_PX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR5_PY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR5_PZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR6_AX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR6_AY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR6_AZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "CA_ROTOR6_CT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 6.5
+    },
+    {
+      "name": "CA_ROTOR6_KM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.05000000074505806
+    },
+    {
+      "name": "CA_ROTOR6_PX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR6_PY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR6_PZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR7_AX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR7_AY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR7_AZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "CA_ROTOR7_CT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 6.5
+    },
+    {
+      "name": "CA_ROTOR7_KM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.05000000074505806
+    },
+    {
+      "name": "CA_ROTOR7_PX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR7_PY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR7_PZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR8_AX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR8_AY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR8_AZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "CA_ROTOR8_CT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 6.5
+    },
+    {
+      "name": "CA_ROTOR8_KM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.05000000074505806
+    },
+    {
+      "name": "CA_ROTOR8_PX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR8_PY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR8_PZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR9_AX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR9_AY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR9_AZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "CA_ROTOR9_CT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 6.5
+    },
+    {
+      "name": "CA_ROTOR9_KM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.05000000074505806
+    },
+    {
+      "name": "CA_ROTOR9_PX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR9_PY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR9_PZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_ROTOR_COUNT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 5.605193857299268e-45
+    },
+    {
+      "name": "CA_R_REV",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "CA_SV0_SLEW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_SV1_SLEW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_SV2_SLEW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_SV3_SLEW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_SV4_SLEW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_SV5_SLEW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_SV6_SLEW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CA_SV7_SLEW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "CBRK_BUZZER",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "CBRK_FLIGHTTERM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.6985418945773973e-40
+    },
+    {
+      "name": "CBRK_IO_SAFETY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 3.0866401273682746e-41
+    },
+    {
+      "name": "CBRK_SUPPLY_CHK",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "CBRK_USB_CHK",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 2.772440985697364e-40
+    },
+    {
+      "name": "CBRK_VTOLARMING",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_ACT_FAIL_ACT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_ARMABLE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "COM_ARM_AUTH_ID",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-44
+    },
+    {
+      "name": "COM_ARM_AUTH_MET",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_ARM_AUTH_REQ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_ARM_AUTH_TO",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "COM_ARM_BAT_MIN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "COM_ARM_CHK_ESCS",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_ARM_HFLT_CHK",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_ARM_IMU_ACC",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.699999988079071
+    },
+    {
+      "name": "COM_ARM_IMU_GYR",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.25
+    },
+    {
+      "name": "COM_ARM_MAG_ANG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": null
+    },
+    {
+      "name": "COM_ARM_MAG_STR",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 2.802596928649634e-45
+    },
+    {
+      "name": "COM_ARM_MIS_REQ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_ARM_ODID",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_ARM_SDCARD",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "COM_ARM_SWISBTN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_ARM_WO_GPS",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "COM_CPU_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 95.0
+    },
+    {
+      "name": "COM_DISARM_LAND",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 2.0
+    },
+    {
+      "name": "COM_DISARM_MAN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "COM_DISARM_PRFLT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 10.0
+    },
+    {
+      "name": "COM_DLL_EXCEPT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_DL_LOSS_T",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-44
+    },
+    {
+      "name": "COM_FAIL_ACT_T",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 5.0
+    },
+    {
+      "name": "COM_FLIGHT_UUID",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 4.0637655465419695e-44
+    },
+    {
+      "name": "COM_FLTMODE1",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_FLTMODE2",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": null
+    },
+    {
+      "name": "COM_FLTMODE3",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": null
+    },
+    {
+      "name": "COM_FLTMODE4",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_FLTMODE5",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_FLTMODE6",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_FLTT_LOW_ACT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 4.203895392974451e-45
+    },
+    {
+      "name": "COM_FLT_PROFILE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_FLT_TIME_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": null
+    },
+    {
+      "name": "COM_FORCE_SAFETY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_HLDL_LOSS_T",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.6815581571897805e-43
+    },
+    {
+      "name": "COM_HLDL_REG_T",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_HOME_EN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "COM_HOME_IN_AIR",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_IMB_PROP_ACT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_KILL_DISARM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 5.0
+    },
+    {
+      "name": "COM_LKDOWN_TKO",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 3.0
+    },
+    {
+      "name": "COM_LOW_BAT_ACT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_MODE_ARM_CHK",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_MOT_TEST_EN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "COM_OBC_LOSS_T",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 5.0
+    },
+    {
+      "name": "COM_OBL_RC_ACT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_OF_LOSS_T",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "COM_PARACHUTE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_POSCTL_NAVL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_POS_FS_EPH",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 5.0
+    },
+    {
+      "name": "COM_POS_LOW_ACT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 4.203895392974451e-45
+    },
+    {
+      "name": "COM_POS_LOW_EPH",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "COM_POWER_COUNT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "COM_PREARM_MODE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_QC_ACT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_RAM_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 95.0
+    },
+    {
+      "name": "COM_RCL_EXCEPT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_RC_ARM_HYST",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-42
+    },
+    {
+      "name": "COM_RC_IN_MODE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 4.203895392974451e-45
+    },
+    {
+      "name": "COM_RC_LOSS_T",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.5
+    },
+    {
+      "name": "COM_RC_OVERRIDE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 4.203895392974451e-45
+    },
+    {
+      "name": "COM_RC_STICK_OV",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 30.0
+    },
+    {
+      "name": "COM_SPOOLUP_TIME",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "COM_TAKEOFF_ACT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_THROW_EN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_THROW_SPEED",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 5.0
+    },
+    {
+      "name": "COM_VEL_FS_EVH",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "COM_WIND_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "COM_WIND_MAX_ACT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "COM_WIND_WARN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "CP_DELAY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.4000000059604645
+    },
+    {
+      "name": "CP_DIST",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "CP_GO_NO_DATA",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "CP_GUIDE_ANG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 30.0
+    },
+    {
+      "name": "DSHOT_3D_DEAD_H",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-42
+    },
+    {
+      "name": "DSHOT_3D_DEAD_L",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-42
+    },
+    {
+      "name": "DSHOT_3D_ENABLE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "DSHOT_BIDIR_EN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "DSHOT_MIN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.054999999701976776
+    },
+    {
+      "name": "DSHOT_TEL_CFG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_ABIAS_INIT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.20000000298023224
+    },
+    {
+      "name": "EKF2_ABL_ACCLIM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 25.0
+    },
+    {
+      "name": "EKF2_ABL_GYRLIM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 3.0
+    },
+    {
+      "name": "EKF2_ABL_LIM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.4000000059604645
+    },
+    {
+      "name": "EKF2_ABL_TAU",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.5
+    },
+    {
+      "name": "EKF2_ACC_B_NOISE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.003000000026077032
+    },
+    {
+      "name": "EKF2_ACC_NOISE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.3499999940395355
+    },
+    {
+      "name": "EKF2_AGP_CTRL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_AGP_DELAY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_AGP_GATE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 3.0
+    },
+    {
+      "name": "EKF2_AGP_NOISE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.8999999761581421
+    },
+    {
+      "name": "EKF2_ANGERR_INIT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.10000000149011612
+    },
+    {
+      "name": "EKF2_ARSP_THR",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_ASPD_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 20.0
+    },
+    {
+      "name": "EKF2_ASP_DELAY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 100.0
+    },
+    {
+      "name": "EKF2_AVEL_DELAY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 5.0
+    },
+    {
+      "name": "EKF2_BARO_CTRL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "EKF2_BARO_DELAY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_BARO_GATE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 5.0
+    },
+    {
+      "name": "EKF2_BARO_NOISE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 3.5
+    },
+    {
+      "name": "EKF2_BCOEF_X",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 100.0
+    },
+    {
+      "name": "EKF2_BCOEF_Y",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 100.0
+    },
+    {
+      "name": "EKF2_BETA_GATE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 5.0
+    },
+    {
+      "name": "EKF2_BETA_NOISE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.30000001192092896
+    },
+    {
+      "name": "EKF2_DECL_TYPE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 4.203895392974451e-45
+    },
+    {
+      "name": "EKF2_DELAY_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 200.0
+    },
+    {
+      "name": "EKF2_DRAG_CTRL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_DRAG_NOISE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 2.5
+    },
+    {
+      "name": "EKF2_EAS_NOISE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.399999976158142
+    },
+    {
+      "name": "EKF2_EN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "EKF2_EVA_NOISE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.10000000149011612
+    },
+    {
+      "name": "EKF2_EVP_GATE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 5.0
+    },
+    {
+      "name": "EKF2_EVP_NOISE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.10000000149011612
+    },
+    {
+      "name": "EKF2_EVV_GATE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 3.0
+    },
+    {
+      "name": "EKF2_EVV_NOISE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.10000000149011612
+    },
+    {
+      "name": "EKF2_EV_CTRL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_EV_DELAY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_EV_NOISE_MD",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_EV_POS_X",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_EV_POS_Y",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_EV_POS_Z",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_EV_QMIN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_FUSE_BETA",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_GBIAS_INIT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.10000000149011612
+    },
+    {
+      "name": "EKF2_GND_EFF_DZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 4.0
+    },
+    {
+      "name": "EKF2_GND_MAX_HGT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.5
+    },
+    {
+      "name": "EKF2_GPS_CHECK",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.4335283290042879e-42
+    },
+    {
+      "name": "EKF2_GPS_CTRL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 9.80908925027372e-45
+    },
+    {
+      "name": "EKF2_GPS_DELAY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 110.0
+    },
+    {
+      "name": "EKF2_GPS_POS_X",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_GPS_POS_Y",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_GPS_POS_Z",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_GPS_P_GATE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 5.0
+    },
+    {
+      "name": "EKF2_GPS_P_NOISE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.5
+    },
+    {
+      "name": "EKF2_GPS_V_GATE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 5.0
+    },
+    {
+      "name": "EKF2_GPS_V_NOISE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.30000001192092896
+    },
+    {
+      "name": "EKF2_GPS_YAW_OFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_GRAV_NOISE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "EKF2_GSF_TAS",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 15.0
+    },
+    {
+      "name": "EKF2_GYR_B_LIM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.15000000596046448
+    },
+    {
+      "name": "EKF2_GYR_B_NOISE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0010000000474974513
+    },
+    {
+      "name": "EKF2_GYR_NOISE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.014999999664723873
+    },
+    {
+      "name": "EKF2_HDG_GATE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 2.5999999046325684
+    },
+    {
+      "name": "EKF2_HEAD_NOISE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.30000001192092896
+    },
+    {
+      "name": "EKF2_HGT_REF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "EKF2_IMU_CTRL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 9.80908925027372e-45
+    },
+    {
+      "name": "EKF2_IMU_POS_X",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_IMU_POS_Y",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_IMU_POS_Z",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_LOG_VERBOSE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "EKF2_MAG_ACCLIM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.5
+    },
+    {
+      "name": "EKF2_MAG_B_NOISE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 9.999999747378752e-05
+    },
+    {
+      "name": "EKF2_MAG_CHECK",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "EKF2_MAG_CHK_INC",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 20.0
+    },
+    {
+      "name": "EKF2_MAG_CHK_STR",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.20000000298023224
+    },
+    {
+      "name": "EKF2_MAG_DECL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 3.193674087524414
+    },
+    {
+      "name": "EKF2_MAG_DELAY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_MAG_E_NOISE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0010000000474974513
+    },
+    {
+      "name": "EKF2_MAG_GATE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 3.0
+    },
+    {
+      "name": "EKF2_MAG_NOISE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.05000000074505806
+    },
+    {
+      "name": "EKF2_MAG_TYPE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_MCOEF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.15000000596046448
+    },
+    {
+      "name": "EKF2_MIN_RNG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.10000000149011612
+    },
+    {
+      "name": "EKF2_MULTI_IMU",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_NOAID_NOISE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 10.0
+    },
+    {
+      "name": "EKF2_NOAID_TOUT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 7.006492321624085e-39
+    },
+    {
+      "name": "EKF2_OF_CTRL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "EKF2_OF_DELAY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 20.0
+    },
+    {
+      "name": "EKF2_OF_GATE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 3.0
+    },
+    {
+      "name": "EKF2_OF_GYR_SRC",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_OF_N_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.5
+    },
+    {
+      "name": "EKF2_OF_N_MIN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.15000000596046448
+    },
+    {
+      "name": "EKF2_OF_POS_X",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_OF_POS_Y",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_OF_POS_Z",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_OF_QMIN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "EKF2_OF_QMIN_GND",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_PCOEF_XN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_PCOEF_XP",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_PCOEF_YN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_PCOEF_YP",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_PCOEF_Z",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_PREDICT_US",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-41
+    },
+    {
+      "name": "EKF2_REQ_EPH",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 3.0
+    },
+    {
+      "name": "EKF2_REQ_EPV",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 5.0
+    },
+    {
+      "name": "EKF2_REQ_GPS_H",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 10.0
+    },
+    {
+      "name": "EKF2_REQ_HDRIFT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.10000000149011612
+    },
+    {
+      "name": "EKF2_REQ_NSATS",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 8.407790785948902e-45
+    },
+    {
+      "name": "EKF2_REQ_PDOP",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 2.5
+    },
+    {
+      "name": "EKF2_REQ_SACC",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.5
+    },
+    {
+      "name": "EKF2_REQ_VDRIFT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.20000000298023224
+    },
+    {
+      "name": "EKF2_RNG_A_HMAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 5.0
+    },
+    {
+      "name": "EKF2_RNG_A_IGATE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "EKF2_RNG_A_VMAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "EKF2_RNG_CTRL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "EKF2_RNG_DELAY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 5.0
+    },
+    {
+      "name": "EKF2_RNG_FOG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "EKF2_RNG_GATE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 5.0
+    },
+    {
+      "name": "EKF2_RNG_K_GATE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "EKF2_RNG_NOISE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.10000000149011612
+    },
+    {
+      "name": "EKF2_RNG_PITCH",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_RNG_POS_X",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_RNG_POS_Y",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_RNG_POS_Z",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_RNG_QLTY_T",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "EKF2_RNG_SFE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.05000000074505806
+    },
+    {
+      "name": "EKF2_SYNT_MAG_Z",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "EKF2_TAS_GATE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 5.0
+    },
+    {
+      "name": "EKF2_TAU_POS",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.25
+    },
+    {
+      "name": "EKF2_TAU_VEL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.25
+    },
+    {
+      "name": "EKF2_TERR_GRAD",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.5
+    },
+    {
+      "name": "EKF2_TERR_NOISE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 5.0
+    },
+    {
+      "name": "EKF2_VEL_LIM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 100.0
+    },
+    {
+      "name": "EKF2_WIND_NSD",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.05000000074505806
+    },
+    {
+      "name": "EV_TSK_RC_LOSS",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "EV_TSK_STAT_DIS",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "FD_ACT_EN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "FD_ACT_MOT_C2T",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 2.0
+    },
+    {
+      "name": "FD_ACT_MOT_THR",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.20000000298023224
+    },
+    {
+      "name": "FD_ACT_MOT_TOUT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-43
+    },
+    {
+      "name": "FD_ESCS_EN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "FD_EXT_ATS_EN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "FD_EXT_ATS_TRIG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 2.6624670822171524e-42
+    },
+    {
+      "name": "FD_FAIL_P",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 8.407790785948902e-44
+    },
+    {
+      "name": "FD_FAIL_P_TTRI",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.30000001192092896
+    },
+    {
+      "name": "FD_FAIL_R",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 8.407790785948902e-44
+    },
+    {
+      "name": "FD_FAIL_R_TTRI",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.30000001192092896
+    },
+    {
+      "name": "FD_IMB_PROP_THR",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 4.203895392974451e-44
+    },
+    {
+      "name": "FLW_TGT_ALT_M",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "FLW_TGT_DST",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 8.0
+    },
+    {
+      "name": "FLW_TGT_FA",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 180.0
+    },
+    {
+      "name": "FLW_TGT_HT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 8.0
+    },
+    {
+      "name": "FLW_TGT_MAX_VEL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 5.0
+    },
+    {
+      "name": "FLW_TGT_RS",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.10000000149011612
+    },
+    {
+      "name": "FW_AIRSPD_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 20.0
+    },
+    {
+      "name": "FW_AIRSPD_TRIM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 15.0
+    },
+    {
+      "name": "FW_PSP_OFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "FW_T_CLMB_R_SP",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 3.0
+    },
+    {
+      "name": "FW_T_SINK_R_SP",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 2.0
+    },
+    {
+      "name": "GF_ACTION",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 2.802596928649634e-45
+    },
+    {
+      "name": "GF_MAX_HOR_DIST",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "GF_MAX_VER_DIST",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "GF_PREDICT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "GF_SOURCE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "GND_SPEED_THR_SC",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "GPS_1_CONFIG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 2.8166099132928823e-43
+    },
+    {
+      "name": "GPS_1_GNSS",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "GPS_1_PROTOCOL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "GPS_2_CONFIG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "GPS_DUMP_COMM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "GPS_SAT_INFO",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "GPS_UBX_BAUD2",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 3.2285916618043785e-40
+    },
+    {
+      "name": "GPS_UBX_CFG_INTF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "GPS_UBX_DYNMODEL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 8.407790785948902e-45
+    },
+    {
+      "name": "GPS_UBX_MODE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "GPS_YAW_OFFSET",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "HTE_ACC_GATE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 3.0
+    },
+    {
+      "name": "HTE_HT_ERR_INIT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.10000000149011612
+    },
+    {
+      "name": "HTE_HT_NOISE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.003599999938160181
+    },
+    {
+      "name": "HTE_THR_RANGE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.20000000298023224
+    },
+    {
+      "name": "HTE_VXY_THR",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 10.0
+    },
+    {
+      "name": "HTE_VZ_THR",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 2.0
+    },
+    {
+      "name": "IMU_ACCEL_CUTOFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 30.0
+    },
+    {
+      "name": "IMU_DGYRO_CUTOFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 30.0
+    },
+    {
+      "name": "IMU_GYRO_CAL_EN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "IMU_GYRO_CUTOFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 40.0
+    },
+    {
+      "name": "IMU_GYRO_DNF_BW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 15.0
+    },
+    {
+      "name": "IMU_GYRO_DNF_EN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "IMU_GYRO_DNF_HMC",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 4.203895392974451e-45
+    },
+    {
+      "name": "IMU_GYRO_DNF_MIN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 25.0
+    },
+    {
+      "name": "IMU_GYRO_NF0_BW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 20.0
+    },
+    {
+      "name": "IMU_GYRO_NF0_FRQ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "IMU_GYRO_NF1_BW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 20.0
+    },
+    {
+      "name": "IMU_GYRO_NF1_FRQ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "IMU_GYRO_RATEMAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.1210387714598537e-42
+    },
+    {
+      "name": "IMU_INTEG_RATE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 2.802596928649634e-43
+    },
+    {
+      "name": "LNDMC_ALT_GND",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 2.0
+    },
+    {
+      "name": "LNDMC_ROT_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 20.0
+    },
+    {
+      "name": "LNDMC_TRIG_TIME",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "LNDMC_XY_VEL_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.5
+    },
+    {
+      "name": "LNDMC_Z_VEL_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.25
+    },
+    {
+      "name": "LND_FLIGHT_T_HI",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "LND_FLIGHT_T_LO",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 2.328271439281944e-25
+    },
+    {
+      "name": "LPE_EN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "MAN_ARM_GESTURE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "MAN_KILL_GEST_T",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "MAV_0_CONFIG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.4153114489680652e-43
+    },
+    {
+      "name": "MAV_0_FLOW_CTRL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 2.802596928649634e-45
+    },
+    {
+      "name": "MAV_0_FORWARD",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "MAV_0_MODE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "MAV_0_RADIO_CTL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "MAV_0_RATE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.6815581571897805e-42
+    },
+    {
+      "name": "MAV_1_CONFIG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "MAV_2_CONFIG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "MAV_COMP_ID",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "MAV_FWDEXTSP",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "MAV_HASH_CHK_EN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "MAV_HB_FORW_EN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "MAV_PROTO_VER",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "MAV_RADIO_TOUT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 7.006492321624085e-45
+    },
+    {
+      "name": "MAV_SIK_RADIO_ID",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "MAV_SYS_ID",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "MAV_TYPE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 2.802596928649634e-45
+    },
+    {
+      "name": "MAV_USEHILGPS",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "MBE_ENABLE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "MBE_LEARN_GAIN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 18.0
+    },
+    {
+      "name": "MC_ACRO_EXPO",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "MC_ACRO_EXPO_Y",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "MC_ACRO_P_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 100.0
+    },
+    {
+      "name": "MC_ACRO_R_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 100.0
+    },
+    {
+      "name": "MC_ACRO_SUPEXPO",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "MC_ACRO_SUPEXPOY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "MC_ACRO_Y_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 100.0
+    },
+    {
+      "name": "MC_AIRMODE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "MC_AT_EN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "MC_BAT_SCALE_EN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "MC_MAN_TILT_TAU",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "MC_ORBIT_RAD_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1000.0
+    },
+    {
+      "name": "MC_ORBIT_YAW_MOD",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "MC_PITCHRATE_D",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.003000000026077032
+    },
+    {
+      "name": "MC_PITCHRATE_FF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "MC_PITCHRATE_I",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.20000000298023224
+    },
+    {
+      "name": "MC_PITCHRATE_K",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "MC_PITCHRATE_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 220.0
+    },
+    {
+      "name": "MC_PITCHRATE_P",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.15000000596046448
+    },
+    {
+      "name": "MC_PITCH_P",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 6.5
+    },
+    {
+      "name": "MC_PR_INT_LIM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.30000001192092896
+    },
+    {
+      "name": "MC_ROLLRATE_D",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.003000000026077032
+    },
+    {
+      "name": "MC_ROLLRATE_FF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "MC_ROLLRATE_I",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.20000000298023224
+    },
+    {
+      "name": "MC_ROLLRATE_K",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "MC_ROLLRATE_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 220.0
+    },
+    {
+      "name": "MC_ROLLRATE_P",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.15000000596046448
+    },
+    {
+      "name": "MC_ROLL_P",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 6.5
+    },
+    {
+      "name": "MC_RR_INT_LIM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.30000001192092896
+    },
+    {
+      "name": "MC_SLOW_DEF_HVEL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 3.0
+    },
+    {
+      "name": "MC_SLOW_DEF_VVEL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "MC_SLOW_DEF_YAWR",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 45.0
+    },
+    {
+      "name": "MC_SLOW_MAP_HVEL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "MC_SLOW_MAP_PTCH",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "MC_SLOW_MAP_VVEL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "MC_SLOW_MAP_YAWR",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "MC_SLOW_MIN_HVEL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.30000001192092896
+    },
+    {
+      "name": "MC_SLOW_MIN_VVEL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.30000001192092896
+    },
+    {
+      "name": "MC_SLOW_MIN_YAWR",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 3.0
+    },
+    {
+      "name": "MC_YAWRATE_D",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "MC_YAWRATE_FF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "MC_YAWRATE_I",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.10000000149011612
+    },
+    {
+      "name": "MC_YAWRATE_K",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "MC_YAWRATE_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 200.0
+    },
+    {
+      "name": "MC_YAWRATE_P",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.20000000298023224
+    },
+    {
+      "name": "MC_YAW_P",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 2.799999952316284
+    },
+    {
+      "name": "MC_YAW_TQ_CUTOFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 2.0
+    },
+    {
+      "name": "MC_YAW_WEIGHT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.4000000059604645
+    },
+    {
+      "name": "MC_YR_INT_LIM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.30000001192092896
+    },
+    {
+      "name": "MIS_COMMAND_TOUT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "MIS_LND_ABRT_ALT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 4.203895392974451e-44
+    },
+    {
+      "name": "MIS_MNT_YAW_CTL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "MIS_TAKEOFF_ALT",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 2.5
+    },
+    {
+      "name": "MIS_YAW_ERR",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 12.0
+    },
+    {
+      "name": "MIS_YAW_TMT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "MNT_MODE_IN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": null
+    },
+    {
+      "name": "MOT_POLE_COUNT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.961817850054744e-44
+    },
+    {
+      "name": "MPC_ACC_DECOUPLE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "MPC_ACC_DOWN_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 3.0
+    },
+    {
+      "name": "MPC_ACC_HOR",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 3.0
+    },
+    {
+      "name": "MPC_ACC_HOR_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 5.0
+    },
+    {
+      "name": "MPC_ACC_UP_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 4.0
+    },
+    {
+      "name": "MPC_ALT_MODE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 2.802596928649634e-45
+    },
+    {
+      "name": "MPC_HOLD_DZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.10000000149011612
+    },
+    {
+      "name": "MPC_HOLD_MAX_XY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.800000011920929
+    },
+    {
+      "name": "MPC_HOLD_MAX_Z",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.6000000238418579
+    },
+    {
+      "name": "MPC_JERK_AUTO",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 4.0
+    },
+    {
+      "name": "MPC_JERK_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 8.0
+    },
+    {
+      "name": "MPC_LAND_ALT1",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 10.0
+    },
+    {
+      "name": "MPC_LAND_ALT2",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 5.0
+    },
+    {
+      "name": "MPC_LAND_ALT3",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "MPC_LAND_CRWL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.30000001192092896
+    },
+    {
+      "name": "MPC_LAND_RADIUS",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1000.0
+    },
+    {
+      "name": "MPC_LAND_RC_HELP",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "MPC_LAND_SPEED",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.699999988079071
+    },
+    {
+      "name": "MPC_MANTHR_MIN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.07999999821186066
+    },
+    {
+      "name": "MPC_MAN_TILT_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 35.0
+    },
+    {
+      "name": "MPC_MAN_Y_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 150.0
+    },
+    {
+      "name": "MPC_MAN_Y_TAU",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.07999999821186066
+    },
+    {
+      "name": "MPC_POS_MODE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 5.605193857299268e-45
+    },
+    {
+      "name": "MPC_THR_CURVE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "MPC_THR_HOVER",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.5
+    },
+    {
+      "name": "MPC_THR_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "MPC_THR_MIN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.11999999731779099
+    },
+    {
+      "name": "MPC_THR_XY_MARG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.30000001192092896
+    },
+    {
+      "name": "MPC_TILTMAX_AIR",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 45.0
+    },
+    {
+      "name": "MPC_TILTMAX_LND",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 12.0
+    },
+    {
+      "name": "MPC_TKO_RAMP_T",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 3.0
+    },
+    {
+      "name": "MPC_TKO_SPEED",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.5
+    },
+    {
+      "name": "MPC_USE_HTE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "MPC_VELD_LP",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 5.0
+    },
+    {
+      "name": "MPC_VEL_LP",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "MPC_VEL_MANUAL",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 10.0
+    },
+    {
+      "name": "MPC_VEL_MAN_BACK",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "MPC_VEL_MAN_SIDE",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "MPC_VEL_NF_BW",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 5.0
+    },
+    {
+      "name": "MPC_VEL_NF_FRQ",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "MPC_XY_CRUISE",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 5.0
+    },
+    {
+      "name": "MPC_XY_ERR_MAX",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 2.0
+    },
+    {
+      "name": "MPC_XY_MAN_EXPO",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 0.6000000238418579
+    },
+    {
+      "name": "MPC_XY_P",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 0.949999988079071
+    },
+    {
+      "name": "MPC_XY_TRAJ_P",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 0.5
+    },
+    {
+      "name": "MPC_XY_VEL_ALL",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": -10.0
+    },
+    {
+      "name": "MPC_XY_VEL_D_ACC",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 0.20000000298023224
+    },
+    {
+      "name": "MPC_XY_VEL_I_ACC",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 0.4000000059604645
+    },
+    {
+      "name": "MPC_XY_VEL_MAX",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 12.0
+    },
+    {
+      "name": "MPC_XY_VEL_P_ACC",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 1.7999999523162842
+    },
+    {
+      "name": "MPC_YAWRAUTO_ACC",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 60.0
+    },
+    {
+      "name": "MPC_YAWRAUTO_MAX",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 45.0
+    },
+    {
+      "name": "MPC_YAW_EXPO",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 0.6000000238418579
+    },
+    {
+      "name": "MPC_YAW_MODE",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "MPC_Z_MAN_EXPO",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 0.6000000238418579
+    },
+    {
+      "name": "MPC_Z_P",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "MPC_Z_VEL_ALL",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": -3.0
+    },
+    {
+      "name": "MPC_Z_VEL_D_ACC",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "MPC_Z_VEL_I_ACC",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 2.0
+    },
+    {
+      "name": "MPC_Z_VEL_MAX_DN",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 1.5
+    },
+    {
+      "name": "MPC_Z_VEL_MAX_UP",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 3.0
+    },
+    {
+      "name": "MPC_Z_VEL_P_ACC",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 4.0
+    },
+    {
+      "name": "MPC_Z_V_AUTO_DN",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 1.5
+    },
+    {
+      "name": "MPC_Z_V_AUTO_UP",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 3.0
+    },
+    {
+      "name": "NAV_ACC_RAD",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 2.0
+    },
+    {
+      "name": "NAV_DLL_ACT",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "NAV_FORCE_VT",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "NAV_FW_ALTL_RAD",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 5.0
+    },
+    {
+      "name": "NAV_FW_ALT_RAD",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 10.0
+    },
+    {
+      "name": "NAV_LOITER_RAD",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 80.0
+    },
+    {
+      "name": "NAV_MC_ALT_RAD",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 0.800000011920929
+    },
+    {
+      "name": "NAV_MIN_GND_DIST",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "NAV_MIN_LTR_ALT",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": -1.0
+    },
+    {
+      "name": "NAV_RCL_ACT",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 2.802596928649634e-45
+    },
+    {
+      "name": "NAV_TRAFF_AVOID",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "NAV_TRAFF_A_HOR",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 500.0
+    },
+    {
+      "name": "NAV_TRAFF_A_VER",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 500.0
+    },
+    {
+      "name": "NAV_TRAFF_COLL_T",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 8.407790785948902e-44
+    },
+    {
+      "name": "PLD_BTOUT",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 5.0
+    },
+    {
+      "name": "PLD_FAPPR_ALT",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 0.10000000149011612
+    },
+    {
+      "name": "PLD_HACC_RAD",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 0.20000000298023224
+    },
+    {
+      "name": "PLD_MAX_SRCH",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 4.203895392974451e-45
+    },
+    {
+      "name": "PLD_SRCH_ALT",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 10.0
+    },
+    {
+      "name": "PLD_SRCH_TOUT",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 10.0
+    },
+    {
+      "name": "PWM_AUX_DIS1",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 2.1019476964872256e-42
+    },
+    {
+      "name": "PWM_AUX_DIS2",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.401298464324817e-42
+    },
+    {
+      "name": "PWM_AUX_DIS3",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.401298464324817e-42
+    },
+    {
+      "name": "PWM_AUX_DIS4",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.401298464324817e-42
+    },
+    {
+      "name": "PWM_AUX_DIS5",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.401298464324817e-42
+    },
+    {
+      "name": "PWM_AUX_DIS6",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.401298464324817e-42
+    },
+    {
+      "name": "PWM_AUX_FAIL1",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": null
+    },
+    {
+      "name": "PWM_AUX_FAIL2",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": null
+    },
+    {
+      "name": "PWM_AUX_FAIL3",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": null
+    },
+    {
+      "name": "PWM_AUX_FAIL4",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": null
+    },
+    {
+      "name": "PWM_AUX_FAIL5",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": null
+    },
+    {
+      "name": "PWM_AUX_FAIL6",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": null
+    },
+    {
+      "name": "PWM_AUX_FUNC1",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "PWM_AUX_FUNC2",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "PWM_AUX_FUNC3",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "PWM_AUX_FUNC4",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "PWM_AUX_FUNC5",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "PWM_AUX_FUNC6",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "PWM_AUX_MAX1",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 2.6624670822171524e-42
+    },
+    {
+      "name": "PWM_AUX_MAX2",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 2.6624670822171524e-42
+    },
+    {
+      "name": "PWM_AUX_MAX3",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 2.6624670822171524e-42
+    },
+    {
+      "name": "PWM_AUX_MAX4",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 2.6624670822171524e-42
+    },
+    {
+      "name": "PWM_AUX_MAX5",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 2.6624670822171524e-42
+    },
+    {
+      "name": "PWM_AUX_MAX6",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 2.802596928649634e-42
+    },
+    {
+      "name": "PWM_AUX_MIN1",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.5414283107572988e-42
+    },
+    {
+      "name": "PWM_AUX_MIN2",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.5414283107572988e-42
+    },
+    {
+      "name": "PWM_AUX_MIN3",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.5414283107572988e-42
+    },
+    {
+      "name": "PWM_AUX_MIN4",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.5414283107572988e-42
+    },
+    {
+      "name": "PWM_AUX_MIN5",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.5414283107572988e-42
+    },
+    {
+      "name": "PWM_AUX_MIN6",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.401298464324817e-42
+    },
+    {
+      "name": "PWM_AUX_REV",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "PWM_AUX_TIM0",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 7.006492321624085e-44
+    },
+    {
+      "name": "PWM_AUX_TIM1",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 7.006492321624085e-44
+    },
+    {
+      "name": "PWM_MAIN_DIS1",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.401298464324817e-42
+    },
+    {
+      "name": "PWM_MAIN_DIS2",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.401298464324817e-42
+    },
+    {
+      "name": "PWM_MAIN_DIS3",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.401298464324817e-42
+    },
+    {
+      "name": "PWM_MAIN_DIS4",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.401298464324817e-42
+    },
+    {
+      "name": "PWM_MAIN_DIS5",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 2.1019476964872256e-42
+    },
+    {
+      "name": "PWM_MAIN_DIS6",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.401298464324817e-42
+    },
+    {
+      "name": "PWM_MAIN_DIS7",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.401298464324817e-42
+    },
+    {
+      "name": "PWM_MAIN_DIS8",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.401298464324817e-42
+    },
+    {
+      "name": "PWM_MAIN_FAIL1",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.401298464324817e-42
+    },
+    {
+      "name": "PWM_MAIN_FAIL2",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.401298464324817e-42
+    },
+    {
+      "name": "PWM_MAIN_FAIL3",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.401298464324817e-42
+    },
+    {
+      "name": "PWM_MAIN_FAIL4",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.401298464324817e-42
+    },
+    {
+      "name": "PWM_MAIN_FAIL5",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 2.1019476964872256e-42
+    },
+    {
+      "name": "PWM_MAIN_FAIL6",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": null
+    },
+    {
+      "name": "PWM_MAIN_FAIL7",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": null
+    },
+    {
+      "name": "PWM_MAIN_FAIL8",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": null
+    },
+    {
+      "name": "PWM_MAIN_FUNC1",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.4153114489680652e-43
+    },
+    {
+      "name": "PWM_MAIN_FUNC2",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.4293244336113134e-43
+    },
+    {
+      "name": "PWM_MAIN_FUNC3",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.4433374182545616e-43
+    },
+    {
+      "name": "PWM_MAIN_FUNC4",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.4573504028978098e-43
+    },
+    {
+      "name": "PWM_MAIN_FUNC5",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 2.8166099132928823e-43
+    },
+    {
+      "name": "PWM_MAIN_FUNC6",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "PWM_MAIN_FUNC7",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "PWM_MAIN_FUNC8",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "PWM_MAIN_MAX1",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 2.6624670822171524e-42
+    },
+    {
+      "name": "PWM_MAIN_MAX2",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 2.6624670822171524e-42
+    },
+    {
+      "name": "PWM_MAIN_MAX3",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 2.6624670822171524e-42
+    },
+    {
+      "name": "PWM_MAIN_MAX4",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 2.6624670822171524e-42
+    },
+    {
+      "name": "PWM_MAIN_MAX5",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 3.0828566215145976e-42
+    },
+    {
+      "name": "PWM_MAIN_MAX6",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 2.802596928649634e-42
+    },
+    {
+      "name": "PWM_MAIN_MAX7",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 2.802596928649634e-42
+    },
+    {
+      "name": "PWM_MAIN_MAX8",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 2.802596928649634e-42
+    },
+    {
+      "name": "PWM_MAIN_MIN1",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.5414283107572988e-42
+    },
+    {
+      "name": "PWM_MAIN_MIN2",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.5414283107572988e-42
+    },
+    {
+      "name": "PWM_MAIN_MIN3",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.5414283107572988e-42
+    },
+    {
+      "name": "PWM_MAIN_MIN4",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.5414283107572988e-42
+    },
+    {
+      "name": "PWM_MAIN_MIN5",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.1210387714598537e-42
+    },
+    {
+      "name": "PWM_MAIN_MIN6",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.401298464324817e-42
+    },
+    {
+      "name": "PWM_MAIN_MIN7",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.401298464324817e-42
+    },
+    {
+      "name": "PWM_MAIN_MIN8",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 1.401298464324817e-42
+    },
+    {
+      "name": "PWM_MAIN_REV",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 2.2420775429197073e-44
+    },
+    {
+      "name": "PWM_MAIN_TIM0",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 5.605193857299268e-43
+    },
+    {
+      "name": "PWM_MAIN_TIM1",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 5.605193857299268e-43
+    },
+    {
+      "name": "PWM_MAIN_TIM2",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 7.006492321624085e-44
+    },
+    {
+      "name": "PWM_SBUS_MODE",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RC10_DZ",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "RC10_MAX",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 2000.0
+    },
+    {
+      "name": "RC10_MIN",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 1000.0
+    },
+    {
+      "name": "RC10_REV",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "RC10_TRIM",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 1500.0
+    },
+    {
+      "name": "RC11_DZ",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "RC11_MAX",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 2000.0
+    },
+    {
+      "name": "RC11_MIN",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 1000.0
+    },
+    {
+      "name": "RC11_REV",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "RC11_TRIM",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 1500.0
+    },
+    {
+      "name": "RC12_DZ",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "RC12_MAX",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 2000.0
+    },
+    {
+      "name": "RC12_MIN",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 1000.0
+    },
+    {
+      "name": "RC12_REV",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "RC12_TRIM",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 1500.0
+    },
+    {
+      "name": "RC13_DZ",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "RC13_MAX",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 2000.0
+    },
+    {
+      "name": "RC13_MIN",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 1000.0
+    },
+    {
+      "name": "RC13_REV",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "RC13_TRIM",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 1500.0
+    },
+    {
+      "name": "RC14_DZ",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "RC14_MAX",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 2000.0
+    },
+    {
+      "name": "RC14_MIN",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 1000.0
+    },
+    {
+      "name": "RC14_REV",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "RC14_TRIM",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 1500.0
+    },
+    {
+      "name": "RC15_DZ",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "RC15_MAX",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 2000.0
+    },
+    {
+      "name": "RC15_MIN",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 1000.0
+    },
+    {
+      "name": "RC15_REV",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "RC15_TRIM",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 1500.0
+    },
+    {
+      "name": "RC16_DZ",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "RC16_MAX",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 2000.0
+    },
+    {
+      "name": "RC16_MIN",
+      "timestamp": 1760295574,
+      "timestamp_readable": "2025-10-12 19:59:34",
+      "type": 9,
+      "value": 1000.0
+    },
+    {
+      "name": "RC16_REV",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "RC16_TRIM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1500.0
+    },
+    {
+      "name": "RC17_DZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "RC17_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 2000.0
+    },
+    {
+      "name": "RC17_MIN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1000.0
+    },
+    {
+      "name": "RC17_REV",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "RC17_TRIM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1500.0
+    },
+    {
+      "name": "RC18_DZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "RC18_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 2000.0
+    },
+    {
+      "name": "RC18_MIN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1000.0
+    },
+    {
+      "name": "RC18_REV",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "RC18_TRIM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1500.0
+    },
+    {
+      "name": "RC1_DZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 10.0
+    },
+    {
+      "name": "RC1_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 2000.0
+    },
+    {
+      "name": "RC1_MIN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1000.0
+    },
+    {
+      "name": "RC1_REV",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "RC1_TRIM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1500.0
+    },
+    {
+      "name": "RC2_DZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 10.0
+    },
+    {
+      "name": "RC2_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 2000.0
+    },
+    {
+      "name": "RC2_MIN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1000.0
+    },
+    {
+      "name": "RC2_REV",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "RC2_TRIM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1500.0
+    },
+    {
+      "name": "RC3_DZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 10.0
+    },
+    {
+      "name": "RC3_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 2001.0
+    },
+    {
+      "name": "RC3_MIN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1000.0
+    },
+    {
+      "name": "RC3_REV",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "RC3_TRIM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1000.0
+    },
+    {
+      "name": "RC4_DZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 10.0
+    },
+    {
+      "name": "RC4_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 2001.0
+    },
+    {
+      "name": "RC4_MIN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1000.0
+    },
+    {
+      "name": "RC4_REV",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "RC4_TRIM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1500.0
+    },
+    {
+      "name": "RC5_DZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 10.0
+    },
+    {
+      "name": "RC5_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 2001.0
+    },
+    {
+      "name": "RC5_MIN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1000.0
+    },
+    {
+      "name": "RC5_REV",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "RC5_TRIM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1500.0
+    },
+    {
+      "name": "RC6_DZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 10.0
+    },
+    {
+      "name": "RC6_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 2001.0
+    },
+    {
+      "name": "RC6_MIN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1000.0
+    },
+    {
+      "name": "RC6_REV",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "RC6_TRIM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1500.0
+    },
+    {
+      "name": "RC7_DZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 10.0
+    },
+    {
+      "name": "RC7_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 2000.0
+    },
+    {
+      "name": "RC7_MIN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1000.0
+    },
+    {
+      "name": "RC7_REV",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "RC7_TRIM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1500.0
+    },
+    {
+      "name": "RC8_DZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 10.0
+    },
+    {
+      "name": "RC8_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 2000.0
+    },
+    {
+      "name": "RC8_MIN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1000.0
+    },
+    {
+      "name": "RC8_REV",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "RC8_TRIM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1500.0
+    },
+    {
+      "name": "RC9_DZ",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "RC9_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 2000.0
+    },
+    {
+      "name": "RC9_MIN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1000.0
+    },
+    {
+      "name": "RC9_REV",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "RC9_TRIM",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1500.0
+    },
+    {
+      "name": "RC_ARMSWITCH_TH",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.75
+    },
+    {
+      "name": "RC_CHAN_CNT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.1210387714598537e-44
+    },
+    {
+      "name": "RC_ENG_MOT_TH",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.75
+    },
+    {
+      "name": "RC_FAILS_THR",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RC_GEAR_TH",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.75
+    },
+    {
+      "name": "RC_KILLSWITCH_TH",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.75
+    },
+    {
+      "name": "RC_LOITER_TH",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.75
+    },
+    {
+      "name": "RC_MAP_ARM_SW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RC_MAP_AUX1",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RC_MAP_AUX2",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RC_MAP_AUX3",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RC_MAP_AUX4",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RC_MAP_AUX5",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RC_MAP_AUX6",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RC_MAP_ENG_MOT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RC_MAP_FAILSAFE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RC_MAP_FLAPS",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RC_MAP_FLTMODE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 5.605193857299268e-45
+    },
+    {
+      "name": "RC_MAP_FLTM_BTN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RC_MAP_GEAR_SW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RC_MAP_KILL_SW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RC_MAP_LOITER_SW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RC_MAP_MODE_SW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RC_MAP_OFFB_SW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RC_MAP_PARAM1",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RC_MAP_PARAM2",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RC_MAP_PARAM3",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RC_MAP_PAY_SW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RC_MAP_PITCH",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 2.802596928649634e-45
+    },
+    {
+      "name": "RC_MAP_RETURN_SW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RC_MAP_ROLL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "RC_MAP_THROTTLE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 4.203895392974451e-45
+    },
+    {
+      "name": "RC_MAP_TRANS_SW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RC_MAP_YAW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 5.605193857299268e-45
+    },
+    {
+      "name": "RC_OFFB_TH",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.75
+    },
+    {
+      "name": "RC_PAYLOAD_TH",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.75
+    },
+    {
+      "name": "RC_RETURN_TH",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.75
+    },
+    {
+      "name": "RC_RSSI_PWM_CHAN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RC_RSSI_PWM_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 2.802596928649634e-42
+    },
+    {
+      "name": "RC_RSSI_PWM_MIN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-42
+    },
+    {
+      "name": "RC_TRANS_TH",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.75
+    },
+    {
+      "name": "RTL_APPR_FORCE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RTL_CONE_ANG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 6.305843089461677e-44
+    },
+    {
+      "name": "RTL_DESCEND_ALT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 10.0
+    },
+    {
+      "name": "RTL_LAND_DELAY",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "RTL_LOITER_RAD",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 80.0
+    },
+    {
+      "name": "RTL_MIN_DIST",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 10.0
+    },
+    {
+      "name": "RTL_PLD_MD",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "RTL_RETURN_ALT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 30.0
+    },
+    {
+      "name": "RTL_TIME_FACTOR",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.100000023841858
+    },
+    {
+      "name": "RTL_TIME_MARGIN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-43
+    },
+    {
+      "name": "RTL_TYPE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SDLOG_MODE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": null
+    },
+    {
+      "name": "SENS_BARO_QNH",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1013.25
+    },
+    {
+      "name": "SENS_BARO_RATE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 20.0
+    },
+    {
+      "name": "SENS_BOARD_ROT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_BOARD_X_OFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_BOARD_Y_OFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_BOARD_Z_OFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_CM8JL65_CFG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_DPRES_ANSC",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_DPRES_OFF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_EN_ADIS164X",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_EN_BATT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_EN_IRLOCK",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_EN_LL40LS",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_EN_MS4525DO",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_EN_MS5525DS",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_EN_PAA3905",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_EN_PAW3902",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_EN_PMW3901",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_EN_PX4FLOW",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_EN_SDP3X",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_EN_SF1XX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_EN_SPA06",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_EN_SPL06",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_EN_TF02PRO",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_EN_THERMAL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_EN_TRANGER",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_EN_VL53L0X",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_EN_VL53L1X",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_EXT_I2C_PRB",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "SENS_GPS_MASK",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 9.80908925027372e-45
+    },
+    {
+      "name": "SENS_GPS_PRIME",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_GPS_TAU",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 10.0
+    },
+    {
+      "name": "SENS_IMU_AUTOCAL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "SENS_IMU_CLPNOTI",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "SENS_IMU_MODE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "SENS_MAG_AUTOCAL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "SENS_MAG_AUTOROT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "SENS_MAG_MODE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "SENS_MAG_RATE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 15.0
+    },
+    {
+      "name": "SENS_MAG_SIDES",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 8.828180325246348e-44
+    },
+    {
+      "name": "SENS_SF0X_CFG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_TFLOW_CFG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_TFMINI_CFG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_ULAND_CFG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SENS_VN_CFG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SEP_PORT1_CFG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SEP_PORT2_CFG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SER_GPS1_BAUD",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SER_TEL1_BAUD",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 8.071479154510946e-41
+    },
+    {
+      "name": "SYS_AUTOCONFIG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SYS_AUTOSTART",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 5.606595155763593e-42
+    },
+    {
+      "name": "SYS_CAL_ACCEL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SYS_CAL_BARO",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SYS_CAL_GYRO",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SYS_CAL_TDEL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 3.363116314379561e-44
+    },
+    {
+      "name": "SYS_CAL_TMAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-44
+    },
+    {
+      "name": "SYS_CAL_TMIN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 7.006492321624085e-45
+    },
+    {
+      "name": "SYS_DM_BACKEND",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SYS_FAC_CAL_MODE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SYS_FAILURE_EN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SYS_HAS_BARO",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "SYS_HAS_GPS",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "SYS_HAS_MAG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "SYS_HAS_NUM_ASPD",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SYS_HAS_NUM_DIST",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SYS_HAS_NUM_OF",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SYS_HITL",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "SYS_PARAM_VER",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "SYS_RGB_MAXBRT",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "SYS_STCK_EN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 1.401298464324817e-45
+    },
+    {
+      "name": "SYS_USB_AUTO",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 2.802596928649634e-45
+    },
+    {
+      "name": "SYS_VEHICLE_RESP",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": -0.4000000059604645
+    },
+    {
+      "name": "TC_A_ENABLE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "TC_B_ENABLE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "TC_G_ENABLE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "TC_M_ENABLE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "TEL_BST_EN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "TEL_FRSKY_CONFIG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "TEL_HOTT_CONFIG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "THR_MDL_FAC",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.0
+    },
+    {
+      "name": "TRIG_MODE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "UAVCAN_ENABLE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "USB_MAV_MODE",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 2.802596928649634e-45
+    },
+    {
+      "name": "UXRCE_DDS_CFG",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "VT_B_DEC_I",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 0.10000000149011612
+    },
+    {
+      "name": "VT_B_DEC_MSS",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 2.0
+    },
+    {
+      "name": "WV_EN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 6,
+      "value": 0.0
+    },
+    {
+      "name": "WV_GAIN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "WV_ROLL_MIN",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 1.0
+    },
+    {
+      "name": "WV_YRATE_MAX",
+      "timestamp": 1760295575,
+      "timestamp_readable": "2025-10-12 19:59:35",
+      "type": 9,
+      "value": 90.0
+    }
+  ]
+}

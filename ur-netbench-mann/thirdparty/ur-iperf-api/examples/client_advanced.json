@@ -1,0 +1,19 @@
+{
+  "role": "client",
+  "server_hostname": "127.0.0.1",
+  "port": 5201,
+  "protocol": "tcp",
+  "duration": 30,
+  "omit": 3,
+  "bandwidth": 10000000,
+  "num_streams": 4,
+  "blksize": 131072,
+  "buffer_size": 262144,
+  "interval": 1.0,
+  "reverse": false,
+  "bidirectional": false,
+  "no_delay": true,
+  "congestion_control": "cubic",
+  "json": true,
+  "verbose": true
+}

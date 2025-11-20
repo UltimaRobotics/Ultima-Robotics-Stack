@@ -1,0 +1,12 @@
+
+{
+  "operation": "traceroute",
+  "traceroute": {
+    "target": "google.com",
+    "max_hops": 30,
+    "timeout_ms": 5000,
+    "packet_size": 60,
+    "num_queries": 3
+  },
+  "output_file": "runtime-data/traceroute_test_results.json"
+}

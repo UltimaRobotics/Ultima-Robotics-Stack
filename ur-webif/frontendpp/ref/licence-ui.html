@@ -1,0 +1,314 @@
+<div class="space-y-6">
+    <!-- Page Header -->
+    <div class="mb-8">
+        <h2 class="text-2xl text-neutral-900 mb-2 flex items-center">
+            <i class="fa-solid fa-certificate text-neutral-700 mr-3"></i>
+            License Management
+        </h2>
+        <p class="text-neutral-600">Manage your software licensing, activation, and feature access</p>
+    </div>
+
+    <!-- License Status Overview -->
+    <section id="license-status-overview" class="bg-white rounded-lg border border-neutral-200">
+        <div class="px-6 py-4 border-b border-neutral-200">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <h3 class="text-lg text-neutral-900">License Status Overview</h3>
+                    <div id="license-status-indicator" class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span id="license-status-text" class="text-sm text-neutral-600">Active</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button id="license-refresh-btn" class="text-neutral-600 hover:text-neutral-900 p-2 rounded-lg hover:bg-neutral-100" title="Refresh License Status">
+                        <i class="fa-solid fa-refresh text-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- License Information Grid -->
+        <div class="p-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- License Information Card -->
+                <div class="border border-neutral-200 rounded-lg p-6">
+                    <h4 class="text-lg text-neutral-800 mb-4 flex items-center">
+                        <i class="fa-solid fa-info-circle text-neutral-600 mr-2"></i>
+                        License Information
+                    </h4>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-neutral-600">License Type:</span>
+                            <span id="license-type" class="text-neutral-800">Loading...</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-neutral-600">License ID:</span>
+                            <span id="license-id" class="text-neutral-800">Loading...</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-neutral-600">Status:</span>
+                            <span id="license-activation-status" class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Loading...</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-neutral-600">Health Score:</span>
+                            <span id="license-health-score" class="text-neutral-800">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Validity Information Card -->
+                <div class="border border-neutral-200 rounded-lg p-6">
+                    <h4 class="text-lg text-neutral-800 mb-4 flex items-center">
+                        <i class="fa-solid fa-calendar text-neutral-600 mr-2"></i>
+                        Validity Information
+                    </h4>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-neutral-600">Start Date:</span>
+                            <span id="license-start-date" class="text-neutral-800">Loading...</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-neutral-600">Expiry Date:</span>
+                            <span id="license-expiry-date" class="text-neutral-800">Loading...</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-neutral-600">Days Remaining:</span>
+                            <span id="license-remaining-days" class="text-neutral-800">Loading...</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-neutral-600">Next Validation:</span>
+                            <span id="license-validation-days" class="text-neutral-800">7 days</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Features Card -->
+                <div class="border border-neutral-200 rounded-lg p-6">
+                    <h4 class="text-lg text-neutral-800 mb-4 flex items-center">
+                        <i class="fa-solid fa-list-check text-neutral-600 mr-2"></i>
+                        Enabled Features
+                    </h4>
+                    <div id="license-features-list" class="space-y-2 max-h-48 overflow-y-auto">
+                        <!-- Features will be populated dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Health Status Bar -->
+            <div class="mt-6 p-4 bg-neutral-50 rounded-lg">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-neutral-800">License Health Score</span>
+                    <span id="license-health-percentage" class="text-neutral-900 font-semibold">Loading...</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div id="license-health-bar" class="bg-green-600 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+                <p class="text-neutral-600 text-sm mt-2">All features are functioning optimally. System health monitoring active.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- License Activation Section -->
+    <section id="license-activation-section" class="bg-white rounded-lg border border-neutral-200">
+        <div class="px-6 py-4 border-b border-neutral-200 cursor-pointer hover:bg-neutral-50" id="license-activation-header">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="text-lg text-neutral-900">License Activation</h3>
+                    <p class="text-sm text-neutral-600 mt-1">Activate your license using key, file upload, or online activation</p>
+                </div>
+                <i class="fa-solid fa-chevron-down text-neutral-500 transition-transform duration-200 rotate-180" id="license-activation-chevron"></i>
+            </div>
+        </div>
+
+        <div class="p-6 hidden" id="license-activation-content">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- License Key Activation -->
+                <div class="border border-neutral-200 rounded-lg p-6">
+                    <h4 class="text-lg text-neutral-800 mb-4 flex items-center">
+                        <i class="fa-solid fa-key text-neutral-600 mr-2"></i>
+                        License Key
+                    </h4>
+                    <form id="license-key-form" class="space-y-4">
+                        <div>
+                            <label class="block text-sm text-neutral-700 mb-2">Enter License Key</label>
+                            <input type="text" id="license-key-input" placeholder="XXXX-XXXX-XXXX-XXXX" 
+                                   class="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-500">
+                        </div>
+                        <button type="submit" id="activate-license-key-btn" 
+                                class="w-full bg-neutral-600 hover:bg-neutral-700 text-white px-4 py-2 rounded-lg text-sm">
+                            <i class="fa-solid fa-key mr-2"></i>
+                            Activate License
+                        </button>
+                    </form>
+                </div>
+
+                <!-- File Upload Activation -->
+                <div class="border border-neutral-200 rounded-lg p-6">
+                    <h4 class="text-lg text-neutral-800 mb-4 flex items-center">
+                        <i class="fa-solid fa-upload text-neutral-600 mr-2"></i>
+                        File Upload
+                    </h4>
+                    <div class="space-y-4">
+                        <div id="license-file-drop-zone" class="border-2 border-dashed border-neutral-300 rounded-lg p-6 text-center hover:border-neutral-400 transition-colors cursor-pointer">
+                            <input type="file" id="license-file-input" accept=".lic,.dat,.key" style="display: none;">
+                            <div class="w-12 h-12 bg-neutral-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <i class="fa-solid fa-cloud-upload text-neutral-400 text-xl"></i>
+                            </div>
+                            <p class="text-neutral-700">Drop license file here</p>
+                            <p class="text-neutral-500 text-sm">or click to browse</p>
+                        </div>
+                        <button id="upload-activate-btn" disabled
+                                class="w-full bg-neutral-400 text-white px-4 py-2 rounded-lg text-sm cursor-not-allowed">
+                            <i class="fa-solid fa-upload mr-2"></i>
+                            Upload & Activate
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Online Activation -->
+                <div class="border border-neutral-200 rounded-lg p-6">
+                    <h4 class="text-lg text-neutral-800 mb-4 flex items-center">
+                        <i class="fa-solid fa-globe text-neutral-600 mr-2"></i>
+                        Online Activation
+                    </h4>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm text-neutral-700 mb-2">Product Code</label>
+                            <input type="text" id="product-code-input" placeholder="Enter product code" 
+                                   class="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-neutral-700 mb-2">Email Address</label>
+                            <input type="email" id="email-input" placeholder="your@email.com" 
+                                   class="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-500">
+                        </div>
+                        <button id="online-activate-btn" 
+                                class="w-full bg-neutral-600 hover:bg-neutral-700 text-white px-4 py-2 rounded-lg text-sm">
+                            <i class="fa-solid fa-globe mr-2"></i>
+                            Auto-Activate Online
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- License Configuration Section -->
+    <section id="license-configuration-section" class="bg-white rounded-lg border border-neutral-200">
+        <div class="px-6 py-4 border-b border-neutral-200 cursor-pointer hover:bg-neutral-50" id="license-configuration-header">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="text-lg text-neutral-900">License Configuration</h3>
+                    <p class="text-sm text-neutral-600 mt-1">Configure license validation and security settings</p>
+                </div>
+                <i class="fa-solid fa-chevron-down text-neutral-500 transition-transform duration-200 rotate-180" id="license-configuration-chevron"></i>
+            </div>
+        </div>
+
+        <div class="p-6 hidden" id="license-configuration-content">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Validation Settings -->
+                <div class="space-y-4">
+                    <h4 class="text-sm font-medium text-neutral-800">Validation Settings</h4>
+                    
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h5 class="text-sm text-neutral-700">Signature Validation</h5>
+                            <p class="text-xs text-neutral-500">Verify license signatures</p>
+                        </div>
+                        <div id="signature-validation-toggle" class="w-12 h-6 bg-neutral-600 rounded-full relative cursor-pointer" data-setting="signature_validation">
+                            <div class="absolute right-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h5 class="text-sm text-neutral-700">Auto Renewal</h5>
+                            <p class="text-xs text-neutral-500">Automatically renew before expiry</p>
+                        </div>
+                        <div id="auto-renewal-toggle" class="w-12 h-6 bg-neutral-300 rounded-full relative cursor-pointer" data-setting="auto_renewal">
+                            <div class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm text-neutral-700 mb-2">Validation Interval (Days)</label>
+                        <input type="number" id="validation-interval-input" value="7" min="1" max="30"
+                               class="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-500">
+                    </div>
+                </div>
+
+                <!-- Security Settings -->
+                <div class="space-y-4">
+                    <h4 class="text-sm font-medium text-neutral-800">Security Settings</h4>
+                    
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h5 class="text-sm text-neutral-700">Require HTTPS</h5>
+                            <p class="text-xs text-neutral-500">Force secure connections</p>
+                        </div>
+                        <div id="require-https-toggle" class="w-12 h-6 bg-neutral-600 rounded-full relative cursor-pointer" data-setting="require_https">
+                            <div class="absolute right-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h5 class="text-sm text-neutral-700">Log Activation Attempts</h5>
+                            <p class="text-xs text-neutral-500">Record all activation events</p>
+                        </div>
+                        <div id="log-attempts-toggle" class="w-12 h-6 bg-neutral-600 rounded-full relative cursor-pointer" data-setting="log_activation_attempts">
+                            <div class="absolute right-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm text-neutral-700 mb-2">Max File Size (MB)</label>
+                        <input type="number" id="max-file-size-input" value="5" min="1" max="50"
+                               class="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-500">
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 pt-6 border-t border-neutral-200">
+                <div class="flex justify-end space-x-3">
+                    <button id="reset-config-btn" class="px-4 py-2 border border-neutral-300 text-neutral-700 rounded-lg hover:bg-neutral-50">
+                        Reset to Defaults
+                    </button>
+                    <button id="save-config-btn" class="px-4 py-2 bg-neutral-600 hover:bg-neutral-700 text-white rounded-lg">
+                        Save Configuration
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- License Events Section -->
+    <section id="license-events-section" class="bg-white rounded-lg border border-neutral-200">
+        <div class="px-6 py-4 border-b border-neutral-200 cursor-pointer hover:bg-neutral-50" id="license-events-header">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="text-lg text-neutral-900">License Events</h3>
+                    <p class="text-sm text-neutral-600 mt-1">Recent license activity and events</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button id="clear-events-btn" class="text-neutral-600 hover:text-neutral-900 px-3 py-1 rounded border border-neutral-300 text-sm">
+                        Clear Events
+                    </button>
+                    <i class="fa-solid fa-chevron-down text-neutral-500 transition-transform duration-200 rotate-180" id="license-events-chevron"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-6 hidden" id="license-events-content">
+            <div id="license-events-container" class="space-y-3 max-h-64 overflow-y-auto">
+                <!-- Events will be populated dynamically -->
+            </div>
+            
+            <div id="license-no-events" class="text-center py-8 text-neutral-500" style="display: none;">
+                <i class="fa-solid fa-calendar-xmark text-2xl mb-3"></i>
+                <p>No license events recorded</p>
+            </div>
+        </div>
+    </section>
+</div>

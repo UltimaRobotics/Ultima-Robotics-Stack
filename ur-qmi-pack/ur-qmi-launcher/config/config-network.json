@@ -1,0 +1,11 @@
+{
+    "apn": "internet",
+    "username": "",
+    "password": "",
+    "ip_type": 4,
+    "auto_connect": true,
+    "retry_attempts": 3,
+    "retry_delay_ms": 500,
+    "enable_monitoring": true,
+    "health_check_interval_ms": 500
+}

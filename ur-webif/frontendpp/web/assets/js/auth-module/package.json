@@ -1,0 +1,32 @@
+{
+  "name": "@webmodules/auth-module",
+  "version": "1.0.0",
+  "description": "A generic JWT-based authentication module with shared session storage",
+  "main": "src/JwtAuthManager.js",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "example": "node examples/basic-usage.js"
+  },
+  "keywords": [
+    "jwt",
+    "authentication",
+    "auth",
+    "session",
+    "shared",
+    "storage",
+    "javascript"
+  ],
+  "author": "WebModules",
+  "license": "MIT",
+  "dependencies": {
+    "crypto": "^1.0.1"
+  },
+  "devDependencies": {},
+  "exports": {
+    ".": "./src/JwtAuthManager.js",
+    "./config": "./lib/jwt-config.js",
+    "./storage": "./lib/auth-storage.js",
+    "./utils": "./lib/jwt-utils.js"
+  }
+}

@@ -1,0 +1,66 @@
+<div id="modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div id="modal-container" class="bg-white rounded-xl shadow-2xl w-full max-w-3xl mx-4 p-10">
+    
+    <!-- Header Section -->
+    <div id="modal-header" class="mb-6">
+      <h2 class="text-xl text-neutral-900 mb-2">Import Configuration</h2>
+      <p class="text-sm text-neutral-600 leading-relaxed">
+        Upload your configuration file to import settings and preferences.<br>
+        The file will be validated before applying any changes to your system.
+      </p>
+    </div>
+
+    <!-- Config Section -->
+    <div id="config-section" class="mb-6">
+      <!-- Label Row -->
+      <div class="flex justify-between items-center mb-3">
+        <label class="text-sm text-neutral-900">Config file</label>
+        <span class="text-xs text-neutral-500">JSON</span>
+      </div>
+
+      <!-- Drop Area -->
+      <div id="drop-area" class="border-2 border-dashed border-neutral-300 rounded-lg bg-neutral-50 p-12 text-center">
+        <div class="flex flex-col items-center space-y-3">
+          <div class="w-12 h-12 bg-neutral-400 rounded flex items-center justify-center">
+            <i class="text-white text-lg" data-fa-i2svg=""><svg class="svg-inline--fa fa-file-arrow-up" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-arrow-up" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM216 408c0 13.3-10.7 24-24 24s-24-10.7-24-24V305.9l-31 31c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l72-72c9.4-9.4 24.6-9.4 33.9 0l72 72c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-31-31V408z"></path></svg></i>
+          </div>
+          <div class="space-y-1">
+            <p class="text-base text-neutral-900">Drop your config file here</p>
+            <p class="text-sm text-neutral-600">Click to browse or drag and drop from your desktop</p>
+            <p class="text-xs text-neutral-500">Maximum file size: 10MB. Existing configurations will not be overwritten.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Selected File Row -->
+    <div id="selected-file" class="mb-6">
+      <div class="bg-neutral-100 rounded-lg px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <i class="text-neutral-600" data-fa-i2svg=""><svg class="svg-inline--fa fa-file-code" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-code" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM153 289l-31 31 31 31c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L71 337c-9.4-9.4-9.4-24.6 0-33.9l48-48c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9zM265 255l48 48c9.4 9.4 9.4 24.6 0 33.9l-48 48c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l31-31-31-31c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0z"></path></svg></i>
+          <div>
+            <span class="text-sm text-neutral-900">config-settings.json</span>
+            <span class="text-xs text-neutral-500 ml-2">(2.4 KB)</span>
+          </div>
+        </div>
+        <span class="text-xs text-neutral-600 bg-white px-2 py-1 rounded">Ready to validate</span>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="modal-footer" class="pt-6 border-t border-neutral-200 flex justify-between items-center">
+      <p class="text-xs text-neutral-500">
+        Configuration will be validated before import. No changes will be made until confirmation.
+      </p>
+      <div class="flex space-x-4">
+        <button class="px-4 py-2 text-sm text-neutral-700 bg-white border border-neutral-300 rounded-md hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-neutral-500">
+          Cancel
+        </button>
+        <button class="px-4 py-2 text-sm text-white bg-neutral-800 rounded-md hover:bg-neutral-900 focus:outline-none focus:ring-2 focus:ring-neutral-500">
+          Validate config
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

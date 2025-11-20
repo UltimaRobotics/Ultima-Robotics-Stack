@@ -1,0 +1,9 @@
+{
+  "operation": "generate",
+  "parameters": {
+    "output": "/home/runner/workspace/ur-licence-mann/tests/output/force_encrypt_test.lic",
+    "license_id": "FORCE-ENC-001",
+    "customer_name": "Force Encrypt Test",
+    "customer_email": "force@test.com"
+  }
+}

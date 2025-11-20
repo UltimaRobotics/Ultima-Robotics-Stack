@@ -1,0 +1,27 @@
+{
+  "name": "@webmodules/http-client",
+  "version": "1.0.0",
+  "description": "A generic HTTP client implementation with shared storage support",
+  "main": "src/HttpClient.js",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "example": "node examples/basic-usage.js"
+  },
+  "keywords": [
+    "http",
+    "client",
+    "shared",
+    "storage",
+    "javascript"
+  ],
+  "author": "WebModules",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {},
+  "exports": {
+    ".": "./src/HttpClient.js",
+    "./config": "./lib/config.js",
+    "./storage": "./lib/http-storage.js"
+  }
+}

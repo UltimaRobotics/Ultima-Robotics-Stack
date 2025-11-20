@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "description": "UR MAVRouter RPC Package Configuration",
+  "config_files": {
+    "router_config": "config/router-config.json",
+    "rpc_config": "config/ur-mavrouter-rpc.json",
+    "http_server_config": "config/http-server-config.json",
+    "statistics_config": "config/statistics-only-config.json"
+  },
+  "log_files": {
+    "main_log": "/var/log/ur-mavrouter/main.log",
+    "rpc_log": "/var/log/ur-mavrouter/rpc.log",
+    "error_log": "/var/log/ur-mavrouter/error.log"
+  },
+  "runtime": {
+    "pid_file": "/var/run/ur-mavrouter.pid",
+    "user": "mavrouter",
+    "group": "mavrouter"
+  }
+}

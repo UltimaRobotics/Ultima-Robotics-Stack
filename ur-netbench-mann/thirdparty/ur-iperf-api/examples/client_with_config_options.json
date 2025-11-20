@@ -1,0 +1,13 @@
+
+{
+  "role": "client",
+  "server_hostname": "41.226.22.119",
+  "port": 9240,
+  "duration": 10,
+  "protocol": "udp",
+  "interval": 1.0,
+  "json": true,
+  "realtime": true,
+  "export_results": "export_results.json",
+  "log_results": "test_log.json"
+}

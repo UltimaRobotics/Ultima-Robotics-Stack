@@ -1,0 +1,8 @@
+{
+            "cellular_mode": "auto",
+            "preferred_bands": [],
+            "preference_duration": 0,
+            "force_mode_selection": false,
+            "enforce_mode_before_connection": false,
+            "description": "Automatic mode selection by modem"
+        }

@@ -1,0 +1,8 @@
+
+{
+  "hostname": "google.com",
+  "query_type": "A",
+  "timeout_ms": 5000,
+  "use_tcp": false,
+  "export_file_path": "dns_export_results.json"
+}

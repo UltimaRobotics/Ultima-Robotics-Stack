@@ -1,0 +1,35 @@
+{
+  "client_id": "ur-qmi-watchdog",
+  "broker_host": "0.0.0.0",
+  "broker_port": 1899,
+  "keepalive": 60,
+  "clean_session": true,
+  "qos": 0,
+  "connect_timeout": 10,
+  "message_timeout": 30,
+  "auto_reconnect": true,
+  "reconnect_delay_min": 1,
+  "reconnect_delay_max": 60,
+  "use_tls": false,
+  "heartbeat": {
+    "enabled": true,
+    "interval_seconds": 2,
+    "topic": "clients/ur-qmi-watchdog/heartbeat",
+    "payload": "{\"client\":\"ur-qmi-watchdog\",\"status\":\"alive\",\"type\":\"heartbeat\",\"ssl\":false}"
+  },
+  "json_added_pubs": {
+    "topics": [
+      "clients/ur-qmi-watchdog/heartbeat",
+      "ur-shared-bus/qmi-data"
+    ]
+  },
+  "json_added_subs": {
+    "topics": [
+      "clients/ur-qmi-ident/heartbeat"
+    ]
+  },
+  "relay": {
+    "enabled": false,
+    "conditional_relay": false
+  }
+}

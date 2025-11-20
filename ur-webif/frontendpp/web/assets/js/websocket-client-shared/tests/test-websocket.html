@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Connection Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            margin-top: 10px;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .test-result {
+            margin: 5px 0;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        .test-result.pass {
+            background: #d4edda;
+            color: #155724;
+        }
+        .test-result.fail {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>WebSocket Connection Test</h1>
+        <p>This page tests WebSocket connectivity to diagnose connection issues.</p>
+        
+        <div class="test-section">
+            <h3>Connection Tests</h3>
+            <button id="runTests" onclick="runTests()">Run Connection Tests</button>
+            <button id="clearLog" onclick="clearLog()">Clear Log</button>
+            
+            <div id="status" class="status info">
+                Ready to run tests. Click "Run Connection Tests" to start.
+            </div>
+            
+            <div id="log" class="log">Test output will appear here...</div>
+        </div>
+        
+        <div class="test-section">
+            <h3>Manual Connection Test</h3>
+            <p>Test a custom WebSocket URL:</p>
+            <input type="text" id="customUrl" value="ws://localhost:9002" style="width: 300px; padding: 5px;">
+            <button onclick="testCustomUrl()">Test Custom URL</button>
+            <div id="customResult" class="log" style="margin-top: 10px;">Custom test results...</div>
+        </div>
+        
+        <div class="test-section">
+            <h3>Test Results Summary</h3>
+            <div id="results">
+                <p>No tests run yet.</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { WebSocketConnectionTest } from './connection-test.js';
+        
+        let tester = null;
+        let originalConsoleLog = console.log;
+        let logMessages = [];
+        
+        // Override console.log to capture output
+        function captureConsoleLog() {
+            console.log = function(...args) {
+                originalConsoleLog.apply(console, args);
+                const message = args.map(arg => 
+                    typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)
+                ).join(' ');
+                logMessages.push(message);
+                updateLogDisplay();
+            };
+        }
+        
+        function restoreConsoleLog() {
+            console.log = originalConsoleLog;
+        }
+        
+        function updateLogDisplay() {
+            const logElement = document.getElementById('log');
+            logElement.textContent = logMessages.join('\n');
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+        
+        function updateStatus(message, type = 'info') {
+            const statusElement = document.getElementById('status');
+            statusElement.textContent = message;
+            statusElement.className = `status ${type}`;
+        }
+        
+        function updateResults(results) {
+            const resultsElement = document.getElementById('results');
+            const passed = results.filter(r => r.status === 'PASS').length;
+            const failed = results.filter(r => r.status === 'FAIL').length;
+            
+            let html = `<p><strong>Total:</strong> ${results.length}, <strong>Passed:</strong> ${passed}, <strong>Failed:</strong> ${failed}</p>`;
+            
+            results.forEach(result => {
+                const icon = result.status === 'PASS' ? '✅' : '❌';
+                html += `<div class="test-result ${result.status.toLowerCase()}">${icon} ${result.test}: ${result.status}${result.error ? ` - ${result.error}` : ''}</div>`;
+            });
+            
+            resultsElement.innerHTML = html;
+        }
+        
+        window.runTests = async function() {
+            const button = document.getElementById('runTests');
+            button.disabled = true;
+            button.textContent = 'Running Tests...';
+            
+            logMessages = [];
+            captureConsoleLog();
+            updateStatus('Running WebSocket connection tests...', 'info');
+            
+            try {
+                tester = new WebSocketConnectionTest();
+                await tester.runTests();
+                
+                updateResults(tester.testResults);
+                
+                const passed = tester.testResults.filter(r => r.status === 'PASS').length;
+                const failed = tester.testResults.filter(r => r.status === 'FAIL').length;
+                
+                if (failed === 0) {
+                    updateStatus('All tests passed! WebSocket connection is working correctly.', 'success');
+                } else {
+                    updateStatus(`${failed} test(s) failed. Check the log for details.`, 'error');
+                }
+                
+            } catch (error) {
+                console.log('Test execution failed:', error);
+                updateStatus('Test execution failed: ' + error.message, 'error');
+            } finally {
+                restoreConsoleLog();
+                button.disabled = false;
+                button.textContent = 'Run Connection Tests';
+            }
+        };
+        
+        window.testCustomUrl = async function() {
+            const url = document.getElementById('customUrl').value;
+            const resultElement = document.getElementById('customResult');
+            
+            if (!url) {
+                alert('Please enter a WebSocket URL');
+                return;
+            }
+            
+            resultElement.textContent = 'Testing connection...';
+            
+            try {
+                const ws = new WebSocket(url);
+                
+                const timeout = setTimeout(() => {
+                    ws.close();
+                    resultElement.textContent = '❌ Connection timeout (5 seconds)';
+                }, 5000);
+                
+                ws.onopen = () => {
+                    clearTimeout(timeout);
+                    resultElement.textContent = '✅ Connection successful!';
+                    ws.close();
+                };
+                
+                ws.onerror = (error) => {
+                    clearTimeout(timeout);
+                    resultElement.textContent = `❌ Connection error: ${error}`;
+                };
+                
+                ws.onclose = (event) => {
+                    clearTimeout(timeout);
+                    if (!resultElement.textContent.includes('successful')) {
+                        resultElement.textContent = `❌ Connection closed: ${event.code} - ${event.reason}`;
+                    }
+                };
+                
+            } catch (error) {
+                resultElement.textContent = `❌ Connection failed: ${error.message}`;
+            }
+        };
+        
+        window.clearLog = function() {
+            logMessages = [];
+            updateLogDisplay();
+            document.getElementById('results').innerHTML = '<p>No tests run yet.</p>';
+            updateStatus('Log cleared. Ready to run tests.', 'info');
+        };
+        
+        // Initial setup
+        updateLogDisplay();
+    </script>
+</body>
+</html>

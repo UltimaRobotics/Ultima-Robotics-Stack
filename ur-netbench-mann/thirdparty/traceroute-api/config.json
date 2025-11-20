@@ -1,0 +1,9 @@
+
+{
+  "target": "google.com",
+  "max_hops": 30,
+  "timeout_ms": 5000,
+  "packet_size": 60,
+  "num_queries": 3,
+  "export_file_path": "traceroute_export_results.json"
+}

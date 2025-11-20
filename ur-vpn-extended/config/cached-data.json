@@ -1,0 +1,19 @@
+{
+  "instances": [
+    {
+      "auto_connect": true,
+      "enabled": true,
+      "id": "ovpn0",
+      "last_used": "",
+      "status": "Disconnected"
+    },
+    {
+      "auto_connect": true,
+      "enabled": true,
+      "id": "wiga0",
+      "last_used": "",
+      "status": "Disconnected"
+    }
+  ],
+  "last_saved": 1761562461
+}

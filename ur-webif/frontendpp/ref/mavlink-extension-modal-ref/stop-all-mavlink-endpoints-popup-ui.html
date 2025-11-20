@@ -1,0 +1,57 @@
+<div id="overlay" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4">
+  <div id="modal-container" class="bg-white rounded-lg shadow-2xl w-full max-w-[560px] p-8">
+    
+    <div id="header-section" class="flex gap-4 mb-6">
+      <div class="w-8 h-8 bg-neutral-300 rounded flex items-center justify-center flex-shrink-0">
+        <i class="text-neutral-600" data-fa-i2svg=""><svg class="svg-inline--fa fa-circle-exclamation" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-exclamation" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c13.3 0 24 10.7 24 24V264c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"></path></svg></i>
+      </div>
+      <div class="flex-1">
+        <h2 class="text-xl text-neutral-900 mb-1">Stop all MAVLink endpoints?</h2>
+        <p class="text-sm text-neutral-600">This action will immediately terminate all active MAVLink connections and endpoints running on your system.</p>
+      </div>
+    </div>
+
+    <div id="info-panel" class="bg-neutral-100 rounded-lg p-5 mb-6">
+      <h3 class="text-sm text-neutral-900 mb-3">What will happen</h3>
+      <ul class="space-y-2">
+        <li class="flex items-start gap-2 text-sm text-neutral-700">
+          <span class="text-neutral-500 mt-0.5">•</span>
+          <span>All active MAVLink connections will be terminated immediately</span>
+        </li>
+        <li class="flex items-start gap-2 text-sm text-neutral-700">
+          <span class="text-neutral-500 mt-0.5">•</span>
+          <span>Data streaming from connected devices will stop</span>
+        </li>
+        <li class="flex items-start gap-2 text-sm text-neutral-700">
+          <span class="text-neutral-500 mt-0.5">•</span>
+          <span>You will need to manually restart endpoints to resume operations</span>
+        </li>
+        <li class="flex items-start gap-2 text-sm text-neutral-700">
+          <span class="text-neutral-500 mt-0.5">•</span>
+          <span>Any unsaved telemetry data may be lost</span>
+        </li>
+      </ul>
+    </div>
+
+    <div id="confirmation-text" class="mb-6">
+      <p class="text-sm text-neutral-800">Are you sure you want to stop all MAVLink endpoints now?</p>
+    </div>
+
+    <div id="checkbox-section" class="mb-8">
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-2 focus:ring-neutral-400">
+        <span class="text-sm text-neutral-700">Do not show this confirmation next time</span>
+      </label>
+    </div>
+
+    <div id="footer-actions" class="flex items-center justify-end gap-3">
+      <button class="px-5 py-2.5 rounded-md bg-white border border-neutral-300 text-neutral-700 text-sm hover:bg-neutral-50 transition-colors">
+        Cancel
+      </button>
+      <button class="px-5 py-2.5 rounded-md bg-neutral-900 text-white text-sm hover:bg-neutral-800 transition-colors">
+        Stop all endpoints
+      </button>
+    </div>
+
+  </div>
+</div>

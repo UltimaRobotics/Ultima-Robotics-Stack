@@ -1,0 +1,46 @@
+{
+  "airframe": {
+    "airframe_type": "Quadrotor",
+    "custom_fw_ver": "No Data Provided",
+    "firmware_version": "No Data Provided",
+    "system_id": 1,
+    "vehicle": "No Data Provided"
+  },
+  "battery_status": [
+    {
+      "battery_function": 1,
+      "battery_remaining_percent": -1,
+      "charge_state": 1,
+      "current_battery_cA": -1,
+      "current_consumed_mAh": -1,
+      "energy_consumed_hJ": -1,
+      "fault_bitmask": 0,
+      "id": 0,
+      "mode": 0,
+      "temperature_cdegC": 32767,
+      "type": 1,
+      "voltages_mV": []
+    }
+  ],
+  "power": {},
+  "power_status": {
+    "Vcc_mV": 0,
+    "Vservo_mV": 0,
+    "flags": 0
+  },
+  "safety": {
+    "data_link_loss_failsafe": "No Data Provided",
+    "low_battery_failsafe": "No Data Provided",
+    "rc_loss_failsafe": "No Data Provided",
+    "rc_loss_timeout": "No Data Provided",
+    "rtl_climb_to": "No Data Provided",
+    "rtl_then": "No Data Provided"
+  },
+  "sensors": {
+    "accelerometer": "OK",
+    "compass_0": "Not Present",
+    "compass_1": "OK",
+    "gyro": "OK"
+  },
+  "timestamp": "2025-10-12 20:05:21"
+}

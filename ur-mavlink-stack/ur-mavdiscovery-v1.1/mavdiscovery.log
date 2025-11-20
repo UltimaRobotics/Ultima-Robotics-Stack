@@ -1,0 +1,1915 @@
+[2025-10-12 15:09:41.341] [INFO] ThreadManager initialized with capacity: 20
+[2025-10-12 15:09:41.341] [INFO] Enumerating existing devices...
+[2025-10-12 15:09:41.346] [INFO] Found existing device: /dev/ttyACM0
+[2025-10-12 15:09:41.346] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:09:41.346] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 15:09:41.346] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:09:41.347] [INFO] Started verification thread 1 for: /dev/ttyACM0
+[2025-10-12 15:09:41.347] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 15:09:41.347] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 15:09:41.347] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:09:41.349] [INFO] Found 1 existing device(s)
+[2025-10-12 15:09:41.350] [INFO] Device monitor started with thread ID: 2
+[2025-10-12 15:09:41.350] [INFO] Device manager running... Press Ctrl+C to exit
+[2025-10-12 15:09:41.353] [INFO] Device VERIFIED: /dev/ttyACM0 @ 57600 baud, sysid=1, compid=1
+[2025-10-12 15:09:41.353] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:09:41.353] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 15:09:41.353] [INFO] USB Device Info JSON: {
+  "autopilotType": "PX4",
+  "baudrate": 57600,
+  "boardClass": "Pixhawk",
+  "boardName": "PX4 FMU V2",
+  "componentId": 1,
+  "deviceName": "PX4 FMU v2.x",
+  "devicePath": "/dev/ttyACM0",
+  "manufacturer": "3D Robotics",
+  "mavlinkVersion": 1,
+  "productId": "0011",
+  "serialNumber": "0",
+  "systemId": 1,
+  "timestamp": "2025-10-12 15:09:41",
+  "vendorId": "26ac"
+}
+[2025-10-12 15:09:41.355] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 15:09:41.355] [INFO] Sending device verification notification to endpoint
+[2025-10-12 15:09:41.356] [INFO] HTTP POST Request:
+[2025-10-12 15:09:41.356] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 15:09:41.356] [INFO]   Timeout: 5000ms
+[2025-10-12 15:09:41.356] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":1,"messages":[{"msgid":105,"name":"MSG_105"}],"state":2,"sysid":1,"timestamp":"2025-10-12 15:09:41"}
+[2025-10-12 15:09:41.357] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:09:41.357] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 15:09:41.357] [INFO] HTTP POST Request:
+[2025-10-12 15:09:41.357] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 15:09:41.357] [INFO]   Timeout: 5000ms
+[2025-10-12 15:09:41.357] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":1,"messages":[{"msgid":105,"name":"MSG_105"}],"state":2,"sysid":1,"timestamp":"2025-10-12 15:09:41"}
+[2025-10-12 15:09:41.357] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:09:54.304] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:09:54.304] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 15:09:54.304] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:09:54.304] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 15:09:54.304] [INFO] HTTP POST Request:
+[2025-10-12 15:09:54.304] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 15:09:54.304] [INFO]   Timeout: 5000ms
+[2025-10-12 15:09:54.305] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 15:09:54.508] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:09:54.508] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 15:09:59.845] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:09:59.845] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 15:09:59.845] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:09:59.846] [INFO] Started verification thread 3 for: /dev/ttyACM0
+[2025-10-12 15:09:59.846] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 15:09:59.846] [WARNING] Failed to register verification thread: ThreadManager: Cannot register non-existent thread 0
+[2025-10-12 15:09:59.846] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 15:09:59.846] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:10:04.470] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:10:04.470] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 15:10:04.470] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:10:04.470] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 15:10:04.470] [INFO] HTTP POST Request:
+[2025-10-12 15:10:04.470] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 15:10:04.470] [INFO]   Timeout: 5000ms
+[2025-10-12 15:10:04.470] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 15:10:04.471] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:10:04.471] [INFO] Device NON-MAVLINK: /dev/ttyACM0
+[2025-10-12 15:10:04.471] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 15:10:04.481] [INFO] Stopped verification thread for: /dev/ttyACM0
+[2025-10-12 15:10:04.481] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 15:10:04.886] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:10:04.887] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 15:10:04.887] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:10:04.887] [INFO] Started verification thread 4 for: /dev/ttyACM0
+[2025-10-12 15:10:04.887] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 15:10:04.887] [WARNING] Failed to register verification thread: ThreadManager: Cannot register non-existent thread 0
+[2025-10-12 15:10:04.887] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 15:10:04.887] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:10:05.479] [INFO] Device VERIFIED: /dev/ttyACM0 @ 57600 baud, sysid=1, compid=1
+[2025-10-12 15:10:05.479] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:10:05.479] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 15:10:05.479] [INFO] USB Device Info JSON: {
+  "autopilotType": "ArduPilot",
+  "baudrate": 57600,
+  "boardClass": "Pixhawk",
+  "boardName": "ArduPilot ChibiOS",
+  "componentId": 1,
+  "deviceName": "Pixhawk1-1M",
+  "devicePath": "/dev/ttyACM0",
+  "manufacturer": "ArduPilot",
+  "mavlinkVersion": 2,
+  "productId": "5741",
+  "serialNumber": "2D003D001350304738313420",
+  "systemId": 1,
+  "timestamp": "2025-10-12 15:10:04",
+  "vendorId": "1209"
+}
+[2025-10-12 15:10:05.479] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 15:10:05.479] [INFO] Sending device verification notification to endpoint
+[2025-10-12 15:10:05.479] [INFO] HTTP POST Request:
+[2025-10-12 15:10:05.479] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 15:10:05.479] [INFO]   Timeout: 5000ms
+[2025-10-12 15:10:05.479] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 15:10:04"}
+[2025-10-12 15:10:05.480] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:10:05.480] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 15:10:05.480] [INFO] HTTP POST Request:
+[2025-10-12 15:10:05.480] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 15:10:05.480] [INFO]   Timeout: 5000ms
+[2025-10-12 15:10:05.480] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 15:10:04"}
+[2025-10-12 15:10:06.084] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:10:17.044] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:10:17.044] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 15:10:17.044] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:10:17.044] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 15:10:17.044] [INFO] HTTP POST Request:
+[2025-10-12 15:10:17.044] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 15:10:17.044] [INFO]   Timeout: 5000ms
+[2025-10-12 15:10:17.044] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 15:10:17.187] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:10:17.187] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 15:10:27.174] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:10:27.175] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 15:10:27.175] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:10:27.175] [INFO] Started verification thread 5 for: /dev/ttyACM0
+[2025-10-12 15:10:27.175] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 15:10:27.175] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 15:10:27.175] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:10:31.794] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:10:31.794] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 15:10:31.794] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:10:31.794] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 15:10:31.794] [INFO] HTTP POST Request:
+[2025-10-12 15:10:31.794] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 15:10:31.794] [INFO]   Timeout: 5000ms
+[2025-10-12 15:10:31.794] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 15:10:31.795] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:10:31.795] [INFO] Device NON-MAVLINK: /dev/ttyACM0
+[2025-10-12 15:10:31.796] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 15:10:31.806] [INFO] Stopped verification thread for: /dev/ttyACM0
+[2025-10-12 15:10:31.806] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 15:10:32.210] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:10:32.210] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 15:10:32.210] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:10:32.210] [INFO] Started verification thread 6 for: /dev/ttyACM0
+[2025-10-12 15:10:32.210] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 15:10:32.210] [WARNING] Failed to register verification thread: ThreadManager: Cannot register non-existent thread 0
+[2025-10-12 15:10:32.210] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 15:10:32.210] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:10:32.212] [INFO] Device added: /dev/ttyACM1
+[2025-10-12 15:10:32.212] [INFO] Device added to state DB: /dev/ttyACM1
+[2025-10-12 15:10:32.212] [INFO] Device added: /dev/ttyACM1
+[2025-10-12 15:10:32.213] [INFO] Started verification thread 7 for: /dev/ttyACM1
+[2025-10-12 15:10:32.213] [INFO] Started verification for: /dev/ttyACM1
+[2025-10-12 15:10:32.213] [INFO] Starting verification for: /dev/ttyACM1
+[2025-10-12 15:10:32.213] [INFO] Device updated in state DB: /dev/ttyACM1
+[2025-10-12 15:10:32.811] [INFO] Device VERIFIED: /dev/ttyACM0 @ 57600 baud, sysid=1, compid=1
+[2025-10-12 15:10:32.811] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:10:32.811] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 15:10:32.811] [INFO] USB Device Info JSON: {
+  "autopilotType": "PX4",
+  "baudrate": 57600,
+  "boardClass": "Pixhawk",
+  "boardName": "Holybro (Unknown Model)",
+  "componentId": 1,
+  "deviceName": "Pixhawk6C",
+  "devicePath": "/dev/ttyACM0",
+  "manufacturer": "Holybro",
+  "mavlinkVersion": 2,
+  "productId": "0053",
+  "serialNumber": "3B0032001651333337363133",
+  "systemId": 1,
+  "timestamp": "2025-10-12 15:10:32",
+  "vendorId": "3162"
+}
+[2025-10-12 15:10:32.812] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 15:10:32.812] [INFO] Sending device verification notification to endpoint
+[2025-10-12 15:10:32.812] [INFO] HTTP POST Request:
+[2025-10-12 15:10:32.812] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 15:10:32.812] [INFO]   Timeout: 5000ms
+[2025-10-12 15:10:32.812] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 15:10:32"}
+[2025-10-12 15:10:32.813] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:10:32.813] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 15:10:32.813] [INFO] HTTP POST Request:
+[2025-10-12 15:10:32.813] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 15:10:32.813] [INFO]   Timeout: 5000ms
+[2025-10-12 15:10:32.813] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 15:10:32"}
+[2025-10-12 15:10:33.376] [INFO] Device VERIFIED: /dev/ttyACM1 @ 115200 baud, sysid=1, compid=1
+[2025-10-12 15:10:33.376] [INFO] Device updated in state DB: /dev/ttyACM1
+[2025-10-12 15:10:33.376] [INFO] Notifying 0 callbacks for device: /dev/ttyACM1
+[2025-10-12 15:10:33.376] [INFO] USB Device Info JSON: {
+  "autopilotType": "PX4",
+  "baudrate": 115200,
+  "boardClass": "Pixhawk",
+  "boardName": "Holybro (Unknown Model)",
+  "componentId": 1,
+  "deviceName": "Pixhawk6C",
+  "devicePath": "/dev/ttyACM1",
+  "manufacturer": "Holybro",
+  "mavlinkVersion": 2,
+  "productId": "0053",
+  "serialNumber": "3B0032001651333337363133",
+  "systemId": 1,
+  "timestamp": "2025-10-12 15:10:32",
+  "vendorId": "3162"
+}
+[2025-10-12 15:10:33.378] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 15:10:33.378] [INFO] Sending device verification notification to endpoint
+[2025-10-12 15:10:33.378] [INFO] HTTP POST Request:
+[2025-10-12 15:10:33.378] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 15:10:33.378] [INFO]   Timeout: 5000ms
+[2025-10-12 15:10:33.378] [INFO]   Payload: {"baudrate":115200,"compid":1,"devicePath":"/dev/ttyACM1","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 15:10:32"}
+[2025-10-12 15:10:33.416] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:10:33.416] [INFO] HTTP POST successful for device: /dev/ttyACM1
+[2025-10-12 15:10:33.416] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 15:10:33.416] [INFO] HTTP POST Request:
+[2025-10-12 15:10:33.416] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 15:10:33.416] [INFO]   Timeout: 5000ms
+[2025-10-12 15:10:33.416] [INFO]   Payload: {"baudrate":115200,"compid":1,"devicePath":"/dev/ttyACM1","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 15:10:32"}
+[2025-10-12 15:10:33.416] [INFO] HTTP POST successful for device: /dev/ttyACM1
+[2025-10-12 15:11:01.756] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:11:01.756] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 15:11:01.756] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:11:01.756] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 15:11:01.756] [INFO] HTTP POST Request:
+[2025-10-12 15:11:01.756] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 15:11:01.756] [INFO]   Timeout: 5000ms
+[2025-10-12 15:11:01.756] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 15:11:01.869] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:11:01.870] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 15:11:01.870] [INFO] Device removed: /dev/ttyACM1
+[2025-10-12 15:11:01.870] [INFO] Device removed from state DB: /dev/ttyACM1
+[2025-10-12 15:11:01.870] [INFO] Device removed: /dev/ttyACM1
+[2025-10-12 15:11:01.870] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM1
+[2025-10-12 15:11:01.870] [INFO] HTTP POST Request:
+[2025-10-12 15:11:01.870] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 15:11:01.870] [INFO]   Timeout: 5000ms
+[2025-10-12 15:11:01.870] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM1","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 15:11:01.871] [INFO] HTTP POST successful for device: /dev/ttyACM1
+[2025-10-12 15:11:01.871] [INFO] Stopped verification for: /dev/ttyACM1
+[2025-10-12 15:11:06.481] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:11:06.481] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 15:11:06.481] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:11:06.481] [INFO] Started verification thread 8 for: /dev/ttyACM0
+[2025-10-12 15:11:06.481] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 15:11:06.481] [WARNING] Failed to register verification thread: ThreadManager: Cannot register non-existent thread 0
+[2025-10-12 15:11:06.481] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 15:11:06.481] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:11:11.098] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:11:11.098] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 15:11:11.098] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:11:11.098] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 15:11:11.098] [INFO] HTTP POST Request:
+[2025-10-12 15:11:11.099] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 15:11:11.099] [INFO]   Timeout: 5000ms
+[2025-10-12 15:11:11.099] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 15:11:11.099] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:11:11.099] [INFO] Device NON-MAVLINK: /dev/ttyACM0
+[2025-10-12 15:11:11.099] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 15:11:11.109] [INFO] Stopped verification thread for: /dev/ttyACM0
+[2025-10-12 15:11:11.109] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 15:11:13.529] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:11:13.530] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 15:11:13.530] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 14:11:13.530] [INFO] Started verification thread 9 for: /dev/ttyACM0
+[2025-10-12 15:11:13.530] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 15:11:13.530] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 15:11:13.530] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:11:14.193] [INFO] Device VERIFIED: /dev/ttyACM0 @ 57600 baud, sysid=1, compid=1
+[2025-10-12 15:11:14.194] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:11:14.194] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 15:11:14.194] [INFO] USB Device Info JSON: {
+  "autopilotType": "PX4",
+  "baudrate": 57600,
+  "boardClass": "Pixhawk",
+  "boardName": "PX4 FMU V2",
+  "componentId": 1,
+  "deviceName": "PX4 FMU v2.x",
+  "devicePath": "/dev/ttyACM0",
+  "manufacturer": "3D Robotics",
+  "mavlinkVersion": 1,
+  "productId": "0011",
+  "serialNumber": "0",
+  "systemId": 1,
+  "timestamp": "2025-10-12 15:11:13",
+  "vendorId": "26ac"
+}
+[2025-10-12 15:11:14.194] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 15:11:14.194] [INFO] Sending device verification notification to endpoint
+[2025-10-12 15:11:14.195] [INFO] HTTP POST Request:
+[2025-10-12 15:11:14.195] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 15:11:14.195] [INFO]   Timeout: 5000ms
+[2025-10-12 15:11:14.195] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":1,"messages":[{"msgid":148,"name":"MSG_148"}],"state":2,"sysid":1,"timestamp":"2025-10-12 15:11:13"}
+[2025-10-12 15:11:14.195] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:11:14.195] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 15:11:14.195] [INFO] HTTP POST Request:
+[2025-10-12 15:11:14.195] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 15:11:14.195] [INFO]   Timeout: 5000ms
+[2025-10-12 15:11:14.195] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":1,"messages":[{"msgid":148,"name":"MSG_148"}],"state":2,"sysid":1,"timestamp":"2025-10-12 15:11:13"}
+[2025-10-12 15:11:14.797] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:11:33.059] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:11:33.059] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 15:11:33.059] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:11:33.059] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 15:11:33.059] [INFO] HTTP POST Request:
+[2025-10-12 15:11:33.059] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 15:11:33.059] [INFO]   Timeout: 5000ms
+[2025-10-12 15:11:33.059] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 15:11:33.253] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:11:33.253] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 15:11:36.301] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:11:36.301] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 15:11:36.301] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:11:36.302] [WARNING] Failed to register verification thread: ThreadManager: Cannot register non-existent thread 0
+[2025-10-12 15:11:36.302] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 15:11:36.302] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:11:36.302] [INFO] Started verification thread 10 for: /dev/ttyACM0
+[2025-10-12 15:11:36.302] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 15:11:37.360] [ERROR] Failed to open /dev/ttyACM0: Device or resource busy
+[2025-10-12 15:11:37.360] [ERROR] Failed to open /dev/ttyACM0: Device or resource busy
+[2025-10-12 15:11:37.360] [ERROR] Failed to open /dev/ttyACM0: Device or resource busy
+[2025-10-12 15:11:37.360] [ERROR] Failed to open /dev/ttyACM0: Device or resource busy
+[2025-10-12 15:11:37.360] [INFO] Device NON-MAVLINK: /dev/ttyACM0
+[2025-10-12 15:11:37.360] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:11:37.360] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 15:11:38.564] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:11:38.564] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 15:11:38.564] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:11:38.564] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 15:11:38.564] [INFO] HTTP POST Request:
+[2025-10-12 15:11:38.564] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 15:11:38.564] [INFO]   Timeout: 5000ms
+[2025-10-12 15:11:38.564] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 15:11:38.565] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:11:38.565] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 15:11:40.986] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:11:40.986] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 15:11:40.986] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:11:40.986] [INFO] Started verification thread 11 for: /dev/ttyACM0
+[2025-10-12 15:11:40.986] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 15:11:40.986] [WARNING] Failed to register verification thread: ThreadManager: Cannot register non-existent thread 0
+[2025-10-12 15:11:40.986] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 15:11:40.986] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:11:41.358] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:11:41.358] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 15:11:41.358] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:11:41.359] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 15:11:41.359] [INFO] HTTP POST Request:
+[2025-10-12 15:11:41.359] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 15:11:41.359] [INFO]   Timeout: 5000ms
+[2025-10-12 15:11:41.359] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 15:11:41.360] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:11:41.360] [INFO] Device NON-MAVLINK: /dev/ttyACM0
+[2025-10-12 15:11:41.360] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 15:11:41.370] [INFO] Stopped verification thread for: /dev/ttyACM0
+[2025-10-12 15:11:41.370] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 15:11:44.198] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:11:44.199] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 15:11:44.199] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:11:44.199] [INFO] Started verification thread 12 for: /dev/ttyACM0
+[2025-10-12 15:11:44.199] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 15:11:44.199] [WARNING] Failed to register verification thread: ThreadManager: Cannot register non-existent thread 0
+[2025-10-12 15:11:44.199] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 15:11:44.199] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:11:48.827] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:11:48.828] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 15:11:48.828] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:11:48.828] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 15:11:48.828] [INFO] HTTP POST Request:
+[2025-10-12 15:11:48.828] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 15:11:48.828] [INFO]   Timeout: 5000ms
+[2025-10-12 15:11:48.828] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 15:11:48.828] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:11:48.828] [INFO] Device NON-MAVLINK: /dev/ttyACM0
+[2025-10-12 15:11:48.828] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 15:11:48.838] [INFO] Stopped verification thread for: /dev/ttyACM0
+[2025-10-12 15:11:48.838] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 15:11:51.231] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:11:51.231] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 15:11:51.231] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:11:51.231] [INFO] Started verification thread 13 for: /dev/ttyACM0
+[2025-10-12 15:11:51.231] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 15:11:51.231] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 15:11:51.231] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:11:51.905] [INFO] Device VERIFIED: /dev/ttyACM0 @ 57600 baud, sysid=1, compid=1
+[2025-10-12 15:11:51.905] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:11:51.905] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 15:11:51.905] [INFO] USB Device Info JSON: {
+  "autopilotType": "PX4",
+  "baudrate": 57600,
+  "boardClass": "Pixhawk",
+  "boardName": "PX4 FMU V2",
+  "componentId": 1,
+  "deviceName": "PX4 FMU v2.x",
+  "devicePath": "/dev/ttyACM0",
+  "manufacturer": "3D Robotics",
+  "mavlinkVersion": 1,
+  "productId": "0011",
+  "serialNumber": "0",
+  "systemId": 1,
+  "timestamp": "2025-10-12 15:11:51",
+  "vendorId": "26ac"
+}
+[2025-10-12 15:11:51.905] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 15:11:51.905] [INFO] Sending device verification notification to endpoint
+[2025-10-12 15:11:51.905] [INFO] HTTP POST Request:
+[2025-10-12 15:11:51.905] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 15:11:51.905] [INFO]   Timeout: 5000ms
+[2025-10-12 15:11:51.905] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":1,"messages":[{"msgid":42,"name":"MSG_42"}],"state":2,"sysid":1,"timestamp":"2025-10-12 15:11:51"}
+[2025-10-12 15:11:51.906] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:11:51.906] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 15:11:51.906] [INFO] HTTP POST Request:
+[2025-10-12 15:11:51.906] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 15:11:51.906] [INFO]   Timeout: 5000ms
+[2025-10-12 15:11:51.906] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":1,"messages":[{"msgid":42,"name":"MSG_42"}],"state":2,"sysid":1,"timestamp":"2025-10-12 15:11:51"}
+[2025-10-12 15:11:52.508] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:13:38.649] [INFO] ThreadManager initialized with capacity: 20
+[2025-10-12 15:13:38.649] [INFO] Enumerating existing devices...
+[2025-10-12 15:13:38.652] [INFO] Found existing device: /dev/ttyACM0
+[2025-10-12 15:13:38.653] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:13:38.653] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 15:13:38.653] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:13:38.653] [INFO] Started verification thread 1 for: /dev/ttyACM0
+[2025-10-12 15:13:38.653] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 15:13:38.653] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 15:13:38.653] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:13:38.655] [INFO] Found 1 existing device(s)
+[2025-10-12 15:13:38.655] [INFO] Device monitor started with thread ID: 2
+[2025-10-12 15:13:38.655] [INFO] Device manager running... Press Ctrl+C to exit
+[2025-10-12 15:13:38.658] [INFO] Device VERIFIED: /dev/ttyACM0 @ 57600 baud, sysid=1, compid=1
+[2025-10-12 15:13:38.658] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:13:38.658] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 15:13:38.658] [INFO] USB Device Info JSON: {
+  "autopilotType": "PX4",
+  "baudrate": 57600,
+  "boardClass": "Pixhawk",
+  "boardName": "PX4 FMU V2",
+  "componentId": 1,
+  "deviceName": "PX4 FMU v2.x",
+  "devicePath": "/dev/ttyACM0",
+  "manufacturer": "3D Robotics",
+  "mavlinkVersion": 1,
+  "productId": "0011",
+  "serialNumber": "0",
+  "systemId": 1,
+  "timestamp": "2025-10-12 15:13:38",
+  "vendorId": "26ac"
+}
+[2025-10-12 15:13:38.658] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 15:13:38.658] [INFO] Sending device verification notification to endpoint
+[2025-10-12 15:13:38.659] [INFO] HTTP POST Request:
+[2025-10-12 15:13:38.659] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 15:13:38.659] [INFO]   Timeout: 5000ms
+[2025-10-12 15:13:38.659] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":1,"messages":[{"msgid":42,"name":"MSG_42"}],"state":2,"sysid":1,"timestamp":"2025-10-12 15:13:38"}
+[2025-10-12 15:13:38.659] [ERROR] HTTP POST failed: Couldn't connect to server
+[2025-10-12 15:13:38.659] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 15:13:38.659] [INFO] HTTP POST Request:
+[2025-10-12 15:13:38.659] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 15:13:38.659] [INFO]   Timeout: 5000ms
+[2025-10-12 15:13:38.659] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":1,"messages":[{"msgid":42,"name":"MSG_42"}],"state":2,"sysid":1,"timestamp":"2025-10-12 15:13:38"}
+[2025-10-12 15:13:38.659] [ERROR] HTTP POST failed: Couldn't connect to server
+[2025-10-12 15:13:47.738] [INFO] ThreadManager initialized with capacity: 20
+[2025-10-12 15:13:47.738] [INFO] Enumerating existing devices...
+[2025-10-12 15:13:47.741] [INFO] Found existing device: /dev/ttyACM0
+[2025-10-12 15:13:47.741] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:13:47.741] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 15:13:47.741] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:13:47.741] [INFO] Started verification thread 1 for: /dev/ttyACM0
+[2025-10-12 15:13:47.741] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 15:13:47.741] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 15:13:47.741] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:13:47.743] [INFO] Found 1 existing device(s)
+[2025-10-12 15:13:47.743] [INFO] Device monitor started with thread ID: 2
+[2025-10-12 15:13:47.743] [INFO] Device manager running... Press Ctrl+C to exit
+[2025-10-12 15:13:47.748] [INFO] Device VERIFIED: /dev/ttyACM0 @ 57600 baud, sysid=1, compid=1
+[2025-10-12 15:13:47.749] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:13:47.749] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 15:13:47.749] [INFO] USB Device Info JSON: {
+  "autopilotType": "PX4",
+  "baudrate": 57600,
+  "boardClass": "Pixhawk",
+  "boardName": "PX4 FMU V2",
+  "componentId": 1,
+  "deviceName": "PX4 FMU v2.x",
+  "devicePath": "/dev/ttyACM0",
+  "manufacturer": "3D Robotics",
+  "mavlinkVersion": 1,
+  "productId": "0011",
+  "serialNumber": "0",
+  "systemId": 1,
+  "timestamp": "2025-10-12 15:13:47",
+  "vendorId": "26ac"
+}
+[2025-10-12 15:13:47.749] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 15:13:47.749] [INFO] Sending device verification notification to endpoint
+[2025-10-12 15:13:47.749] [INFO] HTTP POST Request:
+[2025-10-12 15:13:47.749] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 15:13:47.749] [INFO]   Timeout: 5000ms
+[2025-10-12 15:13:47.749] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":1,"messages":[{"msgid":85,"name":"MSG_85"}],"state":2,"sysid":1,"timestamp":"2025-10-12 15:13:47"}
+[2025-10-12 15:13:47.839] [ERROR] HTTP POST failed: Server returned nothing (no headers, no data)
+[2025-10-12 15:13:47.839] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 15:13:47.839] [INFO] HTTP POST Request:
+[2025-10-12 15:13:47.839] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 15:13:47.839] [INFO]   Timeout: 5000ms
+[2025-10-12 15:13:47.839] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":1,"messages":[{"msgid":85,"name":"MSG_85"}],"state":2,"sysid":1,"timestamp":"2025-10-12 15:13:47"}
+[2025-10-12 15:13:47.839] [ERROR] HTTP POST failed: Couldn't connect to server
+[2025-10-12 15:13:54.715] [INFO] ThreadManager initialized with capacity: 20
+[2025-10-12 15:13:54.715] [INFO] Enumerating existing devices...
+[2025-10-12 15:13:54.718] [INFO] Found existing device: /dev/ttyACM0
+[2025-10-12 15:13:54.718] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:13:54.718] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 15:13:54.718] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:13:54.718] [INFO] Started verification thread 1 for: /dev/ttyACM0
+[2025-10-12 15:13:54.718] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 15:13:54.718] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 15:13:54.718] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:13:54.720] [INFO] Found 1 existing device(s)
+[2025-10-12 15:13:54.720] [INFO] Device monitor started with thread ID: 2
+[2025-10-12 15:13:54.720] [INFO] Device manager running... Press Ctrl+C to exit
+[2025-10-12 15:13:54.726] [INFO] Device VERIFIED: /dev/ttyACM0 @ 57600 baud, sysid=1, compid=1
+[2025-10-12 15:13:54.726] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:13:54.726] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 15:13:54.726] [INFO] USB Device Info JSON: {
+  "autopilotType": "PX4",
+  "baudrate": 57600,
+  "boardClass": "Pixhawk",
+  "boardName": "PX4 FMU V2",
+  "componentId": 1,
+  "deviceName": "PX4 FMU v2.x",
+  "devicePath": "/dev/ttyACM0",
+  "manufacturer": "3D Robotics",
+  "mavlinkVersion": 1,
+  "productId": "0011",
+  "serialNumber": "0",
+  "systemId": 1,
+  "timestamp": "2025-10-12 15:13:54",
+  "vendorId": "26ac"
+}
+[2025-10-12 15:13:54.726] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 15:13:54.726] [INFO] Sending device verification notification to endpoint
+[2025-10-12 15:13:54.726] [INFO] HTTP POST Request:
+[2025-10-12 15:13:54.726] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 15:13:54.726] [INFO]   Timeout: 5000ms
+[2025-10-12 15:13:54.726] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":1,"messages":[{"msgid":32,"name":"MSG_32"}],"state":2,"sysid":1,"timestamp":"2025-10-12 15:13:54"}
+[2025-10-12 15:13:54.727] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:13:54.727] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 15:13:54.727] [INFO] HTTP POST Request:
+[2025-10-12 15:13:54.727] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 15:13:54.727] [INFO]   Timeout: 5000ms
+[2025-10-12 15:13:54.727] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":1,"messages":[{"msgid":32,"name":"MSG_32"}],"state":2,"sysid":1,"timestamp":"2025-10-12 15:13:54"}
+[2025-10-12 15:13:54.930] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:22:11.073] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:22:11.073] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 15:22:11.073] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:22:11.073] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 15:22:11.073] [INFO] HTTP POST Request:
+[2025-10-12 15:22:11.073] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 15:22:11.073] [INFO]   Timeout: 5000ms
+[2025-10-12 15:22:11.073] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 15:22:11.265] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:22:11.265] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 15:43:09.634] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:43:09.634] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 15:43:09.634] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:43:09.634] [INFO] Started verification thread 3 for: /dev/ttyACM0
+[2025-10-12 15:43:09.634] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 15:43:09.635] [WARNING] Failed to register verification thread: ThreadManager: registerThread failed (general error)
+[2025-10-12 15:43:09.635] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 15:43:09.635] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:43:14.256] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:43:14.257] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 15:43:14.257] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:43:14.257] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 15:43:14.257] [INFO] HTTP POST Request:
+[2025-10-12 15:43:14.257] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 15:43:14.257] [INFO]   Timeout: 5000ms
+[2025-10-12 15:43:14.257] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 15:43:14.257] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:43:14.257] [INFO] Device NON-MAVLINK: /dev/ttyACM0
+[2025-10-12 15:43:14.257] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 15:43:14.267] [INFO] Stopped verification thread for: /dev/ttyACM0
+[2025-10-12 15:43:14.267] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 15:43:14.671] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:43:14.671] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 15:43:14.671] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:43:14.671] [INFO] Started verification thread 4 for: /dev/ttyACM0
+[2025-10-12 15:43:14.671] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 15:43:14.671] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 15:43:14.671] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:43:14.671] [INFO] Device added: /dev/ttyACM1
+[2025-10-12 15:43:14.672] [INFO] Device added to state DB: /dev/ttyACM1
+[2025-10-12 15:43:14.672] [INFO] Device added: /dev/ttyACM1
+[2025-10-12 15:43:14.672] [INFO] Started verification thread 5 for: /dev/ttyACM1
+[2025-10-12 15:43:14.672] [INFO] Started verification for: /dev/ttyACM1
+[2025-10-12 15:43:14.672] [INFO] Starting verification for: /dev/ttyACM1
+[2025-10-12 15:43:14.672] [INFO] Device updated in state DB: /dev/ttyACM1
+[2025-10-12 15:43:15.272] [INFO] Device VERIFIED: /dev/ttyACM0 @ 57600 baud, sysid=1, compid=1
+[2025-10-12 15:43:15.272] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:43:15.272] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 15:43:15.272] [INFO] USB Device Info JSON: {
+  "autopilotType": "PX4",
+  "baudrate": 57600,
+  "boardClass": "Pixhawk",
+  "boardName": "Holybro (Unknown Model)",
+  "componentId": 1,
+  "deviceName": "Pixhawk6C",
+  "devicePath": "/dev/ttyACM0",
+  "manufacturer": "Holybro",
+  "mavlinkVersion": 2,
+  "productId": "0053",
+  "serialNumber": "3B0032001651333337363133",
+  "systemId": 1,
+  "timestamp": "2025-10-12 15:43:14",
+  "vendorId": "3162"
+}
+[2025-10-12 15:43:15.272] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 15:43:15.272] [INFO] Sending device verification notification to endpoint
+[2025-10-12 15:43:15.272] [INFO] HTTP POST Request:
+[2025-10-12 15:43:15.272] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 15:43:15.272] [INFO]   Timeout: 5000ms
+[2025-10-12 15:43:15.272] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 15:43:14"}
+[2025-10-12 15:43:15.272] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:43:15.272] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 15:43:15.272] [INFO] HTTP POST Request:
+[2025-10-12 15:43:15.272] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 15:43:15.272] [INFO]   Timeout: 5000ms
+[2025-10-12 15:43:15.272] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 15:43:14"}
+[2025-10-12 15:43:15.839] [INFO] Device VERIFIED: /dev/ttyACM1 @ 115200 baud, sysid=1, compid=1
+[2025-10-12 15:43:15.840] [INFO] Device updated in state DB: /dev/ttyACM1
+[2025-10-12 15:43:15.840] [INFO] Notifying 0 callbacks for device: /dev/ttyACM1
+[2025-10-12 15:43:15.840] [INFO] USB Device Info JSON: {
+  "autopilotType": "PX4",
+  "baudrate": 115200,
+  "boardClass": "Pixhawk",
+  "boardName": "Holybro (Unknown Model)",
+  "componentId": 1,
+  "deviceName": "Pixhawk6C",
+  "devicePath": "/dev/ttyACM1",
+  "manufacturer": "Holybro",
+  "mavlinkVersion": 2,
+  "productId": "0053",
+  "serialNumber": "3B0032001651333337363133",
+  "systemId": 1,
+  "timestamp": "2025-10-12 15:43:14",
+  "vendorId": "3162"
+}
+[2025-10-12 15:43:15.840] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 15:43:15.840] [INFO] Sending device verification notification to endpoint
+[2025-10-12 15:43:15.840] [INFO] HTTP POST Request:
+[2025-10-12 15:43:15.840] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 15:43:15.840] [INFO]   Timeout: 5000ms
+[2025-10-12 15:43:15.840] [INFO]   Payload: {"baudrate":115200,"compid":1,"devicePath":"/dev/ttyACM1","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 15:43:14"}
+[2025-10-12 15:43:15.873] [INFO] HTTP POST successful for device: /dev/ttyACM1
+[2025-10-12 15:43:15.873] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 15:43:15.873] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:43:15.873] [INFO] HTTP POST Request:
+[2025-10-12 15:43:15.873] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 15:43:15.873] [INFO]   Timeout: 5000ms
+[2025-10-12 15:43:15.873] [INFO]   Payload: {"baudrate":115200,"compid":1,"devicePath":"/dev/ttyACM1","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 15:43:14"}
+[2025-10-12 15:43:15.874] [INFO] HTTP POST successful for device: /dev/ttyACM1
+[2025-10-12 15:45:08.194] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:45:08.195] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 15:45:08.195] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:45:08.195] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 15:45:08.196] [INFO] HTTP POST Request:
+[2025-10-12 15:45:08.196] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 15:45:08.196] [INFO]   Timeout: 5000ms
+[2025-10-12 15:45:08.196] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 15:45:08.311] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:45:08.311] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 15:45:08.311] [INFO] Device removed: /dev/ttyACM1
+[2025-10-12 15:45:08.311] [INFO] Device removed from state DB: /dev/ttyACM1
+[2025-10-12 15:45:08.311] [INFO] Device removed: /dev/ttyACM1
+[2025-10-12 15:45:08.311] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM1
+[2025-10-12 15:45:08.311] [INFO] HTTP POST Request:
+[2025-10-12 15:45:08.312] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 15:45:08.312] [INFO]   Timeout: 5000ms
+[2025-10-12 15:45:08.312] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM1","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 15:45:08.312] [INFO] HTTP POST successful for device: /dev/ttyACM1
+[2025-10-12 15:45:08.312] [INFO] Stopped verification for: /dev/ttyACM1
+[2025-10-12 15:45:08.691] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:45:08.691] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 15:45:08.691] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:45:08.691] [INFO] Started verification thread 6 for: /dev/ttyACM0
+[2025-10-12 15:45:08.691] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 15:45:08.691] [WARNING] Failed to register verification thread: ThreadManager: registerThread failed (general error)
+[2025-10-12 15:45:08.691] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 15:45:08.691] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:45:13.292] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:45:13.292] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 15:45:13.292] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 15:45:13.292] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 15:45:13.292] [INFO] HTTP POST Request:
+[2025-10-12 15:45:13.292] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 15:45:13.292] [INFO]   Timeout: 5000ms
+[2025-10-12 15:45:13.292] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 15:45:13.293] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:45:13.293] [INFO] Device NON-MAVLINK: /dev/ttyACM0
+[2025-10-12 15:45:13.293] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 15:45:13.303] [INFO] Stopped verification thread for: /dev/ttyACM0
+[2025-10-12 15:45:13.303] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 15:45:13.706] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:45:13.707] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 15:45:13.707] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 15:45:13.707] [INFO] Started verification thread 7 for: /dev/ttyACM0
+[2025-10-12 15:45:13.707] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 15:45:13.707] [INFO] Device added: /dev/ttyACM1
+[2025-10-12 15:45:13.707] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 15:45:13.707] [INFO] Device added to state DB: /dev/ttyACM1
+[2025-10-12 15:45:13.707] [INFO] Device added: /dev/ttyACM1
+[2025-10-12 15:45:13.707] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:45:13.708] [WARNING] Failed to register verification thread: ThreadManager: Cannot register non-existent thread 0
+[2025-10-12 15:45:13.708] [INFO] Starting verification for: /dev/ttyACM1
+[2025-10-12 15:45:13.708] [INFO] Started verification thread 8 for: /dev/ttyACM1
+[2025-10-12 15:45:13.708] [INFO] Started verification for: /dev/ttyACM1
+[2025-10-12 15:45:13.708] [INFO] Device updated in state DB: /dev/ttyACM1
+[2025-10-12 15:45:14.312] [INFO] Device VERIFIED: /dev/ttyACM0 @ 57600 baud, sysid=1, compid=1
+[2025-10-12 15:45:14.312] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 15:45:14.312] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 15:45:14.312] [INFO] USB Device Info JSON: {
+  "autopilotType": "PX4",
+  "baudrate": 57600,
+  "boardClass": "Pixhawk",
+  "boardName": "Holybro (Unknown Model)",
+  "componentId": 1,
+  "deviceName": "Pixhawk6C",
+  "devicePath": "/dev/ttyACM0",
+  "manufacturer": "Holybro",
+  "mavlinkVersion": 2,
+  "productId": "0053",
+  "serialNumber": "3B0032001651333337363133",
+  "systemId": 1,
+  "timestamp": "2025-10-12 15:45:13",
+  "vendorId": "3162"
+}
+[2025-10-12 15:45:14.312] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 15:45:14.312] [INFO] Sending device verification notification to endpoint
+[2025-10-12 15:45:14.312] [INFO] HTTP POST Request:
+[2025-10-12 15:45:14.312] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 15:45:14.312] [INFO]   Timeout: 5000ms
+[2025-10-12 15:45:14.312] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 15:45:13"}
+[2025-10-12 15:45:14.313] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:45:14.313] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 15:45:14.313] [INFO] HTTP POST Request:
+[2025-10-12 15:45:14.313] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 15:45:14.313] [INFO]   Timeout: 5000ms
+[2025-10-12 15:45:14.313] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 15:45:13"}
+[2025-10-12 15:45:14.332] [INFO] Device VERIFIED: /dev/ttyACM1 @ 57600 baud, sysid=1, compid=1
+[2025-10-12 15:45:14.332] [INFO] Device updated in state DB: /dev/ttyACM1
+[2025-10-12 15:45:14.332] [INFO] Notifying 0 callbacks for device: /dev/ttyACM1
+[2025-10-12 15:45:14.332] [INFO] USB Device Info JSON: {
+  "autopilotType": "PX4",
+  "baudrate": 57600,
+  "boardClass": "Pixhawk",
+  "boardName": "Holybro (Unknown Model)",
+  "componentId": 1,
+  "deviceName": "Pixhawk6C",
+  "devicePath": "/dev/ttyACM1",
+  "manufacturer": "Holybro",
+  "mavlinkVersion": 2,
+  "productId": "0053",
+  "serialNumber": "3B0032001651333337363133",
+  "systemId": 1,
+  "timestamp": "2025-10-12 15:45:13",
+  "vendorId": "3162"
+}
+[2025-10-12 15:45:14.333] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 15:45:14.333] [INFO] Sending device verification notification to endpoint
+[2025-10-12 15:45:14.333] [INFO] HTTP POST Request:
+[2025-10-12 15:45:14.333] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 15:45:14.333] [INFO]   Timeout: 5000ms
+[2025-10-12 15:45:14.333] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM1","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 15:45:13"}
+[2025-10-12 15:45:14.914] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 15:45:14.915] [INFO] HTTP POST successful for device: /dev/ttyACM1
+[2025-10-12 15:45:14.915] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 15:45:14.915] [INFO] HTTP POST Request:
+[2025-10-12 15:45:14.915] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 15:45:14.915] [INFO]   Timeout: 5000ms
+[2025-10-12 15:45:14.915] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM1","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 15:45:13"}
+[2025-10-12 15:45:14.916] [INFO] HTTP POST successful for device: /dev/ttyACM1
+[2025-10-12 17:15:59.039] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 17:15:59.039] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 17:15:59.039] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 17:15:59.039] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 17:15:59.039] [INFO] HTTP POST Request:
+[2025-10-12 17:15:59.039] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 17:15:59.039] [INFO]   Timeout: 5000ms
+[2025-10-12 17:15:59.039] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 17:15:59.222] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 17:15:59.222] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 17:15:59.222] [INFO] Device removed: /dev/ttyACM1
+[2025-10-12 17:15:59.222] [INFO] Device removed from state DB: /dev/ttyACM1
+[2025-10-12 17:15:59.222] [INFO] Device removed: /dev/ttyACM1
+[2025-10-12 17:15:59.222] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM1
+[2025-10-12 17:15:59.222] [INFO] HTTP POST Request:
+[2025-10-12 17:15:59.222] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 17:15:59.222] [INFO]   Timeout: 5000ms
+[2025-10-12 17:15:59.222] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM1","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 17:15:59.223] [INFO] HTTP POST successful for device: /dev/ttyACM1
+[2025-10-12 17:15:59.223] [INFO] Stopped verification for: /dev/ttyACM1
+[2025-10-12 17:16:05.089] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 17:16:05.090] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 17:16:05.090] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 17:16:05.090] [INFO] Started verification thread 9 for: /dev/ttyACM0
+[2025-10-12 17:16:05.090] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 17:16:05.090] [WARNING] Failed to register verification thread: ThreadManager: registerThread failed (general error)
+[2025-10-12 17:16:05.090] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 17:16:05.090] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 17:16:09.712] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 17:16:09.712] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 17:16:09.712] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 17:16:09.712] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 17:16:09.712] [INFO] HTTP POST Request:
+[2025-10-12 17:16:09.712] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 17:16:09.712] [INFO]   Timeout: 5000ms
+[2025-10-12 17:16:09.712] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 17:16:09.712] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 17:16:09.712] [INFO] Device NON-MAVLINK: /dev/ttyACM0
+[2025-10-12 17:16:09.712] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 17:16:09.722] [INFO] Stopped verification thread for: /dev/ttyACM0
+[2025-10-12 17:16:09.722] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 17:16:12.146] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 17:16:12.146] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 17:16:12.146] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 17:16:12.146] [INFO] Started verification thread 10 for: /dev/ttyACM0
+[2025-10-12 17:16:12.146] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 17:16:12.146] [WARNING] Failed to register verification thread: ThreadManager: Cannot register non-existent thread 0
+[2025-10-12 17:16:12.146] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 17:16:12.146] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 17:16:12.809] [INFO] Device VERIFIED: /dev/ttyACM0 @ 57600 baud, sysid=1, compid=1
+[2025-10-12 17:16:12.809] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 17:16:12.809] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 17:16:12.809] [INFO] USB Device Info JSON: {
+  "autopilotType": "PX4",
+  "baudrate": 57600,
+  "boardClass": "Pixhawk",
+  "boardName": "PX4 FMU V2",
+  "componentId": 1,
+  "deviceName": "PX4 FMU v2.x",
+  "devicePath": "/dev/ttyACM0",
+  "manufacturer": "3D Robotics",
+  "mavlinkVersion": 1,
+  "productId": "0011",
+  "serialNumber": "0",
+  "systemId": 1,
+  "timestamp": "2025-10-12 17:16:12",
+  "vendorId": "26ac"
+}
+[2025-10-12 17:16:12.809] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 17:16:12.809] [INFO] Sending device verification notification to endpoint
+[2025-10-12 17:16:12.809] [INFO] HTTP POST Request:
+[2025-10-12 17:16:12.809] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 17:16:12.809] [INFO]   Timeout: 5000ms
+[2025-10-12 17:16:12.809] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":1,"messages":[{"msgid":148,"name":"MSG_148"}],"state":2,"sysid":1,"timestamp":"2025-10-12 17:16:12"}
+[2025-10-12 17:16:12.809] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 17:16:12.809] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 17:16:12.809] [INFO] HTTP POST Request:
+[2025-10-12 17:16:12.809] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 17:16:12.809] [INFO]   Timeout: 5000ms
+[2025-10-12 17:16:12.809] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":1,"messages":[{"msgid":148,"name":"MSG_148"}],"state":2,"sysid":1,"timestamp":"2025-10-12 17:16:12"}
+[2025-10-12 17:16:13.411] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 18:23:29.097] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 18:23:29.097] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 18:23:29.097] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 18:23:29.097] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 18:23:29.097] [INFO] HTTP POST Request:
+[2025-10-12 18:23:29.097] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 18:23:29.097] [INFO]   Timeout: 5000ms
+[2025-10-12 18:23:29.097] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 18:23:29.218] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 18:23:29.218] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 18:23:32.820] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 18:23:32.820] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 18:23:32.820] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 18:23:32.820] [INFO] Started verification thread 11 for: /dev/ttyACM0
+[2025-10-12 18:23:32.821] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 18:23:32.821] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 18:23:32.821] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 18:23:37.446] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 18:23:37.446] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 18:23:37.446] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 18:23:37.446] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 18:23:37.446] [INFO] HTTP POST Request:
+[2025-10-12 18:23:37.446] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 18:23:37.446] [INFO]   Timeout: 5000ms
+[2025-10-12 18:23:37.446] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 18:23:37.447] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 18:23:37.447] [INFO] Device NON-MAVLINK: /dev/ttyACM0
+[2025-10-12 18:23:37.447] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 18:23:37.457] [INFO] Stopped verification thread for: /dev/ttyACM0
+[2025-10-12 18:23:37.457] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 18:23:37.859] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 18:23:37.859] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 18:23:37.859] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 18:23:37.859] [INFO] Started verification thread 12 for: /dev/ttyACM0
+[2025-10-12 18:23:37.859] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 18:23:37.859] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 18:23:37.859] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 18:23:37.860] [INFO] Device added: /dev/ttyACM1
+[2025-10-12 18:23:37.860] [INFO] Device added to state DB: /dev/ttyACM1
+[2025-10-12 18:23:37.860] [INFO] Device added: /dev/ttyACM1
+[2025-10-12 18:23:37.860] [INFO] Started verification thread 13 for: /dev/ttyACM1
+[2025-10-12 18:23:37.860] [INFO] Started verification for: /dev/ttyACM1
+[2025-10-12 18:23:37.861] [WARNING] Failed to register verification thread: ThreadManager: registerThread failed (general error)
+[2025-10-12 18:23:37.861] [INFO] Starting verification for: /dev/ttyACM1
+[2025-10-12 18:23:37.861] [INFO] Device updated in state DB: /dev/ttyACM1
+[2025-10-12 18:23:38.458] [INFO] Device VERIFIED: /dev/ttyACM0 @ 57600 baud, sysid=1, compid=1
+[2025-10-12 18:23:38.458] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 18:23:38.458] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 18:23:38.458] [INFO] USB Device Info JSON: {
+  "autopilotType": "PX4",
+  "baudrate": 57600,
+  "boardClass": "Pixhawk",
+  "boardName": "Holybro (Unknown Model)",
+  "componentId": 1,
+  "deviceName": "Pixhawk6C",
+  "devicePath": "/dev/ttyACM0",
+  "manufacturer": "Holybro",
+  "mavlinkVersion": 2,
+  "productId": "0053",
+  "serialNumber": "3B0032001651333337363133",
+  "systemId": 1,
+  "timestamp": "2025-10-12 18:23:37",
+  "vendorId": "3162"
+}
+[2025-10-12 18:23:38.458] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 18:23:38.458] [INFO] Sending device verification notification to endpoint
+[2025-10-12 18:23:38.458] [INFO] HTTP POST Request:
+[2025-10-12 18:23:38.458] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 18:23:38.458] [INFO]   Timeout: 5000ms
+[2025-10-12 18:23:38.458] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 18:23:37"}
+[2025-10-12 18:23:38.459] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 18:23:38.459] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 18:23:38.459] [INFO] HTTP POST Request:
+[2025-10-12 18:23:38.459] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 18:23:38.459] [INFO]   Timeout: 5000ms
+[2025-10-12 18:23:38.459] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 18:23:37"}
+[2025-10-12 18:23:38.479] [INFO] Device VERIFIED: /dev/ttyACM1 @ 57600 baud, sysid=1, compid=1
+[2025-10-12 18:23:38.479] [INFO] Device updated in state DB: /dev/ttyACM1
+[2025-10-12 18:23:38.479] [INFO] Notifying 0 callbacks for device: /dev/ttyACM1
+[2025-10-12 18:23:38.479] [INFO] USB Device Info JSON: {
+  "autopilotType": "PX4",
+  "baudrate": 57600,
+  "boardClass": "Pixhawk",
+  "boardName": "Holybro (Unknown Model)",
+  "componentId": 1,
+  "deviceName": "Pixhawk6C",
+  "devicePath": "/dev/ttyACM1",
+  "manufacturer": "Holybro",
+  "mavlinkVersion": 2,
+  "productId": "0053",
+  "serialNumber": "3B0032001651333337363133",
+  "systemId": 1,
+  "timestamp": "2025-10-12 18:23:37",
+  "vendorId": "3162"
+}
+[2025-10-12 18:23:38.479] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 18:23:38.479] [INFO] Sending device verification notification to endpoint
+[2025-10-12 18:23:38.479] [INFO] HTTP POST Request:
+[2025-10-12 18:23:38.479] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 18:23:38.479] [INFO]   Timeout: 5000ms
+[2025-10-12 18:23:38.479] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM1","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 18:23:37"}
+[2025-10-12 18:23:39.062] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 18:23:39.062] [INFO] HTTP POST successful for device: /dev/ttyACM1
+[2025-10-12 18:23:39.062] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 18:23:39.062] [INFO] HTTP POST Request:
+[2025-10-12 18:23:39.062] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 18:23:39.062] [INFO]   Timeout: 5000ms
+[2025-10-12 18:23:39.062] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM1","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 18:23:37"}
+[2025-10-12 18:23:39.062] [INFO] HTTP POST successful for device: /dev/ttyACM1
+[2025-10-12 18:58:34.649] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 18:58:34.649] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 18:58:34.649] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 18:58:34.649] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 18:58:34.649] [INFO] HTTP POST Request:
+[2025-10-12 18:58:34.649] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 18:58:34.649] [INFO]   Timeout: 5000ms
+[2025-10-12 18:58:34.649] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 18:58:34.831] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 18:58:34.832] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 18:58:34.832] [INFO] Device removed: /dev/ttyACM1
+[2025-10-12 18:58:34.832] [INFO] Device removed from state DB: /dev/ttyACM1
+[2025-10-12 18:58:34.832] [INFO] Device removed: /dev/ttyACM1
+[2025-10-12 18:58:34.832] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM1
+[2025-10-12 18:58:34.832] [INFO] HTTP POST Request:
+[2025-10-12 18:58:34.832] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 18:58:34.832] [INFO]   Timeout: 5000ms
+[2025-10-12 18:58:34.832] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM1","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 18:58:34.832] [INFO] HTTP POST successful for device: /dev/ttyACM1
+[2025-10-12 18:58:34.832] [INFO] Stopped verification for: /dev/ttyACM1
+[2025-10-12 18:58:35.139] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 18:58:35.139] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 18:58:35.139] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 18:58:35.139] [INFO] Started verification thread 14 for: /dev/ttyACM0
+[2025-10-12 18:58:35.139] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 18:58:35.140] [WARNING] Failed to register verification thread: ThreadManager: registerThread failed (general error)
+[2025-10-12 18:58:35.140] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 18:58:35.140] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 18:58:39.750] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 18:58:39.750] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 18:58:39.750] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 18:58:39.750] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 18:58:39.750] [INFO] HTTP POST Request:
+[2025-10-12 18:58:39.750] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 18:58:39.750] [INFO]   Timeout: 5000ms
+[2025-10-12 18:58:39.750] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 18:58:39.750] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 18:58:39.750] [INFO] Device NON-MAVLINK: /dev/ttyACM0
+[2025-10-12 18:58:39.750] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 18:58:39.760] [INFO] Stopped verification thread for: /dev/ttyACM0
+[2025-10-12 18:58:39.761] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 18:58:40.167] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 18:58:40.167] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 18:58:40.167] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 18:58:40.167] [INFO] Started verification thread 15 for: /dev/ttyACM0
+[2025-10-12 18:58:40.167] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 18:58:40.167] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 18:58:40.167] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 18:58:40.167] [INFO] Device added: /dev/ttyACM1
+[2025-10-12 18:58:40.167] [INFO] Device added to state DB: /dev/ttyACM1
+[2025-10-12 18:58:40.167] [INFO] Device added: /dev/ttyACM1
+[2025-10-12 18:58:40.168] [INFO] Started verification thread 16 for: /dev/ttyACM1
+[2025-10-12 18:58:40.168] [INFO] Started verification for: /dev/ttyACM1
+[2025-10-12 18:58:40.168] [WARNING] Failed to register verification thread: ThreadManager: Cannot register non-existent thread 0
+[2025-10-12 18:58:40.168] [INFO] Starting verification for: /dev/ttyACM1
+[2025-10-12 18:58:40.168] [INFO] Device updated in state DB: /dev/ttyACM1
+[2025-10-12 18:58:40.775] [INFO] Device VERIFIED: /dev/ttyACM0 @ 57600 baud, sysid=1, compid=1
+[2025-10-12 18:58:40.775] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 18:58:40.775] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 18:58:40.775] [INFO] USB Device Info JSON: {
+  "autopilotType": "PX4",
+  "baudrate": 57600,
+  "boardClass": "Pixhawk",
+  "boardName": "Holybro (Unknown Model)",
+  "componentId": 1,
+  "deviceName": "Pixhawk6C",
+  "devicePath": "/dev/ttyACM0",
+  "manufacturer": "Holybro",
+  "mavlinkVersion": 2,
+  "productId": "0053",
+  "serialNumber": "3B0032001651333337363133",
+  "systemId": 1,
+  "timestamp": "2025-10-12 18:58:40",
+  "vendorId": "3162"
+}
+[2025-10-12 18:58:40.775] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 18:58:40.775] [INFO] Sending device verification notification to endpoint
+[2025-10-12 18:58:40.775] [INFO] HTTP POST Request:
+[2025-10-12 18:58:40.775] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 18:58:40.775] [INFO]   Timeout: 5000ms
+[2025-10-12 18:58:40.775] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 18:58:40"}
+[2025-10-12 18:58:40.775] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 18:58:40.775] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 18:58:40.775] [INFO] HTTP POST Request:
+[2025-10-12 18:58:40.775] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 18:58:40.775] [INFO]   Timeout: 5000ms
+[2025-10-12 18:58:40.775] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 18:58:40"}
+[2025-10-12 18:58:40.793] [INFO] Device VERIFIED: /dev/ttyACM1 @ 57600 baud, sysid=1, compid=1
+[2025-10-12 18:58:40.793] [INFO] Device updated in state DB: /dev/ttyACM1
+[2025-10-12 18:58:40.793] [INFO] Notifying 0 callbacks for device: /dev/ttyACM1
+[2025-10-12 18:58:40.793] [INFO] USB Device Info JSON: {
+  "autopilotType": "PX4",
+  "baudrate": 57600,
+  "boardClass": "Pixhawk",
+  "boardName": "Holybro (Unknown Model)",
+  "componentId": 1,
+  "deviceName": "Pixhawk6C",
+  "devicePath": "/dev/ttyACM1",
+  "manufacturer": "Holybro",
+  "mavlinkVersion": 2,
+  "productId": "0053",
+  "serialNumber": "3B0032001651333337363133",
+  "systemId": 1,
+  "timestamp": "2025-10-12 18:58:40",
+  "vendorId": "3162"
+}
+[2025-10-12 18:58:40.793] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 18:58:40.793] [INFO] Sending device verification notification to endpoint
+[2025-10-12 18:58:40.793] [INFO] HTTP POST Request:
+[2025-10-12 18:58:40.793] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 18:58:40.793] [INFO]   Timeout: 5000ms
+[2025-10-12 18:58:40.793] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM1","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 18:58:40"}
+[2025-10-12 18:58:41.377] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 18:58:41.377] [INFO] HTTP POST successful for device: /dev/ttyACM1
+[2025-10-12 18:58:41.377] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 18:58:41.377] [INFO] HTTP POST Request:
+[2025-10-12 18:58:41.377] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 18:58:41.377] [INFO]   Timeout: 5000ms
+[2025-10-12 18:58:41.377] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM1","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 18:58:40"}
+[2025-10-12 18:58:41.378] [INFO] HTTP POST successful for device: /dev/ttyACM1
+[2025-10-12 19:05:23.770] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:05:23.770] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 19:05:23.770] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:05:23.770] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 19:05:23.770] [INFO] HTTP POST Request:
+[2025-10-12 19:05:23.770] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 19:05:23.770] [INFO]   Timeout: 5000ms
+[2025-10-12 19:05:23.770] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 19:05:23.912] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:05:23.912] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 19:05:23.912] [INFO] Device removed: /dev/ttyACM1
+[2025-10-12 19:05:23.912] [INFO] Device removed from state DB: /dev/ttyACM1
+[2025-10-12 19:05:23.912] [INFO] Device removed: /dev/ttyACM1
+[2025-10-12 19:05:23.912] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM1
+[2025-10-12 19:05:23.912] [INFO] HTTP POST Request:
+[2025-10-12 19:05:23.912] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 19:05:23.913] [INFO]   Timeout: 5000ms
+[2025-10-12 19:05:23.913] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM1","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 19:05:23.913] [INFO] HTTP POST successful for device: /dev/ttyACM1
+[2025-10-12 19:05:23.913] [INFO] Stopped verification for: /dev/ttyACM1
+[2025-10-12 19:05:26.486] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:05:26.486] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 19:05:26.486] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:05:26.486] [INFO] Started verification thread 17 for: /dev/ttyACM0
+[2025-10-12 19:05:26.486] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 19:05:26.486] [WARNING] Failed to register verification thread: ThreadManager: Cannot register non-existent thread 0
+[2025-10-12 19:05:26.486] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 19:05:26.486] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 19:05:31.117] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:05:31.118] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 19:05:31.118] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:05:31.118] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 19:05:31.118] [INFO] HTTP POST Request:
+[2025-10-12 19:05:31.118] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 19:05:31.118] [INFO]   Timeout: 5000ms
+[2025-10-12 19:05:31.118] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 19:05:31.119] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:05:31.119] [INFO] Device NON-MAVLINK: /dev/ttyACM0
+[2025-10-12 19:05:31.119] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 19:05:31.129] [INFO] Stopped verification thread for: /dev/ttyACM0
+[2025-10-12 19:05:31.129] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 19:05:33.539] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:05:33.539] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 19:05:33.539] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:05:33.540] [INFO] Started verification thread 18 for: /dev/ttyACM0
+[2025-10-12 19:05:33.540] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 19:05:33.540] [WARNING] Failed to register verification thread: ThreadManager: Cannot register non-existent thread 0
+[2025-10-12 19:05:33.540] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 19:05:33.540] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 19:05:34.198] [INFO] Device VERIFIED: /dev/ttyACM0 @ 57600 baud, sysid=1, compid=1
+[2025-10-12 19:05:34.198] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 19:05:34.198] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 19:05:34.198] [INFO] USB Device Info JSON: {
+  "autopilotType": "PX4",
+  "baudrate": 57600,
+  "boardClass": "Pixhawk",
+  "boardName": "PX4 FMU V2",
+  "componentId": 1,
+  "deviceName": "PX4 FMU v2.x",
+  "devicePath": "/dev/ttyACM0",
+  "manufacturer": "3D Robotics",
+  "mavlinkVersion": 1,
+  "productId": "0011",
+  "serialNumber": "0",
+  "systemId": 1,
+  "timestamp": "2025-10-12 19:05:33",
+  "vendorId": "26ac"
+}
+[2025-10-12 19:05:34.199] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 19:05:34.199] [INFO] Sending device verification notification to endpoint
+[2025-10-12 19:05:34.199] [INFO] HTTP POST Request:
+[2025-10-12 19:05:34.199] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 19:05:34.199] [INFO]   Timeout: 5000ms
+[2025-10-12 19:05:34.199] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":1,"messages":[{"msgid":148,"name":"MSG_148"}],"state":2,"sysid":1,"timestamp":"2025-10-12 19:05:33"}
+[2025-10-12 19:05:34.199] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:05:34.199] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 19:05:34.199] [INFO] HTTP POST Request:
+[2025-10-12 19:05:34.199] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 19:05:34.199] [INFO]   Timeout: 5000ms
+[2025-10-12 19:05:34.199] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":1,"messages":[{"msgid":148,"name":"MSG_148"}],"state":2,"sysid":1,"timestamp":"2025-10-12 19:05:33"}
+[2025-10-12 19:05:34.800] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:24:44.685] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:24:44.685] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 19:24:44.685] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:24:44.685] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 19:24:44.685] [INFO] HTTP POST Request:
+[2025-10-12 19:24:44.685] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 19:24:44.685] [INFO]   Timeout: 5000ms
+[2025-10-12 19:24:44.685] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 19:24:44.807] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:24:44.807] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 19:24:50.443] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:24:50.443] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 19:24:50.443] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:24:50.443] [INFO] Started verification thread 19 for: /dev/ttyACM0
+[2025-10-12 19:24:50.443] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 19:24:50.443] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 19:24:50.443] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 19:24:55.064] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:24:55.064] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 19:24:55.064] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:24:55.064] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 19:24:55.064] [INFO] HTTP POST Request:
+[2025-10-12 19:24:55.064] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 19:24:55.064] [INFO]   Timeout: 5000ms
+[2025-10-12 19:24:55.064] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 19:24:55.064] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:24:55.064] [INFO] Device NON-MAVLINK: /dev/ttyACM0
+[2025-10-12 19:24:55.064] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 19:24:55.074] [INFO] Stopped verification thread for: /dev/ttyACM0
+[2025-10-12 19:24:55.074] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 19:24:55.472] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:24:55.472] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 19:24:55.472] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:24:55.472] [INFO] Started verification thread 20 for: /dev/ttyACM0
+[2025-10-12 19:24:55.472] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 19:24:55.472] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 19:24:55.472] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 19:24:55.472] [INFO] Device added: /dev/ttyACM1
+[2025-10-12 19:24:55.472] [INFO] Device added to state DB: /dev/ttyACM1
+[2025-10-12 19:24:55.472] [INFO] Device added: /dev/ttyACM1
+[2025-10-12 19:24:55.473] [INFO] Started verification thread 21 for: /dev/ttyACM1
+[2025-10-12 19:24:55.473] [INFO] Started verification for: /dev/ttyACM1
+[2025-10-12 19:24:55.473] [WARNING] Failed to register verification thread: ThreadManager: registerThread failed (general error)
+[2025-10-12 19:24:55.473] [INFO] Starting verification for: /dev/ttyACM1
+[2025-10-12 19:24:55.473] [INFO] Device updated in state DB: /dev/ttyACM1
+[2025-10-12 19:24:56.079] [INFO] Device VERIFIED: /dev/ttyACM0 @ 57600 baud, sysid=1, compid=1
+[2025-10-12 19:24:56.079] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 19:24:56.079] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 19:24:56.079] [INFO] USB Device Info JSON: {
+  "autopilotType": "PX4",
+  "baudrate": 57600,
+  "boardClass": "Pixhawk",
+  "boardName": "Holybro (Unknown Model)",
+  "componentId": 1,
+  "deviceName": "Pixhawk6C",
+  "devicePath": "/dev/ttyACM0",
+  "manufacturer": "Holybro",
+  "mavlinkVersion": 2,
+  "productId": "0053",
+  "serialNumber": "3B0032001651333337363133",
+  "systemId": 1,
+  "timestamp": "2025-10-12 19:24:55",
+  "vendorId": "3162"
+}
+[2025-10-12 19:24:56.079] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 19:24:56.079] [INFO] Sending device verification notification to endpoint
+[2025-10-12 19:24:56.079] [INFO] HTTP POST Request:
+[2025-10-12 19:24:56.079] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 19:24:56.079] [INFO]   Timeout: 5000ms
+[2025-10-12 19:24:56.079] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 19:24:55"}
+[2025-10-12 19:24:56.080] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:24:56.080] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 19:24:56.080] [INFO] HTTP POST Request:
+[2025-10-12 19:24:56.080] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 19:24:56.080] [INFO]   Timeout: 5000ms
+[2025-10-12 19:24:56.080] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 19:24:55"}
+[2025-10-12 19:24:56.098] [INFO] Device VERIFIED: /dev/ttyACM1 @ 57600 baud, sysid=1, compid=1
+[2025-10-12 19:24:56.098] [INFO] Device updated in state DB: /dev/ttyACM1
+[2025-10-12 19:24:56.098] [INFO] Notifying 0 callbacks for device: /dev/ttyACM1
+[2025-10-12 19:24:56.098] [INFO] USB Device Info JSON: {
+  "autopilotType": "PX4",
+  "baudrate": 57600,
+  "boardClass": "Pixhawk",
+  "boardName": "Holybro (Unknown Model)",
+  "componentId": 1,
+  "deviceName": "Pixhawk6C",
+  "devicePath": "/dev/ttyACM1",
+  "manufacturer": "Holybro",
+  "mavlinkVersion": 2,
+  "productId": "0053",
+  "serialNumber": "3B0032001651333337363133",
+  "systemId": 1,
+  "timestamp": "2025-10-12 19:24:55",
+  "vendorId": "3162"
+}
+[2025-10-12 19:24:56.098] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 19:24:56.098] [INFO] Sending device verification notification to endpoint
+[2025-10-12 19:24:56.098] [INFO] HTTP POST Request:
+[2025-10-12 19:24:56.098] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 19:24:56.098] [INFO]   Timeout: 5000ms
+[2025-10-12 19:24:56.098] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM1","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 19:24:55"}
+[2025-10-12 19:24:56.682] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:24:56.682] [INFO] HTTP POST successful for device: /dev/ttyACM1
+[2025-10-12 19:24:56.682] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 19:24:56.682] [INFO] HTTP POST Request:
+[2025-10-12 19:24:56.682] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 19:24:56.682] [INFO]   Timeout: 5000ms
+[2025-10-12 19:24:56.682] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM1","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 19:24:55"}
+[2025-10-12 19:24:56.682] [INFO] HTTP POST successful for device: /dev/ttyACM1
+[2025-10-12 19:33:18.592] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:33:18.592] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 19:33:18.592] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:33:18.592] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 19:33:18.592] [INFO] HTTP POST Request:
+[2025-10-12 19:33:18.592] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 19:33:18.592] [INFO]   Timeout: 5000ms
+[2025-10-12 19:33:18.592] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 19:33:18.775] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:33:18.775] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 19:33:18.775] [INFO] Device removed: /dev/ttyACM1
+[2025-10-12 19:33:18.775] [INFO] Device removed from state DB: /dev/ttyACM1
+[2025-10-12 19:33:18.775] [INFO] Device removed: /dev/ttyACM1
+[2025-10-12 19:33:18.775] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM1
+[2025-10-12 19:33:18.775] [INFO] HTTP POST Request:
+[2025-10-12 19:33:18.775] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 19:33:18.775] [INFO]   Timeout: 5000ms
+[2025-10-12 19:33:18.775] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM1","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 19:33:18.776] [INFO] HTTP POST successful for device: /dev/ttyACM1
+[2025-10-12 19:33:18.776] [INFO] Stopped verification for: /dev/ttyACM1
+[2025-10-12 19:34:09.202] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:34:09.202] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 19:34:09.202] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:34:09.203] [INFO] Started verification thread 22 for: /dev/ttyACM0
+[2025-10-12 19:34:09.203] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 19:34:09.203] [WARNING] Failed to register verification thread: ThreadManager: registerThread failed (general error)
+[2025-10-12 19:34:09.203] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 19:34:09.203] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 19:34:13.831] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:34:13.832] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 19:34:13.832] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:34:13.832] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 19:34:13.832] [INFO] HTTP POST Request:
+[2025-10-12 19:34:13.832] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 19:34:13.832] [INFO]   Timeout: 5000ms
+[2025-10-12 19:34:13.832] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 19:34:13.833] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:34:13.834] [INFO] Device NON-MAVLINK: /dev/ttyACM0
+[2025-10-12 19:34:13.834] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 19:34:13.844] [INFO] Stopped verification thread for: /dev/ttyACM0
+[2025-10-12 19:34:13.844] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 19:34:16.252] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:34:16.252] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 19:34:16.252] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:34:16.252] [INFO] Started verification thread 23 for: /dev/ttyACM0
+[2025-10-12 19:34:16.252] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 19:34:16.252] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 19:34:16.252] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 19:34:16.903] [INFO] Device VERIFIED: /dev/ttyACM0 @ 57600 baud, sysid=1, compid=1
+[2025-10-12 19:34:16.903] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 19:34:16.903] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 19:34:16.904] [INFO] USB Device Info JSON: {
+  "autopilotType": "PX4",
+  "baudrate": 57600,
+  "boardClass": "Pixhawk",
+  "boardName": "PX4 FMU V2",
+  "componentId": 1,
+  "deviceName": "PX4 FMU v2.x",
+  "devicePath": "/dev/ttyACM0",
+  "manufacturer": "3D Robotics",
+  "mavlinkVersion": 1,
+  "productId": "0011",
+  "serialNumber": "0",
+  "systemId": 1,
+  "timestamp": "2025-10-12 19:34:16",
+  "vendorId": "26ac"
+}
+[2025-10-12 19:34:16.904] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 19:34:16.904] [INFO] Sending device verification notification to endpoint
+[2025-10-12 19:34:16.904] [INFO] HTTP POST Request:
+[2025-10-12 19:34:16.904] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 19:34:16.904] [INFO]   Timeout: 5000ms
+[2025-10-12 19:34:16.904] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":1,"messages":[{"msgid":148,"name":"MSG_148"}],"state":2,"sysid":1,"timestamp":"2025-10-12 19:34:16"}
+[2025-10-12 19:34:16.904] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:34:16.904] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 19:34:16.904] [INFO] HTTP POST Request:
+[2025-10-12 19:34:16.904] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 19:34:16.904] [INFO]   Timeout: 5000ms
+[2025-10-12 19:34:16.904] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":1,"messages":[{"msgid":148,"name":"MSG_148"}],"state":2,"sysid":1,"timestamp":"2025-10-12 19:34:16"}
+[2025-10-12 19:34:17.507] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:35:00.988] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:35:00.988] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 19:35:00.988] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:35:00.988] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 19:35:00.988] [INFO] HTTP POST Request:
+[2025-10-12 19:35:00.988] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 19:35:00.988] [INFO]   Timeout: 5000ms
+[2025-10-12 19:35:00.988] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 19:35:01.181] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:35:01.181] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 19:35:36.055] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:35:36.055] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 19:35:36.055] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:35:36.055] [INFO] Started verification thread 24 for: /dev/ttyACM0
+[2025-10-12 19:35:36.055] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 19:35:36.055] [WARNING] Failed to register verification thread: ThreadManager: registerThread failed (general error)
+[2025-10-12 19:35:36.055] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 19:35:36.055] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 19:35:40.678] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:35:40.678] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 19:35:40.678] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:35:40.678] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 19:35:40.678] [INFO] HTTP POST Request:
+[2025-10-12 19:35:40.678] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 19:35:40.678] [INFO]   Timeout: 5000ms
+[2025-10-12 19:35:40.678] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 19:35:40.679] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:35:40.679] [INFO] Device NON-MAVLINK: /dev/ttyACM0
+[2025-10-12 19:35:40.679] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 19:35:40.689] [INFO] Stopped verification thread for: /dev/ttyACM0
+[2025-10-12 19:35:40.690] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 19:35:41.092] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:35:41.092] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 19:35:41.092] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:35:41.092] [INFO] Started verification thread 25 for: /dev/ttyACM0
+[2025-10-12 19:35:41.092] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 19:35:41.092] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 19:35:41.092] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 19:35:41.094] [INFO] Device added: /dev/ttyACM1
+[2025-10-12 19:35:41.094] [INFO] Device added to state DB: /dev/ttyACM1
+[2025-10-12 19:35:41.094] [INFO] Device added: /dev/ttyACM1
+[2025-10-12 19:35:41.095] [INFO] Started verification thread 26 for: /dev/ttyACM1
+[2025-10-12 19:35:41.095] [INFO] Started verification for: /dev/ttyACM1
+[2025-10-12 19:35:41.095] [WARNING] Failed to register verification thread: ThreadManager: registerThread failed (general error)
+[2025-10-12 19:35:41.095] [INFO] Starting verification for: /dev/ttyACM1
+[2025-10-12 19:35:41.095] [INFO] Device updated in state DB: /dev/ttyACM1
+[2025-10-12 19:35:41.693] [INFO] Device VERIFIED: /dev/ttyACM0 @ 57600 baud, sysid=1, compid=1
+[2025-10-12 19:35:41.693] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 19:35:41.693] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 19:35:41.693] [INFO] USB Device Info JSON: {
+  "autopilotType": "PX4",
+  "baudrate": 57600,
+  "boardClass": "Pixhawk",
+  "boardName": "Holybro (Unknown Model)",
+  "componentId": 1,
+  "deviceName": "Pixhawk6C",
+  "devicePath": "/dev/ttyACM0",
+  "manufacturer": "Holybro",
+  "mavlinkVersion": 2,
+  "productId": "0053",
+  "serialNumber": "3B0032001651333337363133",
+  "systemId": 1,
+  "timestamp": "2025-10-12 19:35:41",
+  "vendorId": "3162"
+}
+[2025-10-12 19:35:41.693] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 19:35:41.693] [INFO] Sending device verification notification to endpoint
+[2025-10-12 19:35:41.693] [INFO] HTTP POST Request:
+[2025-10-12 19:35:41.693] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 19:35:41.693] [INFO]   Timeout: 5000ms
+[2025-10-12 19:35:41.693] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 19:35:41"}
+[2025-10-12 19:35:41.693] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:35:41.693] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 19:35:41.693] [INFO] HTTP POST Request:
+[2025-10-12 19:35:41.693] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 19:35:41.693] [INFO]   Timeout: 5000ms
+[2025-10-12 19:35:41.693] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":2,"messages":[{"msgid":0,"name":"MSG_0"}],"state":2,"sysid":1,"timestamp":"2025-10-12 19:35:41"}
+[2025-10-12 19:35:41.772] [INFO] Device VERIFIED: /dev/ttyACM1 @ 57600 baud, sysid=1, compid=1
+[2025-10-12 19:35:41.772] [INFO] Device updated in state DB: /dev/ttyACM1
+[2025-10-12 19:35:41.772] [INFO] Notifying 0 callbacks for device: /dev/ttyACM1
+[2025-10-12 19:35:41.772] [INFO] USB Device Info JSON: {
+  "autopilotType": "PX4",
+  "baudrate": 57600,
+  "boardClass": "Pixhawk",
+  "boardName": "Holybro (Unknown Model)",
+  "componentId": 1,
+  "deviceName": "Pixhawk6C",
+  "devicePath": "/dev/ttyACM1",
+  "manufacturer": "Holybro",
+  "mavlinkVersion": 2,
+  "productId": "0053",
+  "serialNumber": "3B0032001651333337363133",
+  "systemId": 1,
+  "timestamp": "2025-10-12 19:35:41",
+  "vendorId": "3162"
+}
+[2025-10-12 19:35:41.772] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 19:35:41.772] [INFO] Sending device verification notification to endpoint
+[2025-10-12 19:35:41.772] [INFO] HTTP POST Request:
+[2025-10-12 19:35:41.772] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 19:35:41.772] [INFO]   Timeout: 5000ms
+[2025-10-12 19:35:41.772] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM1","mavlinkVersion":2,"messages":[{"msgid":22,"name":"MSG_22"}],"state":2,"sysid":1,"timestamp":"2025-10-12 19:35:41"}
+[2025-10-12 19:35:42.296] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:35:42.296] [INFO] HTTP POST successful for device: /dev/ttyACM1
+[2025-10-12 19:35:42.296] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 19:35:42.296] [INFO] HTTP POST Request:
+[2025-10-12 19:35:42.296] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 19:35:42.296] [INFO]   Timeout: 5000ms
+[2025-10-12 19:35:42.296] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM1","mavlinkVersion":2,"messages":[{"msgid":22,"name":"MSG_22"}],"state":2,"sysid":1,"timestamp":"2025-10-12 19:35:41"}
+[2025-10-12 19:35:42.297] [INFO] HTTP POST successful for device: /dev/ttyACM1
+[2025-10-12 19:48:42.478] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:48:42.478] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 19:48:42.478] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:48:42.479] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 19:48:42.479] [INFO] HTTP POST Request:
+[2025-10-12 19:48:42.479] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 19:48:42.479] [INFO]   Timeout: 5000ms
+[2025-10-12 19:48:42.479] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 19:48:42.661] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:48:42.661] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 19:48:42.661] [INFO] Device removed: /dev/ttyACM1
+[2025-10-12 19:48:42.661] [INFO] Device removed from state DB: /dev/ttyACM1
+[2025-10-12 19:48:42.661] [INFO] Device removed: /dev/ttyACM1
+[2025-10-12 19:48:42.661] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM1
+[2025-10-12 19:48:42.661] [INFO] HTTP POST Request:
+[2025-10-12 19:48:42.661] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 19:48:42.661] [INFO]   Timeout: 5000ms
+[2025-10-12 19:48:42.661] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM1","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 19:48:42.661] [INFO] HTTP POST successful for device: /dev/ttyACM1
+[2025-10-12 19:48:42.661] [INFO] Stopped verification for: /dev/ttyACM1
+[2025-10-12 19:48:53.010] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:48:53.010] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 19:48:53.010] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:48:53.011] [INFO] Started verification thread 27 for: /dev/ttyACM0
+[2025-10-12 19:48:53.011] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 19:48:53.011] [WARNING] Failed to register verification thread: ThreadManager: registerThread failed (general error)
+[2025-10-12 19:48:53.011] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 19:48:53.011] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 19:48:57.639] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:48:57.639] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 19:48:57.639] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:48:57.639] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 19:48:57.639] [INFO] HTTP POST Request:
+[2025-10-12 19:48:57.639] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 19:48:57.639] [INFO]   Timeout: 5000ms
+[2025-10-12 19:48:57.639] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 19:48:57.640] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:48:57.640] [INFO] Device NON-MAVLINK: /dev/ttyACM0
+[2025-10-12 19:48:57.640] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 19:48:57.650] [INFO] Stopped verification thread for: /dev/ttyACM0
+[2025-10-12 19:48:57.650] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 19:49:00.071] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:49:00.071] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 19:49:00.071] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:49:00.071] [INFO] Started verification thread 28 for: /dev/ttyACM0
+[2025-10-12 19:49:00.071] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 19:49:00.071] [WARNING] Failed to register verification thread: ThreadManager: Cannot register non-existent thread 0
+[2025-10-12 19:49:00.071] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 19:49:00.071] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 19:49:00.730] [INFO] Device VERIFIED: /dev/ttyACM0 @ 57600 baud, sysid=1, compid=1
+[2025-10-12 19:49:00.731] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 19:49:00.731] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 19:49:00.731] [INFO] USB Device Info JSON: {
+  "autopilotType": "PX4",
+  "baudrate": 57600,
+  "boardClass": "Pixhawk",
+  "boardName": "PX4 FMU V2",
+  "componentId": 1,
+  "deviceName": "PX4 FMU v2.x",
+  "devicePath": "/dev/ttyACM0",
+  "manufacturer": "3D Robotics",
+  "mavlinkVersion": 1,
+  "productId": "0011",
+  "serialNumber": "0",
+  "systemId": 1,
+  "timestamp": "2025-10-12 19:49:00",
+  "vendorId": "26ac"
+}
+[2025-10-12 19:49:00.731] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 19:49:00.731] [INFO] Sending device verification notification to endpoint
+[2025-10-12 19:49:00.731] [INFO] HTTP POST Request:
+[2025-10-12 19:49:00.731] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 19:49:00.731] [INFO]   Timeout: 5000ms
+[2025-10-12 19:49:00.731] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":1,"messages":[{"msgid":148,"name":"MSG_148"}],"state":2,"sysid":1,"timestamp":"2025-10-12 19:49:00"}
+[2025-10-12 19:49:00.731] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:49:00.731] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 19:49:00.731] [INFO] HTTP POST Request:
+[2025-10-12 19:49:00.731] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 19:49:00.731] [INFO]   Timeout: 5000ms
+[2025-10-12 19:49:00.731] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":1,"messages":[{"msgid":148,"name":"MSG_148"}],"state":2,"sysid":1,"timestamp":"2025-10-12 19:49:00"}
+[2025-10-12 19:49:01.333] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:55:10.758] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:55:10.758] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 19:55:10.758] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:55:10.758] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 19:55:10.758] [INFO] HTTP POST Request:
+[2025-10-12 19:55:10.759] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 19:55:10.759] [INFO]   Timeout: 5000ms
+[2025-10-12 19:55:10.759] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 19:55:10.960] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:55:10.960] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 19:58:17.422] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:58:17.422] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 19:58:17.422] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:58:17.422] [INFO] Started verification thread 29 for: /dev/ttyACM0
+[2025-10-12 19:58:17.422] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 19:58:17.422] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 19:58:17.422] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 19:58:22.051] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:58:22.051] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 19:58:22.051] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:58:22.051] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 19:58:22.051] [INFO] HTTP POST Request:
+[2025-10-12 19:58:22.051] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 19:58:22.051] [INFO]   Timeout: 5000ms
+[2025-10-12 19:58:22.051] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 19:58:22.052] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:58:22.052] [INFO] Device NON-MAVLINK: /dev/ttyACM0
+[2025-10-12 19:58:22.052] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 19:58:22.062] [INFO] Stopped verification thread for: /dev/ttyACM0
+[2025-10-12 19:58:22.062] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 19:58:24.488] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:58:24.488] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 19:58:24.488] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:58:24.488] [INFO] Started verification thread 30 for: /dev/ttyACM0
+[2025-10-12 19:58:24.488] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 19:58:24.489] [WARNING] Failed to register verification thread: ThreadManager: Cannot register non-existent thread 0
+[2025-10-12 19:58:24.489] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 19:58:24.489] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 19:58:25.148] [INFO] Device VERIFIED: /dev/ttyACM0 @ 57600 baud, sysid=1, compid=1
+[2025-10-12 19:58:25.148] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 19:58:25.148] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 19:58:25.148] [INFO] USB Device Info JSON: {
+  "autopilotType": "PX4",
+  "baudrate": 57600,
+  "boardClass": "Pixhawk",
+  "boardName": "PX4 FMU V2",
+  "componentId": 1,
+  "deviceName": "PX4 FMU v2.x",
+  "devicePath": "/dev/ttyACM0",
+  "manufacturer": "3D Robotics",
+  "mavlinkVersion": 1,
+  "productId": "0011",
+  "serialNumber": "0",
+  "systemId": 1,
+  "timestamp": "2025-10-12 19:58:24",
+  "vendorId": "26ac"
+}
+[2025-10-12 19:58:25.148] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 19:58:25.148] [INFO] Sending device verification notification to endpoint
+[2025-10-12 19:58:25.148] [INFO] HTTP POST Request:
+[2025-10-12 19:58:25.148] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 19:58:25.148] [INFO]   Timeout: 5000ms
+[2025-10-12 19:58:25.148] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":1,"messages":[{"msgid":148,"name":"MSG_148"}],"state":2,"sysid":1,"timestamp":"2025-10-12 19:58:24"}
+[2025-10-12 19:58:25.148] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:58:25.148] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 19:58:25.148] [INFO] HTTP POST Request:
+[2025-10-12 19:58:25.148] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 19:58:25.148] [INFO]   Timeout: 5000ms
+[2025-10-12 19:58:25.148] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":1,"messages":[{"msgid":148,"name":"MSG_148"}],"state":2,"sysid":1,"timestamp":"2025-10-12 19:58:24"}
+[2025-10-12 19:58:25.749] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:59:35.890] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:59:35.890] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 19:59:35.890] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:59:35.890] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 19:59:35.890] [INFO] HTTP POST Request:
+[2025-10-12 19:59:35.890] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 19:59:35.890] [INFO]   Timeout: 5000ms
+[2025-10-12 19:59:35.890] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 19:59:36.072] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:59:36.072] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 19:59:40.259] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:59:40.259] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 19:59:40.259] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:59:40.259] [INFO] Started verification thread 31 for: /dev/ttyACM0
+[2025-10-12 19:59:40.259] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 19:59:40.259] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 19:59:40.259] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 19:59:44.887] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:59:44.887] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 19:59:44.887] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 19:59:44.887] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 19:59:44.887] [INFO] HTTP POST Request:
+[2025-10-12 19:59:44.887] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 19:59:44.887] [INFO]   Timeout: 5000ms
+[2025-10-12 19:59:44.887] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 19:59:44.888] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:59:44.888] [INFO] Device NON-MAVLINK: /dev/ttyACM0
+[2025-10-12 19:59:44.888] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 19:59:44.898] [INFO] Stopped verification thread for: /dev/ttyACM0
+[2025-10-12 19:59:44.898] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-10-12 19:59:47.302] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:59:47.302] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-10-12 19:59:47.302] [INFO] Device added: /dev/ttyACM0
+[2025-10-12 19:59:47.302] [INFO] Started verification thread 32 for: /dev/ttyACM0
+[2025-10-12 19:59:47.302] [INFO] Started verification for: /dev/ttyACM0
+[2025-10-12 19:59:47.303] [WARNING] Failed to register verification thread: ThreadManager: Cannot register non-existent thread 0
+[2025-10-12 19:59:47.303] [INFO] Starting verification for: /dev/ttyACM0
+[2025-10-12 19:59:47.303] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 19:59:47.964] [INFO] Device VERIFIED: /dev/ttyACM0 @ 57600 baud, sysid=1, compid=1
+[2025-10-12 19:59:47.964] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-10-12 19:59:47.965] [INFO] Notifying 0 callbacks for device: /dev/ttyACM0
+[2025-10-12 19:59:47.965] [INFO] USB Device Info JSON: {
+  "autopilotType": "PX4",
+  "baudrate": 57600,
+  "boardClass": "Pixhawk",
+  "boardName": "PX4 FMU V2",
+  "componentId": 1,
+  "deviceName": "PX4 FMU v2.x",
+  "devicePath": "/dev/ttyACM0",
+  "manufacturer": "3D Robotics",
+  "mavlinkVersion": 1,
+  "productId": "0011",
+  "serialNumber": "0",
+  "systemId": 1,
+  "timestamp": "2025-10-12 19:59:47",
+  "vendorId": "26ac"
+}
+[2025-10-12 19:59:47.965] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-10-12 19:59:47.965] [INFO] Sending device verification notification to endpoint
+[2025-10-12 19:59:47.965] [INFO] HTTP POST Request:
+[2025-10-12 19:59:47.965] [INFO]   Endpoint: http://0.0.0.0:5000/api/devices
+[2025-10-12 19:59:47.965] [INFO]   Timeout: 5000ms
+[2025-10-12 19:59:47.965] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":1,"messages":[{"msgid":148,"name":"MSG_148"}],"state":2,"sysid":1,"timestamp":"2025-10-12 19:59:47"}
+[2025-10-12 19:59:47.965] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 19:59:47.965] [INFO] Sending mainloop start request to MAVRouter
+[2025-10-12 19:59:47.965] [INFO] HTTP POST Request:
+[2025-10-12 19:59:47.965] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/start
+[2025-10-12 19:59:47.965] [INFO]   Timeout: 5000ms
+[2025-10-12 19:59:47.965] [INFO]   Payload: {"baudrate":57600,"compid":1,"devicePath":"/dev/ttyACM0","mavlinkVersion":1,"messages":[{"msgid":148,"name":"MSG_148"}],"state":2,"sysid":1,"timestamp":"2025-10-12 19:59:47"}
+[2025-10-12 19:59:48.567] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 20:05:20.807] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 20:05:20.807] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-10-12 20:05:20.807] [INFO] Device removed: /dev/ttyACM0
+[2025-10-12 20:05:20.807] [INFO] Sending mainloop stop request to MAVRouter for device removal: /dev/ttyACM0
+[2025-10-12 20:05:20.807] [INFO] HTTP POST Request:
+[2025-10-12 20:05:20.807] [INFO]   Endpoint: http://0.0.0.0:5000/api/threads/mainloop/stop
+[2025-10-12 20:05:20.807] [INFO]   Timeout: 5000ms
+[2025-10-12 20:05:20.807] [INFO]   Payload: {"baudrate":0,"compid":0,"devicePath":"/dev/ttyACM0","mavlinkVersion":0,"messages":[],"state":0,"sysid":0,"timestamp":""}
+[2025-10-12 20:05:21.010] [INFO] HTTP POST successful for device: /dev/ttyACM0
+[2025-10-12 20:05:21.010] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-11-14 15:57:05.466] [INFO] ThreadManager initialized with capacity: 20
+[2025-11-14 15:57:05.466] [INFO] Enumerating existing devices...
+[2025-11-14 15:57:05.470] [INFO] No existing devices found
+[2025-11-14 15:57:05.471] [INFO] Device monitor started with thread ID: 1
+[2025-11-14 15:57:05.471] [INFO] Callback registered, total callbacks: 1
+[2025-11-14 15:57:05.471] [INFO] RPC configuration loaded from: rpc-config.json
+[2025-11-14 15:57:05.471] [INFO] RPC client created with ID: ur-mavdiscovery
+[2025-11-14 15:57:05.471] [ERROR] No message handler set for RPC client!
+[2025-11-14 15:57:08.476] [ERROR] RPC client failed to start within timeout
+[2025-11-14 15:57:08.476] [ERROR] Failed to start RPC client
+[2025-11-14 15:57:08.476] [ERROR] Failed to initialize RPC client
+[2025-11-14 15:57:08.476] [INFO] Shutting down device manager...
+[2025-11-14 15:57:09.482] [INFO] Device monitor stopped
+[2025-11-14 15:57:09.482] [WARNING] Remaining threads after shutdown: 1
+[2025-11-14 15:57:09.482] [INFO] Device manager shutdown complete
+[2025-11-14 16:02:37.196] [INFO] ThreadManager initialized with capacity: 20
+[2025-11-14 16:02:37.196] [INFO] Enumerating existing devices...
+[2025-11-14 16:02:37.201] [INFO] No existing devices found
+[2025-11-14 16:02:37.201] [INFO] Device monitor started with thread ID: 1
+[2025-11-14 16:02:37.201] [INFO] Callback registered, total callbacks: 1
+[2025-11-14 16:02:37.201] [INFO] RPC message handler configured for topic: direct_messaging/ur-mavdiscovery/requests
+[2025-11-14 16:02:37.201] [INFO] RpcOperationProcessor initialized with thread pool size: 50
+[2025-11-14 16:02:37.201] [INFO] RPC configuration loaded from: rpc-config.json
+[2025-11-14 16:02:37.201] [INFO] RPC client created with ID: ur-mavdiscovery
+[2025-11-14 16:02:37.202] [INFO] RPC connection status: connected
+[2025-11-14 16:02:38.203] [INFO] RPC client connected to broker
+[2025-11-14 16:02:38.203] [INFO] RPC client started successfully
+[2025-11-14 16:02:38.203] [INFO] RPC system initialized successfully
+[2025-11-14 16:02:38.203] [INFO] Device manager running... Press Ctrl+C to exit
+[2025-11-14 16:02:50.532] [INFO] ThreadManager initialized with capacity: 20
+[2025-11-14 16:02:50.532] [INFO] Enumerating existing devices...
+[2025-11-14 16:02:50.536] [INFO] No existing devices found
+[2025-11-14 16:02:50.536] [INFO] Device monitor started with thread ID: 1
+[2025-11-14 16:02:50.536] [INFO] Callback registered, total callbacks: 1
+[2025-11-14 16:02:50.536] [INFO] RPC message handler configured for topic: direct_messaging/ur-mavdiscovery/requests
+[2025-11-14 16:02:50.536] [INFO] RpcOperationProcessor initialized with thread pool size: 50
+[2025-11-14 16:02:50.536] [INFO] RPC configuration loaded from: rpc-config.json
+[2025-11-14 16:02:50.536] [INFO] RPC client created with ID: ur-mavdiscovery
+[2025-11-14 16:02:50.537] [INFO] RPC connection status: connected
+[2025-11-14 16:02:51.538] [INFO] RPC client connected to broker
+[2025-11-14 16:02:51.638] [INFO] RPC client started successfully
+[2025-11-14 16:02:51.638] [INFO] RPC system initialized successfully
+[2025-11-14 16:02:51.638] [INFO] Device manager running... Press Ctrl+C to exit
+[2025-11-14 16:03:01.485] [INFO] Device added: /dev/ttyACM0
+[2025-11-14 16:03:01.485] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-11-14 16:03:01.485] [INFO] Device added: /dev/ttyACM0
+[2025-11-14 16:03:01.485] [INFO] Started verification thread 2 for: /dev/ttyACM0
+[2025-11-14 16:03:01.485] [INFO] Started verification for: /dev/ttyACM0
+[2025-11-14 16:03:01.485] [INFO] Starting verification for: /dev/ttyACM0
+[2025-11-14 16:03:01.485] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-11-14 16:03:06.043] [INFO] Device removed: /dev/ttyACM0
+[2025-11-14 16:03:06.043] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-11-14 16:03:06.043] [INFO] Device removed: /dev/ttyACM0
+[2025-11-14 16:03:06.043] [INFO] RPC configuration loaded from: rpc-config.json
+[2025-11-14 16:03:06.043] [INFO] RPC client created with ID: ur-mavdiscovery
+[2025-11-14 16:03:06.043] [ERROR] No message handler set for RPC client!
+[2025-11-14 16:03:06.503] [INFO] Device NON-MAVLINK: /dev/ttyACM0
+[2025-11-14 16:03:06.503] [INFO] Notifying 1 callbacks for device: /dev/ttyACM0
+[2025-11-14 16:03:09.045] [ERROR] RPC client failed to start within timeout
+[2025-11-14 16:03:09.045] [ERROR] Failed to start RPC client for device removal notifications
+[2025-11-14 16:03:09.045] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-11-14 16:03:09.046] [INFO] Device added: /dev/ttyACM0
+[2025-11-14 16:03:09.046] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-11-14 16:03:09.046] [INFO] Device added: /dev/ttyACM0
+[2025-11-14 16:03:09.046] [INFO] Started verification thread 3 for: /dev/ttyACM0
+[2025-11-14 16:03:09.046] [INFO] Started verification for: /dev/ttyACM0
+[2025-11-14 16:03:09.046] [WARNING] Failed to register verification thread: ThreadManager: registerThread failed (general error)
+[2025-11-14 16:03:09.046] [INFO] Starting verification for: /dev/ttyACM0
+[2025-11-14 16:03:09.046] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-11-14 16:03:14.065] [INFO] Device NON-MAVLINK: /dev/ttyACM0
+[2025-11-14 16:03:14.065] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-11-14 16:03:14.065] [INFO] Notifying 1 callbacks for device: /dev/ttyACM0
+[2025-11-14 16:03:17.593] [INFO] Device removed: /dev/ttyACM0
+[2025-11-14 16:03:17.593] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-11-14 16:03:17.593] [INFO] Device removed: /dev/ttyACM0
+[2025-11-14 16:03:17.593] [INFO] RPC configuration loaded from: rpc-config.json
+[2025-11-14 16:03:17.593] [INFO] RPC client created with ID: ur-mavdiscovery
+[2025-11-14 16:03:17.593] [ERROR] No message handler set for RPC client!
+[2025-11-14 16:03:20.597] [ERROR] RPC client failed to start within timeout
+[2025-11-14 16:03:20.597] [ERROR] Failed to start RPC client for device removal notifications
+[2025-11-14 16:03:20.597] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-11-14 16:03:34.032] [INFO] ThreadManager initialized with capacity: 20
+[2025-11-14 16:03:34.032] [INFO] Enumerating existing devices...
+[2025-11-14 16:03:34.036] [INFO] No existing devices found
+[2025-11-14 16:03:34.036] [INFO] Device monitor started with thread ID: 1
+[2025-11-14 16:03:34.036] [INFO] Callback registered, total callbacks: 1
+[2025-11-14 16:03:34.037] [INFO] RPC message handler configured for topic: direct_messaging/ur-mavdiscovery/requests
+[2025-11-14 16:03:34.037] [INFO] RpcOperationProcessor initialized with thread pool size: 50
+[2025-11-14 16:03:34.037] [INFO] RPC configuration loaded from: rpc-config.json
+[2025-11-14 16:03:34.037] [INFO] RPC client created with ID: ur-mavdiscovery
+[2025-11-14 16:03:34.037] [INFO] RPC connection status: connected
+[2025-11-14 16:03:35.038] [INFO] RPC client connected to broker
+[2025-11-14 16:03:35.138] [INFO] RPC client started successfully
+[2025-11-14 16:03:35.138] [INFO] RPC system initialized successfully
+[2025-11-14 16:03:35.138] [INFO] Device manager running... Press Ctrl+C to exit
+[2025-11-14 16:03:40.255] [INFO] Device added: /dev/ttyACM0
+[2025-11-14 16:03:40.256] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-11-14 16:03:40.256] [INFO] Device added: /dev/ttyACM0
+[2025-11-14 16:03:40.256] [INFO] Started verification thread 2 for: /dev/ttyACM0
+[2025-11-14 16:03:40.256] [INFO] Started verification for: /dev/ttyACM0
+[2025-11-14 16:03:40.256] [INFO] Starting verification for: /dev/ttyACM0
+[2025-11-14 16:03:40.256] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-11-14 16:03:44.884] [INFO] Device removed: /dev/ttyACM0
+[2025-11-14 16:03:44.884] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-11-14 16:03:44.884] [INFO] Device removed: /dev/ttyACM0
+[2025-11-14 16:03:44.884] [INFO] RPC configuration loaded from: rpc-config.json
+[2025-11-14 16:03:44.884] [INFO] RPC client created with ID: ur-mavdiscovery
+[2025-11-14 16:03:44.884] [ERROR] No message handler set for RPC client!
+[2025-11-14 16:03:45.273] [INFO] Device NON-MAVLINK: /dev/ttyACM0
+[2025-11-14 16:03:45.273] [INFO] Notifying 1 callbacks for device: /dev/ttyACM0
+[2025-11-14 16:03:47.889] [ERROR] RPC client failed to start within timeout
+[2025-11-14 16:03:47.889] [ERROR] Failed to start RPC client for device removal notifications
+[2025-11-14 16:03:47.889] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-11-14 16:03:47.889] [INFO] Device added: /dev/ttyACM0
+[2025-11-14 16:03:47.889] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-11-14 16:03:47.889] [INFO] Device added: /dev/ttyACM0
+[2025-11-14 16:03:47.889] [INFO] Started verification thread 3 for: /dev/ttyACM0
+[2025-11-14 16:03:47.889] [INFO] Started verification for: /dev/ttyACM0
+[2025-11-14 16:03:47.890] [WARNING] Failed to register verification thread: ThreadManager: registerThread failed (general error)
+[2025-11-14 16:03:47.890] [INFO] Starting verification for: /dev/ttyACM0
+[2025-11-14 16:03:47.890] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-11-14 16:03:52.911] [INFO] Device NON-MAVLINK: /dev/ttyACM0
+[2025-11-14 16:03:52.911] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-11-14 16:03:52.911] [INFO] Notifying 1 callbacks for device: /dev/ttyACM0
+[2025-11-14 16:07:38.349] [INFO] ThreadManager initialized with capacity: 20
+[2025-11-14 16:07:38.349] [INFO] Enumerating existing devices...
+[2025-11-14 16:07:38.355] [INFO] Found existing device: /dev/ttyACM0
+[2025-11-14 16:07:38.355] [INFO] Device added: /dev/ttyACM0
+[2025-11-14 16:07:38.355] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-11-14 16:07:38.355] [INFO] Device added: /dev/ttyACM0
+[2025-11-14 16:07:38.355] [INFO] Started verification thread 1 for: /dev/ttyACM0
+[2025-11-14 16:07:38.355] [INFO] Started verification for: /dev/ttyACM0
+[2025-11-14 16:07:38.355] [WARNING] Failed to register verification thread: ThreadManager: Cannot register non-existent thread 0
+[2025-11-14 16:07:38.355] [INFO] Starting verification for: /dev/ttyACM0
+[2025-11-14 16:07:38.355] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-11-14 16:07:38.358] [INFO] Found 1 existing device(s)
+[2025-11-14 16:07:38.358] [INFO] Device monitor started with thread ID: 2
+[2025-11-14 16:07:38.358] [INFO] Callback registered, total callbacks: 1
+[2025-11-14 16:07:38.358] [INFO] RPC message handler configured for topic: direct_messaging/ur-mavdiscovery/requests
+[2025-11-14 16:07:38.358] [INFO] RpcOperationProcessor initialized with thread pool size: 50
+[2025-11-14 16:07:38.358] [INFO] RPC configuration loaded from: rpc-config.json
+[2025-11-14 16:07:38.358] [INFO] RPC client created with ID: ur-mavdiscovery
+[2025-11-14 16:07:38.359] [INFO] RPC connection status: connected
+[2025-11-14 16:07:39.359] [INFO] RPC client connected to broker
+[2025-11-14 16:07:39.459] [INFO] RPC client started successfully
+[2025-11-14 16:07:39.460] [INFO] RPC system initialized successfully
+[2025-11-14 16:07:39.460] [INFO] Device manager running... Press Ctrl+C to exit
+[2025-11-14 16:07:43.377] [INFO] Device NON-MAVLINK: /dev/ttyACM0
+[2025-11-14 16:07:43.377] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-11-14 16:07:43.377] [INFO] Notifying 1 callbacks for device: /dev/ttyACM0
+[2025-11-14 16:08:09.640] [INFO] Device removed: /dev/ttyACM0
+[2025-11-14 16:08:09.640] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-11-14 16:08:09.641] [INFO] Device removed: /dev/ttyACM0
+[2025-11-14 16:08:09.641] [INFO] Sending device_removed request to ur-mavrouter
+[2025-11-14 16:08:09.641] [INFO] Sending device_removed request to ur-mavcollector
+[2025-11-14 16:08:09.641] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-11-14 16:08:24.480] [INFO] Device added: /dev/ttyACM0
+[2025-11-14 16:08:24.480] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-11-14 16:08:24.480] [INFO] Device added: /dev/ttyACM0
+[2025-11-14 16:08:24.481] [INFO] Started verification thread 3 for: /dev/ttyACM0
+[2025-11-14 16:08:24.481] [INFO] Started verification for: /dev/ttyACM0
+[2025-11-14 16:08:24.481] [INFO] Starting verification for: /dev/ttyACM0
+[2025-11-14 16:08:24.481] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-11-14 16:08:29.106] [INFO] Device removed: /dev/ttyACM0
+[2025-11-14 16:08:29.106] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-11-14 16:08:29.106] [INFO] Device removed: /dev/ttyACM0
+[2025-11-14 16:08:29.106] [INFO] Sending device_removed request to ur-mavrouter
+[2025-11-14 16:08:29.106] [INFO] Sending device_removed request to ur-mavcollector
+[2025-11-14 16:08:29.106] [INFO] Device NON-MAVLINK: /dev/ttyACM0
+[2025-11-14 16:08:29.106] [INFO] Notifying 1 callbacks for device: /dev/ttyACM0
+[2025-11-14 16:08:29.116] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-11-14 16:08:29.116] [INFO] Stopped verification for: /dev/ttyACM0
+[2025-11-14 16:08:30.487] [INFO] Device added: /dev/ttyACM0
+[2025-11-14 16:08:30.488] [INFO] Device added to state DB: /dev/ttyACM0
+[2025-11-14 16:08:30.488] [INFO] Device added: /dev/ttyACM0
+[2025-11-14 16:08:30.488] [INFO] Started verification thread 4 for: /dev/ttyACM0
+[2025-11-14 16:08:30.488] [INFO] Starting verification for: /dev/ttyACM0
+[2025-11-14 16:08:30.488] [INFO] Started verification for: /dev/ttyACM0
+[2025-11-14 16:08:30.488] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-11-14 16:08:31.119] [INFO] Device VERIFIED: /dev/ttyACM0 @ 57600 baud, sysid=1, compid=1
+[2025-11-14 16:08:31.119] [INFO] Device updated in state DB: /dev/ttyACM0
+[2025-11-14 16:08:31.119] [INFO] Notifying 1 callbacks for device: /dev/ttyACM0
+[2025-11-14 16:08:31.119] [INFO] Device verified: /dev/ttyACM0
+[2025-11-14 16:08:31.119] [INFO] Sending mavlink_added request to ur-mavrouter
+[2025-11-14 16:08:31.119] [INFO] Sending mavlink_added request to ur-mavcollector
+[2025-11-14 16:08:31.119] [INFO] USB Device Info JSON: {
+  "autopilotType": "Generic",
+  "baudrate": 57600,
+  "boardClass": "",
+  "boardName": "PX4 FMU v6C.x",
+  "componentId": 1,
+  "deviceName": "PX4 FMU v6C.x",
+  "devicePath": "/dev/ttyACM0",
+  "manufacturer": "Auterion",
+  "mavlinkVersion": 2,
+  "productId": "0038",
+  "serialNumber": "0",
+  "systemId": 1,
+  "timestamp": "2025-11-14 16:08:30",
+  "vendorId": "3185"
+}
+[2025-11-14 16:08:31.119] [INFO] Device saved to runtime file (replaced old contents): current-runtime-device.json
+[2025-11-14 16:08:31.119] [WARNING] HTTP notifications requested but HTTP support not compiled (rebuild with -DHTTP_ENABLED=ON)
+[2025-11-14 16:09:20.356] [INFO] Device removed: /dev/ttyACM0
+[2025-11-14 16:09:20.357] [INFO] Device removed from state DB: /dev/ttyACM0
+[2025-11-14 16:09:20.357] [INFO] Device removed: /dev/ttyACM0
+[2025-11-14 16:09:20.357] [INFO] Sending device_removed request to ur-mavrouter
+[2025-11-14 16:09:20.357] [INFO] Sending device_removed request to ur-mavcollector
+[2025-11-14 16:09:20.357] [INFO] Stopped verification for: /dev/ttyACM0

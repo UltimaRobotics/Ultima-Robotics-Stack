@@ -1,0 +1,119 @@
+
+[
+  {
+    "license_type": "UltimaOpenLicence",
+    "features": [
+      {
+        "feature_name": "basic_features",
+        "feature_status": "UNLIMITED_ACCESS"
+      },
+      {
+        "feature_name": "advanced_analytics",
+        "feature_status": "DISABLED"
+      },
+      {
+        "feature_name": "cloud_sync",
+        "feature_status": "DISABLED"
+      },
+      {
+        "feature_name": "api_access",
+        "feature_status": "DISABLED"
+      }
+    ]
+  },
+  {
+    "license_type": "UltimaProfessionalLicence",
+    "features": [
+      {
+        "feature_name": "basic_features",
+        "feature_status": "UNLIMITED_ACCESS"
+      },
+      {
+        "feature_name": "advanced_analytics",
+        "feature_status": "LIMITED_ACCESS"
+      },
+      {
+        "feature_name": "cloud_sync",
+        "feature_status": "LIMITED_ACCESS"
+      },
+      {
+        "feature_name": "api_access",
+        "feature_status": "LIMITED_ACCESS"
+      },
+      {
+        "feature_name": "priority_support",
+        "feature_status": "UNLIMITED_ACCESS"
+      }
+    ]
+  },
+  {
+    "license_type": "UltimaEnterpriseLicence",
+    "features": [
+      {
+        "feature_name": "basic_features",
+        "feature_status": "UNLIMITED_ACCESS"
+      },
+      {
+        "feature_name": "advanced_analytics",
+        "feature_status": "UNLIMITED_ACCESS"
+      },
+      {
+        "feature_name": "cloud_sync",
+        "feature_status": "UNLIMITED_ACCESS"
+      },
+      {
+        "feature_name": "api_access",
+        "feature_status": "UNLIMITED_ACCESS"
+      },
+      {
+        "feature_name": "priority_support",
+        "feature_status": "UNLIMITED_ACCESS"
+      },
+      {
+        "feature_name": "custom_integrations",
+        "feature_status": "UNLIMITED_ACCESS"
+      },
+      {
+        "feature_name": "dedicated_account_manager",
+        "feature_status": "UNLIMITED_ACCESS"
+      },
+      {
+        "feature_name": "sla_guarantee",
+        "feature_status": "UNLIMITED_ACCESS"
+      }
+    ]
+  },
+  {
+    "license_type": "UltimaDeveloperLicence",
+    "features": [
+      {
+        "feature_name": "basic_features",
+        "feature_status": "UNLIMITED_ACCESS"
+      },
+      {
+        "feature_name": "advanced_analytics",
+        "feature_status": "LIMITED_ACCESS"
+      },
+      {
+        "feature_name": "cloud_sync",
+        "feature_status": "DISABLED"
+      },
+      {
+        "feature_name": "api_access",
+        "feature_status": "UNLIMITED_ACCESS"
+      },
+      {
+        "feature_name": "sdk_access",
+        "feature_status": "UNLIMITED_ACCESS"
+      },
+      {
+        "feature_name": "debugging_tools",
+        "feature_status": "UNLIMITED_ACCESS"
+      },
+      {
+        "feature_name": "testing_environments",
+        "feature_status": "LIMITED_ACCESS_V2"
+      }
+    ]
+  }
+]

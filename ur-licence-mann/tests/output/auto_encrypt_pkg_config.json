@@ -1,0 +1,13 @@
+{
+  "keys_directory": "/home/runner/workspace/ur-licence-mann/keys",
+  "config_directory": "/home/runner/workspace/ur-licence-mann/config",
+  "licenses_directory": "/home/runner/workspace/ur-licence-mann/licenses",
+  "license_definitions_file": "/home/runner/workspace/ur-licence-mann/tests/output/test_definitions.json",
+  "encrypted_license_definitions_file": "/home/runner/workspace/ur-licence-mann/tests/output/test_definitions.enc",
+  "private_key_file": "/home/runner/workspace/ur-licence-mann/keys/private_key.pem",
+  "public_key_file": "/home/runner/workspace/ur-licence-mann/keys/public_key.pem",
+  "auto_encrypt_definitions": true,
+  "auto_encrypt_licenses": true,
+  "require_hardware_binding": true,
+  "require_signature": true
+}

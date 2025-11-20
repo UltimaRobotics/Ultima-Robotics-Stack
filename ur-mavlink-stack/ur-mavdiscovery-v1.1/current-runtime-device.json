@@ -1,0 +1,16 @@
+{
+  "autopilotType": "Generic",
+  "baudrate": 57600,
+  "boardClass": "",
+  "boardName": "PX4 FMU v6C.x",
+  "componentId": 1,
+  "deviceName": "PX4 FMU v6C.x",
+  "devicePath": "/dev/ttyACM0",
+  "manufacturer": "Auterion",
+  "mavlinkVersion": 2,
+  "productId": "0038",
+  "serialNumber": "0",
+  "systemId": 1,
+  "timestamp": "2025-11-14 16:08:30",
+  "vendorId": "3185"
+}

@@ -1,0 +1,17 @@
+
+{
+  "operation": "iperf",
+  "servers_list_path": "runtime-configs/public-servers.json",
+  "filters": {
+    "keyword": "",
+    "continent": "Europe",
+    "country": "",
+    "site": "",
+    "provider": "",
+    "host": "",
+    "port": 0,
+    "min_speed": "",
+    "options": ""
+  }
+  "output_file": "runtime-data/iperf_servers_list_results.json"
+}

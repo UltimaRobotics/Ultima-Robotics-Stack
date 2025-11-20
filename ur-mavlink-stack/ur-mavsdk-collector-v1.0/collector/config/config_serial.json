@@ -1,0 +1,10 @@
+{
+  "connection": {
+    "type": "serial",
+    "device": "/dev/ttyACM1",
+    "baudrate": 1500000,
+    "system_id": "10",
+    "component_id": "10",
+    "timeout_s": 10
+  }
+}

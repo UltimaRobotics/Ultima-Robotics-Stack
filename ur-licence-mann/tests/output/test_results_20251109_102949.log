@@ -1,0 +1,391 @@
+==================================================
+ur-licence-mann Test Suite
+==================================================
+Test started at: Sun Nov  9 10:29:49 AM UTC 2025
+
+[0;32mBinary found: /home/runner/workspace/ur-licence-mann/build/ur-licence-mann[0m
+
+---------------------------------------------------
+Running: License Generation Test
+---------------------------------------------------
+Testing license generation...
+✓ License file created
+✓ License file has content
+✓ License generation test passed
+[0;32m✓ PASSED[0m: License Generation Test
+
+---------------------------------------------------
+Running: License Verification Test
+---------------------------------------------------
+Testing license verification...
+✓ License verification successful
+Testing with invalid license...
+✓ Invalid license correctly rejected
+✓ License verification test passed
+[0;32m✓ PASSED[0m: License Verification Test
+
+---------------------------------------------------
+Running: Update Test
+---------------------------------------------------
+Testing license update...
+✓ Updated license created
+✓ Updated license is valid
+✓ License update test passed
+[0;32m✓ PASSED[0m: Update Test
+
+---------------------------------------------------
+Running: Update License Type Test
+---------------------------------------------------
+/home/runner/workspace/ur-licence-mann/tests/test_update_license_type.sh: line 2: ![CDATA[#!/bin/bash: No such file or directory
+Testing license type update...
+✓ Updated license created
+✓ License type updated successfully to UltimaProfessionalLicence
+✓ License type update test passed
+[0;32m✓ PASSED[0m: Update License Type Test
+
+---------------------------------------------------
+Running: Get License Info Test
+---------------------------------------------------
+Testing get license info...
+✓ Found field: license_id
+✓ Found field: product
+✓ Found field: customer_name
+✓ Found field: customer_email
+✓ Get license info test passed
+[0;32m✓ PASSED[0m: Get License Info Test
+
+---------------------------------------------------
+Running: Get License Plan Test
+---------------------------------------------------
+Testing get license plan...
+✓ License plan contains expected fields
+✓ Get license plan test passed
+[0;32m✓ PASSED[0m: Get License Plan Test
+
+---------------------------------------------------
+Running: Encryption Test
+---------------------------------------------------
+Testing license encryption...
+✓ Encrypted license verified successfully
+✓ Encryption test passed
+[0;32m✓ PASSED[0m: Encryption Test
+
+---------------------------------------------------
+Running: Hardware Binding Test
+---------------------------------------------------
+Testing hardware binding...
+✓ Hardware binding information present in license
+✓ Hardware binding test passed
+[0;32m✓ PASSED[0m: Hardware Binding Test
+
+---------------------------------------------------
+Running: Builtin Encryption Key Test
+---------------------------------------------------
+Testing Build-time Encryption Key Feature...
+==============================================
+Step 1: Generating license with automatic encryption...
+Loaded package config from: /home/runner/workspace/ur-licence-mann/config/package_config.json
+Initializing ur-licence-mann system...
+Directories created/verified
+Existing RSA key pair found, verifying consistency...
+RSA key pair consistency verified successfully
+RSA key pair is valid and consistent
+Using built-in encryption key from device configuration
+No license definitions file found, will be created on first use
+Initialization complete.
+Hardware binding: REQUIRED (enforced)
+ur-licence-mann - Advanced License Management Tool
+
+New Operation-Based Interface:
+  --package-config <file>  Package configuration JSON file
+  -o, --operation <op>     Operation: generate/verify/update/get_license_info/get_license_plan/get_license_definitions
+  --operation-config <file> Operation configuration JSON file
+  -v, --verbose            Enable verbose output
+
+Examples:
+  Initialize and generate keys:
+    ./ur-licence-mann --package-config config.json
+
+  Generate license:
+    ./ur-licence-mann --package-config config.json -o generate --operation-config operation.json
+
+  Verify license:
+    ./ur-licence-mann --package-config config.json -o verify license_file=license.lic
+
+  Get license info:
+    ./ur-licence-mann --package-config config.json -o get_license_info license_file=license.lic
+
+  Get license plan:
+    ./ur-licence-mann --package-config config.json -o get_license_plan license_file=license.lic
+
+  Get license definitions:
+    ./ur-licence-mann --package-config config.json -o get_license_definitions
+
+Note: Encryption keys are automatically generated on first run and stored securely.
+      License definitions are automatically encrypted when auto_encrypt_definitions=true.
+      All licenses include hardware fingerprints and signatures when required.
+ERROR: Encrypted license file not created: /home/runner/workspace/ur-licence-mann/tests/output/builtin_encrypted_license.lic.enc
+[0;31m✗ FAILED[0m: Builtin Encryption Key Test
+
+---------------------------------------------------
+Running: Auto Encrypt Definitions Test
+---------------------------------------------------
+Testing Automatic Definitions Encryption Feature...
+====================================================
+Step 1: Updating definitions (should auto-encrypt)...
+Loaded package config from: /home/runner/workspace/ur-licence-mann/tests/output/auto_encrypt_pkg_config.json
+Initializing ur-licence-mann system...
+Directories created/verified
+Existing RSA key pair found, verifying consistency...
+RSA key pair consistency verified successfully
+RSA key pair is valid and consistent
+Using built-in encryption key from device configuration
+Verifying encrypted license definitions file...
+Failed to finalize decryption
+Failed to decrypt license definitions, may need re-encryption
+Re-encrypting from plain file...
+License definitions encrypted: /home/runner/workspace/ur-licence-mann/tests/output/test_definitions.enc
+Initialization complete.
+Hardware binding: REQUIRED (enforced)
+ur-licence-mann - Advanced License Management Tool
+
+New Operation-Based Interface:
+  --package-config <file>  Package configuration JSON file
+  -o, --operation <op>     Operation: generate/verify/update/get_license_info/get_license_plan/get_license_definitions
+  --operation-config <file> Operation configuration JSON file
+  -v, --verbose            Enable verbose output
+
+Examples:
+  Initialize and generate keys:
+    ./ur-licence-mann --package-config config.json
+
+  Generate license:
+    ./ur-licence-mann --package-config config.json -o generate --operation-config operation.json
+
+  Verify license:
+    ./ur-licence-mann --package-config config.json -o verify license_file=license.lic
+
+  Get license info:
+    ./ur-licence-mann --package-config config.json -o get_license_info license_file=license.lic
+
+  Get license plan:
+    ./ur-licence-mann --package-config config.json -o get_license_plan license_file=license.lic
+
+  Get license definitions:
+    ./ur-licence-mann --package-config config.json -o get_license_definitions
+
+Note: Encryption keys are automatically generated on first run and stored securely.
+      License definitions are automatically encrypted when auto_encrypt_definitions=true.
+      All licenses include hardware fingerprints and signatures when required.
+✓ Definitions encrypted successfully
+
+Step 2: Reading encrypted definitions...
+Loaded package config from: /home/runner/workspace/ur-licence-mann/tests/output/auto_encrypt_pkg_config.json
+Initializing ur-licence-mann system...
+Directories created/verified
+Existing RSA key pair found, verifying consistency...
+RSA key pair consistency verified successfully
+RSA key pair is valid and consistent
+Using built-in encryption key from device configuration
+Verifying encrypted license definitions file...
+Encrypted license definitions verified successfully
+Initialization complete.
+Hardware binding: REQUIRED (enforced)
+ur-licence-mann - Advanced License Management Tool
+
+New Operation-Based Interface:
+  --package-config <file>  Package configuration JSON file
+  -o, --operation <op>     Operation: generate/verify/update/get_license_info/get_license_plan/get_license_definitions
+  --operation-config <file> Operation configuration JSON file
+  -v, --verbose            Enable verbose output
+
+Examples:
+  Initialize and generate keys:
+    ./ur-licence-mann --package-config config.json
+
+  Generate license:
+    ./ur-licence-mann --package-config config.json -o generate --operation-config operation.json
+
+  Verify license:
+    ./ur-licence-mann --package-config config.json -o verify license_file=license.lic
+
+  Get license info:
+    ./ur-licence-mann --package-config config.json -o get_license_info license_file=license.lic
+
+  Get license plan:
+    ./ur-licence-mann --package-config config.json -o get_license_plan license_file=license.lic
+
+  Get license definitions:
+    ./ur-licence-mann --package-config config.json -o get_license_definitions
+
+Note: Encryption keys are automatically generated on first run and stored securely.
+      License definitions are automatically encrypted when auto_encrypt_definitions=true.
+      All licenses include hardware fingerprints and signatures when required.
+✓ Encrypted definitions read successfully
+
+Step 3: Updating definitions via JSON parameter...
+Loaded package config from: /home/runner/workspace/ur-licence-mann/tests/output/auto_encrypt_pkg_config.json
+Initializing ur-licence-mann system...
+Directories created/verified
+Existing RSA key pair found, verifying consistency...
+RSA key pair consistency verified successfully
+RSA key pair is valid and consistent
+Using built-in encryption key from device configuration
+Verifying encrypted license definitions file...
+Encrypted license definitions verified successfully
+Initialization complete.
+Hardware binding: REQUIRED (enforced)
+ur-licence-mann - Advanced License Management Tool
+
+New Operation-Based Interface:
+  --package-config <file>  Package configuration JSON file
+  -o, --operation <op>     Operation: generate/verify/update/get_license_info/get_license_plan/get_license_definitions
+  --operation-config <file> Operation configuration JSON file
+  -v, --verbose            Enable verbose output
+
+Examples:
+  Initialize and generate keys:
+    ./ur-licence-mann --package-config config.json
+
+  Generate license:
+    ./ur-licence-mann --package-config config.json -o generate --operation-config operation.json
+
+  Verify license:
+    ./ur-licence-mann --package-config config.json -o verify license_file=license.lic
+
+  Get license info:
+    ./ur-licence-mann --package-config config.json -o get_license_info license_file=license.lic
+
+  Get license plan:
+    ./ur-licence-mann --package-config config.json -o get_license_plan license_file=license.lic
+
+  Get license definitions:
+    ./ur-licence-mann --package-config config.json -o get_license_definitions
+
+Note: Encryption keys are automatically generated on first run and stored securely.
+      License definitions are automatically encrypted when auto_encrypt_definitions=true.
+      All licenses include hardware fingerprints and signatures when required.
+✓ Definitions updated via JSON successfully
+
+Step 4: Verifying updated definitions...
+ERROR: Updated definitions not found
+[0;31m✗ FAILED[0m: Auto Encrypt Definitions Test
+
+---------------------------------------------------
+Running: Update with Encryption Test
+---------------------------------------------------
+Testing License Update with Automatic Encryption...
+====================================================
+Step 1: Generating initial license...
+Loaded package config from: /home/runner/workspace/ur-licence-mann/config/package_config.json
+Initializing ur-licence-mann system...
+Directories created/verified
+Existing RSA key pair found, verifying consistency...
+RSA key pair consistency verified successfully
+RSA key pair is valid and consistent
+Using built-in encryption key from device configuration
+No license definitions file found, will be created on first use
+Initialization complete.
+Hardware binding: REQUIRED (enforced)
+ur-licence-mann - Advanced License Management Tool
+
+New Operation-Based Interface:
+  --package-config <file>  Package configuration JSON file
+  -o, --operation <op>     Operation: generate/verify/update/get_license_info/get_license_plan/get_license_definitions
+  --operation-config <file> Operation configuration JSON file
+  -v, --verbose            Enable verbose output
+
+Examples:
+  Initialize and generate keys:
+    ./ur-licence-mann --package-config config.json
+
+  Generate license:
+    ./ur-licence-mann --package-config config.json -o generate --operation-config operation.json
+
+  Verify license:
+    ./ur-licence-mann --package-config config.json -o verify license_file=license.lic
+
+  Get license info:
+    ./ur-licence-mann --package-config config.json -o get_license_info license_file=license.lic
+
+  Get license plan:
+    ./ur-licence-mann --package-config config.json -o get_license_plan license_file=license.lic
+
+  Get license definitions:
+    ./ur-licence-mann --package-config config.json -o get_license_definitions
+
+Note: Encryption keys are automatically generated on first run and stored securely.
+      License definitions are automatically encrypted when auto_encrypt_definitions=true.
+      All licenses include hardware fingerprints and signatures when required.
+ERROR: Initial encrypted license not created
+[0;31m✗ FAILED[0m: Update with Encryption Test
+
+---------------------------------------------------
+Running: Force Encryption Flags Test
+---------------------------------------------------
+Testing Force Encryption Flags...
+==================================
+Step 1: Checking device_config.h for force encryption flags...
+✓ FORCE_LICENSE_ENCRYPTION is enabled
+✓ FORCE_DEFINITIONS_ENCRYPTION is enabled
+✓ BUILTIN_ENCRYPTION_KEY is defined
+
+Step 2: Verifying license generation always encrypts...
+Loaded package config from: /home/runner/workspace/ur-licence-mann/config/package_config.json
+Initializing ur-licence-mann system...
+Directories created/verified
+Existing RSA key pair found, verifying consistency...
+RSA key pair consistency verified successfully
+RSA key pair is valid and consistent
+Using built-in encryption key from device configuration
+No license definitions file found, will be created on first use
+Initialization complete.
+Hardware binding: REQUIRED (enforced)
+ur-licence-mann - Advanced License Management Tool
+
+New Operation-Based Interface:
+  --package-config <file>  Package configuration JSON file
+  -o, --operation <op>     Operation: generate/verify/update/get_license_info/get_license_plan/get_license_definitions
+  --operation-config <file> Operation configuration JSON file
+  -v, --verbose            Enable verbose output
+
+Examples:
+  Initialize and generate keys:
+    ./ur-licence-mann --package-config config.json
+
+  Generate license:
+    ./ur-licence-mann --package-config config.json -o generate --operation-config operation.json
+
+  Verify license:
+    ./ur-licence-mann --package-config config.json -o verify license_file=license.lic
+
+  Get license info:
+    ./ur-licence-mann --package-config config.json -o get_license_info license_file=license.lic
+
+  Get license plan:
+    ./ur-licence-mann --package-config config.json -o get_license_plan license_file=license.lic
+
+  Get license definitions:
+    ./ur-licence-mann --package-config config.json -o get_license_definitions
+
+Note: Encryption keys are automatically generated on first run and stored securely.
+      License definitions are automatically encrypted when auto_encrypt_definitions=true.
+      All licenses include hardware fingerprints and signatures when required.
+WARNING: Encrypted file not found, checking if auto_encrypt_licenses is enabled in package_config
+
+Step 3: Verifying all operations use builtin encryption key...
+✓ Verification works with builtin encryption key
+✓ Get license info works with builtin encryption key
+
+All force encryption tests passed!
+[0;32m✓ PASSED[0m: Force Encryption Flags Test
+
+==================================================
+Test Summary
+==================================================
+Total Tests:  12
+[0;32mPassed:       9[0m
+[0;31mFailed:       3[0m
+
+Detailed log: /home/runner/workspace/ur-licence-mann/tests/output/test_results_20251109_102949.log
+Test completed at: Sun Nov  9 10:29:50 AM UTC 2025

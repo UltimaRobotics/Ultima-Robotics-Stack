@@ -1,0 +1,6 @@
+
+{
+  "operation": "servers-status",
+  "servers_list_path": "runtime-configs/public-servers.json",
+  "output_file": ""
+}

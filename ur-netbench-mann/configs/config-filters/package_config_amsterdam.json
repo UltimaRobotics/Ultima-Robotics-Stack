@@ -1,0 +1,9 @@
+
+{
+  "operation": "servers-status",
+  "servers_list_path": "runtime-configs/public-servers.json",
+  "filters": {
+    "keyword": "amsterdam"
+  },
+  "output_dir": "runtime-data/server-status"
+}

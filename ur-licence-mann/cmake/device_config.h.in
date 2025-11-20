@@ -1,0 +1,30 @@
+
+
+#ifndef DEVICE_CONFIG_H
+#define DEVICE_CONFIG_H
+
+// Auto-generated device configuration from CMake
+#define PRODUCT_NAME "@PRODUCT_NAME@"
+#define PRODUCT_VERSION "@PRODUCT_VERSION@"
+#define DEVICE_MODEL "@DEVICE_MODEL@"
+
+// Build timestamp
+#define BUILD_TIMESTAMP "@CMAKE_TIMESTAMP@"
+
+// Default license configuration
+#define DEFAULT_EXPIRY_YEARS 1
+#define DEFAULT_LICENSE_TYPE "UltimaOpenLicence"
+
+// Single license file name (used in licenses_directory)
+#define LICENSE_FILE "system.lic"
+
+// Build-time encryption key (AES-256 requires 64 hex characters = 32 bytes)
+// This key is embedded at build time and should be kept secure
+// This is the ONLY encryption key used - no runtime master keys
+#define BUILTIN_ENCRYPTION_KEY "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+
+// Force encryption for all operations - uses BUILTIN_ENCRYPTION_KEY
+#define FORCE_LICENSE_ENCRYPTION true
+#define FORCE_DEFINITIONS_ENCRYPTION true
+
+#endif // DEVICE_CONFIG_H

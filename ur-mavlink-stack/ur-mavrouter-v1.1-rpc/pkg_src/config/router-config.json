@@ -1,0 +1,98 @@
+{
+  "general": {
+    "debug_log_level": "info",
+    "deduplication_period": 100,
+    "extension_conf_dir": "config",
+    "report_stats": false,
+    "sniffer_sysid": 0,
+    "tcp_server_port": 5760
+  },
+  "tcp_endpoints": [
+    {
+      "address": "127.0.0.1",
+      "name": "tcp-extension-point-1",
+      "port": 5761,
+      "retry_timeout": 5000
+    },
+    {
+      "address": "127.0.0.1",
+      "name": "tcp-extension-point-2",
+      "port": 5762,
+      "retry_timeout": 5000
+    },
+    {
+      "address": "127.0.0.1",
+      "name": "tcp-extension-point-3",
+      "port": 5763,
+      "retry_timeout": 5000
+    }
+  ],
+  "uart_endpoints": [
+    {
+      "baud": [
+        57600
+      ],
+      "device": "/dev/ttyACM0",
+      "flow_control": false,
+      "name": "flight_controller"
+    },
+    {
+      "baud": [
+        57600
+      ],
+      "device": "/dev/ttyACM1",
+      "flow_control": false,
+      "name": "discovered_device"
+    }
+  ],
+  "udp_endpoints": [
+    {
+      "address": "127.0.0.1",
+      "mode": "client",
+      "name": "internal-router-point-1",
+      "port": 43001
+    },
+    {
+      "address": "127.0.0.1",
+      "mode": "client",
+      "name": "internal-router-point-2",
+      "port": 43002
+    },
+    {
+      "address": "127.0.0.1",
+      "mode": "client",
+      "name": "internal-router-point-3",
+      "port": 43003
+    },
+    {
+      "address": "127.0.0.1",
+      "mode": "client",
+      "name": "udp-extension-point-1",
+      "port": 44001
+    },
+    {
+      "address": "127.0.0.1",
+      "mode": "client",
+      "name": "udp-extension-point-2",
+      "port": 44002
+    },
+    {
+      "address": "127.0.0.1",
+      "mode": "client",
+      "name": "udp-extension-point-3",
+      "port": 44003
+    },
+    {
+      "address": "127.0.0.1",
+      "mode": "client",
+      "name": "udp-extension-point-4",
+      "port": 44004
+    },
+    {
+      "address": "127.0.0.1",
+      "mode": "client",
+      "name": "udp-extension-point-5",
+      "port": 44005
+    }
+  ]
+}

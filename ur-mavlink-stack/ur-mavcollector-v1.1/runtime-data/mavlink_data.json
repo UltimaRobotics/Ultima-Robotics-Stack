@@ -1,0 +1,14 @@
+{
+  "armed": false,
+  "battery_voltage": "No Data Provided",
+  "component_id": 1,
+  "firmware": "PX4",
+  "flight_mode": "POSCTL",
+  "heartbeat": "1s ago",
+  "last_activity": "0s ago",
+  "last_update": "2025-10-12 20:05:21",
+  "messages_per_sec": 1139.8433734939758,
+  "model": "No Data Provided",
+  "software_version": "No Data Provided",
+  "system_id": 1
+}

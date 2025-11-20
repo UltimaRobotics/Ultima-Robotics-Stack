@@ -1,0 +1,11 @@
+
+{
+  "keys_directory": "./keys",
+  "config_directory": "./config",
+  "licenses_directory": "./licenses",
+  "license_definitions_file": "./config/license_definitions.json",
+  "encrypted_license_definitions_file": "./config/license_definitions.enc",
+  "encryption_keys_file": "./keys/encryption_keys.json",
+  "private_key_file": "./keys/private_key.pem",
+  "public_key_file": "./keys/public_key.pem"
+}

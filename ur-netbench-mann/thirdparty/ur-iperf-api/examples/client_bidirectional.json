@@ -1,0 +1,10 @@
+{
+  "role": "client",
+  "server_hostname": "127.0.0.1",
+  "port": 5201,
+  "duration": 15,
+  "bidirectional": true,
+  "num_streams": 2,
+  "json": true,
+  "verbose": true
+}

@@ -1,0 +1,95 @@
+<div id="modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+  <div id="modal-card" class="bg-white rounded-2xl shadow-2xl w-[680px] p-8">
+    
+    <!-- Header Section -->
+    <div id="modal-header" class="mb-8">
+      <h2 class="text-2xl text-neutral-900 mb-2">Add MAVLink Endpoint</h2>
+      <p class="text-neutral-600">Configure a new network endpoint for MAVLink communication</p>
+    </div>
+
+    <!-- Form Body -->
+    <div id="modal-form" class="space-y-6">
+      
+      <!-- Endpoint Name -->
+      <div class="form-group">
+        <label class="block text-sm text-neutral-900 mb-2">Endpoint name</label>
+        <input type="text" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-500 focus:border-neutral-500 outline-none" placeholder="Enter endpoint name">
+      </div>
+
+      <!-- Protocol and Mode Row -->
+      <div class="grid grid-cols-2 gap-6">
+        <div class="form-group">
+          <label class="block text-sm text-neutral-900 mb-2">Protocol</label>
+          <select class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-500 focus:border-neutral-500 outline-none bg-white">
+            <option>TCP</option>
+            <option>UDP</option>
+            <option>Serial</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="block text-sm text-neutral-900 mb-2">
+            Mode 
+            <span class="text-neutral-500">Optional</span>
+          </label>
+          <select class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-500 focus:border-neutral-500 outline-none bg-white">
+            <option>Client</option>
+            <option>Server</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Host IP and Port Row -->
+      <div class="grid grid-cols-2 gap-6">
+        <div class="form-group">
+          <label class="block text-sm text-neutral-900 mb-2">Host IP</label>
+          <input type="text" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-500 focus:border-neutral-500 outline-none" placeholder="192.168.1.100">
+        </div>
+        <div class="form-group">
+          <label class="block text-sm text-neutral-900 mb-2">Port</label>
+          <input type="number" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-500 focus:border-neutral-500 outline-none" placeholder="14550">
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label class="block text-sm text-neutral-900 mb-2">
+          Description 
+          <span class="text-neutral-500">Optional</span>
+        </label>
+        <textarea rows="2" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-500 focus:border-neutral-500 outline-none resize-none" placeholder="Brief description of the endpoint"></textarea>
+      </div>
+
+      <!-- Auto-start Toggle -->
+      <div class="form-group">
+        <div class="flex items-start justify-between">
+          <div>
+            <label class="block text-sm text-neutral-900 mb-1">Auto-start connection</label>
+            <p class="text-sm text-neutral-600">Automatically connect when the application starts</p>
+          </div>
+          <div class="flex items-center space-x-3 mt-1">
+            <span class="text-sm text-neutral-500">Disabled</span>
+            <div class="relative">
+              <input type="checkbox" class="sr-only">
+              <div class="w-12 h-6 bg-neutral-300 rounded-full cursor-pointer">
+                <div class="w-5 h-5 bg-white rounded-full shadow-md transform translate-x-0.5 translate-y-0.5 transition-transform"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Actions -->
+    <div id="modal-actions" class="flex items-center justify-between mt-8 pt-6 border-t border-neutral-200">
+      <p class="text-sm text-neutral-500">You can edit or remove this endpoint later</p>
+      <div class="flex space-x-3">
+        <button class="px-6 py-3 border border-neutral-300 text-neutral-700 rounded-lg hover:bg-neutral-50 transition-colors">
+          Cancel
+        </button>
+        <button class="px-6 py-3 bg-neutral-900 text-white rounded-lg hover:bg-neutral-800 transition-colors">
+          Create endpoint
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

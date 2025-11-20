@@ -1,0 +1,11 @@
+{
+    "devices": [
+        {
+            "device_path": "/dev/cdc-wdm1",
+            "imei": "869816054518831",
+            "model": "NL668-EAU-10-01",
+            "manufacturer": "Fibocom Wireless Inc.",
+            "is_available": true
+        }
+    ]
+}

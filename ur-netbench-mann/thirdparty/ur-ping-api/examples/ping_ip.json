@@ -1,0 +1,10 @@
+
+{
+  "destination": "8.8.8.8",
+  "count": 4,
+  "timeout_ms": 1000,
+  "interval_ms": 1000,
+  "packet_size": 64,
+  "ttl": 64,
+  "resolve_hostname": false
+}

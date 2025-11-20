@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Dashboard - UR Web Launcher</title>
+        <script src="./assets/css/tailwind-3.4.17.js"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            'sans': ['Inter', 'sans-serif'],
+                        }
+                    }
+                }
+            }
+        </script>
+        <script
+            src="./assets/css/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+        <style>
+            * {
+                font-family: "Inter", sans-serif;
+            }
+            ::-webkit-scrollbar {
+                display: none;
+            }
+        </style>
+    </head>
+    <body class="h-full text-base-content">
+        <!-- UI will be dynamically created by source-ui.js -->
+        <div id="app-container">
+            <!-- Loading state -->
+            <div class="flex items-center justify-center h-screen">
+                <div class="text-center">
+                    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                    <p class="text-neutral-600">Loading dashboard...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Initialize Source Page -->
+        <script type="module">
+            // Import source modules
+            import { SourceManager } from './assets/js/source/source.js';
+            import { SourceUI } from './assets/js/source/source-ui.js';
+            
+            // Initialize UI after source manager is ready
+            document.addEventListener('sourceInitialized', (event) => {
+                console.log('[SOURCE] Source manager initialized, setting up UI');
+                window.sourceUI = new SourceUI(window.sourceManager);
+            });
+            
+            // Handle initialization errors
+            document.addEventListener('error', (event) => {
+                if (event.message && event.message.includes('source')) {
+                    console.error('[SOURCE] Critical error during initialization:', event.error);
+                    document.getElementById('app-container').innerHTML = `
+                        <div class="flex items-center justify-center h-screen">
+                            <div class="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
+                                <h2 class="text-red-800 font-semibold mb-2">Initialization Error</h2>
+                                <p class="text-red-600 mb-4">Failed to initialize the dashboard. Please refresh the page or contact support.</p>
+                                <button onclick="window.location.reload()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">
+                                    Refresh Page
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+        </script>
+
+    </body>
+</html>
+

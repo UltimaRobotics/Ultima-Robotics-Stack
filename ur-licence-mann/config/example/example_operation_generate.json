@@ -1,0 +1,11 @@
+{
+  "operation": "generate",
+  "parameters": {
+    "output": "./licenses/license.lic",
+    "user_name": "John Doe",
+    "user_email": "john@example.com",
+    "expiry_date": "2026-12-31",
+    "product_name": "MyApp",
+    "product_version": "1.0.0"
+  }
+}

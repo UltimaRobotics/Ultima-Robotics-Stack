@@ -1,0 +1,334 @@
+[0;32mQMI Device Scanner Command Test Script[0m
+[0;32m======================================[0m
+[0;34mSearching for QMI devices...[0m
+[0;32mFound QMI device: /dev/cdc-wdm3[0m
+
+[0;34m========================================[0m
+[0;34m SYSTEM DIAGNOSTIC COMMANDS[0m
+[0;34m========================================[0m
+
+[1;33mCommand:[0m qmicli --help-all | head -20
+[1;33mDescription:[0m QMI CLI help (first 20 lines)
+[0;32mResponse:[0m
+----------------------------------------
+Usage:
+  qmicli [OPTION…] - Control QMI devices
+
+Help Options:
+  -h, --help                                                                                                        Show help options
+  --help-all                                                                                                        Show all help options
+  --help-dms                                                                                                        Show Device Management Service options
+  --help-nas                                                                                                        Show Network Access Service options
+  --help-wds                                                                                                        Show Wireless Data Service options
+  --help-pbm                                                                                                        Show Phonebook Management options
+  --help-pdc                                                                                                        Show platform device configurations options
+  --help-uim                                                                                                        Show User Identity Module options
+  --help-sar                                                                                                        Show Specific Absorption Rate options
+  --help-wms                                                                                                        Show Wireless Messaging Service options
+  --help-wda                                                                                                        Show Wireless Data Administrative options
+  --help-voice                                                                                                      Show Voice Service options
+  --help-loc                                                                                                        Show location options
+  --help-qos                                                                                                        Show Quality of Service options
+  --help-gas                                                                                                        Show General Application Service options
+  --help-gms                                                                                                        Show General Modem Service options
+----------------------------------------
+
+[1;33mCommand:[0m ls -la /dev/cdc-wdm*
+[1;33mDescription:[0m List QMI device files
+[0;32mResponse:[0m
+----------------------------------------
+crw------- 1 root root 180, 3 أوت    16 13:58 /dev/cdc-wdm3
+----------------------------------------
+
+[1;33mCommand:[0m lsmod | grep qmi
+[1;33mDescription:[0m Show loaded QMI kernel modules
+[0;32mResponse:[0m
+----------------------------------------
+qmi_wwan               40960  0
+cdc_wdm                28672  1 qmi_wwan
+usbnet                 61440  1 qmi_wwan
+----------------------------------------
+
+[1;33mCommand:[0m dmesg | grep -i qmi | tail -10
+[1;33mDescription:[0m Recent QMI-related kernel messages
+[0;32mResponse:[0m
+----------------------------------------
+[    3.472250] qmi_wwan 1-1.2:1.4: cdc-wdm3: USB WDM device
+[    3.473031] qmi_wwan 1-1.2:1.4 wwan0: register 'qmi_wwan' at usb-0000:06:00.3-1.2, WWAN/QMI device, ca:02:5b:0e:4d:25
+[    3.473101] usbcore: registered new interface driver qmi_wwan
+[ 2466.527785] qmi_wwan 1-1.2:1.4 wwan0: unregister 'qmi_wwan' usb-0000:06:00.3-1.2, WWAN/QMI device
+[ 2487.163109] qmi_wwan 2-1.2:1.4: cdc-wdm3: USB WDM device
+[ 2487.163655] qmi_wwan 2-1.2:1.4 wwan0: register 'qmi_wwan' at usb-0000:06:00.3-1.2, WWAN/QMI device, 6e:a6:ce:f8:e6:ae
+[ 4397.423869] qmi_wwan 2-1.2:1.4 wwan0: unregister 'qmi_wwan' usb-0000:06:00.3-1.2, WWAN/QMI device
+[ 4397.823831] qmi_wwan 2-1.2:1.4: cdc-wdm3: USB WDM device
+[ 4397.824204] qmi_wwan 2-1.2:1.4 wwan0: register 'qmi_wwan' at usb-0000:06:00.3-1.2, WWAN/QMI device, 3a:7b:73:33:a9:fd
+----------------------------------------
+
+[0;34m========================================[0m
+[0;34m NETWORK INTERFACE COMMANDS[0m
+[0;34m========================================[0m
+
+[1;33mCommand:[0m ip link show
+[1;33mDescription:[0m Show all network interfaces
+[0;32mResponse:[0m
+----------------------------------------
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: enp2s0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc fq_codel state DOWN mode DEFAULT group default qlen 1000
+    link/ether e4:a8:df:de:02:39 brd ff:ff:ff:ff:ff:ff
+4: wlo1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DORMANT group default qlen 1000
+    link/ether d8:80:83:a5:ae:29 brd ff:ff:ff:ff:ff:ff
+    altname wlp3s0
+5: virbr0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default qlen 1000
+    link/ether 52:54:00:79:d2:95 brd ff:ff:ff:ff:ff:ff
+6: lxcbr0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default qlen 1000
+    link/ether 00:16:3e:00:00:00 brd ff:ff:ff:ff:ff:ff
+7: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default 
+    link/ether 22:1e:c3:38:d8:b6 brd ff:ff:ff:ff:ff:ff
+8: br-796979f5b324: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default 
+    link/ether 4a:63:7f:d7:59:aa brd ff:ff:ff:ff:ff:ff
+175: wwan0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 3a:7b:73:33:a9:fd brd ff:ff:ff:ff:ff:ff
+----------------------------------------
+
+[1;33mCommand:[0m cat /sys/class/net/wlan0/address 2>/dev/null || echo 'wlan0 not found'
+[1;33mDescription:[0m Get WLAN MAC address
+[0;32mResponse:[0m
+----------------------------------------
+wlan0 not found
+----------------------------------------
+
+[1;33mCommand:[0m cat /sys/class/net/hci0/address 2>/dev/null || echo 'hci0 not found'
+[1;33mDescription:[0m Get Bluetooth MAC address
+[0;32mResponse:[0m
+----------------------------------------
+hci0 not found
+----------------------------------------
+
+[1;33mCommand:[0m lsusb | grep -i 'modem\|cellular\|qualcomm\|sierra\|huawei\|zte'
+[1;33mDescription:[0m List USB cellular modems
+[0;32mResponse:[0m
+----------------------------------------
+Bus 002 Device 004: ID 2cb7:0104 Fibocom Fibocom FM160 Modem_SN:E6D94376
+----------------------------------------
+
+[0;34mTesting device: /dev/cdc-wdm3[0m
+
+[0;34m========================================[0m
+[0;34m BASIC MODE COMMANDS for /dev/cdc-wdm3[0m
+[0;34m========================================[0m
+
+[1;33mCommand:[0m qmicli -d /dev/cdc-wdm3 --dms-get-ids
+[1;33mDescription:[0m Get device IDs (IMEI, ESN, MEID)
+[0;32mResponse:[0m
+----------------------------------------
+[/dev/cdc-wdm3] Device IDs retrieved:
+	    ESN: '0'
+	   IMEI: '869814060276288'
+	   MEID: 'unknown'
+	IMEI SV: '16'
+----------------------------------------
+
+[1;33mCommand:[0m qmicli -d /dev/cdc-wdm3 --dms-get-model
+[1;33mDescription:[0m Get device model information
+[0;32mResponse:[0m
+----------------------------------------
+[/dev/cdc-wdm3] Device model retrieved:
+	Model: 'FM160-EAU-00 5G Module'
+----------------------------------------
+
+[1;33mCommand:[0m qmicli -d /dev/cdc-wdm3 --dms-get-revision
+[1;33mDescription:[0m Get firmware revision/version
+[0;32mResponse:[0m
+----------------------------------------
+[/dev/cdc-wdm3] Device revision retrieved:
+	Revision: '89611.1000.00.01.09.16'
+----------------------------------------
+
+[1;33mCommand:[0m qmicli -d /dev/cdc-wdm3 --dms-get-capabilities
+[1;33mDescription:[0m Get device capabilities (bands, features)
+[0;32mResponse:[0m
+----------------------------------------
+[/dev/cdc-wdm3] Device capabilities retrieved:
+	Max TX channel rate: '0'
+	Max RX channel rate: '0'
+	       Data Service: 'non-simultaneous-cs-ps'
+	                SIM: 'supported'
+	           Networks: 'umts, lte, 5gnr'
+----------------------------------------
+
+[1;33mCommand:[0m qmicli -d /dev/cdc-wdm3 --uim-get-card-status
+[1;33mDescription:[0m Get SIM/UIM card status and PIN state
+[0;32mResponse:[0m
+----------------------------------------
+[/dev/cdc-wdm3] Successfully got card status
+Provisioning applications:
+	Primary GW:   slot '1', application '1'
+	Primary 1X:   session doesn't exist
+	Secondary GW: session doesn't exist
+	Secondary 1X: session doesn't exist
+Slot [1]:
+	Card state: 'present'
+	UPIN state: 'not-initialized'
+		UPIN retries: '0'
+		UPUK retries: '0'
+	Application [1]:
+		Application type:  'usim (2)'
+		Application state: 'ready'
+		Application ID:
+			A0:00:00:00:87:10:02:FF:FF:F0:01:89:00:00:01:FF
+		Personalization state: 'ready'
+		UPIN replaces PIN1: 'no'
+		PIN1 state: 'disabled'
+			PIN1 retries: '3'
+			PUK1 retries: '10'
+		PIN2 state: 'enabled-not-verified'
+			PIN2 retries: '3'
+			PUK2 retries: '10'
+----------------------------------------
+
+[0;34m========================================[0m
+[0;34m ADVANCED MODE COMMANDS for /dev/cdc-wdm3[0m
+[0;34m========================================[0m
+
+[1;33mCommand:[0m qmicli -d /dev/cdc-wdm3 --dms-get-manufacturer
+[1;33mDescription:[0m Get device manufacturer
+[0;32mResponse:[0m
+----------------------------------------
+[/dev/cdc-wdm3] Device manufacturer retrieved:
+	Manufacturer: 'Fibocom Wireless Inc.'
+----------------------------------------
+
+[1;33mCommand:[0m qmicli -d /dev/cdc-wdm3 --dms-get-msisdn
+[1;33mDescription:[0m Get MSISDN (phone number)
+[0;32mResponse:[0m
+----------------------------------------
+[/dev/cdc-wdm3] Device MSISDN retrieved:
+	MSISDN: ''
+----------------------------------------
+
+[1;33mCommand:[0m qmicli -d /dev/cdc-wdm3 --dms-get-power-state
+[1;33mDescription:[0m Get device power state
+[0;32mResponse:[0m
+----------------------------------------
+[/dev/cdc-wdm3] Device power state retrieved:
+	Power state: 'external-source'
+	Battery level: '0 %'
+----------------------------------------
+
+[1;33mCommand:[0m qmicli -d /dev/cdc-wdm3 --dms-get-hardware-revision
+[1;33mDescription:[0m Get hardware revision
+[0;32mResponse:[0m
+----------------------------------------
+[/dev/cdc-wdm3] Hardware revision retrieved:
+	Revision: '20000'
+----------------------------------------
+
+[1;33mCommand:[0m qmicli -d /dev/cdc-wdm3 --dms-get-operating-mode
+[1;33mDescription:[0m Get operating mode (online/offline)
+[0;32mResponse:[0m
+----------------------------------------
+[/dev/cdc-wdm3] Operating mode retrieved:
+	Mode: 'online'
+	HW restricted: 'no'
+----------------------------------------
+
+[1;33mCommand:[0m qmicli -d /dev/cdc-wdm3 --uim-get-imsi --uim-slot=1
+[1;33mDescription:[0m Get IMSI from SIM card
+[0;32mResponse:[0m
+----------------------------------------
+[0;31mCommand failed with exit code 1[0m
+error: Unknown option --uim-get-imsi
+----------------------------------------
+
+[1;33mCommand:[0m qmicli -d /dev/cdc-wdm3 --dms-get-time
+[1;33mDescription:[0m Get system time
+[0;32mResponse:[0m
+----------------------------------------
+[/dev/cdc-wdm3] Time retrieved:
+	Time count: '1151511929702 (x 1.25ms): 2016-07-02 16:25:29'
+	Time source: 'device'
+	System time: '1439389912129 (ms): 2025-08-16 14:31:52'
+	User time: '3950884 (ms): 1980-01-06 01:05:50'
+----------------------------------------
+
+[1;33mCommand:[0m qmicli -d /dev/cdc-wdm3 --dms-get-band-capabilities
+[1;33mDescription:[0m Get detailed band capabilities
+[0;32mResponse:[0m
+----------------------------------------
+[/dev/cdc-wdm3] Device band capabilities retrieved:
+	Bands: 'wcdma-2100, wcdma-850-us, wcdma-800, wcdma-900'
+	LTE bands: '1, 3, 5, 7, 8, 20, 28, 32, 38, 40, 41, 42, 43'
+	LTE bands (extended): '1, 3, 5, 7, 8, 20, 28, 32, 38, 40, 41, 42, 43'
+	NR5G bands: '1, 3, 5, 7, 8, 20, 28, 38, 40, 41, 75, 76, 77, 78'
+----------------------------------------
+
+[1;33mCommand:[0m qmicli -d /dev/cdc-wdm3 --dms-list-stored-images
+[1;33mDescription:[0m List stored firmware images
+[0;32mResponse:[0m
+----------------------------------------
+[0;31mCommand failed with exit code 1[0m
+error: couldn't list stored images: QMI protocol error (57): 'WmsInvalidMessageId'
+----------------------------------------
+
+[1;33mCommand:[0m qmicli -d /dev/cdc-wdm3 --dms-get-software-version
+[1;33mDescription:[0m Get software version information
+[0;32mResponse:[0m
+----------------------------------------
+[/dev/cdc-wdm3] Software version: 89611.1000.00.01.09.16
+----------------------------------------
+
+[1;33mCommand:[0m qmicli -d /dev/cdc-wdm3 --dms-swi-get-usb-composition
+[1;33mDescription:[0m Get USB composition (Sierra Wireless specific)
+[0;32mResponse:[0m
+----------------------------------------
+[0;31mCommand failed with exit code 1[0m
+error: couldn't get USB composite modes: QMI protocol error (57): 'WmsInvalidMessageId'
+----------------------------------------
+
+[1;33mCommand:[0m qmicli -d /dev/cdc-wdm3 --dms-get-prl-version
+[1;33mDescription:[0m Get PRL (Preferred Roaming List) version
+[0;32mResponse:[0m
+----------------------------------------
+[0;31mCommand failed with exit code 1[0m
+error: couldn't get the PRL version: QMI protocol error (94): 'NotSupported'
+----------------------------------------
+
+[1;33mCommand:[0m qmicli -d /dev/cdc-wdm3 --dms-get-activation-state
+[1;33mDescription:[0m Get service activation state
+[0;32mResponse:[0m
+----------------------------------------
+[0;31mCommand failed with exit code 1[0m
+error: couldn't get the state of the service activation: QMI protocol error (25): 'DeviceUnsupported'
+----------------------------------------
+
+[1;33mCommand:[0m qmicli -d /dev/cdc-wdm3 --dms-get-user-lock-state
+[1;33mDescription:[0m Get user lock state
+[0;32mResponse:[0m
+----------------------------------------
+[0;31mCommand failed with exit code 1[0m
+error: couldn't get the state of the user lock: QMI protocol error (94): 'NotSupported'
+----------------------------------------
+
+[1;33mCommand:[0m qmicli -d /dev/cdc-wdm3 --dms-get-boot-image-download-mode
+[1;33mDescription:[0m Get boot image download mode
+[0;32mResponse:[0m
+----------------------------------------
+[0;31mCommand failed with exit code 1[0m
+error: couldn't get boot image download mode: QMI protocol error (57): 'WmsInvalidMessageId'
+----------------------------------------
+
+[1;33mCommand:[0m qmicli -d /dev/cdc-wdm3 --dms-get-factory-sku
+[1;33mDescription:[0m Get factory SKU
+[0;32mResponse:[0m
+----------------------------------------
+[/dev/cdc-wdm3] Device factory SKU retrieved:
+	SKU: 'FM62NN002W'
+----------------------------------------
+
+[0;34m========================================[0m
+[0;34m DEVICE /dev/cdc-wdm3 TESTING COMPLETE[0m
+[0;34m========================================[0m
+
+[0;32mAll QMI command tests completed![0m
+[1;33mNote: Some commands may fail depending on device capabilities and support.[0m

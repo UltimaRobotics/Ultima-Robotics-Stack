@@ -1,0 +1,19 @@
+
+{
+    "description": "Example timeouts configuration for cellular connection",
+    "version": "1.0",
+    "timeouts": {
+        "ping_timeout": 3000,
+        "dns_resolution_timeout": 8000,
+        "http_test_timeout": 25000,
+        "qmi_device_open_timeout": 15000,
+        "qmi_start_network_timeout": 30000,
+        "dhcp_timeout": 45000,
+        "connectivity_check_timeout": 30000,
+        "connectivity_check_interval": 60000,
+        "modem_reset_timeout": 90000,
+        "connection_retry_timeout": 45000,
+        "retry_delay": 2000
+    }
+}
+

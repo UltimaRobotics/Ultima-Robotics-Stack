@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UR WebIF Platform - Initializing...</title>
+    
+    <!-- External Dependencies -->
+    <script src="./assets/css/tailwind-3.4.17.js"></script>
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet"> -->
+    <script>
+        window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};
+    </script>   
+    <script src="./assets/js/all.min.js"></script>
+    <link href="./assets/css/fonts.css">
+    
+    <!-- HTTP Client System -->
+    <script type="module">
+        import { HttpConfig } from './assets/js/http-client/lib/config.js';
+        import { HttpClient } from './assets/js/http-client/src/HttpClient.js';
+        import { JWTTokenManager } from './assets/js/jwt-token-manager.js';
+
+        /**
+         * Platform Initialization System
+         * Handles base URL collection, HTTP client configuration, authentication, and routing
+         */
+        class PlatformInitializer {
+            constructor() {
+                this.baseURL = '';
+                this.httpClient = null;
+                this.tokenManager = null;
+                this.initializationSteps = [
+                    'collectBaseUrl',
+                    'createHttpClientConfig', 
+                    'initializeAuthentication',
+                    'redirectToLogin'
+                ];
+                this.currentStep = 0;
+            }
+
+            /**
+             * Start the initialization process
+             */
+            async initialize() {
+                try {
+                    console.log('[PLATFORM] Starting initialization...');
+                    this.updateLoadingUI('Collecting base URL...');
+                    
+                    // Execute initialization steps
+                    for (const step of this.initializationSteps) {
+                        this.currentStep = this.initializationSteps.indexOf(step);
+                        await this[step]();
+                        console.log(`[PLATFORM] Completed step: ${step}`);
+                    }
+                    
+                } catch (error) {
+                    console.error('[PLATFORM] Initialization failed:', error);
+                    this.handleError(error);
+                }
+            }
+
+            /**
+             * Collect the base URL from current location
+             */
+            async collectBaseUrl() {
+                this.updateLoadingUI('Collecting base URL...');
+                
+                // Get base URL from current location
+                const protocol = window.location.protocol;
+                const hostname = window.location.hostname;
+                const port = window.location.port;
+                
+                this.baseURL = `${protocol}//${hostname}${port ? ':' + port : ''}`;
+                console.log('[PLATFORM] Base URL collected:', this.baseURL);
+                
+                // Store base URL for other components
+                window.PLATFORM_CONFIG = {
+                    baseURL: this.baseURL,
+                    apiBaseURL: `${this.baseURL}/api`
+                };
+                
+                // Simulate async operation
+                await this.delay(500);
+            }
+
+            /**
+             * Create HTTP client configuration
+             */
+            async createHttpClientConfig() {
+                this.updateLoadingUI('Creating HTTP client configuration...');
+                
+                try {
+                    // Create HTTP configuration
+                    const httpConfig = new HttpConfig({
+                        baseURL: this.baseURL,
+                        timeout: 10000,
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        retryConfig: {
+                            maxRetries: 3,
+                            retryDelay: 1000
+                        }
+                    });
+
+                    // Test HTTP connection
+                    this.httpClient = new HttpClient(httpConfig);
+                    await this.testHttpConnection();
+                    
+                    // Store HTTP client globally
+                    window.PLATFORM_HTTP_CLIENT = this.httpClient;
+                    
+                    console.log('[PLATFORM] HTTP client configured successfully');
+                    await this.delay(500);
+                    
+                } catch (error) {
+                    console.error('[PLATFORM] HTTP client configuration failed:', error);
+                    throw new Error('HTTP_CONNECTION_FAILED');
+                }
+            }
+
+            /**
+             * Test HTTP server connection
+             */
+            async testHttpConnection() {
+                this.updateLoadingUI('Testing server connection...');
+                
+                try {
+                    // Try to connect to the server with a simple health check
+                    const response = await fetch(`${this.baseURL}/api/health`, {
+                        method: 'GET',
+                        timeout: 5000
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`Server returned ${response.status}`);
+                    }
+                    
+                    console.log('[PLATFORM] Server connection successful');
+                    
+                } catch (error) {
+                    // If health endpoint doesn't exist, try a basic connection test
+                    try {
+                        const response = await fetch(this.baseURL, {
+                            method: 'HEAD',
+                            timeout: 5000
+                        });
+                        console.log('[PLATFORM] Basic connection successful');
+                    } catch (fallbackError) {
+                        throw new Error('CONNECTION_FAILED');
+                    }
+                }
+                
+                await this.delay(500);
+            }
+
+            /**
+             * Initialize authentication system
+             */
+            async initializeAuthentication() {
+                this.updateLoadingUI('Initializing authentication...');
+                
+                try {
+                    // Initialize JWT token manager
+                    this.tokenManager = new JWTTokenManager({
+                        apiBaseUrl: window.PLATFORM_CONFIG.apiBaseURL,
+                        storageKey: 'ur_webif_token',
+                        refreshKey: 'ur_webif_refresh_token',
+                        userKey: 'ur_webif_user',
+                        autoRefresh: true
+                    });
+
+                    // Store token manager globally
+                    window.PLATFORM_TOKEN_MANAGER = this.tokenManager;
+                    
+                    console.log('[PLATFORM] Authentication system initialized');
+                    await this.delay(500);
+                    
+                } catch (error) {
+                    console.error('[PLATFORM] Authentication initialization failed:', error);
+                    throw new Error('AUTH_INITIALIZATION_FAILED');
+                }
+            }
+
+            /**
+             * Redirect to login page
+             */
+            async redirectToLogin() {
+                this.updateLoadingUI('Redirecting to login...');
+                
+                try {
+                    // Check if login page exists
+                    const loginPageResponse = await fetch('/login-page.html', {
+                        method: 'GET'
+                    });
+                    
+                    if (loginPageResponse.ok) {
+                        console.log('[PLATFORM] Redirecting to login page');
+                        await this.delay(1000); // Brief delay for UI feedback
+                        window.location.href = '/login-page.html';
+                    } else {
+                        throw new Error('LOGIN_PAGE_NOT_FOUND');
+                    }
+                    
+                } catch (error) {
+                    console.error('[PLATFORM] Failed to redirect to login:', error);
+                    if (error.message === 'LOGIN_PAGE_NOT_FOUND') {
+                        this.showNotFoundError();
+                    } else {
+                        throw error;
+                    }
+                }
+            }
+
+            /**
+             * Handle initialization errors
+             */
+            handleError(error) {
+                console.error('[PLATFORM] Handling error:', error.message);
+                
+                switch (error.message) {
+                    case 'HTTP_CONNECTION_FAILED':
+                    case 'CONNECTION_FAILED':
+                        this.showConnectionError();
+                        break;
+                    case 'LOGIN_PAGE_NOT_FOUND':
+                        this.showNotFoundError();
+                        break;
+                    default:
+                        this.showGenericError(error);
+                        break;
+                }
+            }
+
+            /**
+             * Show connection error page
+             */
+            showConnectionError() {
+                console.log('[PLATFORM] Showing connection error page');
+                fetch('./assets/js/templates/error-connection-page.html')
+                    .then(response => response.text())
+                    .then(html => {
+                        document.body.innerHTML = html;
+                        this.setupErrorPageButtons();
+                    })
+                    .catch(err => {
+                        console.error('[PLATFORM] Failed to load connection error template:', err);
+                        this.showFallbackError('Connection Error', 'Unable to connect to the server. Please check your internet connection and try again.');
+                    });
+            }
+
+            /**
+             * Show 404 error page
+             */
+            showNotFoundError() {
+                console.log('[PLATFORM] Showing 404 error page');
+                fetch('./assets/js/templates/error-page-notfound.html')
+                    .then(response => response.text())
+                    .then(html => {
+                        document.body.innerHTML = html;
+                        this.setupErrorPageButtons();
+                    })
+                    .catch(err => {
+                        console.error('[PLATFORM] Failed to load 404 error template:', err);
+                        this.showFallbackError('Page Not Found', 'The requested page could not be found.');
+                    });
+            }
+
+            /**
+             * Show fallback error when templates fail to load
+             */
+            showFallbackError(title, message) {
+                document.body.innerHTML = `
+                    <div class="flex items-center justify-center min-h-screen bg-gray-100">
+                        <div class="max-w-md mx-auto text-center px-6">
+                            <div class="mb-6">
+                                <i class="fas fa-exclamation-triangle text-6xl text-yellow-500"></i>
+                            </div>
+                            <h1 class="text-4xl text-gray-700 mb-4">${title}</h1>
+                            <p class="text-gray-600 mb-8">${message}</p>
+                            <button onclick="window.location.reload()" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors">
+                                <i class="fas fa-refresh mr-2"></i>Try Again
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            /**
+             * Show generic error
+             */
+            showGenericError(error) {
+                this.showFallbackError('Initialization Error', `An error occurred during initialization: ${error.message}`);
+            }
+
+            /**
+             * Setup error page button handlers
+             */
+            setupErrorPageButtons() {
+                // Retry button
+                const retryBtn = document.getElementById('retry-button');
+                if (retryBtn) {
+                    retryBtn.addEventListener('click', () => {
+                        window.location.reload();
+                    });
+                }
+
+                // Home button
+                const homeBtn = document.getElementById('home-button');
+                if (homeBtn) {
+                    homeBtn.addEventListener('click', () => {
+                        window.location.href = './index.html';
+                    });
+                }
+
+                // Go back button
+                const backBtn = document.getElementById('go-back-button');
+                if (backBtn) {
+                    backBtn.addEventListener('click', () => {
+                        window.history.back();
+                    });
+                }
+            }
+
+            /**
+             * Update loading UI
+             */
+            updateLoadingUI(message) {
+                const loadingText = document.getElementById('loading-text');
+                const loadingStep = document.getElementById('loading-step');
+                const progressBar = document.getElementById('progress-bar');
+                
+                if (loadingText) {
+                    loadingText.textContent = message;
+                }
+                
+                if (loadingStep) {
+                    loadingStep.textContent = `Step ${this.currentStep + 1} of ${this.initializationSteps.length}`;
+                }
+                
+                if (progressBar) {
+                    const progress = ((this.currentStep + 1) / this.initializationSteps.length) * 100;
+                    progressBar.style.width = `${progress}%`;
+                }
+            }
+
+            /**
+             * Utility: Delay execution
+             */
+            delay(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+        }
+
+        // Initialize platform when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            const initializer = new PlatformInitializer();
+            initializer.initialize();
+        });
+
+        // Export for global access
+        window.PlatformInitializer = PlatformInitializer;
+    </script>
+    
+    <style>
+        ::-webkit-scrollbar { display: none; }
+        body { 
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .loading-spinner {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="flex-grow overflow-y-auto">
+        <div class="flex items-center justify-center mx-4 my-8 h-[calc(100vh-120px)]">
+            <div class="w-full max-w-md text-center fade-in">
+                <!-- Loading Icon -->
+                <div class="mb-8">
+                    <div class="w-16 h-16 bg-gray-900 rounded-lg flex items-center justify-center mx-auto">
+                        <i class="fas fa-cube text-white text-2xl loading-spinner"></i>
+                    </div>
+                </div>
+
+                <!-- Loading Title -->
+                <h1 class="text-2xl font-bold text-gray-900 mb-2">UR WebIF Platform</h1>
+                <p class="text-gray-600 mb-8">Initializing application...</p>
+
+                <!-- Loading Progress -->
+                <div class="mb-6">
+                    <div class="w-full bg-gray-200 rounded-full h-2 mb-2">
+                        <div id="progress-bar" class="bg-blue-600 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                    <p id="loading-step" class="text-sm text-gray-500">Step 1 of 4</p>
+                </div>
+
+                <!-- Loading Message -->
+                <div class="mb-8">
+                    <div class="flex items-center justify-center">
+                        <i class="fas fa-spinner fa-spin text-gray-400 mr-2"></i>
+                        <span id="loading-text" class="text-gray-600">Collecting base URL...</span>
+                    </div>
+                </div>
+
+                <!-- Status Indicator -->
+                <div class="flex items-center justify-center">
+                    <div class="w-2 h-2 bg-yellow-400 rounded-full mr-2"></div>
+                    <span class="text-sm text-gray-500">System Status: Initializing</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

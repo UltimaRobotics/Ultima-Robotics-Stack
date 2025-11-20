@@ -1,0 +1,9 @@
+
+{
+  "operation": "iperf",
+  "servers_list_path": "runtime-configs/public-servers.json",
+  "iperf": {
+    "server_hostname": "iperf.angolacables.co.ao"
+  },
+  "output_file": "runtime-data/iperf_test_results.json"
+}

@@ -1,0 +1,6 @@
+{
+  "operation": "update_license_definitions",
+  "parameters": {
+    "definitions_file": "/home/runner/workspace/ur-licence-mann/tests/output/test_definitions.json"
+  }
+}

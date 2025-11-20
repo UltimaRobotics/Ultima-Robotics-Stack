@@ -1,0 +1,32 @@
+
+{
+  "profiles": [
+    {
+      "basic": {
+        "path": "/dev/cdc-wdm0",
+        "imei": "869816054518831",
+        "model": "NL668-EAU-10-01",
+        "manufacturer": "Fibocom Wireless Inc."
+      },
+      "advanced": {
+        "bands": ["3", "7", "20"],
+        "apn": "internet"
+      }
+    }
+  ],
+  "monitoring_config": {
+    "collection_interval_ms": 3000,
+    "timeout_ms": 15000,
+    "enable_health_scoring": true,
+    "health_weights": {
+      "signal_weight": 0.5,
+      "network_weight": 0.35,
+      "rf_weight": 0.15
+    }
+  },
+  "failure_detection": {
+    "critical_rssi_threshold": -105,
+    "warning_rssi_threshold": -90,
+    "max_consecutive_failures": 5
+  }
+}

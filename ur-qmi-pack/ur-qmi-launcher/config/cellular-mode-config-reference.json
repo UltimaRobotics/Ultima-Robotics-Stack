@@ -1,0 +1,59 @@
+{
+    "cellular_mode_examples": {
+        "lte_only_configuration": {
+            "cellular_mode": "lte_only",
+            "preferred_bands": [1, 3, 7, 20],
+            "preference_duration": 300,
+            "force_mode_selection": false,
+            "enforce_mode_before_connection": true,
+            "description": "Force LTE only mode with specific bands"
+        },
+        "5g_only_configuration": {
+            "cellular_mode": "5g_only",
+            "preferred_bands": [78, 79, 258],
+            "preference_duration": 600,
+            "force_mode_selection": true,
+            "enforce_mode_before_connection": true,
+            "description": "Force 5G only mode with preferred bands"
+        },
+        "lte_5g_auto_configuration": {
+            "cellular_mode": "lte_5g",
+            "preferred_bands": [],
+            "preference_duration": 0,
+            "force_mode_selection": false,
+            "enforce_mode_before_connection": true,
+            "description": "Allow LTE and 5G automatic selection"
+        },
+        "automatic_configuration": {
+            "cellular_mode": "auto",
+            "preferred_bands": [],
+            "preference_duration": 0,
+            "force_mode_selection": false,
+            "enforce_mode_before_connection": false,
+            "description": "Automatic mode selection by modem"
+        },
+        "3gpp_legacy_configuration": {
+            "cellular_mode": "3gpp_legacy",
+            "preferred_bands": [1, 8],
+            "preference_duration": 180,
+            "force_mode_selection": false,
+            "enforce_mode_before_connection": true,
+            "description": "Use 3GPP legacy mode (UMTS) for older networks"
+        }
+    },
+    "band_reference": {
+        "lte_bands": {
+            "band_1": "2100 MHz",
+            "band_3": "1800 MHz",
+            "band_7": "2600 MHz",
+            "band_8": "900 MHz",
+            "band_20": "800 MHz",
+            "band_28": "700 MHz"
+        },
+        "5g_bands": {
+            "band_78": "3500 MHz (n78)",
+            "band_79": "4700 MHz (n79)",
+            "band_258": "26 GHz (n258)"
+        }
+    }
+}

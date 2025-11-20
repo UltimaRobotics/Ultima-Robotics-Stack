@@ -1,0 +1,13 @@
+
+{
+  "role": "client",
+  "server_hostname": "127.0.0.1",
+  "port": 5201,
+  "duration": 10,
+  "protocol": "tcp",
+  "interval": 1.0,
+  "json": true,
+  "realtime": true,
+  "log_results": true,
+  "streaming": false
+}

@@ -1,0 +1,9 @@
+
+{
+  "target": "8.8.8.8",
+  "max_hops": 15,
+  "timeout_ms": 3000,
+  "packet_size": 60,
+  "num_queries": 3,
+  "export_file_path": "traceroute_export_results.json"
+}

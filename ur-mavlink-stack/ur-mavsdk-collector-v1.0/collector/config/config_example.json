@@ -1,0 +1,10 @@
+{
+  "connection": {
+    "type": "udp",
+    "address": "127.0.0.1",
+    "port": 14550,
+    "system_id": "1",
+    "component_id": "1",
+    "timeout_s": 10
+  }
+}

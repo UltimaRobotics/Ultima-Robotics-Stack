@@ -1,0 +1,9 @@
+{
+  "operation": "generate",
+  "parameters": {
+    "output": "/home/runner/workspace/ur-licence-mann/tests/output/update_encrypt_license.lic",
+    "license_id": "UPDATE-ENC-001",
+    "customer_name": "Update Test User",
+    "customer_email": "update@test.com"
+  }
+}

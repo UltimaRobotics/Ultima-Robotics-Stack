@@ -1,0 +1,12 @@
+
+{
+  "operation": "dns",
+  "dns": {
+    "hostname": "google.com",
+    "query_type": "A",
+    "nameserver": "",
+    "timeout_ms": 5000,
+    "use_tcp": false
+  },
+  "output_file": "runtime-data/dns_test_results.json"
+}

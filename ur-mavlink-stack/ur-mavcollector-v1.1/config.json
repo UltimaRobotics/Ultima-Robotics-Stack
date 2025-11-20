@@ -1,0 +1,27 @@
+
+{
+  "udp_address": "127.0.0.1",
+  "udp_port": 44003,
+  "request_sysid": 214,
+  "request_compid": 1,
+  "log_file": "runtime-data/mavlink_data.json",
+  "diagnose_data_logfile": "runtime-data/diagnose_data.json",
+  "params_log_file": "runtime-data/params_collected.json",
+  "request_interval_ms": 500,
+  "log_interval_ms": 1000,
+  "diagnose_log_interval_ms": 1000,
+  "socket_timeout_ms": 100,
+  "collection_loop_sleep_ms": 10,
+  "verbose": false,
+  "mav_stats_counter": true,
+  "enableHTTP": true,
+  "filtered_system_ids": [255],
+  "httpConfig": {
+    "serverAddress": "0.0.0.0",
+    "serverPort": 5000,
+    "timeoutMs": 5000,
+    "fetch_status_interval_ms": 1000
+  }
+}
+
+

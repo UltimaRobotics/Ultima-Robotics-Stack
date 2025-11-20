@@ -1,0 +1,11 @@
+{
+    "devices": [
+        {
+            "device_path": "/dev/cdc-wdm4",
+            "imei": "869814060276288",
+            "model": "FM160-EAU-00 5G Module",
+            "manufacturer": "Fibocom Wireless Inc.",
+            "is_available": true
+        }
+    ]
+}

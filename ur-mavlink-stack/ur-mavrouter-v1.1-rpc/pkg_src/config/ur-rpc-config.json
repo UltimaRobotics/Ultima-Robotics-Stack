@@ -1,0 +1,27 @@
+{
+  "client_id": "ur-mavrouter",
+  "broker_host": "127.0.0.1",
+  "broker_port": 1899,
+  "keepalive": 60,
+  "qos": 0,
+  "auto_reconnect": true,
+  "reconnect_delay_min": 1,
+  "reconnect_delay_max": 60,
+  "use_tls": false,
+  "heartbeat": {
+    "enabled": true,
+    "interval_seconds": 5,
+    "topic": "clients/ur-mavrouter/heartbeat",
+    "payload": "{\"client\":\"ur-mavrouter\",\"status\":\"alive\"}"
+  },
+  "json_added_pubs": {
+    "topics": [
+      "direct_messaging/ur-mavrouter/responses"
+    ]
+  },
+  "json_added_subs": {
+    "topics": [
+      "direct_messaging/ur-mavrouter/requests"
+    ]
+  }
+}

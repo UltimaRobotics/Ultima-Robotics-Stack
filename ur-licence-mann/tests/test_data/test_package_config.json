@@ -1,0 +1,16 @@
+
+{
+  "product_name": "TestProduct",
+  "product_version": "1.0.0",
+  "device_model": "TestDevice",
+  "keys_directory": "tests/output/test_keys",
+  "private_key_file": "tests/output/test_keys/private_key.pem",
+  "public_key_file": "tests/output/test_keys/public_key.pem",
+  "encryption_keys_file": "tests/output/test_keys/encryption_keys.json",
+  "license_definitions_file": "config/license_definitions.json",
+  "encrypted_license_definitions_file": "tests/output/encrypted_definitions.json",
+  "auto_encrypt_licenses": false,
+  "auto_encrypt_definitions": false,
+  "require_hardware_binding": true,
+  "master_encryption_key": "test-encryption-key-32-characters!!"
+}

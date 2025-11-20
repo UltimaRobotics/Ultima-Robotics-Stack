@@ -1,0 +1,7 @@
+
+{
+  "hostname": "google.com",
+  "query_type": "AAAA",
+  "timeout_ms": 5000,
+  "use_tcp": false
+}

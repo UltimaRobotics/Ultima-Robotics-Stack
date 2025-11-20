@@ -1,0 +1,9 @@
+{
+    "description": "Example cellular IP monitoring configuration",
+    "ping_targets": ["8.8.8.8", "164.132.53.65"],
+    "ping_interval_ms": 5000,
+    "ping_timeout_ms": 3000,
+    "enable_monitoring": true,
+    "log_format": "json",
+    "include_modem_data": true
+}

@@ -1,0 +1,80 @@
+<div id="modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div id="settings-modal" class="bg-white rounded-lg shadow-2xl w-[600px] max-w-[90vw]">
+    <!-- Modal Header -->
+    <div id="modal-header" class="flex items-center justify-between px-6 py-4 border-b border-neutral-200">
+      <h2 class="text-xl text-neutral-900">Settings</h2>
+      <button id="close-btn" class="p-1 hover:bg-neutral-100 rounded-md transition-colors">
+        <i class="text-neutral-500 text-lg" data-fa-i2svg=""><svg class="svg-inline--fa fa-xmark" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"></path></svg></i>
+      </button>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div id="tab-navigation" class="border-b border-neutral-200">
+      <nav class="flex">
+        <button id="password-tab" class="px-6 py-3 text-sm text-neutral-900 border-b-2 border-neutral-900 bg-neutral-50">
+          Manage Password
+        </button>
+        <button id="token-tab" class="px-6 py-3 text-sm text-neutral-600 hover:text-neutral-900 hover:bg-neutral-50 transition-colors">
+          Manage Access Token
+        </button>
+        <button id="cloud-tab" class="px-6 py-3 text-sm text-neutral-600 hover:text-neutral-900 hover:bg-neutral-50 transition-colors">
+          Ultima Cloud
+        </button>
+      </nav>
+    </div>
+
+    <!-- Modal Content -->
+    <div id="modal-content" class="px-6 py-6">
+      <!-- Password Management Section -->
+      <div id="password-section">
+        <div class="mb-6">
+          <h3 class="text-lg text-neutral-900 mb-2">Change your password</h3>
+          <p class="text-sm text-neutral-600">Create a strong password with at least 12 characters.</p>
+        </div>
+
+        <!-- Password Form -->
+        <form id="password-form" class="space-y-5">
+          <!-- Current Password Field -->
+          <div class="form-group">
+            <label for="current-password" class="block text-sm text-neutral-700 mb-2">
+              Current password
+            </label>
+            <div class="relative">
+              <input type="password" id="current-password" name="current-password" class="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:border-transparent" required="">
+            </div>
+          </div>
+
+          <!-- New Password Field -->
+          <div class="form-group">
+            <label for="new-password" class="block text-sm text-neutral-700 mb-2">
+              New password
+            </label>
+            <div class="relative">
+              <input type="password" id="new-password" name="new-password" placeholder="Use 12+ characters, numbers &amp; symbols" class="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:border-transparent" required="">
+            </div>
+          </div>
+
+          <!-- Confirm Password Field -->
+          <div class="form-group">
+            <label for="confirm-password" class="block text-sm text-neutral-700 mb-2">
+              Confirm new password
+            </label>
+            <div class="relative">
+              <input type="password" id="confirm-password" name="confirm-password" placeholder="Re-enter new password" class="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:border-transparent" required="">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal Footer -->
+    <div id="modal-footer" class="flex justify-end gap-3 px-6 py-4 border-t border-neutral-200">
+      <button id="cancel-btn" type="button" class="px-4 py-2 text-sm text-neutral-700 bg-white border border-neutral-300 rounded-md hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-neutral-500 transition-colors">
+        Cancel
+      </button>
+      <button id="update-btn" type="submit" class="px-4 py-2 text-sm text-white bg-neutral-900 rounded-md hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-neutral-500 transition-colors">
+        Update Password
+      </button>
+    </div>
+  </div>
+</div>

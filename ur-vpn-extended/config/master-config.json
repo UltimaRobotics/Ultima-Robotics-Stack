@@ -1,0 +1,11 @@
+{
+  "config_file_path": "config/config.json",
+  "cached_data_path": "config/cached-data.json",
+  "custom_routing_rules": "config/routing-rules.json",
+  "http_server": {
+    "enabled": true,
+    "host": "0.0.0.0",
+    "port": 5000
+  },
+  "verbose": true
+}

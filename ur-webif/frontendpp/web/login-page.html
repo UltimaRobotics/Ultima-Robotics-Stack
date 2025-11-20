@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UR WebIF API - Login</title>
+    
+    <!-- External Dependencies -->
+     <script src="./assets/css/tailwind-3.4.17.js"></script>
+<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet"> -->
+    <script>
+        window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Popup Manager -->
+    <script type="module" src="assets/js/popup-manager.js"></script>
+    
+    <!-- JWT Authentication System -->
+    <script type="module" src="assets/js/jwt-token-manager.js"></script>
+    
+    <!-- HTTP Client System -->
+    <script type="module" src="assets/js/http-client/src/HttpClient.js"></script>
+    <script type="module" src="assets/js/http-client/lib/config.js"></script>
+    
+    <!-- Login Page Modules -->
+    <script type="module" src="assets/js/login-ui.js"></script>
+    <script type="module" src="assets/js/login-file.js"></script>
+    <script type="module" src="assets/js/login-auth.js"></script>
+    <script type="module" src="assets/js/login-modal.js"></script>
+    <script type="module" src="assets/js/login-main.js"></script>
+    
+    <style>
+        ::-webkit-scrollbar { display: none;}
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <main class="flex-grow overflow-y-auto">
+        <div>
+            <div class="flex items-center justify-center mx-4 my-8 h-[calc(100vh-120px)]">
+                <div id="login-container" class="w-full max-w-md">
+                    <div id="login-card" class="bg-white rounded-xl shadow-lg p-8">
+                        <!-- Logo Section -->
+                        <div id="logo-section" class="flex justify-center mb-8">
+                            <div class="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-cube text-white text-xl"></i>
+                            </div>
+                        </div>
+
+                        <!-- Welcome Section -->
+                        <div id="welcome-section" class="text-center mb-8">
+                            <h1 class="text-2xl font-bold text-gray-900 mb-2">Welcome back</h1>
+                            <p class="text-gray-600">Sign in to your account</p>
+                        </div>
+
+                        <!-- Login Form -->
+                        <form id="login-form" class="space-y-6">
+                            <!-- Username Field -->
+                            <div id="username-field">
+                                <label for="username" class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                                <div class="relative">
+                                    <input 
+                                        type="text" 
+                                        id="username" 
+                                        name="username" 
+                                        placeholder="Enter your username"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none pr-12"
+                                        required
+                                    >
+                                    <i class="fa-solid fa-user absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                </div>
+                            </div>
+
+                            <!-- Password Field -->
+                            <div id="password-field">
+                                <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                                <div class="relative">
+                                    <input 
+                                        type="password" 
+                                        id="password" 
+                                        name="password" 
+                                        placeholder="Enter your password"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none pr-12"
+                                        required
+                                    >
+                                    <button type="button" id="toggle-password" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Auth File Section -->
+                            <div id="auth-file-section">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Authentication File (Optional)</label>
+                                <button type="button" id="auth-toggle" class="w-full flex items-center justify-between p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                                    <span class="text-gray-600">Select authentication file</span>
+                                    <i class="fa-solid fa-chevron-down text-gray-400"></i>
+                                </button>
+                                
+                                <!-- Hidden file upload area -->
+                                <div id="file-upload-area" class="hidden mt-2 p-4 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50">
+                                    <div class="text-center">
+                                        <i class="fa-solid fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                        <p class="text-sm text-gray-600 mb-1">Click to browse or drag and drop your authentication file</p>
+                                        <p class="text-xs text-gray-500">Supports: UACC files</p>
+                                        <input type="file" id="auth-file" class="hidden" accept=".uacc,.json">
+                                        <div id="file-info" class="mt-2 text-sm text-gray-700"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Options Section -->
+                            <div id="options-section" class="flex items-center justify-between">
+                                <label class="flex items-center">
+                                    <input type="checkbox" id="remember" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                    <span class="ml-2 text-sm text-gray-700">Remember me</span>
+                                </label>
+                                <a href="#" id="forgot-password" class="text-sm text-blue-600 hover:text-blue-700 font-medium">Forgot password?</a>
+                            </div>
+
+                            <!-- Sign In Button -->
+                            <button type="submit" id="signin-btn" class="w-full bg-gray-900 text-white py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-center space-x-2 font-medium">
+                                <span id="signin-text">Sign in</span>
+                                <div id="signin-dot" class="w-2 h-2 bg-white rounded-full"></div>
+                                <div id="signin-spinner" class="hidden w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                            </button>
+
+                            <!-- Sign Up Link -->
+                            <div id="signup-link" class="text-center">
+                                <p class="text-sm text-gray-600">
+                                    Don't have an account? 
+                                    <a href="#" id="signup-link" class="text-blue-600 hover:text-blue-700 font-medium">Sign up</a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    </body>
+</html>

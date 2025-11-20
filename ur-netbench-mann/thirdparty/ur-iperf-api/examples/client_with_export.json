@@ -1,0 +1,12 @@
+{
+  "role": "client",
+  "server_hostname": "41.226.22.119",
+  "port": 9202,
+  "duration": 100,
+  "protocol": "tcp",
+  "num_streams": 1,
+  "blksize": 131072,
+  "interval": 1.0,
+  "json": true,
+  "verbose": false
+}

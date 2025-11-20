@@ -1,0 +1,7 @@
+{
+  "operation": "verify",
+  "parameters": {
+    "license_file": "/home/runner/workspace/ur-licence-mann/tests/output/force_encrypt_test.lic.enc",
+    "check_expiry": "false"
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "vpn_profiles": [
+    {
+      "auth_method": "",
+      "auto_connect": true,
+      "config_file": {
+        "content": "client\nproto udp\nexplicit-exit-notify\nremote 164.132.53.65 1194\ndev tun\nresolv-retry infinite\nnobind\npersist-key\npersist-tun\nremote-cert-tls server\nverify-x509-name server_TdRVRdZMQXooJ8YK name\nauth SHA256\nauth-nocache\ncipher AES-128-GCM\ntls-client\ntls-version-min 1.2\ntls-cipher TLS-ECDHE-ECDSA-WITH-AES-128-GCM-SHA256\nignore-unknown-option block-outside-dns\nsetenv opt block-outside-dns # Prevent Windows 10 DNS leak\nverb 3\n<ca>\n-----BEGIN CERTIFICATE-----\nMIIB1zCCAX2gAwIBAgIUKu0dlV/p50POOmdd9rV/5LSlHAgwCgYIKoZIzj0EAwIw\nHjEcMBoGA1UEAwwTY25fQmVLRzhPcHBGbmpPQTVHdDAeFw0yNTAxMjUyMTM0NTFa\nFw0zNTAxMjMyMTM0NTFaMB4xHDAaBgNVBAMME2NuX0JlS0c4T3BwRm5qT0E1R3Qw\nWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASKJV4qF+jf3kS0q6lfyj9mpHiKBB7J\nI+VtRP6hRu7Z//wbvAxja/W8k8ZEVdYYGsptoBdIrICk/yLLarqR7vwYo4GYMIGV\nMAwGA1UdEwQFMAMBAf8wHQYDVR0OBBYEFMyVjreBF8fKrM7DQ+bE5nuoFJrSMFkG\nA1UdIwRSMFCAFMyVjreBF8fKrM7DQ+bE5nuoFJrSoSKkIDAeMRwwGgYDVQQDDBNj\nbl9CZUtHOE9wcEZuak9BNUd0ghQq7R2VX+nnQ846Z132tX/ktKUcCDALBgNVHQ8E\nBAMCAQYwCgYIKoZIzj0EAwIDSAAwRQIgTZ83kdb3QF7ZxK9UqhJ48Ulp0BOt4wzA\naCRzrmEWrssCIQCGQyiio2x9fCPkDx9ORZpSx7E1LeXv0Me1fmaGPm1mvw==\n-----END CERTIFICATE-----\n</ca>\n<cert>\n-----BEGIN CERTIFICATE-----\nMIIB7TCCAZOgAwIBAgIQSBsd2pGnJUKt8Rerd9RK9zAKBggqhkjOPQQDAjAeMRww\nGgYDVQQDDBNjbl9CZUtHOE9wcEZuak9BNUd0MB4XDTI1MDIxNzEyMjI1NVoXDTM1\nMDIxNTEyMjI1NVowJjEkMCIGA1UEAwwbVWx0aW1hLVJvYm90aWNzLUZlaG1pWW91\nc2ZpMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEgx7/hffwjMpsvR2PsZmKDdVg\nmVVZlZtVUfYeNbtfUkIxYHglDlqLaqNxHuBmuStX5ZyZbygHJtf1y2SJHicJ2qOB\nqjCBpzAJBgNVHRMEAjAAMB0GA1UdDgQWBBQ/FqemJppFKOjNWgkmIfEMCj1vFDBZ\nBgNVHSMEUjBQgBTMlY63gRfHyqzOw0PmxOZ7qBSa0qEipCAwHjEcMBoGA1UEAwwT\nY25fQmVLRzhPcHBGbmpPQTVHdIIUKu0dlV/p50POOmdd9rV/5LSlHAgwEwYDVR0l\nBAwwCgYIKwYBBQUHAwIwCwYDVR0PBAQDAgeAMAoGCCqGSM49BAMCA0gAMEUCIQDP\nyRgCkRLRWbjn6ILdVNcsKK8/jqZ0wzm6L9Al+wc3gQIgGgZztraKQDqk3y7tYXIn\nNZRfMCv5F9lurmPvmAY9Ls8=\n-----END CERTIFICATE-----\n</cert>\n<key>\n-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgTzUbi+pUGOQw6zYa\nCLNhb+Mlih7hz8G7rEolu5bjnimhRANCAASDHv+F9/CMymy9HY+xmYoN1WCZVVmV\nm1VR9h41u19SQjFgeCUOWotqo3Ee4Ga5K1flnJlvKAcm1/XLZIkeJwna\n-----END PRIVATE KEY-----\n</key>\n<tls-crypt>\n#\n# 2048 bit OpenVPN static key\n#\n-----BEGIN OpenVPN Static key V1-----\na486e383d2808b4de536e98ba5fde00e\nd49954340fe8ea1dd9d5415c93b46295\nab8e57fecdd1371f6deed36a332647d7\n0ba89d3adfe8ab83284d871016f2a544\ncf88c32ed5de130265f6bfc22cd5ff83\n4fa7ae14a1b7732538b186d2b41552fb\n41d22e6986b8bf3cf1ff5d288fb39e5c\n8cbf9d47de509e64247a6e7527fabd98\nd42e7263c311af475fcefb10b826fdd7\nc6cb208e495a904c92f4216f4d49e326\n60ab8cb7f3e5858b6d37799c31ef29c3\n9f66cc10d522459294dfaedae1a11e67\n7eff722b5876b59794d31141d69dfe45\n43f9649a8d25373aa894116fc829926f\nc7e3623de0bc1ab0d0f5985eff3883e1\n6364e395f7fb34f0d2262a8f09da4785\n-----END OpenVPN Static key V1-----\n</tls-crypt>\n\n"
+      },
+      "connection_stats": {
+        "connection_time": "0h 0m 0s",
+        "download_bytes": 0,
+        "download_formatted": "0.00 B",
+        "download_rate_bps": 0,
+        "download_rate_formatted": "0.00 B/s",
+        "ping_ms": 0,
+        "total_session_mb": 5.14984130859375e-05,
+        "upload_bytes": 54,
+        "upload_formatted": "54.00 B",
+        "upload_rate_bps": 54,
+        "upload_rate_formatted": "54.00 B/s"
+      },
+      "connection_time": {
+        "current_session_formatted": "0h 0m 0s",
+        "current_session_seconds": 0,
+        "total_formatted": "0h 0m 0s",
+        "total_seconds": 0
+      },
+      "created_date": "1760626538",
+      "data_transfer": {
+        "download_bytes": 0,
+        "download_formatted": "0.00 B",
+        "upload_bytes": 54,
+        "upload_formatted": "54.00 B"
+      },
+      "encryption": "",
+      "id": "ovpn0",
+      "last_used": "",
+      "name": "ovpn0",
+      "parsed_config": null,
+      "password": "",
+      "port": 0,
+      "protocol": "openvpn",
+      "server": "",
+      "status": "Disconnected",
+      "total_data_transferred": {
+        "current_session_bytes": 54,
+        "current_session_mb": 5.14984130859375e-05,
+        "total_bytes": 54,
+        "total_mb": 5.14984130859375e-05
+      },
+      "username": ""
+    },
+    {
+      "auth_method": "",
+      "auto_connect": true,
+      "config_file": {
+        "content": "[Interface]\nPrivateKey = ALol5qPf+GCh1XqNvk5wlk3osjjWoxkpvKTyBSNbDUc=\nAddress = 10.66.66.2/32,fd42:42:42::2/128\nDNS = 1.1.1.1,1.0.0.1\n\n# Uncomment the next line to set a custom MTU\n# This might impact performance, so use it only if you know what you are doing\n# See https://github.com/nitred/nr-wg-mtu-finder to find your optimal MTU\n# MTU = 1420\n\n[Peer]\nPublicKey = Mj3A4RgNdYOCNRm/GVBzyXetbhRSIHwwOHU4R+xE9m8=\nPresharedKey = uxwPSNoMSwMYzCSRK8u0eKry7Y8C//bKWrYM7x5tQ7w=\nEndpoint = 164.132.53.65:59595\nAllowedIPs = 10.66.66.0/24\n\n"
+      },
+      "connection_stats": {
+        "connection_time": "0h 0m 0s",
+        "download_bytes": 0,
+        "download_formatted": "0.00 B",
+        "download_rate_bps": 0,
+        "download_rate_formatted": "0.00 B/s",
+        "latency_ms": 0,
+        "total_session_mb": 0.0,
+        "upload_bytes": 0,
+        "upload_formatted": "0.00 B",
+        "upload_rate_bps": 0,
+        "upload_rate_formatted": "0.00 B/s"
+      },
+      "connection_time": {
+        "current_session_formatted": "0h 0m 0s",
+        "current_session_seconds": 0,
+        "total_formatted": "0h 0m 0s",
+        "total_seconds": 0
+      },
+      "created_date": "1760626555",
+      "data_transfer": {
+        "download_bytes": 0,
+        "download_formatted": "0.00 B",
+        "upload_bytes": 0,
+        "upload_formatted": "0.00 B"
+      },
+      "encryption": "",
+      "id": "wiga0",
+      "last_used": "",
+      "name": "wiga0",
+      "parsed_config": null,
+      "password": "",
+      "port": 0,
+      "protocol": "wireguard",
+      "server": "",
+      "status": "Disconnecting",
+      "total_data_transferred": {
+        "current_session_bytes": 0,
+        "current_session_mb": 0.0,
+        "total_bytes": 0,
+        "total_mb": 0.0
+      },
+      "username": ""
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "address": "127.0.0.1",
+  "assigned_extension_point": "udp-extension-point-1",
+  "extension_thread_config": {
+    "general": {
+      "tcp_server_port": 55360
+    },
+    "udp_endpoints": [
+      {
+        "address": "127.0.0.1",
+        "mode": "Server",
+        "name": "udp-extension-point-1",
+        "port": 44001
+      },
+      {
+        "address": "127.0.0.1",
+        "mode": "Client",
+        "name": "test_extension_1",
+        "port": 44100
+      }
+    ]
+  },
+  "name": "test_extension_1",
+  "port": 44100,
+  "type": "udp"
+}

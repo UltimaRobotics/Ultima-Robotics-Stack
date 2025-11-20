@@ -1,0 +1,9 @@
+{
+  "operation": "generate",
+  "parameters": {
+    "output": "/home/runner/workspace/ur-licence-mann/tests/output/builtin_encrypted_license.lic",
+    "license_id": "BUILTIN-TEST-001",
+    "customer_name": "Builtin Test User",
+    "customer_email": "builtin@test.com"
+  }
+}

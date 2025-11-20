@@ -1,0 +1,38 @@
+{
+  "name": "@webmodules/websocket-client-shared",
+  "version": "1.0.0",
+  "description": "A configurable WebSocket client implementation with shared storage support",
+  "main": "src/WebSocketClient.js",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "example": "node examples/basic-usage.js",
+    "example-shared": "node examples/shared-client.js",
+    "example-config": "node examples/advanced-config.js"
+  },
+  "keywords": [
+    "websocket",
+    "client",
+    "shared",
+    "storage",
+    "reconnect",
+    "heartbeat",
+    "javascript"
+  ],
+  "author": "WebModules",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {},
+  "exports": {
+    ".": "./src/WebSocketClient.js",
+    "./config": "./lib/config.js",
+    "./storage": "./lib/websocket-storage.js"
+  },
+  "files": [
+    "src/",
+    "lib/",
+    "examples/",
+    "tests/",
+    "README.md"
+  ]
+}

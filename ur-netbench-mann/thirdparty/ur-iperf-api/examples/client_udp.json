@@ -1,0 +1,11 @@
+{
+  "role": "client",
+  "server_hostname": "127.0.0.1",
+  "port": 5201,
+  "protocol": "udp",
+  "bandwidth": 1000000,
+  "duration": 10,
+  "blksize": 1460,
+  "json": true,
+  "verbose": false
+}

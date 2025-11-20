@@ -1,0 +1,6 @@
+{
+  "operation": "update_license_definitions",
+  "parameters": {
+    "definitions_json": "{\"licenses\":[{\"licence_type\":\"UpdatedType\",\"features\":[{\"feature_name\":\"new_feature\",\"feature_status\":\"UNLIMITED_ACCESS\"}]}]}"
+  }
+}

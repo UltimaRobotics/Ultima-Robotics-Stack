@@ -1,0 +1,7 @@
+{
+  "role": "server",
+  "port": 5201,
+  "json": true,
+  "verbose": false,
+  "one_off": false
+}
