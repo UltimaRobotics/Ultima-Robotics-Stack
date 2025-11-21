@@ -1,4 +1,4 @@
-# Install script for directory: /home/fyou/Downloads/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/tests
+# Install script for directory: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/tests
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

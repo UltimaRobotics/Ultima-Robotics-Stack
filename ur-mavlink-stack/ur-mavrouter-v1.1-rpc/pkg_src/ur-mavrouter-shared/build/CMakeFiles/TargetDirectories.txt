@@ -1,0 +1,8 @@
+/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/ur-mavrouter-shared/build/CMakeFiles/ur-mavrouter-shared.dir
+/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/ur-mavrouter-shared/build/CMakeFiles/ur-mavrouter-shared-static.dir
+/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/ur-mavrouter-shared/build/CMakeFiles/edit_cache.dir
+/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/ur-mavrouter-shared/build/CMakeFiles/rebuild_cache.dir
+/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/ur-mavrouter-shared/build/CMakeFiles/list_install_components.dir
+/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/ur-mavrouter-shared/build/CMakeFiles/install.dir
+/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/ur-mavrouter-shared/build/CMakeFiles/install/local.dir
+/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/ur-mavrouter-shared/build/CMakeFiles/install/strip.dir

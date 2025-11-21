@@ -1,0 +1,2 @@
+/usr/bin/ar qc libur-mavrouter-shared-static.a CMakeFiles/ur-mavrouter-shared-static.dir/ThreadRpcTypes.cpp.o CMakeFiles/ur-mavrouter-shared-static.dir/ExtensionRpcTypes.cpp.o CMakeFiles/ur-mavrouter-shared-static.dir/RpcMessageTypes.cpp.o
+/usr/bin/ranlib libur-mavrouter-shared-static.a

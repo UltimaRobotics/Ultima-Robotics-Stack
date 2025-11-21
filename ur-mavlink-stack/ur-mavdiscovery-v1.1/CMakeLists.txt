@@ -33,6 +33,11 @@ add_subdirectory(../ur-rpc-template ur-rpc-template)
 message(STATUS "RPC TEMPLATE LIBS = ${RPC_TEMPLATE_LIBS}")
 message(STATUS "RPC TEMPLATE INCLUDE_DIRS = ${RPC_TEMPLATE_INCLUDE_DIRS}")
 
+# Add the ur-mavdiscovery-shared subdirectory
+add_subdirectory(ur-mavdiscovery-shared)
+message(STATUS "MAVLINK SHARED LIBS = ${UR_MAVDISCOVERY_SHARED_LIBS}")
+message(STATUS "MAVLINK SHARED INCLUDE_DIRS = ${UR_MAVDISCOVERY_SHARED_INCLUDE_DIRS}")
+
 # Include directories
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/include
@@ -41,6 +46,7 @@ include_directories(
     ${UDEV_INCLUDE_DIRS}
     ${THREADDER_INCLUDE_DIRS}
     ${RPC_TEMPLATE_INCLUDE_DIRS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/ur-mavdiscovery-shared/include
 )
 
 # Conditionally include CURL directories
@@ -70,24 +76,30 @@ if(ENABLE_HTTP)
     list(APPEND SOURCES src/HTTPClient.cpp)
 endif()
 
-# Executable
-add_executable(mavdiscovery ${SOURCES})
+# Create executable
+add_executable(ur-mavdiscovery ${SOURCES})
 
 # Link libraries
-target_link_libraries(mavdiscovery
+target_link_libraries(ur-mavdiscovery
     ${UDEV_LIBRARIES}
-    ${THREADDER_LIBS} 
-    ${RPC_TEMPLATE_LIBS}
+    threadmanager
+    threadmanager_cpp
+    ur-rpc-template
+    ur-rpc-dcpp
+    ur-mavdiscovery-shared
     Threads::Threads
+    m
+    ssl
+    crypto
 )
 
 # Conditionally link CURL
 if(ENABLE_HTTP)
-    target_link_libraries(mavdiscovery ${CURL_LIBRARIES})
+    target_link_libraries(ur-mavdiscovery ${CURL_LIBRARIES})
 endif()
 
 # Compiler flags
-target_compile_options(mavdiscovery PRIVATE
+target_compile_options(ur-mavdiscovery PRIVATE
     -Wall -Wextra
     -Wno-address-of-packed-member
     -O2

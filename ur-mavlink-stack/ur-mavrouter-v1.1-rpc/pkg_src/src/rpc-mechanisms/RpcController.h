@@ -17,11 +17,8 @@
 #include <cstdio>
 #include "../../modules/ur-threadder-api/cpp/include/ThreadManager.hpp"
 
-// Forward declarations for UR-RPC integration
-namespace URRpcIntegration {
-    class RpcClientWrapper;
-    class RpcOperationProcessor;
-}
+// Forward declaration for RpcClient to avoid include issues
+class RpcClient;
 
 // Forward declaration for ExtensionManager
 namespace MavlinkExtensions {
@@ -288,9 +285,8 @@ private:
     std::map<std::string, std::function<unsigned int()>> restartCallbacks_;
     mutable std::mutex registryMutex_;
     
-    // UR-RPC Integration members
-    std::shared_ptr<URRpcIntegration::RpcClientWrapper> rpcClient_;
-    std::shared_ptr<URRpcIntegration::RpcOperationProcessor> operationProcessor_;
+    // UR-RPC Integration members (updated to use new RpcClient)
+    std::unique_ptr<RpcClient> rpcClient_;
     MavlinkExtensions::ExtensionManager* extensionManager_{nullptr};
     std::string rpcConfigPath_;
     std::string rpcClientId_;

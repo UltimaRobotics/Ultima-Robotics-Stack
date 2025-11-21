@@ -1,0 +1,2 @@
+/usr/bin/ar qc libur-mavdiscovery-shared.a CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.o CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.o
+/usr/bin/ranlib libur-mavdiscovery-shared.a

@@ -1,0 +1,7 @@
+# Hashes of file build rules.
+e266fa06e7795b766558a70fa25c4e37 CMakeFiles/build_cjson
+0d54b11f5bf4bf46776e0f846b79b8d5 CMakeFiles/build_mbedtls
+3f1858e1185d6a8f7aa2f3e7c091b910 CMakeFiles/clean-all
+0271ba8b749b3f3c59f4717fc72bf4b7 CMakeFiles/clean-deps
+51ca939230c8f054a9a40dea44a7d4ed CMakeFiles/download_cjson
+e24fd6951d18bc11ad295fed83ee616a CMakeFiles/download_mbedtls

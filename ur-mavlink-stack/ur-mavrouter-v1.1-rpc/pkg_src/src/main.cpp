@@ -42,7 +42,7 @@
 #include "common/json_config.h"
 #include "ThreadManager.hpp"
 #include "mavlink-extensions/ExtensionManager.h"
-#include "rpc-mechanisms/RpcController.h"
+#include "rpc-mechanisms/RpcControllerNew.hpp"
 
 #ifdef _BUILD_HTTP
 #include "HttpServer.hpp"
@@ -1168,10 +1168,15 @@ int main(int argc, char *argv[])
 
 
         log_info("main() - Entering main wait loop - press Ctrl+C or send SIGTERM to exit");
+        #ifdef _BUILD_HTTP
         log_info("main() - Mainloop will only start when requested via POST /api/threads/mainloop/start");
+        #else
+        log_info("main() - Mainloop will only start when requested via RPC device added event");
+        #endif
 
         // Monitor HTTP server thread - keep running as long as it's alive
         while (true) {
+        #ifdef _BUILD_HTTP
             bool httpServerAlive = httpServerThreadId != 0 && threadManager.isThreadAlive(httpServerThreadId);
 
             // If HTTP server stopped unexpectedly, that's an error condition - exit
@@ -1187,13 +1192,21 @@ int main(int argc, char *argv[])
                 retcode = EXIT_SUCCESS;
                 break;
             }
+        #else
+            // When HTTP is disabled, keep running until RPC client stops or receives signal
+            if (rpcController && !rpcController->isRpcClientRunning()) {
+                log_info("main() - RPC client stopped, exiting application");
+                retcode = EXIT_SUCCESS;
+                break;
+            }
+        #endif
 
             // Sleep for a short interval before checking again
             std::this_thread::sleep_for(std::chrono::seconds(1));
         }
 
         // Cleanup - only stop HTTP server if it's still running
-
+        #ifdef _BUILD_HTTP
         if (httpServerThreadId != 0 && threadManager.isThreadAlive(httpServerThreadId)) {
             std::cout << "Stopping HTTP server..." << std::endl;
             if (httpServer) { // Ensure httpServer is valid
@@ -1207,6 +1220,7 @@ int main(int argc, char *argv[])
             }
             std::cout << "HTTP server stopped" << std::endl;
         }
+        #endif
 
         log_info("main() - ThreadManager operations completed");
 
@@ -1236,7 +1250,8 @@ close_log:
     return EXIT_FAILURE;
 }
 
-// This function is no longer used as threads are managed by ThreadManager
+#ifdef _BUILD_HTTP
+// HTTP server thread function - currently not used as HTTP server is managed by ThreadManager
 // and started directly within main(). It's kept here for historical reference
 // or potential future use if direct pthread manipulation is needed again.
 static void* http_server_thread_func(void* arg) {
@@ -1270,6 +1285,7 @@ static void* http_server_thread_func(void* arg) {
         log_error("http_thread - Unknown exception occurred");
     }
 
-    log_info("http_thread - Thread function exiting");
+    log_info("http_thread - Thread function completed");
     return nullptr;
 }
+#endif

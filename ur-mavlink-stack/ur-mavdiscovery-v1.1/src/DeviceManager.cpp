@@ -5,8 +5,9 @@
 #include "RpcClient.hpp"
 #include "CallbackDispatcher.hpp"
 #include "Logger.hpp"
-#include <chrono>
+#include "DeviceStateDB.hpp"
 #include <thread>
+#include <chrono>
 
 DeviceManager::DeviceManager() : running_(false), rpcRunning_(false) {}
 
@@ -15,57 +16,69 @@ DeviceManager::~DeviceManager() {
 }
 
 bool DeviceManager::initialize(const std::string& configPath) {
-    if (!config_.loadFromFile(configPath)) {
-        LOG_ERROR("Failed to load configuration");
-        return false;
-    }
-
-    DeviceConfig deviceConfig = config_.getConfig();
-
-    // Set log level from config
-    if (deviceConfig.logLevel == "DEBUG") {
-        Logger::getInstance().setLogLevel(LogLevel::DEBUG);
-    } else if (deviceConfig.logLevel == "INFO") {
-        Logger::getInstance().setLogLevel(LogLevel::INFO);
-    } else if (deviceConfig.logLevel == "WARNING") {
-        Logger::getInstance().setLogLevel(LogLevel::WARNING);
-    } else if (deviceConfig.logLevel == "ERROR") {
-        Logger::getInstance().setLogLevel(LogLevel::ERROR);
-    }
-
-    // Set log file
-    Logger::getInstance().setLogFile(deviceConfig.logFile);
-
-    // Initialize ThreadManager with initial capacity
-    threadManager_ = std::make_unique<ThreadMgr::ThreadManager>(20);
-    ThreadMgr::ThreadManager::setLogLevel(ThreadMgr::LogLevel::Info);
-
-    LOG_INFO("ThreadManager initialized with capacity: 20");
-
-    monitor_ = std::make_unique<DeviceMonitor>(deviceConfig, *threadManager_);
-
-    monitor_->setAddCallback([this](const std::string& path) {
-        this->onDeviceAdded(path);
-    });
-
-    monitor_->setRemoveCallback([this](const std::string& path) {
-        this->onDeviceRemoved(path);
-    });
-
-    if (!monitor_->start()) {
-        LOG_ERROR("Failed to start device monitor");
-        return false;
-    }
-
-    // Register callback for device verification events
-    CallbackDispatcher::getInstance().registerCallback([this](const DeviceInfo& info) {
-        if (info.state == DeviceState::VERIFIED) {
-            this->onDeviceVerified(info.devicePath, info);
+    try {
+        config_ = ConfigLoader();
+        if (!config_.loadFromFile(configPath)) {
+            LOG_ERROR("Failed to load device manager configuration");
+            return false;
         }
-    });
 
-    running_ = true;
-    return true;
+        DeviceConfig deviceConfig = config_.getConfig();
+
+        // Set log level from config
+        if (deviceConfig.logLevel == "DEBUG") {
+            Logger::getInstance().setLogLevel(LogLevel::DEBUG);
+        } else if (deviceConfig.logLevel == "INFO") {
+            Logger::getInstance().setLogLevel(LogLevel::INFO);
+        } else if (deviceConfig.logLevel == "WARNING") {
+            Logger::getInstance().setLogLevel(LogLevel::WARNING);
+        } else if (deviceConfig.logLevel == "ERROR") {
+            Logger::getInstance().setLogLevel(LogLevel::ERROR);
+        }
+
+        // Initialize thread manager
+        threadManager_ = std::make_unique<ThreadMgr::ThreadManager>(20);
+
+        // Initialize device monitor
+        monitor_ = std::make_unique<DeviceMonitor>(deviceConfig, *threadManager_);
+        if (!monitor_) {
+            LOG_ERROR("Failed to create device monitor");
+            return false;
+        }
+
+        // Set up callbacks
+        monitor_->setAddCallback([this](const std::string& path) {
+            this->onDeviceAdded(path);
+        });
+
+        monitor_->setRemoveCallback([this](const std::string& path) {
+            this->onDeviceRemoved(path);
+        });
+
+        if (!monitor_->start()) {
+            LOG_ERROR("Failed to start device monitor");
+            return false;
+        }
+
+        // Register callback for device verification events
+        CallbackDispatcher::getInstance().registerCallback([this](const DeviceInfo& info) {
+            if (info.state == DeviceState::VERIFIED) {
+                this->onDeviceVerified(info.devicePath, info);
+            }
+        });
+
+        running_ = true;
+        
+        // Send init process discovery notification after initialization
+        LOG_INFO("Sending init process discovery notification");
+        sendInitProcessDiscoveryNotification();
+        
+        return true;
+
+    } catch (const std::exception& e) {
+        LOG_ERROR("Failed to initialize device manager: " + std::string(e.what()));
+        return false;
+    }
 }
 
 void DeviceManager::run() {
@@ -147,8 +160,11 @@ void DeviceManager::onDeviceRemoved(const std::string& devicePath) {
 
     auto it = verifiers_.find(devicePath);
     if (it != verifiers_.end()) {
-        // Send RPC device removed notification
+        // Send RPC device removed notification using ur-rpc-template structure
         sendDeviceRemovedRpcNotifications(devicePath);
+
+        // Send shared bus notification
+        sendDeviceRemovedSharedNotification(devicePath);
 
 #ifdef HTTP_ENABLED
         DeviceConfig deviceConfig = config_.getConfig();
@@ -173,38 +189,54 @@ void DeviceManager::onDeviceRemoved(const std::string& devicePath) {
 void DeviceManager::onDeviceVerified(const std::string& devicePath, const DeviceInfo& info) {
     LOG_INFO("Device verified: " + devicePath);
     
-    // Send RPC notifications for verified device
+    // Send RPC notifications for verified device using ur-rpc-template structure
     sendDeviceAddedRpcNotifications(info);
+    
+    // Send shared bus notification
+    sendDeviceVerifiedNotification(info);
 }
 
 void DeviceManager::sendDeviceAddedRpcNotifications(const DeviceInfo& info) {
     try {
-        // Use the main RPC client instead of creating a temporary one
+        // Wait for RPC client to be available with retry mechanism
+        int retryCount = 0;
+        const int maxRetries = 10;
+        const int retryDelayMs = 500;
+        
+        while ((!rpcClient_ || !rpcClient_->isRunning()) && retryCount < maxRetries) {
+            LOG_INFO("Waiting for RPC client to be available for device added notifications... (attempt " + 
+                     std::to_string(retryCount + 1) + "/" + std::to_string(maxRetries) + ")");
+            std::this_thread::sleep_for(std::chrono::milliseconds(retryDelayMs));
+            retryCount++;
+        }
+        
         if (!rpcClient_ || !rpcClient_->isRunning()) {
-            LOG_ERROR("RPC client not available for device added notifications");
+            LOG_ERROR("RPC client still not available for device added notifications after " + 
+                     std::to_string(maxRetries) + " attempts");
             return;
         }
         
-        // Build device info JSON for the request using helper method
-        json deviceJson = info.toJson();
+        LOG_INFO("RPC client is now available, sending device added notifications");
         
-        // Create RPC request for mavlink added method
-        json mavlinkAddedRequest;
-        mavlinkAddedRequest["jsonrpc"] = "2.0";
-        mavlinkAddedRequest["method"] = "mavlink_added";
-        mavlinkAddedRequest["params"] = deviceJson;
-        mavlinkAddedRequest["id"] = std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(
-            std::chrono::system_clock::now().time_since_epoch()).count());
+        // Convert to shared DeviceInfo format
+        auto sharedDeviceInfo = convertToSharedDeviceInfo(info);
         
-        std::string requestPayload = mavlinkAddedRequest.dump();
+        // Create device added event using ur-rpc-template structure
+        MavlinkShared::DeviceAddedEvent deviceAddedEvent(sharedDeviceInfo);
         
-        // Send to ur-mavrouter
-        LOG_INFO("Sending mavlink_added request to ur-mavrouter");
-        rpcClient_->getClient().publishMessage("direct_messaging/ur-mavrouter/requests", requestPayload);
+        // Create RPC request using ur-rpc-template format
+        auto requestJson = MavlinkShared::MavlinkEventSerializer::createDeviceAddedRequest(deviceAddedEvent);
+        std::string requestPayload = requestJson.dump();
         
-        // Send to ur-mavcollector
-        LOG_INFO("Sending mavlink_added request to ur-mavcollector");
-        rpcClient_->getClient().publishMessage("direct_messaging/ur-mavcollector/requests", requestPayload);
+        // Extract params from the full JSON-RPC request for ur-rpc-template
+        std::string paramsJson = requestJson["params"].dump();
+        
+        // Send proper RPC requests to ur-mavrouter and ur-mavcollector
+        LOG_INFO("Sending mavlink_device_added RPC request to ur-mavrouter");
+        rpcClient_->sendRpcRequest("ur-mavrouter", "mavlink_device_added", paramsJson);
+        
+        LOG_INFO("Sending mavlink_device_added RPC request to ur-mavcollector");
+        rpcClient_->sendRpcRequest("ur-mavcollector", "mavlink_device_added", paramsJson);
         
     } catch (const std::exception& e) {
         LOG_ERROR("Failed to send RPC device added notifications: " + std::string(e.what()));
@@ -213,35 +245,42 @@ void DeviceManager::sendDeviceAddedRpcNotifications(const DeviceInfo& info) {
 
 void DeviceManager::sendDeviceRemovedRpcNotifications(const std::string& devicePath) {
     try {
-        // Use the main RPC client instead of creating a temporary one
+        // Wait for RPC client to be available with retry mechanism
+        int retryCount = 0;
+        const int maxRetries = 10;
+        const int retryDelayMs = 500;
+        
+        while ((!rpcClient_ || !rpcClient_->isRunning()) && retryCount < maxRetries) {
+            LOG_INFO("Waiting for RPC client to be available for device removal notifications... (attempt " + 
+                     std::to_string(retryCount + 1) + "/" + std::to_string(maxRetries) + ")");
+            std::this_thread::sleep_for(std::chrono::milliseconds(retryDelayMs));
+            retryCount++;
+        }
+        
         if (!rpcClient_ || !rpcClient_->isRunning()) {
-            LOG_ERROR("RPC client not available for device removal notifications");
+            LOG_ERROR("RPC client still not available for device removal notifications after " + 
+                     std::to_string(maxRetries) + " attempts");
             return;
         }
         
-        // Build device removal info JSON
-        json deviceRemovedJson;
-        deviceRemovedJson["devicePath"] = devicePath;
-        deviceRemovedJson["timestamp"] = std::to_string(std::chrono::duration_cast<std::chrono::seconds>(
-            std::chrono::system_clock::now().time_since_epoch()).count());
+        LOG_INFO("RPC client is now available, sending device removal notifications");
         
-        // Create RPC request for device removed method
-        json deviceRemovedRequest;
-        deviceRemovedRequest["jsonrpc"] = "2.0";
-        deviceRemovedRequest["method"] = "device_removed";
-        deviceRemovedRequest["params"] = deviceRemovedJson;
-        deviceRemovedRequest["id"] = std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(
-            std::chrono::system_clock::now().time_since_epoch()).count());
+        // Create device removed event using ur-rpc-template structure
+        MavlinkShared::DeviceRemovedEvent deviceRemovedEvent(devicePath);
         
-        std::string requestPayload = deviceRemovedRequest.dump();
+        // Create RPC request using ur-rpc-template format
+        auto requestJson = MavlinkShared::MavlinkEventSerializer::createDeviceRemovedRequest(deviceRemovedEvent);
+        std::string requestPayload = requestJson.dump();
         
-        // Send to ur-mavrouter
-        LOG_INFO("Sending device_removed request to ur-mavrouter");
-        rpcClient_->getClient().publishMessage("direct_messaging/ur-mavrouter/requests", requestPayload);
+        // Extract params from the full JSON-RPC request for ur-rpc-template
+        std::string paramsJson = requestJson["params"].dump();
         
-        // Send to ur-mavcollector
-        LOG_INFO("Sending device_removed request to ur-mavcollector");
-        rpcClient_->getClient().publishMessage("direct_messaging/ur-mavcollector/requests", requestPayload);
+        // Send proper RPC requests to ur-mavrouter and ur-mavcollector
+        LOG_INFO("Sending mavlink_device_removed RPC request to ur-mavrouter");
+        rpcClient_->sendRpcRequest("ur-mavrouter", "mavlink_device_removed", paramsJson);
+        
+        LOG_INFO("Sending mavlink_device_removed RPC request to ur-mavcollector");
+        rpcClient_->sendRpcRequest("ur-mavcollector", "mavlink_device_removed", paramsJson);
         
     } catch (const std::exception& e) {
         LOG_ERROR("Failed to send RPC device removed notifications: " + std::string(e.what()));
@@ -325,4 +364,141 @@ void DeviceManager::onRpcMessage(const std::string& topic, const std::string& pa
     } catch (const std::exception& e) {
         LOG_ERROR("Error processing RPC message: " + std::string(e.what()));
     }
+}
+
+// Shared bus notification methods
+void DeviceManager::sendDeviceVerifiedNotification(const DeviceInfo& info) {
+    try {
+        if (!rpcClient_ || !rpcClient_->isRunning()) {
+            LOG_ERROR("RPC client not available for device verified notifications");
+            return;
+        }
+        
+        // Convert to shared DeviceInfo format
+        auto sharedDeviceInfo = convertToSharedDeviceInfo(info);
+        
+        // Create device verified notification
+        MavlinkShared::DeviceVerifiedNotification notification(sharedDeviceInfo);
+        
+        // Create notification JSON
+        auto notificationJson = MavlinkShared::MavlinkEventSerializer::createDeviceVerifiedNotification(notification);
+        std::string notificationPayload = notificationJson.dump();
+        
+        // Send to shared bus
+        LOG_INFO("Sending device verified notification to ur-shared-bus");
+        rpcClient_->sendResponse("ur-shared-bus/ur-mavlink-stack/notifications", notificationPayload);
+        
+    } catch (const std::exception& e) {
+        LOG_ERROR("Failed to send device verified notification: " + std::string(e.what()));
+    }
+}
+
+void DeviceManager::sendDeviceRemovedSharedNotification(const std::string& devicePath) {
+    try {
+        if (!rpcClient_ || !rpcClient_->isRunning()) {
+            LOG_ERROR("RPC client not available for device removed notifications");
+            return;
+        }
+        
+        // Create device removed notification
+        MavlinkShared::DeviceRemovedNotification notification(devicePath);
+        
+        // Create notification JSON
+        auto notificationJson = MavlinkShared::MavlinkEventSerializer::createDeviceRemovedNotification(notification);
+        std::string notificationPayload = notificationJson.dump();
+        
+        // Send to shared bus
+        LOG_INFO("Sending device removed notification to ur-shared-bus");
+        rpcClient_->sendResponse("ur-shared-bus/ur-mavlink-stack/notifications", notificationPayload);
+        
+    } catch (const std::exception& e) {
+        LOG_ERROR("Failed to send device removed notification: " + std::string(e.what()));
+    }
+}
+
+void DeviceManager::sendInitProcessDiscoveryNotification() {
+    try {
+        if (!rpcClient_ || !rpcClient_->isRunning()) {
+            LOG_ERROR("RPC client not available for init process discovery");
+            return;
+        }
+        
+        // Get all verified devices from DeviceStateDB
+        auto& deviceDB = DeviceStateDB::getInstance();
+        auto allDevices = deviceDB.getAllDevices();
+        
+        std::vector<MavlinkShared::DeviceInfo> sharedDevices;
+        for (const auto& device : allDevices) {
+            if (device->state == DeviceState::VERIFIED) {
+                sharedDevices.push_back(convertToSharedDeviceInfo(*device));
+            }
+        }
+        
+        // Create init process discovery notification
+        MavlinkShared::InitProcessDiscoveryEvent discoveryEvent(sharedDevices);
+        
+        // Create notification JSON
+        auto notificationJson = MavlinkShared::MavlinkEventSerializer::createInitProcessDiscoveryNotification(discoveryEvent);
+        std::string notificationPayload = notificationJson.dump();
+        
+        // Send to shared bus
+        LOG_INFO("Sending init process discovery notification to ur-shared-bus");
+        rpcClient_->sendResponse("ur-shared-bus/ur-mavlink-stack/notifications", notificationPayload);
+        
+    } catch (const std::exception& e) {
+        LOG_ERROR("Failed to send init process discovery notification: " + std::string(e.what()));
+    }
+}
+
+// Convert between old and new DeviceInfo formats
+MavlinkShared::DeviceInfo DeviceManager::convertToSharedDeviceInfo(const DeviceInfo& info) {
+    MavlinkShared::DeviceInfo sharedInfo;
+    
+    // Basic device information
+    sharedInfo.devicePath = info.devicePath;
+    
+    // Convert DeviceState enum
+    switch (info.state.load()) {
+        case DeviceState::UNKNOWN:
+            sharedInfo.state = MavlinkShared::DeviceState::UNKNOWN;
+            break;
+        case DeviceState::VERIFYING:
+            sharedInfo.state = MavlinkShared::DeviceState::VERIFYING;
+            break;
+        case DeviceState::VERIFIED:
+            sharedInfo.state = MavlinkShared::DeviceState::VERIFIED;
+            break;
+        case DeviceState::NON_MAVLINK:
+            sharedInfo.state = MavlinkShared::DeviceState::NON_MAVLINK;
+            break;
+        case DeviceState::REMOVED:
+            sharedInfo.state = MavlinkShared::DeviceState::REMOVED;
+            break;
+    }
+    
+    sharedInfo.baudrate = info.baudrate;
+    sharedInfo.sysid = info.sysid;
+    sharedInfo.compid = info.compid;
+    sharedInfo.mavlinkVersion = info.mavlinkVersion;
+    sharedInfo.timestamp = info.timestamp;
+    
+    // Convert USB info
+    sharedInfo.usbInfo.deviceName = info.usbInfo.deviceName;
+    sharedInfo.usbInfo.manufacturer = info.usbInfo.manufacturer;
+    sharedInfo.usbInfo.serialNumber = info.usbInfo.serialNumber;
+    sharedInfo.usbInfo.vendorId = info.usbInfo.vendorId;
+    sharedInfo.usbInfo.productId = info.usbInfo.productId;
+    sharedInfo.usbInfo.boardClass = info.usbInfo.boardClass;
+    sharedInfo.usbInfo.boardName = info.usbInfo.boardName;
+    sharedInfo.usbInfo.autopilotType = info.usbInfo.autopilotType;
+    
+    // Convert MAVLink messages
+    for (const auto& msg : info.messages) {
+        MavlinkShared::MAVLinkMessage sharedMsg;
+        sharedMsg.msgid = msg.msgid;
+        sharedMsg.name = msg.name;
+        sharedInfo.messages.push_back(sharedMsg);
+    }
+    
+    return sharedInfo;
 }

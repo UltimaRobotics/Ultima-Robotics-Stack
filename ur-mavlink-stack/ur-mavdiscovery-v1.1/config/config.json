@@ -1,0 +1,26 @@
+
+{
+  "devicePathFilters": [
+    "/dev/ttyUSB",
+    "/dev/ttyACM"
+  ],
+  "baudrates": [
+    57600,
+    115200,
+    921600,
+    500000,
+    1500000
+  ],
+  "readTimeoutMs": 100,
+  "packetTimeoutMs": 1000,
+  "maxPacketSize": 280,
+  "enableHTTP": true,
+  "httpConfig": {
+    "serverAddress": "0.0.0.0",
+    "serverPort": 5000,
+    "timeoutMs": 5000
+  },
+  "logFile": "mavdiscovery.log",
+  "logLevel": "INFO",
+  "runtimeDeviceFile": "current-runtime-device.json"
+}

@@ -5,6 +5,8 @@
 #include "RpcClient.hpp"
 #include "RpcOperationProcessor.hpp"
 #include "../ur-threadder-api/cpp/include/ThreadManager.hpp"
+#include "../ur-mavdiscovery-shared/include/MavlinkDeviceStructs.hpp"
+#include "../ur-mavdiscovery-shared/include/MavlinkEventSerializer.hpp"
 #include "../thirdparty/nholmann/json.hpp"
 #include <string>
 #include <map>
@@ -32,6 +34,14 @@ private:
     void onDeviceVerified(const std::string& devicePath, const DeviceInfo& info);
     void sendDeviceAddedRpcNotifications(const DeviceInfo& info);
     void sendDeviceRemovedRpcNotifications(const std::string& devicePath);
+    
+    // Shared bus notification methods
+    void sendDeviceVerifiedNotification(const DeviceInfo& info);
+    void sendDeviceRemovedSharedNotification(const std::string& devicePath);
+    void sendInitProcessDiscoveryNotification();
+    
+    // Convert between old and new DeviceInfo formats
+    MavlinkShared::DeviceInfo convertToSharedDeviceInfo(const DeviceInfo& info);
     
     // RPC message handling
     void onRpcMessage(const std::string& topic, const std::string& payload);

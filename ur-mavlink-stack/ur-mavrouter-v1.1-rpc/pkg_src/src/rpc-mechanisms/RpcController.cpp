@@ -4,6 +4,7 @@
  */
 
 #include "RpcController.h"
+#include "RpcClient.hpp"
 #include "../common/log.h"
 #include "mainloop.h"
 #include <sstream>
@@ -12,8 +13,6 @@
 
 // UR-RPC Integration includes
 #include "../../modules/ur-threadder-api/cpp/include/ThreadManager.hpp"
-#include "../ur-rpc-integration/rpc_client_wrapper.hpp"
-#include "../ur-rpc-integration/rpc_operation_processor.hpp"
 
 namespace RpcMechanisms {
 
@@ -571,18 +570,10 @@ bool RpcController::initializeRpcIntegration(const std::string& configPath, cons
         rpcConfigPath_ = configPath;
         rpcClientId_ = clientId;
         
-        // Create RPC client wrapper
-        rpcClient_ = URRpcIntegration::RpcClientFactory::create(configPath, clientId, threadManager_);
+        // Create RPC client using the new implementation
+        rpcClient_ = std::make_unique<RpcClient>(configPath, clientId);
         if (!rpcClient_) {
-            std::cerr << "Failed to create RPC client wrapper" << std::endl;
-            return false;
-        }
-        
-        // Create operation processor
-        operationProcessor_ = std::make_shared<URRpcIntegration::RpcOperationProcessor>(threadManager_, true);
-        if (!operationProcessor_) {
-            std::cerr << "Failed to create RPC operation processor" << std::endl;
-            rpcClient_.reset();
+            log_error("Failed to create RPC client");
             return false;
         }
         
@@ -590,11 +581,11 @@ bool RpcController::initializeRpcIntegration(const std::string& configPath, cons
         setupRpcMessageHandlers();
         
         rpcInitialized_.store(true);
-        std::cout << "UR-RPC integration initialized successfully" << std::endl;
+        log_info("UR-RPC integration initialized successfully with C++ wrapper");
         return true;
         
     } catch (const std::exception& e) {
-        std::cerr << "Failed to initialize UR-RPC integration: " << e.what() << std::endl;
+        log_error("Failed to initialize UR-RPC integration: %s", e.what());
         return false;
     }
 }
@@ -603,27 +594,27 @@ bool RpcController::startRpcClient() {
     std::lock_guard<std::mutex> lock(rpcMutex_);
     
     if (!rpcInitialized_.load()) {
-        std::cerr << "UR-RPC integration not initialized" << std::endl;
+        log_error("UR-RPC integration not initialized");
         return false;
     }
     
     if (!rpcClient_) {
-        std::cerr << "RPC client not available" << std::endl;
+        log_error("RPC client not available");
         return false;
     }
     
     try {
-        // Start RPC client
-        if (!rpcClient_->start()) {
-            std::cerr << "Failed to start RPC client" << std::endl;
+        // Start the RPC client
+        if (rpcClient_->start()) {
+            log_info("UR-RPC client started successfully with C++ wrapper");
+            return true;
+        } else {
+            log_error("Failed to start UR-RPC client");
             return false;
         }
         
-        std::cout << "UR-RPC client started successfully" << std::endl;
-        return true;
-        
     } catch (const std::exception& e) {
-        std::cerr << "Exception starting RPC client: " << e.what() << std::endl;
+        log_error("Failed to start UR-RPC client: %s", e.what());
         return false;
     }
 }
@@ -634,18 +625,9 @@ void RpcController::stopRpcClient() {
     if (rpcClient_ && rpcClient_->isRunning()) {
         try {
             rpcClient_->stop();
-            std::cout << "UR-RPC client stopped" << std::endl;
+            log_info("UR-RPC client stopped");
         } catch (const std::exception& e) {
-            std::cerr << "Exception stopping RPC client: " << e.what() << std::endl;
-        }
-    }
-    
-    if (operationProcessor_) {
-        try {
-            operationProcessor_->shutdown();
-            std::cout << "RPC operation processor shutdown" << std::endl;
-        } catch (const std::exception& e) {
-            std::cerr << "Exception shutting down operation processor: " << e.what() << std::endl;
+            log_error("Exception stopping RPC client: %s", e.what());
         }
     }
 }
@@ -671,7 +653,8 @@ std::string RpcController::getRpcClientStatistics() const {
 }
 
 void RpcController::setupRpcMessageHandlers() {
-    if (!rpcClient_ || !operationProcessor_) {
+    if (!rpcClient_) {
+        log_error("Cannot setup RPC message handlers - RPC client not available");
         return;
     }
     
@@ -680,41 +663,78 @@ void RpcController::setupRpcMessageHandlers() {
         this->handleRpcMessage(topic, payload);
     });
     
-    // Set RPC client for operation processor
-    operationProcessor_->setRpcClient(rpcClient_);
-    operationProcessor_->setResponseTopic("direct_messaging/" + rpcClientId_ + "/responses");
-    
-    // Set RPC controller and extension manager for operation processor
-    operationProcessor_->setRpcController(this);
-    operationProcessor_->setExtensionManager(extensionManager_);
+    log_info("RPC message handlers configured successfully");
 }
 
 void RpcController::handleRpcMessage(const std::string& topic, const std::string& payload) {
-    if (!operationProcessor_) {
-        std::cerr << "Cannot handle RPC message - operation processor not available" << std::endl;
-        return;
-    }
-    
     try {
-        // Forward message to operation processor
-        operationProcessor_->processRequest(payload.c_str(), payload.length());
+        log_debug("Handling RPC message from topic: %s", topic.c_str());
         
-        if (verbose_) {
-            std::cout << "Processed RPC message from topic: " << topic << std::endl;
+        // Parse JSON-RPC request
+        nlohmann::json request = nlohmann::json::parse(payload);
+        
+        if (!request.contains("method") || !request.contains("params")) {
+            log_error("Invalid RPC request format");
+            return;
         }
         
+        std::string method = request["method"];
+        nlohmann::json params = request["params"];
+        std::string requestId = request.value("id", "unknown");
+        
+        log_info("Processing RPC method: %s", method.c_str());
+        
+        // Handle different RPC methods
+        nlohmann::json response;
+        response["jsonrpc"] = "2.0";
+        response["id"] = requestId;
+        
+        if (method == "thread_status" || method == "get_thread_status") {
+            std::string threadName = params.value("thread_name", "all");
+            RpcResponse rpcResponse;
+            
+            if (threadName == "all") {
+                rpcResponse = getAllThreadStatus();
+            } else {
+                rpcResponse = getThreadStatus(threadName);
+            }
+            
+            response["result"] = nlohmann::json::parse(rpcResponse.toJson());
+            
+        } else if (method == "thread_operation") {
+            std::string threadName = params.value("thread_name", "");
+            std::string operation = params.value("operation", "status");
+            
+            if (threadName.empty()) {
+                response["error"] = {{"code", -32602}, {"message", "thread_name parameter required"}};
+            } else {
+                ThreadOperation op = stringToThreadOperation(operation);
+                RpcResponse rpcResponse = executeOperationOnThread(threadName, op);
+                response["result"] = nlohmann::json::parse(rpcResponse.toJson());
+            }
+            
+        } else {
+            response["error"] = {{"code", -32601}, {"message", "Method not found: " + method}};
+        }
+        
+        // Send response
+        std::string responseTopic = "direct_messaging/" + rpcClientId_ + "/responses";
+        rpcClient_->sendResponse(responseTopic, response.dump());
+        
+        if (verbose_) {
+            log_info("Processed RPC message from topic: %s, method: %s", topic.c_str(), method.c_str());
+        }
+        
+    } catch (const nlohmann::json::parse_error& e) {
+        log_error("JSON parse error in RPC message: %s", e.what());
     } catch (const std::exception& e) {
-        std::cerr << "Exception handling RPC message: " << e.what() << std::endl;
+        log_error("Exception handling RPC message: %s", e.what());
     }
 }
 
 void RpcController::setExtensionManager(MavlinkExtensions::ExtensionManager* extensionManager) {
     extensionManager_ = extensionManager;
-    
-    // If operation processor is already initialized, set the extension manager there too
-    if (operationProcessor_) {
-        operationProcessor_->setExtensionManager(extensionManager);
-    }
+    log_info("Extension manager set for RPC controller");
 }
 
 } // namespace RpcMechanisms

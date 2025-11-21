@@ -138,16 +138,19 @@ int main(int argc, char* argv[]) {
     
     DeviceManager manager;
     
-    if (!manager.initialize(packageConfigFile)) {
-        LOG_ERROR("Failed to initialize device manager");
-        std::cerr << "Error: Failed to initialize device manager with package config: " << packageConfigFile << std::endl;
-        return 1;
-    }
-    
-    // Initialize RPC with the RPC config file
+    // Initialize RPC FIRST before starting device discovery
+    LOG_INFO("Initializing RPC system...");
     if (!manager.initializeRpc(rpcConfigFile)) {
         LOG_ERROR("Failed to initialize RPC client");
         std::cerr << "Error: Failed to initialize RPC client with config: " << rpcConfigFile << std::endl;
+        return 1;
+    }
+    
+    // Initialize device discovery AFTER RPC is ready
+    LOG_INFO("Initializing device manager...");
+    if (!manager.initialize(packageConfigFile)) {
+        LOG_ERROR("Failed to initialize device manager");
+        std::cerr << "Error: Failed to initialize device manager with package config: " << packageConfigFile << std::endl;
         return 1;
     }
     

@@ -15,6 +15,15 @@ set(THREADDER_API_INCLUDE_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/../ur-threadder-api/cpp/include
 )
 
+# Get RPC template include directories from parent scope
+set(RPC_TEMPLATE_INCLUDE_DIRS 
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../../ur-rpc-template
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../../ur-rpc-template/pkg_src/api
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../../ur-rpc-template/pkg_src/api/wrappers
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../../ur-rpc-template/pkg_src/api/wrappers/cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../../ur-rpc-template/deps/mqtt-client/include
+)
+
 # Source files
 set(HTTP_MODULE_SOURCES
     src/HttpServer.cpp
@@ -38,6 +47,7 @@ target_include_directories(http_module
         ${CMAKE_CURRENT_SOURCE_DIR}/../../src/rpc-mechanisms
         ${CMAKE_CURRENT_SOURCE_DIR}/../../modules/mavlink_c_library_v2/ardupilotmega
         ${THREADDER_API_INCLUDE_DIRS}
+        ${RPC_TEMPLATE_INCLUDE_DIRS}
 )
 
 target_link_libraries(http_module

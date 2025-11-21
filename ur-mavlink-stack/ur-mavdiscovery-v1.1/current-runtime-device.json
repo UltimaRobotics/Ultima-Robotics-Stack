@@ -1,16 +1,16 @@
 {
-  "autopilotType": "Generic",
+  "autopilotType": "PX4",
   "baudrate": 57600,
-  "boardClass": "",
-  "boardName": "PX4 FMU v6C.x",
+  "boardClass": "Pixhawk",
+  "boardName": "Holybro (Unknown Model)",
   "componentId": 1,
-  "deviceName": "PX4 FMU v6C.x",
-  "devicePath": "/dev/ttyACM0",
-  "manufacturer": "Auterion",
+  "deviceName": "Pixhawk6C",
+  "devicePath": "/dev/ttyACM1",
+  "manufacturer": "Holybro",
   "mavlinkVersion": 2,
-  "productId": "0038",
-  "serialNumber": "0",
+  "productId": "0053",
+  "serialNumber": "3B0032001651333337363133",
   "systemId": 1,
-  "timestamp": "2025-11-14 16:08:30",
-  "vendorId": "3185"
+  "timestamp": "2025-11-20 20:47:47",
+  "vendorId": "3162"
 }

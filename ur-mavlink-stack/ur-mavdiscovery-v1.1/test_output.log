@@ -1,0 +1,34 @@
+Validating configuration files...
+[2025-11-20 20:07:16.180] [INFO] RPC configuration loaded successfully
+✓ RPC config file validated: config/rpc-config.json
+[2025-11-20 20:07:16.181] [INFO] Device configuration loaded successfully
+✓ Package config file validated: config/config.json
+All configuration files validated successfully.
+Starting MAVLink Device Discovery...
+[2025-11-20 20:07:16.181] [INFO] MAVLink Device Discovery starting...
+[2025-11-20 20:07:16.181] [INFO] RPC Config: config/rpc-config.json
+[2025-11-20 20:07:16.181] [INFO] Package Config: config/config.json
+[2025-11-20 20:07:16.181] [INFO] Initializing RPC system...
+[2025-11-20 20:07:16.181] [INFO] RpcClient initialized with ur-threadder-api thread manager and C++ wrapper
+[2025-11-20 20:07:16.181] [INFO] RPC message handler configured for topic: direct_messaging/ur-mavdiscovery/requests
+[2025-11-20 20:07:16.181] [INFO] RpcOperationProcessor initialized with thread pool size: 50
+[2025-11-20 20:07:16] [INFO] [/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-threadder-api/cpp/src/ThreadManager.cpp:55:createThread] ThreadManager::createThread - Starting thread creation
+[2025-11-20 20:07:16] [INFO] [/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-threadder-api/cpp/src/ThreadManager.cpp:64:createThread] ThreadManager::createThread - Stored function wrapper with ID 1
+[2025-11-20 20:07:16] [INFO] [/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-threadder-api/cpp/src/ThreadManager.cpp:87:createThread] ThreadManager::createThread - Calling thread_create
+[2025-11-20 20:07:16] [INFO] [/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-threadder-api/cpp/src/ThreadManager.cpp:89:createThread] ThreadManager::createThread - thread_create returned result=1, threadId=1
+[2025-11-20 20:07:16] [INFO] [/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-threadder-api/cpp/src/ThreadManager.cpp:70:operator()] Thread function starting execution
+[2025-11-20 20:07:16] [INFO] [/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-threadder-api/cpp/src/ThreadManager.cpp:99:createThread] ThreadManager::createThread - Successfully created thread with ID 1
+[2025-11-20 20:07:16.181] [INFO] [RPC] Client thread started with ID: 1
+[2025-11-20 20:07:16.181] [INFO] Waiting for RPC client connection...
+[2025-11-20 20:07:16] [ INFO] Connecting to MQTT broker 127.0.0.1:1899 (TLS: disabled)
+[2025-11-20 20:07:16] [ INFO] Connection initiated successfully, waiting for callback confirmation
+[2025-11-20 20:07:16] [ INFO] Starting MQTT client loop
+[2025-11-20 20:07:16] [ INFO] Waiting for stable MQTT connection...
+[2025-11-20 20:07:16] [ INFO] MQTT connected successfully (rc=0)
+[2025-11-20 20:07:16] [ INFO] Subscribing to 1 topics from json_added_subs
+[2025-11-20 20:07:16] [ INFO] Subscribed to topic: direct_messaging/ur-mavdiscovery/requests (QoS: 1)
+[2025-11-20 20:07:16] [ INFO] MQTT connection stabilized
+[2025-11-20 20:07:17] [ INFO] Heartbeat started: topic=clients/ur-mavdiscovery/heartbeat, interval=5s
+[2025-11-20 20:07:17] [ INFO] Heartbeat started after connection stabilization
+[2025-11-20 20:07:17.182] [INFO] [RPC] Connected successfully with C++ wrapper and fixed topics
+[2025-11-20 20:07:17.681] [INFO] RPC client connected, starting device discovery...

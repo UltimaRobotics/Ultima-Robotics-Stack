@@ -15,7 +15,7 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include "../../nholmann/json.hpp"
-#include "RpcController.h"
+#include "RpcControllerNew.hpp"
 #include "../../src/mavlink-extensions/ExtensionManager.h"
 
 namespace HttpModule {

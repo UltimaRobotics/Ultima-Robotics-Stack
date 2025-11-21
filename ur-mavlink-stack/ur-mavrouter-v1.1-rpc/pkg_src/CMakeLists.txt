@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Option to enable HTTP server build
-option(_BUILD_HTTP "Build with HTTP server support" ON)
+option(_BUILD_HTTP "Build with HTTP server support" OFF)
 
 add_definitions(-DPACKAGE="ur-mavrouter")
 add_definitions(-Wno-address-of-packed-member)
@@ -19,10 +19,15 @@ add_subdirectory(modules/ur-threadder-api)
 message(STATUS "LIBS = ${THREADDER_LIBS}")
 message(STATUS "INCLUDE_DIRS = ${THREADDER_INCLUDE_DIRS}")
 
-# Add the ur-rpc-integration subdirectory
-add_subdirectory(modules/ur-rpc-integration)
-message(STATUS "UR_RPC_LIBS = ${UR_RPC_INTEGRATION_LIBS}")
-message(STATUS "UR_RPC_INCLUDE_DIRS = ${UR_RPC_INTEGRATION_INCLUDE_DIRS}")
+# Add the ur-rpc-template subdirectory (like ur-mavdiscovery)
+add_subdirectory(../../ur-rpc-template ur-rpc-template)
+message(STATUS "RPC TEMPLATE LIBS = ${RPC_TEMPLATE_LIBS}")
+message(STATUS "RPC TEMPLATE INCLUDE_DIRS = ${RPC_TEMPLATE_INCLUDE_DIRS}")
+
+# Add the ur-mavdiscovery-shared subdirectory
+add_subdirectory(ur-mavdiscovery-shared)
+message(STATUS "MAVDISCOVERY SHARED LIBS = ${UR_MAVDISCOVERY_SHARED_LIBS}")
+message(STATUS "MAVDISCOVERY SHARED INCLUDE_DIRS = ${UR_MAVDISCOVERY_SHARED_INCLUDE_DIRS}")
 
 # Conditionally add HTTP module
 if(_BUILD_HTTP)
@@ -48,12 +53,14 @@ include_directories(
     .
     modules/mavlink_c_library_v2/ardupilotmega
     ${THREADDER_INCLUDE_DIRS}
-    ${UR_RPC_INTEGRATION_INCLUDE_DIRS}
+    ${RPC_TEMPLATE_INCLUDE_DIRS}
     ${HTTP_MODULE_INCLUDE_DIRS}
     ${MHD_INCLUDE_DIRS}
+    modules/nholmann
     src
     src/rpc-mechanisms
     src/mavlink-extensions
+    ur-mavdiscovery-shared/include
 )
 
 set(SRC_FILES
@@ -75,10 +82,13 @@ set(SRC_FILES
     src/common/log.cpp
     src/common/util.cpp
     src/common/xtermios.cpp
-    src/rpc-mechanisms/RpcController.cpp
+    src/rpc-mechanisms/RpcClient.cpp
+    src/rpc-mechanisms/RpcOperations.cpp
+    src/rpc-mechanisms/RpcClientInterfaceNew.cpp
+    src/rpc-mechanisms/RpcControllerNew.cpp
     src/mavlink-extensions/ExtensionManager.cpp
 )
 
 configure_file(src/version.h.in src/git_version.h)
 add_executable(${PROJECT_NAME} ${SRC_FILES} src/git_version.h)
-target_link_libraries(${PROJECT_NAME} rt m pthread ${THREADDER_LIBS} ${UR_RPC_INTEGRATION_LIBS} ${HTTP_MODULE_LIBS})
+target_link_libraries(${PROJECT_NAME} rt m pthread ${THREADDER_LIBS} ${RPC_TEMPLATE_LIBS} ${HTTP_MODULE_LIBS} ur-mavdiscovery-shared)
