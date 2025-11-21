@@ -1,8 +1,6 @@
 #include "RpcClient.hpp"
 #include "../common/log.h"
 #include <cstring>
-#include <iostream>
-#include <stdexcept>
 #include <thread>
 #include <chrono>
 #include "../../modules/nholmann/json.hpp"
@@ -159,11 +157,11 @@ void RpcClient::sendResponse(const std::string &topic,
   }
 }
 
-void RpcClient::sendRpcRequest(const std::string& service, const std::string& method, 
+std::string RpcClient::sendRpcRequest(const std::string& service, const std::string& method, 
                                const std::string& paramsJson) {
     if (!running_.load() || !urpcClient_) {
         log_error("[RPC] Cannot send RPC request - client not running");
-        return;
+        return "";
     }
 
     try {
@@ -175,7 +173,8 @@ void RpcClient::sendRpcRequest(const std::string& service, const std::string& me
         request["method"] = method;
         request["service"] = service;
         request["authority"] = "USER";
-        request["id"] = generateTransactionId();
+        std::string transactionId = generateTransactionId();
+        request["id"] = transactionId;
         request["params"] = json::parse(paramsJson);
 
         std::string requestPayload = request.dump();
@@ -207,16 +206,19 @@ void RpcClient::sendRpcRequest(const std::string& service, const std::string& me
             });
 
             log_info("[RPC] RPC request sent via ur-rpc-template: %s to %s", method.c_str(), service.c_str());
-            return;
+            return transactionId;
         }
 
         // Publish directly to the specified topic
         log_info("[RPC] Publishing directly to topic: %s", targetTopic.c_str());
         urpcClient_->publishMessage(targetTopic, requestPayload);
         log_info("[RPC] RPC request sent to topic %s: %s to %s", targetTopic.c_str(), method.c_str(), service.c_str());
+        
+        return transactionId;
 
     } catch (const std::exception &e) {
         log_error("[RPC] Failed to send RPC request: %s", e.what());
+        return "";
     }
 }
 

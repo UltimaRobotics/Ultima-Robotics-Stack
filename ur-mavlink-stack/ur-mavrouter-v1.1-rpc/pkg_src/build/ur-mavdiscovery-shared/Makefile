@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src
+CMAKE_SOURCE_DIR = /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build
+CMAKE_BINARY_DIR = /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -132,14 +132,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-mavdiscovery-shared//CMakeFiles/progress.marks
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-mavdiscovery-shared/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles 0
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-mavdiscovery-shared//CMakeFiles/progress.marks
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-mavdiscovery-shared/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-mavdiscovery-shared/clean
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-mavdiscovery-shared/clean
 .PHONY : clean
 
 # The main clean target
@@ -148,23 +148,23 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-mavdiscovery-shared/preinstall
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-mavdiscovery-shared/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-mavdiscovery-shared/preinstall
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-mavdiscovery-shared/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -P /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles/VerifyGlobs.cmake
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -P /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles/VerifyGlobs.cmake
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/rule:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/rule
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/rule
 .PHONY : ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/rule
 
 # Convenience name for target.
@@ -173,7 +173,7 @@ ur-mavdiscovery-shared: ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared
 
 # fast build rule for target.
 ur-mavdiscovery-shared/fast:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/build.make ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/build
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/build.make ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/build
 .PHONY : ur-mavdiscovery-shared/fast
 
 src/MavlinkDeviceStructs.o: src/MavlinkDeviceStructs.cpp.o
@@ -181,7 +181,7 @@ src/MavlinkDeviceStructs.o: src/MavlinkDeviceStructs.cpp.o
 
 # target to build an object file
 src/MavlinkDeviceStructs.cpp.o:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/build.make ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.o
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/build.make ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.o
 .PHONY : src/MavlinkDeviceStructs.cpp.o
 
 src/MavlinkDeviceStructs.i: src/MavlinkDeviceStructs.cpp.i
@@ -189,7 +189,7 @@ src/MavlinkDeviceStructs.i: src/MavlinkDeviceStructs.cpp.i
 
 # target to preprocess a source file
 src/MavlinkDeviceStructs.cpp.i:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/build.make ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.i
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/build.make ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.i
 .PHONY : src/MavlinkDeviceStructs.cpp.i
 
 src/MavlinkDeviceStructs.s: src/MavlinkDeviceStructs.cpp.s
@@ -197,7 +197,7 @@ src/MavlinkDeviceStructs.s: src/MavlinkDeviceStructs.cpp.s
 
 # target to generate assembly for a file
 src/MavlinkDeviceStructs.cpp.s:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/build.make ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.s
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/build.make ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.s
 .PHONY : src/MavlinkDeviceStructs.cpp.s
 
 src/MavlinkEventSerializer.o: src/MavlinkEventSerializer.cpp.o
@@ -205,7 +205,7 @@ src/MavlinkEventSerializer.o: src/MavlinkEventSerializer.cpp.o
 
 # target to build an object file
 src/MavlinkEventSerializer.cpp.o:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/build.make ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.o
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/build.make ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.o
 .PHONY : src/MavlinkEventSerializer.cpp.o
 
 src/MavlinkEventSerializer.i: src/MavlinkEventSerializer.cpp.i
@@ -213,7 +213,7 @@ src/MavlinkEventSerializer.i: src/MavlinkEventSerializer.cpp.i
 
 # target to preprocess a source file
 src/MavlinkEventSerializer.cpp.i:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/build.make ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.i
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/build.make ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.i
 .PHONY : src/MavlinkEventSerializer.cpp.i
 
 src/MavlinkEventSerializer.s: src/MavlinkEventSerializer.cpp.s
@@ -221,7 +221,7 @@ src/MavlinkEventSerializer.s: src/MavlinkEventSerializer.cpp.s
 
 # target to generate assembly for a file
 src/MavlinkEventSerializer.cpp.s:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/build.make ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.s
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/build.make ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.s
 .PHONY : src/MavlinkEventSerializer.cpp.s
 
 # Help Target
@@ -254,7 +254,7 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -P /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles/VerifyGlobs.cmake
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -P /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles/VerifyGlobs.cmake
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

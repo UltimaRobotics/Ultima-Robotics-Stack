@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src
+CMAKE_SOURCE_DIR = /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build
+CMAKE_BINARY_DIR = /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -132,14 +132,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template/deps/cJSON//CMakeFiles/progress.marks
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/cJSON/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles 0
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template/deps/cJSON//CMakeFiles/progress.marks
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/cJSON/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/cJSON/clean
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/cJSON/clean
 .PHONY : clean
 
 # The main clean target
@@ -148,23 +148,23 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/cJSON/preinstall
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/cJSON/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/cJSON/preinstall
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/cJSON/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -P /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles/VerifyGlobs.cmake
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -P /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles/VerifyGlobs.cmake
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/rule:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/rule
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/rule
 .PHONY : ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/rule
 
 # Convenience name for target.
@@ -173,7 +173,7 @@ cJSON: ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/rule
 
 # fast build rule for target.
 cJSON/fast:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/build.make ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/build
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/build.make ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/build
 .PHONY : cJSON/fast
 
 cJSON.o: cJSON.c.o
@@ -181,7 +181,7 @@ cJSON.o: cJSON.c.o
 
 # target to build an object file
 cJSON.c.o:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/build.make ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON.c.o
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/build.make ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON.c.o
 .PHONY : cJSON.c.o
 
 cJSON.i: cJSON.c.i
@@ -189,7 +189,7 @@ cJSON.i: cJSON.c.i
 
 # target to preprocess a source file
 cJSON.c.i:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/build.make ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON.c.i
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/build.make ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON.c.i
 .PHONY : cJSON.c.i
 
 cJSON.s: cJSON.c.s
@@ -197,7 +197,7 @@ cJSON.s: cJSON.c.s
 
 # target to generate assembly for a file
 cJSON.c.s:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/build.make ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON.c.s
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/build.make ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON.c.s
 .PHONY : cJSON.c.s
 
 cJSON_Utils.o: cJSON_Utils.c.o
@@ -205,7 +205,7 @@ cJSON_Utils.o: cJSON_Utils.c.o
 
 # target to build an object file
 cJSON_Utils.c.o:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/build.make ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON_Utils.c.o
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/build.make ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON_Utils.c.o
 .PHONY : cJSON_Utils.c.o
 
 cJSON_Utils.i: cJSON_Utils.c.i
@@ -213,7 +213,7 @@ cJSON_Utils.i: cJSON_Utils.c.i
 
 # target to preprocess a source file
 cJSON_Utils.c.i:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/build.make ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON_Utils.c.i
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/build.make ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON_Utils.c.i
 .PHONY : cJSON_Utils.c.i
 
 cJSON_Utils.s: cJSON_Utils.c.s
@@ -221,7 +221,7 @@ cJSON_Utils.s: cJSON_Utils.c.s
 
 # target to generate assembly for a file
 cJSON_Utils.c.s:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/build.make ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON_Utils.c.s
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/build.make ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON_Utils.c.s
 .PHONY : cJSON_Utils.c.s
 
 # Help Target
@@ -254,7 +254,7 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -P /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles/VerifyGlobs.cmake
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -P /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles/VerifyGlobs.cmake
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

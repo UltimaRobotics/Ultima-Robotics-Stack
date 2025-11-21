@@ -1,7 +1,7 @@
 ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.o: \
- /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-mavdiscovery-shared/src/MavlinkDeviceStructs.cpp \
+ /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-mavdiscovery-shared/src/MavlinkDeviceStructs.cpp \
  /usr/include/stdc-predef.h \
- /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-mavdiscovery-shared/include/MavlinkDeviceStructs.hpp \
+ /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-mavdiscovery-shared/include/MavlinkDeviceStructs.hpp \
  /usr/include/c++/11/string \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \

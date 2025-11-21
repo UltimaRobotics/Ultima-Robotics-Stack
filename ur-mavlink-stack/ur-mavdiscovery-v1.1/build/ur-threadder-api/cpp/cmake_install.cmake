@@ -1,4 +1,4 @@
-# Install script for directory: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-threadder-api/cpp
+# Install script for directory: /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-threadder-api/cpp
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

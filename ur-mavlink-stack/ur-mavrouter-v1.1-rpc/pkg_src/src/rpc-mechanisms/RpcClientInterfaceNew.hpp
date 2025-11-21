@@ -40,8 +40,9 @@ public:
      * @param service Target service
      * @param method RPC method
      * @param paramsJson JSON parameters
+     * @return Transaction ID used for the request
      */
-    virtual void sendRpcRequest(const std::string& service, const std::string& method, const std::string& paramsJson) = 0;
+    virtual std::string sendRpcRequest(const std::string& service, const std::string& method, const std::string& paramsJson) = 0;
     
     /**
      * @brief Send response
@@ -81,7 +82,7 @@ public:
     bool start() override;
     void stop() override;
     bool isRunning() const override;
-    void sendRpcRequest(const std::string& service, const std::string& method, const std::string& paramsJson) override;
+    std::string sendRpcRequest(const std::string& service, const std::string& method, const std::string& paramsJson) override;
     void sendResponse(const std::string& topic, const std::string& response) override;
     void setMessageHandler(std::function<void(const std::string&, const std::string&)> handler) override;
     

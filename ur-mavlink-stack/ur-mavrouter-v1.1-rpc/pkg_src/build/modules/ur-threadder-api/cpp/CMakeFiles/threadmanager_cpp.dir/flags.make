@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DPACKAGE=\"ur-mavrouter\" -D_POSIX_C_SOURCE=200809L
 
-CXX_INCLUDES = -I/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/modules/ur-threadder-api/include -I/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/thirdparty -I/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/modules/ur-threadder-api/cpp/include -I/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build -I/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/modules/ur-threadder-api/cpp/src
+CXX_INCLUDES = -I/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/modules/ur-threadder-api/include -I/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/thirdparty -I/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/modules/ur-threadder-api/cpp/include -I/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build -I/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/modules/ur-threadder-api/cpp/src
 
 CXX_FLAGS = -O3 -DNDEBUG -fvisibility=hidden -fvisibility-inlines-hidden   -Wno-address-of-packed-member -Wno-return-type -Wno-unused-result -O2 -g -Wall -Wextra -Wpedantic -std=gnu++17
 

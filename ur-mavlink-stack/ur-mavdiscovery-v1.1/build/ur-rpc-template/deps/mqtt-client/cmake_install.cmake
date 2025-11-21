@@ -1,4 +1,4 @@
-# Install script for directory: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/mqtt-client
+# Install script for directory: /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/mqtt-client
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -43,6 +43,6 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/mqtt-client/libmqtt-client.a")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/mqtt-client/libmqtt-client.a")
 endif()
 

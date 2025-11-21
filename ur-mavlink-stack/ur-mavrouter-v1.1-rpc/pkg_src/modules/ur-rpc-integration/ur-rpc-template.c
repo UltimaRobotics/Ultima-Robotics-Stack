@@ -1669,9 +1669,9 @@ int ur_rpc_client_start(ur_rpc_client_t* client) {
     for (int i = 0; i < 100; i++) { // Increased from 50 to 100 (10 seconds max)
         if (ur_atomic_load(&client->connected)) {
             connection_attempts++;
-            // Ensure connection is stable (stays connected for 500ms)
-            if (connection_attempts >= 5) {
-                LOG_INFO_SIMPLE("MQTT connection stabilized");
+            // Ensure connection is stable (reduced requirement for better tolerance)
+            if (connection_attempts >= 2) { // Reduced from 5 to 2 for better tolerance
+                LOG_INFO_SIMPLE("MQTT connection stabilized after %d attempts", connection_attempts);
                 break;
             }
         } else {
@@ -1682,13 +1682,13 @@ int ur_rpc_client_start(ur_rpc_client_t* client) {
 
     // Only start heartbeat if connection is truly stable
     if (client->config.heartbeat.enabled) {
-        if (ur_atomic_load(&client->connected) && connection_attempts >= 5) {
+        if (ur_atomic_load(&client->connected) && connection_attempts >= 2) { // Reduced from 5 to 2
             // Additional delay to ensure socket is ready for write operations
             usleep(500000); // 500ms additional stabilization time
             ur_rpc_heartbeat_start(client);
             LOG_INFO_SIMPLE("Heartbeat started after connection stabilization");
         } else {
-            LOG_WARN_SIMPLE("Connection not stable, heartbeat will not start automatically");
+            LOG_WARN_SIMPLE("Connection not stable (only %d consecutive attempts), heartbeat will not start automatically", connection_attempts);
         }
     }
 

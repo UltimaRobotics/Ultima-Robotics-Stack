@@ -58,16 +58,17 @@ bool RpcClientWrapper::isRunning() const {
     }
 }
 
-void RpcClientWrapper::sendRpcRequest(const std::string& service, const std::string& method, const std::string& paramsJson) {
+std::string RpcClientWrapper::sendRpcRequest(const std::string& service, const std::string& method, const std::string& paramsJson) {
     if (!rpcClient_) {
         log_error("RpcClient not initialized - cannot send request");
-        return;
+        return "";
     }
     
     try {
-        rpcClient_->sendRpcRequest(service, method, paramsJson);
+        return rpcClient_->sendRpcRequest(service, method, paramsJson);
     } catch (const std::exception& e) {
         log_error("Failed to send RPC request: %s", e.what());
+        return "";
     }
 }
 

@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src
+CMAKE_SOURCE_DIR = /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build
+CMAKE_BINARY_DIR = /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build
 
 # Include any dependencies generated for this target.
 include ur-rpc-template/CMakeFiles/ur-rpc-template.dir/depend.make
@@ -70,32 +70,32 @@ include ur-rpc-template/CMakeFiles/ur-rpc-template.dir/progress.make
 include ur-rpc-template/CMakeFiles/ur-rpc-template.dir/flags.make
 
 ur-rpc-template/CMakeFiles/ur-rpc-template.dir/ur-rpc-template.c.o: ur-rpc-template/CMakeFiles/ur-rpc-template.dir/flags.make
-ur-rpc-template/CMakeFiles/ur-rpc-template.dir/ur-rpc-template.c.o: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/ur-rpc-template.c
+ur-rpc-template/CMakeFiles/ur-rpc-template.dir/ur-rpc-template.c.o: /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/ur-rpc-template.c
 ur-rpc-template/CMakeFiles/ur-rpc-template.dir/ur-rpc-template.c.o: ur-rpc-template/CMakeFiles/ur-rpc-template.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object ur-rpc-template/CMakeFiles/ur-rpc-template.dir/ur-rpc-template.c.o"
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT ur-rpc-template/CMakeFiles/ur-rpc-template.dir/ur-rpc-template.c.o -MF CMakeFiles/ur-rpc-template.dir/ur-rpc-template.c.o.d -o CMakeFiles/ur-rpc-template.dir/ur-rpc-template.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/ur-rpc-template.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object ur-rpc-template/CMakeFiles/ur-rpc-template.dir/ur-rpc-template.c.o"
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT ur-rpc-template/CMakeFiles/ur-rpc-template.dir/ur-rpc-template.c.o -MF CMakeFiles/ur-rpc-template.dir/ur-rpc-template.c.o.d -o CMakeFiles/ur-rpc-template.dir/ur-rpc-template.c.o -c /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/ur-rpc-template.c
 
 ur-rpc-template/CMakeFiles/ur-rpc-template.dir/ur-rpc-template.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/ur-rpc-template.dir/ur-rpc-template.c.i"
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/ur-rpc-template.c > CMakeFiles/ur-rpc-template.dir/ur-rpc-template.c.i
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/ur-rpc-template.c > CMakeFiles/ur-rpc-template.dir/ur-rpc-template.c.i
 
 ur-rpc-template/CMakeFiles/ur-rpc-template.dir/ur-rpc-template.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/ur-rpc-template.dir/ur-rpc-template.c.s"
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/ur-rpc-template.c -o CMakeFiles/ur-rpc-template.dir/ur-rpc-template.c.s
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/ur-rpc-template.c -o CMakeFiles/ur-rpc-template.dir/ur-rpc-template.c.s
 
 ur-rpc-template/CMakeFiles/ur-rpc-template.dir/extensions/direct_template.c.o: ur-rpc-template/CMakeFiles/ur-rpc-template.dir/flags.make
-ur-rpc-template/CMakeFiles/ur-rpc-template.dir/extensions/direct_template.c.o: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/extensions/direct_template.c
+ur-rpc-template/CMakeFiles/ur-rpc-template.dir/extensions/direct_template.c.o: /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/extensions/direct_template.c
 ur-rpc-template/CMakeFiles/ur-rpc-template.dir/extensions/direct_template.c.o: ur-rpc-template/CMakeFiles/ur-rpc-template.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object ur-rpc-template/CMakeFiles/ur-rpc-template.dir/extensions/direct_template.c.o"
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT ur-rpc-template/CMakeFiles/ur-rpc-template.dir/extensions/direct_template.c.o -MF CMakeFiles/ur-rpc-template.dir/extensions/direct_template.c.o.d -o CMakeFiles/ur-rpc-template.dir/extensions/direct_template.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/extensions/direct_template.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object ur-rpc-template/CMakeFiles/ur-rpc-template.dir/extensions/direct_template.c.o"
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT ur-rpc-template/CMakeFiles/ur-rpc-template.dir/extensions/direct_template.c.o -MF CMakeFiles/ur-rpc-template.dir/extensions/direct_template.c.o.d -o CMakeFiles/ur-rpc-template.dir/extensions/direct_template.c.o -c /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/extensions/direct_template.c
 
 ur-rpc-template/CMakeFiles/ur-rpc-template.dir/extensions/direct_template.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/ur-rpc-template.dir/extensions/direct_template.c.i"
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/extensions/direct_template.c > CMakeFiles/ur-rpc-template.dir/extensions/direct_template.c.i
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/extensions/direct_template.c > CMakeFiles/ur-rpc-template.dir/extensions/direct_template.c.i
 
 ur-rpc-template/CMakeFiles/ur-rpc-template.dir/extensions/direct_template.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/ur-rpc-template.dir/extensions/direct_template.c.s"
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/extensions/direct_template.c -o CMakeFiles/ur-rpc-template.dir/extensions/direct_template.c.s
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/extensions/direct_template.c -o CMakeFiles/ur-rpc-template.dir/extensions/direct_template.c.s
 
 # Object files for target ur-rpc-template
 ur__rpc__template_OBJECTS = \
@@ -109,19 +109,19 @@ ur-rpc-template/libur-rpc-template.a: ur-rpc-template/CMakeFiles/ur-rpc-template
 ur-rpc-template/libur-rpc-template.a: ur-rpc-template/CMakeFiles/ur-rpc-template.dir/extensions/direct_template.c.o
 ur-rpc-template/libur-rpc-template.a: ur-rpc-template/CMakeFiles/ur-rpc-template.dir/build.make
 ur-rpc-template/libur-rpc-template.a: ur-rpc-template/CMakeFiles/ur-rpc-template.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C static library libur-rpc-template.a"
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template && $(CMAKE_COMMAND) -P CMakeFiles/ur-rpc-template.dir/cmake_clean_target.cmake
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ur-rpc-template.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C static library libur-rpc-template.a"
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template && $(CMAKE_COMMAND) -P CMakeFiles/ur-rpc-template.dir/cmake_clean_target.cmake
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ur-rpc-template.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 ur-rpc-template/CMakeFiles/ur-rpc-template.dir/build: ur-rpc-template/libur-rpc-template.a
 .PHONY : ur-rpc-template/CMakeFiles/ur-rpc-template.dir/build
 
 ur-rpc-template/CMakeFiles/ur-rpc-template.dir/clean:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template && $(CMAKE_COMMAND) -P CMakeFiles/ur-rpc-template.dir/cmake_clean.cmake
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template && $(CMAKE_COMMAND) -P CMakeFiles/ur-rpc-template.dir/cmake_clean.cmake
 .PHONY : ur-rpc-template/CMakeFiles/ur-rpc-template.dir/clean
 
 ur-rpc-template/CMakeFiles/ur-rpc-template.dir/depend:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template/CMakeFiles/ur-rpc-template.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template/CMakeFiles/ur-rpc-template.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : ur-rpc-template/CMakeFiles/ur-rpc-template.dir/depend
 

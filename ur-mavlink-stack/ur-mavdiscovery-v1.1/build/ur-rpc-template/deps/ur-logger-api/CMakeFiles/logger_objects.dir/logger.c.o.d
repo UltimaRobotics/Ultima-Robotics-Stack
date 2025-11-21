@@ -1,7 +1,7 @@
 ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/logger.c.o: \
- /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/ur-logger-api/logger.c \
+ /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/ur-logger-api/logger.c \
  /usr/include/stdc-predef.h \
- /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/ur-logger-api/logger.h \
+ /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/ur-logger-api/logger.h \
  /usr/include/stdio.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \

@@ -86,6 +86,7 @@ set(SRC_FILES
     src/rpc-mechanisms/RpcOperations.cpp
     src/rpc-mechanisms/RpcClientInterfaceNew.cpp
     src/rpc-mechanisms/RpcControllerNew.cpp
+    src/rpc-mechanisms/DeviceDiscoveryCronJob.cpp
     src/mavlink-extensions/ExtensionManager.cpp
 )
 

@@ -28,6 +28,7 @@
 #include <chrono>
 #include <vector>
 #include <map>
+#include <atomic>
 
 #include "common/conf_file.h"
 #include "common/dbg.h"
@@ -53,6 +54,9 @@
 #define EXTENSION_CONFIG_DIR "pkg_src/config" // Default directory for extension configs
 
 extern const char *BUILD_VERSION;
+
+// Global shutdown flag for graceful termination
+static std::atomic<bool> shutdown_requested{false};
 
 static const struct option long_options[] = {{"package-config", required_argument, nullptr, 'P'},
                                              {"rpc-config", required_argument, nullptr, 'R'},
@@ -512,9 +516,9 @@ static int cmpstr(const void *s1, const void *s2)
 
 void signalHandler(int signal) {
     std::cout << "Shutting down system..." << std::endl;
-    // In a real application, you might want to signal the mainloop/threads to exit gracefully
-    // For now, exiting directly.
     exit(0);
+    shutdown_requested.store(true);
+    // Signal will be handled in main loop
 }
 
 static int parse_conf_files(Configuration &config)
@@ -1044,6 +1048,65 @@ int main(int argc, char *argv[])
                         return resp;
                     });
 
+                // GET /api/startup/status - Get startup mechanism status
+                httpServer->addRoute(HttpModule::HttpMethod::GET, "/api/startup/status",
+                    [&rpcController](const HttpModule::HttpRequest& req) -> HttpModule::HttpResponse {
+                        std::cout << "\n[HTTP] Client request: GET /api/startup/status" << std::endl;
+                        std::cout << "[HTTP] Action: Get startup mechanism status" << std::endl;
+
+                        HttpModule::HttpResponse resp;
+                        resp.contentType = "application/json";
+                        resp.statusCode = 200;
+                        
+                        try {
+                            auto startupStatus = rpcController->getStartupStatus();
+                            resp.content = startupStatus.dump();
+                            
+                            std::cout << "[HTTP] Startup status: " << startupStatus["overall_status"] << std::endl;
+                            
+                        } catch (const std::exception& e) {
+                            resp.statusCode = 500;
+                            resp.content = "{\"error\": \"Failed to get startup status: " + std::string(e.what()) + "\"}";
+                            std::cerr << "[HTTP] Error getting startup status: " << e.what() << std::endl;
+                        }
+
+                        return resp;
+                    });
+
+                // POST /api/startup/trigger - Manually trigger device discovery
+                httpServer->addRoute(HttpModule::HttpMethod::POST, "/api/startup/trigger",
+                    [&rpcController](const HttpModule::HttpRequest& req) -> HttpModule::HttpResponse {
+                        std::cout << "\n[HTTP] Client request: POST /api/startup/trigger" << std::endl;
+                        std::cout << "[HTTP] Action: Manually trigger device discovery" << std::endl;
+
+                        HttpModule::HttpResponse resp;
+                        resp.contentType = "application/json";
+                        
+                        try {
+                            // Create a device discovery request
+                            nlohmann::json triggerRequest;
+                            triggerRequest["jsonrpc"] = "2.0";
+                            triggerRequest["method"] = "device-list";
+                            triggerRequest["params"] = nlohmann::json::object();
+                            triggerRequest["id"] = "manual_trigger";
+                            
+                            // Send the request via RPC
+                            std::string payload = triggerRequest.dump();
+                            rpcController->handleRpcMessage("manual_trigger", payload);
+                            
+                            resp.statusCode = 200;
+                            resp.content = "{\"status\": \"success\", \"message\": \"Device discovery triggered manually\"}";
+                            std::cout << "[HTTP] Device discovery triggered successfully" << std::endl;
+                            
+                        } catch (const std::exception& e) {
+                            resp.statusCode = 500;
+                            resp.content = "{\"error\": \"Failed to trigger device discovery: " + std::string(e.what()) + "\"}";
+                            std::cerr << "[HTTP] Error triggering device discovery: " << e.what() << std::endl;
+                        }
+
+                        return resp;
+                    });
+
 
                 // Set RPC controller for HTTP server
                 httpServer->setRpcController(rpcController);
@@ -1193,11 +1256,26 @@ int main(int argc, char *argv[])
                 break;
             }
         #else
-            // When HTTP is disabled, keep running until RPC client stops or receives signal
-            if (rpcController && !rpcController->isRpcClientRunning()) {
-                log_info("main() - RPC client stopped, exiting application");
+            // When HTTP is disabled, keep running indefinitely or until shutdown signal
+            // RPC client should stay alive and handle reconnections automatically
+            if (shutdown_requested.load()) {
+                log_info("main() - Shutdown requested, exiting application");
                 retcode = EXIT_SUCCESS;
                 break;
+            }
+            
+            // Check RPC client status but don't exit on temporary disconnections
+            if (rpcController) {
+                bool rpcRunning = rpcController->isRpcClientRunning();
+                if (!rpcRunning) {
+                    static int rpcWarningCount = 0;
+                    if (rpcWarningCount % 60 == 0) { // Log every 60 seconds (10 * 6)
+                        log_warning("main() - RPC client not running, but keeping application alive for reconnection");
+                        rpcWarningCount++;
+                    } else {
+                        rpcWarningCount++;
+                    }
+                }
             }
         #endif
 

@@ -16,12 +16,15 @@
   },
   "json_added_pubs": {
     "topics": [
-      "direct_messaging/ur-mavrouter/responses"
+      "direct_messaging/ur-mavrouter/responses",
+      "direct_messaging/ur-mavdiscovery/requests"
     ]
   },
   "json_added_subs": {
     "topics": [
-      "direct_messaging/ur-mavrouter/requests"
+      "direct_messaging/ur-mavrouter/requests",
+      "direct_messaging/ur-mavdiscovery/responses",
+      "clients/ur-mavdiscovery/heartbeat"
     ]
   }
 }

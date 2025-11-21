@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1
+CMAKE_SOURCE_DIR = /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build
+CMAKE_BINARY_DIR = /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build
 
 # Include any dependencies generated for this target.
 include ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/depend.make
@@ -72,30 +72,30 @@ include ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/flags.make
 ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.o: ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/flags.make
 ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.o: ../ur-mavdiscovery-shared/src/MavlinkDeviceStructs.cpp
 ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.o: ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.o"
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-mavdiscovery-shared && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.o -MF CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.o.d -o CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-mavdiscovery-shared/src/MavlinkDeviceStructs.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.o"
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-mavdiscovery-shared && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.o -MF CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.o.d -o CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.o -c /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-mavdiscovery-shared/src/MavlinkDeviceStructs.cpp
 
 ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.i"
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-mavdiscovery-shared && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-mavdiscovery-shared/src/MavlinkDeviceStructs.cpp > CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.i
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-mavdiscovery-shared && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-mavdiscovery-shared/src/MavlinkDeviceStructs.cpp > CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.i
 
 ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.s"
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-mavdiscovery-shared && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-mavdiscovery-shared/src/MavlinkDeviceStructs.cpp -o CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.s
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-mavdiscovery-shared && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-mavdiscovery-shared/src/MavlinkDeviceStructs.cpp -o CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkDeviceStructs.cpp.s
 
 ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.o: ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/flags.make
 ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.o: ../ur-mavdiscovery-shared/src/MavlinkEventSerializer.cpp
 ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.o: ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.o"
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-mavdiscovery-shared && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.o -MF CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.o.d -o CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-mavdiscovery-shared/src/MavlinkEventSerializer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.o"
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-mavdiscovery-shared && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.o -MF CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.o.d -o CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.o -c /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-mavdiscovery-shared/src/MavlinkEventSerializer.cpp
 
 ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.i"
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-mavdiscovery-shared && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-mavdiscovery-shared/src/MavlinkEventSerializer.cpp > CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.i
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-mavdiscovery-shared && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-mavdiscovery-shared/src/MavlinkEventSerializer.cpp > CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.i
 
 ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.s"
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-mavdiscovery-shared && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-mavdiscovery-shared/src/MavlinkEventSerializer.cpp -o CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.s
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-mavdiscovery-shared && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-mavdiscovery-shared/src/MavlinkEventSerializer.cpp -o CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.s
 
 # Object files for target ur-mavdiscovery-shared
 ur__mavdiscovery__shared_OBJECTS = \
@@ -109,19 +109,19 @@ ur-mavdiscovery-shared/libur-mavdiscovery-shared.a: ur-mavdiscovery-shared/CMake
 ur-mavdiscovery-shared/libur-mavdiscovery-shared.a: ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/src/MavlinkEventSerializer.cpp.o
 ur-mavdiscovery-shared/libur-mavdiscovery-shared.a: ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/build.make
 ur-mavdiscovery-shared/libur-mavdiscovery-shared.a: ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX static library libur-mavdiscovery-shared.a"
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-mavdiscovery-shared && $(CMAKE_COMMAND) -P CMakeFiles/ur-mavdiscovery-shared.dir/cmake_clean_target.cmake
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-mavdiscovery-shared && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ur-mavdiscovery-shared.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX static library libur-mavdiscovery-shared.a"
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-mavdiscovery-shared && $(CMAKE_COMMAND) -P CMakeFiles/ur-mavdiscovery-shared.dir/cmake_clean_target.cmake
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-mavdiscovery-shared && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ur-mavdiscovery-shared.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/build: ur-mavdiscovery-shared/libur-mavdiscovery-shared.a
 .PHONY : ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/build
 
 ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/clean:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-mavdiscovery-shared && $(CMAKE_COMMAND) -P CMakeFiles/ur-mavdiscovery-shared.dir/cmake_clean.cmake
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-mavdiscovery-shared && $(CMAKE_COMMAND) -P CMakeFiles/ur-mavdiscovery-shared.dir/cmake_clean.cmake
 .PHONY : ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/clean
 
 ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/depend:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1 /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-mavdiscovery-shared /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-mavdiscovery-shared /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1 /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-mavdiscovery-shared /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-mavdiscovery-shared /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/depend
 

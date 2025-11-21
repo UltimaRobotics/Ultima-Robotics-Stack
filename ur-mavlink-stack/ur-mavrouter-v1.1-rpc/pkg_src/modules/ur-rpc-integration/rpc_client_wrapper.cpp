@@ -265,20 +265,52 @@ void RpcClientWrapper::rpcClientThreadFunc() {
         // Wait for connection establishment
         waitForConnection();
         
-        // Main thread loop
+        // Main thread loop - enhanced for resilience
+        int consecutiveFailures = 0;
+        const int maxFailures = 10;
+        
         while (running_.load()) {
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
             
             // Check connection status
             if (!direct_client_thread_is_connected(clientThread_)) {
                 handleConnectionStatus(false, "Connection lost");
-                // Wait for reconnection
-                waitForConnection();
+                consecutiveFailures++;
+                
+                // Attempt reconnection with exponential backoff
+                if (consecutiveFailures <= maxFailures) {
+                    int backoffMs = std::min(1000 * (1 << (consecutiveFailures / 2)), 30000); // Max 30 seconds
+                    std::cout << "Connection lost, attempting reconnection in " << backoffMs << "ms (attempt " << consecutiveFailures << "/" << maxFailures << ")" << std::endl;
+                    
+                    std::this_thread::sleep_for(std::chrono::milliseconds(backoffMs));
+                    waitForConnection();
+                    
+                    if (direct_client_thread_is_connected(clientThread_)) {
+                        consecutiveFailures = 0; // Reset on successful reconnection
+                        std::cout << "Successfully reconnected" << std::endl;
+                    }
+                } else {
+                    std::cerr << "Too many consecutive connection failures (" << maxFailures << "), but keeping thread alive for future attempts" << std::endl;
+                    // Don't exit the thread - just wait longer before next attempt
+                    std::this_thread::sleep_for(std::chrono::seconds(60));
+                    consecutiveFailures = 0; // Reset counter for long-term operation
+                }
+            } else {
+                consecutiveFailures = 0; // Reset on successful connection check
             }
         }
         
+        std::cout << "RPC client thread shutting down gracefully" << std::endl;
+        
     } catch (const std::exception& e) {
         std::cerr << "RPC client thread exception: " << e.what() << std::endl;
+        // Don't exit - let the thread continue running
+        std::cout << "Thread will continue running despite exception" << std::endl;
+        
+        // Keep thread alive even after exception
+        while (running_.load()) {
+            std::this_thread::sleep_for(std::chrono::seconds(5));
+        }
     }
 }
 
@@ -333,9 +365,28 @@ void RpcClientWrapper::waitForConnection() {
         return;
     }
     
-    // Wait for connection with timeout
-    bool connected = direct_client_thread_wait_for_connection(clientThread_, 10000);
-    handleConnectionStatus(connected, connected ? "Connected" : "Connection timeout");
+    // Wait for connection with timeout - enhanced with retry logic
+    bool connected = false;
+    int attempts = 0;
+    const int maxAttempts = 3;
+    
+    while (attempts < maxAttempts && !connected) {
+        attempts++;
+        std::cout << "Waiting for RPC connection (attempt " << attempts << "/" << maxAttempts << ")..." << std::endl;
+        connected = direct_client_thread_wait_for_connection(clientThread_, 10000);
+        
+        if (!connected && attempts < maxAttempts) {
+            std::cout << "Connection timeout, retrying..." << std::endl;
+            std::this_thread::sleep_for(std::chrono::seconds(2));
+        }
+    }
+    
+    if (connected) {
+        handleConnectionStatus(true, "Connected successfully");
+    } else {
+        std::cout << "Connection failed after " << maxAttempts << " attempts, but thread will continue running" << std::endl;
+        handleConnectionStatus(false, "Connection failed - will retry later");
+    }
 }
 
 void RpcClientWrapper::handleConnectionStatus(bool connected, const std::string& reason) {

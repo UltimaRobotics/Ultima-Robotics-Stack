@@ -40,7 +40,7 @@ public:
     void sendResponse(const std::string& topic, const std::string& response);
     
     // Send RPC request using ur-rpc-template C++ wrapper with fixed topics
-    void sendRpcRequest(const std::string& service, const std::string& method, const std::string& paramsJson);
+    std::string sendRpcRequest(const std::string& service, const std::string& method, const std::string& paramsJson);
 
     // Getters for internal components
     UrRpc::Client* getUrRpcClient() { return urpcClient_.get(); }

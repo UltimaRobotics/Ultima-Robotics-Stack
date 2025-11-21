@@ -6,11 +6,15 @@
 #include "../../modules/ur-threadder-api/cpp/include/ThreadManager.hpp"
 #include "RpcClientInterfaceNew.hpp"
 #include "RpcOperations.hpp"
+#include "../../ur-mavdiscovery-shared/include/MavlinkDeviceStructs.hpp"
 
 // Forward declaration for ExtensionManager
 namespace MavlinkExtensions {
     class ExtensionManager;
 }
+
+// Forward declaration for DeviceDiscoveryCronJob
+class DeviceDiscoveryCronJob;
 
 namespace RpcMechanisms {
 
@@ -172,6 +176,19 @@ public:
      * @return Pointer to operations
      */
     RpcOperations* getOperations() { return operations_.get(); }
+    
+    /**
+     * @brief Get startup status information
+     * @return JSON object with startup status
+     */
+    nlohmann::json getStartupStatus() const;
+    
+    /**
+     * @brief Handle incoming RPC message (public for manual trigger)
+     * @param topic Message topic
+     * @param payload Message payload
+     */
+    void handleRpcMessage(const std::string& topic, const std::string& payload);
 
 private:
     // RPC client and operations
@@ -184,9 +201,36 @@ private:
     std::atomic<bool> rpcInitialized_{false};
     mutable std::mutex rpcMutex_;
     
+    // Message handler for RPC client (used for temporary handler management)
+    std::function<void(const std::string&, const std::string&)> messageHandler_;
+    
     // UR-RPC private methods
     void setupRpcMessageHandlers();
-    void handleRpcMessage(const std::string& topic, const std::string& payload);
+    
+    // Startup mechanism private methods
+    void handleHeartbeatMessage(const std::string& payload);
+    void triggerDeviceDiscovery();
+    void handleDeviceDiscoveryResponse(const std::string& payload);
+    void handleDeviceAddedEvent(const MavlinkShared::DeviceAddedEvent& event);
+    bool isMainloopRunning() const;
+    void checkHeartbeatTimeout();
+    
+    // Startup state tracking
+    std::atomic<bool> discoveryTriggered_{false};
+    std::atomic<bool> mainloopStarted_{false};
+    std::chrono::steady_clock::time_point lastHeartbeatTime_;
+    mutable std::mutex startupMutex_;
+    
+    // Thread management for startup mechanism
+    std::vector<std::thread> startupThreads_;
+    std::mutex threadsMutex_;
+    std::atomic<bool> shutdown_{false};
+    
+    // Device discovery cron job (new implementation)
+    std::unique_ptr<DeviceDiscoveryCronJob> discoveryCronJob_;
+    
+    // Heartbeat timeout configuration
+    static constexpr std::chrono::seconds HEARTBEAT_TIMEOUT{30}; // 30 seconds timeout
 };
 
 } // namespace RpcMechanisms

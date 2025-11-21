@@ -1,4 +1,4 @@
-# Install script for directory: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/modules/ur-threadder-api/cpp
+# Install script for directory: /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/modules/ur-threadder-api/cpp
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

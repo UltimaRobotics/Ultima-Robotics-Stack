@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src
+CMAKE_SOURCE_DIR = /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build
+CMAKE_BINARY_DIR = /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build
 
 # Include any dependencies generated for this target.
 include ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/depend.make
@@ -70,18 +70,18 @@ include ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/progres
 include ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/flags.make
 
 ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/logger.c.o: ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/flags.make
-ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/logger.c.o: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/ur-logger-api/logger.c
+ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/logger.c.o: /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/ur-logger-api/logger.c
 ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/logger.c.o: ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/logger.c.o"
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template/deps/ur-logger-api && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/logger.c.o -MF CMakeFiles/logger_objects.dir/logger.c.o.d -o CMakeFiles/logger_objects.dir/logger.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/ur-logger-api/logger.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/logger.c.o"
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template/deps/ur-logger-api && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/logger.c.o -MF CMakeFiles/logger_objects.dir/logger.c.o.d -o CMakeFiles/logger_objects.dir/logger.c.o -c /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/ur-logger-api/logger.c
 
 ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/logger.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/logger_objects.dir/logger.c.i"
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template/deps/ur-logger-api && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/ur-logger-api/logger.c > CMakeFiles/logger_objects.dir/logger.c.i
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template/deps/ur-logger-api && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/ur-logger-api/logger.c > CMakeFiles/logger_objects.dir/logger.c.i
 
 ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/logger.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/logger_objects.dir/logger.c.s"
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template/deps/ur-logger-api && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/ur-logger-api/logger.c -o CMakeFiles/logger_objects.dir/logger.c.s
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template/deps/ur-logger-api && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/ur-logger-api/logger.c -o CMakeFiles/logger_objects.dir/logger.c.s
 
 logger_objects: ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/logger.c.o
 logger_objects: ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/build.make
@@ -92,10 +92,10 @@ ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/build: logger_o
 .PHONY : ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/build
 
 ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/clean:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template/deps/ur-logger-api && $(CMAKE_COMMAND) -P CMakeFiles/logger_objects.dir/cmake_clean.cmake
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template/deps/ur-logger-api && $(CMAKE_COMMAND) -P CMakeFiles/logger_objects.dir/cmake_clean.cmake
 .PHONY : ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/clean
 
 ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/depend:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/ur-logger-api /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template/deps/ur-logger-api /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/ur-logger-api /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template/deps/ur-logger-api /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/depend
 

@@ -31,6 +31,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/ur-mavrouter.dir/src/mavlink-extensions/ExtensionManager.cpp.o.d"
   "CMakeFiles/ur-mavrouter.dir/src/pollable.cpp.o"
   "CMakeFiles/ur-mavrouter.dir/src/pollable.cpp.o.d"
+  "CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/DeviceDiscoveryCronJob.cpp.o"
+  "CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/DeviceDiscoveryCronJob.cpp.o.d"
   "CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcClient.cpp.o"
   "CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcClient.cpp.o.d"
   "CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcClientInterfaceNew.cpp.o"
