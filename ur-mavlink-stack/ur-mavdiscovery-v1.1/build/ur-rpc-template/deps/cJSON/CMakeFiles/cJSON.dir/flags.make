@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_DEFINES = 
 
-C_INCLUDES = -I/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/cJSON
+C_INCLUDES = -I/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/cJSON
 
 C_FLAGS =  -Wall -Wextra -pthread -Wno-unused-parameter -Wno-unused-variable -Wno-unused-result -Wno-sign-compare -O2 -DNDEBUG -fPIC -std=gnu99
 

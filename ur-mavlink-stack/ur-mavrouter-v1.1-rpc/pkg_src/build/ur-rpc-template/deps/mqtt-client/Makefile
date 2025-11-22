@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src
+CMAKE_SOURCE_DIR = /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build
+CMAKE_BINARY_DIR = /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -132,14 +132,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template/deps/mqtt-client//CMakeFiles/progress.marks
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/mqtt-client/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles 0
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template/deps/mqtt-client//CMakeFiles/progress.marks
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/mqtt-client/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/mqtt-client/clean
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/mqtt-client/clean
 .PHONY : clean
 
 # The main clean target
@@ -148,23 +148,23 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/mqtt-client/preinstall
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/mqtt-client/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/mqtt-client/preinstall
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/mqtt-client/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -P /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles/VerifyGlobs.cmake
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -P /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles/VerifyGlobs.cmake
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/rule:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/rule
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/rule
 .PHONY : ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/rule
 
 # Convenience name for target.
@@ -173,7 +173,7 @@ mqtt-client-static: ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-stat
 
 # fast build rule for target.
 mqtt-client-static/fast:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build
 .PHONY : mqtt-client-static/fast
 
 src/actions.o: src/actions.c.o
@@ -181,7 +181,7 @@ src/actions.o: src/actions.c.o
 
 # target to build an object file
 src/actions.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/actions.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/actions.c.o
 .PHONY : src/actions.c.o
 
 src/actions.i: src/actions.c.i
@@ -189,7 +189,7 @@ src/actions.i: src/actions.c.i
 
 # target to preprocess a source file
 src/actions.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/actions.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/actions.c.i
 .PHONY : src/actions.c.i
 
 src/actions.s: src/actions.c.s
@@ -197,7 +197,7 @@ src/actions.s: src/actions.c.s
 
 # target to generate assembly for a file
 src/actions.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/actions.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/actions.c.s
 .PHONY : src/actions.c.s
 
 src/callbacks.o: src/callbacks.c.o
@@ -205,7 +205,7 @@ src/callbacks.o: src/callbacks.c.o
 
 # target to build an object file
 src/callbacks.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/callbacks.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/callbacks.c.o
 .PHONY : src/callbacks.c.o
 
 src/callbacks.i: src/callbacks.c.i
@@ -213,7 +213,7 @@ src/callbacks.i: src/callbacks.c.i
 
 # target to preprocess a source file
 src/callbacks.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/callbacks.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/callbacks.c.i
 .PHONY : src/callbacks.c.i
 
 src/callbacks.s: src/callbacks.c.s
@@ -221,7 +221,7 @@ src/callbacks.s: src/callbacks.c.s
 
 # target to generate assembly for a file
 src/callbacks.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/callbacks.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/callbacks.c.s
 .PHONY : src/callbacks.c.s
 
 src/connect.o: src/connect.c.o
@@ -229,7 +229,7 @@ src/connect.o: src/connect.c.o
 
 # target to build an object file
 src/connect.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/connect.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/connect.c.o
 .PHONY : src/connect.c.o
 
 src/connect.i: src/connect.c.i
@@ -237,7 +237,7 @@ src/connect.i: src/connect.c.i
 
 # target to preprocess a source file
 src/connect.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/connect.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/connect.c.i
 .PHONY : src/connect.c.i
 
 src/connect.s: src/connect.c.s
@@ -245,7 +245,7 @@ src/connect.s: src/connect.c.s
 
 # target to generate assembly for a file
 src/connect.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/connect.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/connect.c.s
 .PHONY : src/connect.c.s
 
 src/handle_connack.o: src/handle_connack.c.o
@@ -253,7 +253,7 @@ src/handle_connack.o: src/handle_connack.c.o
 
 # target to build an object file
 src/handle_connack.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_connack.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_connack.c.o
 .PHONY : src/handle_connack.c.o
 
 src/handle_connack.i: src/handle_connack.c.i
@@ -261,7 +261,7 @@ src/handle_connack.i: src/handle_connack.c.i
 
 # target to preprocess a source file
 src/handle_connack.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_connack.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_connack.c.i
 .PHONY : src/handle_connack.c.i
 
 src/handle_connack.s: src/handle_connack.c.s
@@ -269,7 +269,7 @@ src/handle_connack.s: src/handle_connack.c.s
 
 # target to generate assembly for a file
 src/handle_connack.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_connack.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_connack.c.s
 .PHONY : src/handle_connack.c.s
 
 src/handle_ping.o: src/handle_ping.c.o
@@ -277,7 +277,7 @@ src/handle_ping.o: src/handle_ping.c.o
 
 # target to build an object file
 src/handle_ping.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_ping.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_ping.c.o
 .PHONY : src/handle_ping.c.o
 
 src/handle_ping.i: src/handle_ping.c.i
@@ -285,7 +285,7 @@ src/handle_ping.i: src/handle_ping.c.i
 
 # target to preprocess a source file
 src/handle_ping.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_ping.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_ping.c.i
 .PHONY : src/handle_ping.c.i
 
 src/handle_ping.s: src/handle_ping.c.s
@@ -293,7 +293,7 @@ src/handle_ping.s: src/handle_ping.c.s
 
 # target to generate assembly for a file
 src/handle_ping.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_ping.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_ping.c.s
 .PHONY : src/handle_ping.c.s
 
 src/handle_pubackcomp.o: src/handle_pubackcomp.c.o
@@ -301,7 +301,7 @@ src/handle_pubackcomp.o: src/handle_pubackcomp.c.o
 
 # target to build an object file
 src/handle_pubackcomp.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_pubackcomp.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_pubackcomp.c.o
 .PHONY : src/handle_pubackcomp.c.o
 
 src/handle_pubackcomp.i: src/handle_pubackcomp.c.i
@@ -309,7 +309,7 @@ src/handle_pubackcomp.i: src/handle_pubackcomp.c.i
 
 # target to preprocess a source file
 src/handle_pubackcomp.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_pubackcomp.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_pubackcomp.c.i
 .PHONY : src/handle_pubackcomp.c.i
 
 src/handle_pubackcomp.s: src/handle_pubackcomp.c.s
@@ -317,7 +317,7 @@ src/handle_pubackcomp.s: src/handle_pubackcomp.c.s
 
 # target to generate assembly for a file
 src/handle_pubackcomp.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_pubackcomp.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_pubackcomp.c.s
 .PHONY : src/handle_pubackcomp.c.s
 
 src/handle_publish.o: src/handle_publish.c.o
@@ -325,7 +325,7 @@ src/handle_publish.o: src/handle_publish.c.o
 
 # target to build an object file
 src/handle_publish.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_publish.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_publish.c.o
 .PHONY : src/handle_publish.c.o
 
 src/handle_publish.i: src/handle_publish.c.i
@@ -333,7 +333,7 @@ src/handle_publish.i: src/handle_publish.c.i
 
 # target to preprocess a source file
 src/handle_publish.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_publish.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_publish.c.i
 .PHONY : src/handle_publish.c.i
 
 src/handle_publish.s: src/handle_publish.c.s
@@ -341,7 +341,7 @@ src/handle_publish.s: src/handle_publish.c.s
 
 # target to generate assembly for a file
 src/handle_publish.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_publish.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_publish.c.s
 .PHONY : src/handle_publish.c.s
 
 src/handle_pubrec.o: src/handle_pubrec.c.o
@@ -349,7 +349,7 @@ src/handle_pubrec.o: src/handle_pubrec.c.o
 
 # target to build an object file
 src/handle_pubrec.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_pubrec.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_pubrec.c.o
 .PHONY : src/handle_pubrec.c.o
 
 src/handle_pubrec.i: src/handle_pubrec.c.i
@@ -357,7 +357,7 @@ src/handle_pubrec.i: src/handle_pubrec.c.i
 
 # target to preprocess a source file
 src/handle_pubrec.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_pubrec.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_pubrec.c.i
 .PHONY : src/handle_pubrec.c.i
 
 src/handle_pubrec.s: src/handle_pubrec.c.s
@@ -365,7 +365,7 @@ src/handle_pubrec.s: src/handle_pubrec.c.s
 
 # target to generate assembly for a file
 src/handle_pubrec.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_pubrec.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_pubrec.c.s
 .PHONY : src/handle_pubrec.c.s
 
 src/handle_pubrel.o: src/handle_pubrel.c.o
@@ -373,7 +373,7 @@ src/handle_pubrel.o: src/handle_pubrel.c.o
 
 # target to build an object file
 src/handle_pubrel.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_pubrel.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_pubrel.c.o
 .PHONY : src/handle_pubrel.c.o
 
 src/handle_pubrel.i: src/handle_pubrel.c.i
@@ -381,7 +381,7 @@ src/handle_pubrel.i: src/handle_pubrel.c.i
 
 # target to preprocess a source file
 src/handle_pubrel.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_pubrel.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_pubrel.c.i
 .PHONY : src/handle_pubrel.c.i
 
 src/handle_pubrel.s: src/handle_pubrel.c.s
@@ -389,7 +389,7 @@ src/handle_pubrel.s: src/handle_pubrel.c.s
 
 # target to generate assembly for a file
 src/handle_pubrel.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_pubrel.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_pubrel.c.s
 .PHONY : src/handle_pubrel.c.s
 
 src/handle_suback.o: src/handle_suback.c.o
@@ -397,7 +397,7 @@ src/handle_suback.o: src/handle_suback.c.o
 
 # target to build an object file
 src/handle_suback.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_suback.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_suback.c.o
 .PHONY : src/handle_suback.c.o
 
 src/handle_suback.i: src/handle_suback.c.i
@@ -405,7 +405,7 @@ src/handle_suback.i: src/handle_suback.c.i
 
 # target to preprocess a source file
 src/handle_suback.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_suback.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_suback.c.i
 .PHONY : src/handle_suback.c.i
 
 src/handle_suback.s: src/handle_suback.c.s
@@ -413,7 +413,7 @@ src/handle_suback.s: src/handle_suback.c.s
 
 # target to generate assembly for a file
 src/handle_suback.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_suback.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_suback.c.s
 .PHONY : src/handle_suback.c.s
 
 src/handle_unsuback.o: src/handle_unsuback.c.o
@@ -421,7 +421,7 @@ src/handle_unsuback.o: src/handle_unsuback.c.o
 
 # target to build an object file
 src/handle_unsuback.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_unsuback.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_unsuback.c.o
 .PHONY : src/handle_unsuback.c.o
 
 src/handle_unsuback.i: src/handle_unsuback.c.i
@@ -429,7 +429,7 @@ src/handle_unsuback.i: src/handle_unsuback.c.i
 
 # target to preprocess a source file
 src/handle_unsuback.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_unsuback.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_unsuback.c.i
 .PHONY : src/handle_unsuback.c.i
 
 src/handle_unsuback.s: src/handle_unsuback.c.s
@@ -437,7 +437,7 @@ src/handle_unsuback.s: src/handle_unsuback.c.s
 
 # target to generate assembly for a file
 src/handle_unsuback.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_unsuback.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/handle_unsuback.c.s
 .PHONY : src/handle_unsuback.c.s
 
 src/helpers.o: src/helpers.c.o
@@ -445,7 +445,7 @@ src/helpers.o: src/helpers.c.o
 
 # target to build an object file
 src/helpers.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/helpers.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/helpers.c.o
 .PHONY : src/helpers.c.o
 
 src/helpers.i: src/helpers.c.i
@@ -453,7 +453,7 @@ src/helpers.i: src/helpers.c.i
 
 # target to preprocess a source file
 src/helpers.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/helpers.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/helpers.c.i
 .PHONY : src/helpers.c.i
 
 src/helpers.s: src/helpers.c.s
@@ -461,7 +461,7 @@ src/helpers.s: src/helpers.c.s
 
 # target to generate assembly for a file
 src/helpers.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/helpers.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/helpers.c.s
 .PHONY : src/helpers.c.s
 
 src/logging_mosq.o: src/logging_mosq.c.o
@@ -469,7 +469,7 @@ src/logging_mosq.o: src/logging_mosq.c.o
 
 # target to build an object file
 src/logging_mosq.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/logging_mosq.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/logging_mosq.c.o
 .PHONY : src/logging_mosq.c.o
 
 src/logging_mosq.i: src/logging_mosq.c.i
@@ -477,7 +477,7 @@ src/logging_mosq.i: src/logging_mosq.c.i
 
 # target to preprocess a source file
 src/logging_mosq.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/logging_mosq.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/logging_mosq.c.i
 .PHONY : src/logging_mosq.c.i
 
 src/logging_mosq.s: src/logging_mosq.c.s
@@ -485,7 +485,7 @@ src/logging_mosq.s: src/logging_mosq.c.s
 
 # target to generate assembly for a file
 src/logging_mosq.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/logging_mosq.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/logging_mosq.c.s
 .PHONY : src/logging_mosq.c.s
 
 src/loop.o: src/loop.c.o
@@ -493,7 +493,7 @@ src/loop.o: src/loop.c.o
 
 # target to build an object file
 src/loop.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/loop.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/loop.c.o
 .PHONY : src/loop.c.o
 
 src/loop.i: src/loop.c.i
@@ -501,7 +501,7 @@ src/loop.i: src/loop.c.i
 
 # target to preprocess a source file
 src/loop.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/loop.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/loop.c.i
 .PHONY : src/loop.c.i
 
 src/loop.s: src/loop.c.s
@@ -509,7 +509,7 @@ src/loop.s: src/loop.c.s
 
 # target to generate assembly for a file
 src/loop.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/loop.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/loop.c.s
 .PHONY : src/loop.c.s
 
 src/memory_mosq.o: src/memory_mosq.c.o
@@ -517,7 +517,7 @@ src/memory_mosq.o: src/memory_mosq.c.o
 
 # target to build an object file
 src/memory_mosq.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/memory_mosq.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/memory_mosq.c.o
 .PHONY : src/memory_mosq.c.o
 
 src/memory_mosq.i: src/memory_mosq.c.i
@@ -525,7 +525,7 @@ src/memory_mosq.i: src/memory_mosq.c.i
 
 # target to preprocess a source file
 src/memory_mosq.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/memory_mosq.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/memory_mosq.c.i
 .PHONY : src/memory_mosq.c.i
 
 src/memory_mosq.s: src/memory_mosq.c.s
@@ -533,7 +533,7 @@ src/memory_mosq.s: src/memory_mosq.c.s
 
 # target to generate assembly for a file
 src/memory_mosq.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/memory_mosq.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/memory_mosq.c.s
 .PHONY : src/memory_mosq.c.s
 
 src/messages_mosq.o: src/messages_mosq.c.o
@@ -541,7 +541,7 @@ src/messages_mosq.o: src/messages_mosq.c.o
 
 # target to build an object file
 src/messages_mosq.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/messages_mosq.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/messages_mosq.c.o
 .PHONY : src/messages_mosq.c.o
 
 src/messages_mosq.i: src/messages_mosq.c.i
@@ -549,7 +549,7 @@ src/messages_mosq.i: src/messages_mosq.c.i
 
 # target to preprocess a source file
 src/messages_mosq.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/messages_mosq.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/messages_mosq.c.i
 .PHONY : src/messages_mosq.c.i
 
 src/messages_mosq.s: src/messages_mosq.c.s
@@ -557,7 +557,7 @@ src/messages_mosq.s: src/messages_mosq.c.s
 
 # target to generate assembly for a file
 src/messages_mosq.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/messages_mosq.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/messages_mosq.c.s
 .PHONY : src/messages_mosq.c.s
 
 src/mosquitto.o: src/mosquitto.c.o
@@ -565,7 +565,7 @@ src/mosquitto.o: src/mosquitto.c.o
 
 # target to build an object file
 src/mosquitto.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/mosquitto.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/mosquitto.c.o
 .PHONY : src/mosquitto.c.o
 
 src/mosquitto.i: src/mosquitto.c.i
@@ -573,7 +573,7 @@ src/mosquitto.i: src/mosquitto.c.i
 
 # target to preprocess a source file
 src/mosquitto.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/mosquitto.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/mosquitto.c.i
 .PHONY : src/mosquitto.c.i
 
 src/mosquitto.s: src/mosquitto.c.s
@@ -581,7 +581,7 @@ src/mosquitto.s: src/mosquitto.c.s
 
 # target to generate assembly for a file
 src/mosquitto.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/mosquitto.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/mosquitto.c.s
 .PHONY : src/mosquitto.c.s
 
 src/net_mosq.o: src/net_mosq.c.o
@@ -589,7 +589,7 @@ src/net_mosq.o: src/net_mosq.c.o
 
 # target to build an object file
 src/net_mosq.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/net_mosq.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/net_mosq.c.o
 .PHONY : src/net_mosq.c.o
 
 src/net_mosq.i: src/net_mosq.c.i
@@ -597,7 +597,7 @@ src/net_mosq.i: src/net_mosq.c.i
 
 # target to preprocess a source file
 src/net_mosq.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/net_mosq.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/net_mosq.c.i
 .PHONY : src/net_mosq.c.i
 
 src/net_mosq.s: src/net_mosq.c.s
@@ -605,7 +605,7 @@ src/net_mosq.s: src/net_mosq.c.s
 
 # target to generate assembly for a file
 src/net_mosq.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/net_mosq.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/net_mosq.c.s
 .PHONY : src/net_mosq.c.s
 
 src/options.o: src/options.c.o
@@ -613,7 +613,7 @@ src/options.o: src/options.c.o
 
 # target to build an object file
 src/options.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/options.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/options.c.o
 .PHONY : src/options.c.o
 
 src/options.i: src/options.c.i
@@ -621,7 +621,7 @@ src/options.i: src/options.c.i
 
 # target to preprocess a source file
 src/options.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/options.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/options.c.i
 .PHONY : src/options.c.i
 
 src/options.s: src/options.c.s
@@ -629,7 +629,7 @@ src/options.s: src/options.c.s
 
 # target to generate assembly for a file
 src/options.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/options.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/options.c.s
 .PHONY : src/options.c.s
 
 src/packet_mosq.o: src/packet_mosq.c.o
@@ -637,7 +637,7 @@ src/packet_mosq.o: src/packet_mosq.c.o
 
 # target to build an object file
 src/packet_mosq.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/packet_mosq.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/packet_mosq.c.o
 .PHONY : src/packet_mosq.c.o
 
 src/packet_mosq.i: src/packet_mosq.c.i
@@ -645,7 +645,7 @@ src/packet_mosq.i: src/packet_mosq.c.i
 
 # target to preprocess a source file
 src/packet_mosq.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/packet_mosq.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/packet_mosq.c.i
 .PHONY : src/packet_mosq.c.i
 
 src/packet_mosq.s: src/packet_mosq.c.s
@@ -653,7 +653,7 @@ src/packet_mosq.s: src/packet_mosq.c.s
 
 # target to generate assembly for a file
 src/packet_mosq.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/packet_mosq.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/packet_mosq.c.s
 .PHONY : src/packet_mosq.c.s
 
 src/read_handle.o: src/read_handle.c.o
@@ -661,7 +661,7 @@ src/read_handle.o: src/read_handle.c.o
 
 # target to build an object file
 src/read_handle.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/read_handle.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/read_handle.c.o
 .PHONY : src/read_handle.c.o
 
 src/read_handle.i: src/read_handle.c.i
@@ -669,7 +669,7 @@ src/read_handle.i: src/read_handle.c.i
 
 # target to preprocess a source file
 src/read_handle.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/read_handle.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/read_handle.c.i
 .PHONY : src/read_handle.c.i
 
 src/read_handle.s: src/read_handle.c.s
@@ -677,7 +677,7 @@ src/read_handle.s: src/read_handle.c.s
 
 # target to generate assembly for a file
 src/read_handle.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/read_handle.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/read_handle.c.s
 .PHONY : src/read_handle.c.s
 
 src/send_connect.o: src/send_connect.c.o
@@ -685,7 +685,7 @@ src/send_connect.o: src/send_connect.c.o
 
 # target to build an object file
 src/send_connect.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_connect.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_connect.c.o
 .PHONY : src/send_connect.c.o
 
 src/send_connect.i: src/send_connect.c.i
@@ -693,7 +693,7 @@ src/send_connect.i: src/send_connect.c.i
 
 # target to preprocess a source file
 src/send_connect.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_connect.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_connect.c.i
 .PHONY : src/send_connect.c.i
 
 src/send_connect.s: src/send_connect.c.s
@@ -701,7 +701,7 @@ src/send_connect.s: src/send_connect.c.s
 
 # target to generate assembly for a file
 src/send_connect.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_connect.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_connect.c.s
 .PHONY : src/send_connect.c.s
 
 src/send_disconnect.o: src/send_disconnect.c.o
@@ -709,7 +709,7 @@ src/send_disconnect.o: src/send_disconnect.c.o
 
 # target to build an object file
 src/send_disconnect.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_disconnect.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_disconnect.c.o
 .PHONY : src/send_disconnect.c.o
 
 src/send_disconnect.i: src/send_disconnect.c.i
@@ -717,7 +717,7 @@ src/send_disconnect.i: src/send_disconnect.c.i
 
 # target to preprocess a source file
 src/send_disconnect.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_disconnect.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_disconnect.c.i
 .PHONY : src/send_disconnect.c.i
 
 src/send_disconnect.s: src/send_disconnect.c.s
@@ -725,7 +725,7 @@ src/send_disconnect.s: src/send_disconnect.c.s
 
 # target to generate assembly for a file
 src/send_disconnect.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_disconnect.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_disconnect.c.s
 .PHONY : src/send_disconnect.c.s
 
 src/send_mosq.o: src/send_mosq.c.o
@@ -733,7 +733,7 @@ src/send_mosq.o: src/send_mosq.c.o
 
 # target to build an object file
 src/send_mosq.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_mosq.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_mosq.c.o
 .PHONY : src/send_mosq.c.o
 
 src/send_mosq.i: src/send_mosq.c.i
@@ -741,7 +741,7 @@ src/send_mosq.i: src/send_mosq.c.i
 
 # target to preprocess a source file
 src/send_mosq.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_mosq.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_mosq.c.i
 .PHONY : src/send_mosq.c.i
 
 src/send_mosq.s: src/send_mosq.c.s
@@ -749,7 +749,7 @@ src/send_mosq.s: src/send_mosq.c.s
 
 # target to generate assembly for a file
 src/send_mosq.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_mosq.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_mosq.c.s
 .PHONY : src/send_mosq.c.s
 
 src/send_publish.o: src/send_publish.c.o
@@ -757,7 +757,7 @@ src/send_publish.o: src/send_publish.c.o
 
 # target to build an object file
 src/send_publish.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_publish.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_publish.c.o
 .PHONY : src/send_publish.c.o
 
 src/send_publish.i: src/send_publish.c.i
@@ -765,7 +765,7 @@ src/send_publish.i: src/send_publish.c.i
 
 # target to preprocess a source file
 src/send_publish.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_publish.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_publish.c.i
 .PHONY : src/send_publish.c.i
 
 src/send_publish.s: src/send_publish.c.s
@@ -773,7 +773,7 @@ src/send_publish.s: src/send_publish.c.s
 
 # target to generate assembly for a file
 src/send_publish.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_publish.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_publish.c.s
 .PHONY : src/send_publish.c.s
 
 src/send_subscribe.o: src/send_subscribe.c.o
@@ -781,7 +781,7 @@ src/send_subscribe.o: src/send_subscribe.c.o
 
 # target to build an object file
 src/send_subscribe.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_subscribe.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_subscribe.c.o
 .PHONY : src/send_subscribe.c.o
 
 src/send_subscribe.i: src/send_subscribe.c.i
@@ -789,7 +789,7 @@ src/send_subscribe.i: src/send_subscribe.c.i
 
 # target to preprocess a source file
 src/send_subscribe.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_subscribe.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_subscribe.c.i
 .PHONY : src/send_subscribe.c.i
 
 src/send_subscribe.s: src/send_subscribe.c.s
@@ -797,7 +797,7 @@ src/send_subscribe.s: src/send_subscribe.c.s
 
 # target to generate assembly for a file
 src/send_subscribe.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_subscribe.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_subscribe.c.s
 .PHONY : src/send_subscribe.c.s
 
 src/send_unsubscribe.o: src/send_unsubscribe.c.o
@@ -805,7 +805,7 @@ src/send_unsubscribe.o: src/send_unsubscribe.c.o
 
 # target to build an object file
 src/send_unsubscribe.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_unsubscribe.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_unsubscribe.c.o
 .PHONY : src/send_unsubscribe.c.o
 
 src/send_unsubscribe.i: src/send_unsubscribe.c.i
@@ -813,7 +813,7 @@ src/send_unsubscribe.i: src/send_unsubscribe.c.i
 
 # target to preprocess a source file
 src/send_unsubscribe.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_unsubscribe.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_unsubscribe.c.i
 .PHONY : src/send_unsubscribe.c.i
 
 src/send_unsubscribe.s: src/send_unsubscribe.c.s
@@ -821,7 +821,7 @@ src/send_unsubscribe.s: src/send_unsubscribe.c.s
 
 # target to generate assembly for a file
 src/send_unsubscribe.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_unsubscribe.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/send_unsubscribe.c.s
 .PHONY : src/send_unsubscribe.c.s
 
 src/socks_mosq.o: src/socks_mosq.c.o
@@ -829,7 +829,7 @@ src/socks_mosq.o: src/socks_mosq.c.o
 
 # target to build an object file
 src/socks_mosq.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/socks_mosq.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/socks_mosq.c.o
 .PHONY : src/socks_mosq.c.o
 
 src/socks_mosq.i: src/socks_mosq.c.i
@@ -837,7 +837,7 @@ src/socks_mosq.i: src/socks_mosq.c.i
 
 # target to preprocess a source file
 src/socks_mosq.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/socks_mosq.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/socks_mosq.c.i
 .PHONY : src/socks_mosq.c.i
 
 src/socks_mosq.s: src/socks_mosq.c.s
@@ -845,7 +845,7 @@ src/socks_mosq.s: src/socks_mosq.c.s
 
 # target to generate assembly for a file
 src/socks_mosq.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/socks_mosq.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/socks_mosq.c.s
 .PHONY : src/socks_mosq.c.s
 
 src/srv_mosq.o: src/srv_mosq.c.o
@@ -853,7 +853,7 @@ src/srv_mosq.o: src/srv_mosq.c.o
 
 # target to build an object file
 src/srv_mosq.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/srv_mosq.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/srv_mosq.c.o
 .PHONY : src/srv_mosq.c.o
 
 src/srv_mosq.i: src/srv_mosq.c.i
@@ -861,7 +861,7 @@ src/srv_mosq.i: src/srv_mosq.c.i
 
 # target to preprocess a source file
 src/srv_mosq.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/srv_mosq.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/srv_mosq.c.i
 .PHONY : src/srv_mosq.c.i
 
 src/srv_mosq.s: src/srv_mosq.c.s
@@ -869,7 +869,7 @@ src/srv_mosq.s: src/srv_mosq.c.s
 
 # target to generate assembly for a file
 src/srv_mosq.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/srv_mosq.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/srv_mosq.c.s
 .PHONY : src/srv_mosq.c.s
 
 src/thread_mosq.o: src/thread_mosq.c.o
@@ -877,7 +877,7 @@ src/thread_mosq.o: src/thread_mosq.c.o
 
 # target to build an object file
 src/thread_mosq.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/thread_mosq.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/thread_mosq.c.o
 .PHONY : src/thread_mosq.c.o
 
 src/thread_mosq.i: src/thread_mosq.c.i
@@ -885,7 +885,7 @@ src/thread_mosq.i: src/thread_mosq.c.i
 
 # target to preprocess a source file
 src/thread_mosq.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/thread_mosq.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/thread_mosq.c.i
 .PHONY : src/thread_mosq.c.i
 
 src/thread_mosq.s: src/thread_mosq.c.s
@@ -893,7 +893,7 @@ src/thread_mosq.s: src/thread_mosq.c.s
 
 # target to generate assembly for a file
 src/thread_mosq.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/thread_mosq.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/thread_mosq.c.s
 .PHONY : src/thread_mosq.c.s
 
 src/time_mosq.o: src/time_mosq.c.o
@@ -901,7 +901,7 @@ src/time_mosq.o: src/time_mosq.c.o
 
 # target to build an object file
 src/time_mosq.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/time_mosq.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/time_mosq.c.o
 .PHONY : src/time_mosq.c.o
 
 src/time_mosq.i: src/time_mosq.c.i
@@ -909,7 +909,7 @@ src/time_mosq.i: src/time_mosq.c.i
 
 # target to preprocess a source file
 src/time_mosq.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/time_mosq.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/time_mosq.c.i
 .PHONY : src/time_mosq.c.i
 
 src/time_mosq.s: src/time_mosq.c.s
@@ -917,7 +917,7 @@ src/time_mosq.s: src/time_mosq.c.s
 
 # target to generate assembly for a file
 src/time_mosq.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/time_mosq.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/time_mosq.c.s
 .PHONY : src/time_mosq.c.s
 
 src/tls_mosq.o: src/tls_mosq.c.o
@@ -925,7 +925,7 @@ src/tls_mosq.o: src/tls_mosq.c.o
 
 # target to build an object file
 src/tls_mosq.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/tls_mosq.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/tls_mosq.c.o
 .PHONY : src/tls_mosq.c.o
 
 src/tls_mosq.i: src/tls_mosq.c.i
@@ -933,7 +933,7 @@ src/tls_mosq.i: src/tls_mosq.c.i
 
 # target to preprocess a source file
 src/tls_mosq.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/tls_mosq.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/tls_mosq.c.i
 .PHONY : src/tls_mosq.c.i
 
 src/tls_mosq.s: src/tls_mosq.c.s
@@ -941,7 +941,7 @@ src/tls_mosq.s: src/tls_mosq.c.s
 
 # target to generate assembly for a file
 src/tls_mosq.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/tls_mosq.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/tls_mosq.c.s
 .PHONY : src/tls_mosq.c.s
 
 src/utf8_mosq.o: src/utf8_mosq.c.o
@@ -949,7 +949,7 @@ src/utf8_mosq.o: src/utf8_mosq.c.o
 
 # target to build an object file
 src/utf8_mosq.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/utf8_mosq.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/utf8_mosq.c.o
 .PHONY : src/utf8_mosq.c.o
 
 src/utf8_mosq.i: src/utf8_mosq.c.i
@@ -957,7 +957,7 @@ src/utf8_mosq.i: src/utf8_mosq.c.i
 
 # target to preprocess a source file
 src/utf8_mosq.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/utf8_mosq.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/utf8_mosq.c.i
 .PHONY : src/utf8_mosq.c.i
 
 src/utf8_mosq.s: src/utf8_mosq.c.s
@@ -965,7 +965,7 @@ src/utf8_mosq.s: src/utf8_mosq.c.s
 
 # target to generate assembly for a file
 src/utf8_mosq.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/utf8_mosq.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/utf8_mosq.c.s
 .PHONY : src/utf8_mosq.c.s
 
 src/util_mosq.o: src/util_mosq.c.o
@@ -973,7 +973,7 @@ src/util_mosq.o: src/util_mosq.c.o
 
 # target to build an object file
 src/util_mosq.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/util_mosq.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/util_mosq.c.o
 .PHONY : src/util_mosq.c.o
 
 src/util_mosq.i: src/util_mosq.c.i
@@ -981,7 +981,7 @@ src/util_mosq.i: src/util_mosq.c.i
 
 # target to preprocess a source file
 src/util_mosq.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/util_mosq.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/util_mosq.c.i
 .PHONY : src/util_mosq.c.i
 
 src/util_mosq.s: src/util_mosq.c.s
@@ -989,7 +989,7 @@ src/util_mosq.s: src/util_mosq.c.s
 
 # target to generate assembly for a file
 src/util_mosq.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/util_mosq.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/util_mosq.c.s
 .PHONY : src/util_mosq.c.s
 
 src/will_mosq.o: src/will_mosq.c.o
@@ -997,7 +997,7 @@ src/will_mosq.o: src/will_mosq.c.o
 
 # target to build an object file
 src/will_mosq.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/will_mosq.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/will_mosq.c.o
 .PHONY : src/will_mosq.c.o
 
 src/will_mosq.i: src/will_mosq.c.i
@@ -1005,7 +1005,7 @@ src/will_mosq.i: src/will_mosq.c.i
 
 # target to preprocess a source file
 src/will_mosq.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/will_mosq.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/will_mosq.c.i
 .PHONY : src/will_mosq.c.i
 
 src/will_mosq.s: src/will_mosq.c.s
@@ -1013,7 +1013,7 @@ src/will_mosq.s: src/will_mosq.c.s
 
 # target to generate assembly for a file
 src/will_mosq.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/will_mosq.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/build.make ur-rpc-template/deps/mqtt-client/CMakeFiles/mqtt-client-static.dir/src/will_mosq.c.s
 .PHONY : src/will_mosq.c.s
 
 # Help Target
@@ -1145,7 +1145,7 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -P /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles/VerifyGlobs.cmake
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -P /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles/VerifyGlobs.cmake
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

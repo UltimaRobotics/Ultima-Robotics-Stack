@@ -1,4 +1,4 @@
-# Install script for directory: /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template
+# Install script for directory: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -43,22 +43,22 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/libur-rpc-template.a")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/libur-rpc-template.a")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE FILE FILES
-    "/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/ur-rpc-template.h"
-    "/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/extensions/direct_template.h"
+    "/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/ur-rpc-template.h"
+    "/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/extensions/direct_template.h"
     )
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/cJSON/cmake_install.cmake")
-  include("/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/mqtt-client/cmake_install.cmake")
-  include("/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/ur-logger-api/cmake_install.cmake")
-  include("/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/pkg_src/api/wrappers/cpp/cmake_install.cmake")
+  include("/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/cJSON/cmake_install.cmake")
+  include("/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/mqtt-client/cmake_install.cmake")
+  include("/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/ur-logger-api/cmake_install.cmake")
+  include("/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/pkg_src/api/wrappers/cpp/cmake_install.cmake")
 
 endif()
 

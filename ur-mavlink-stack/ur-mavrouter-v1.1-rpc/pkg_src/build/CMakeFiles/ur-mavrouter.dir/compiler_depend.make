@@ -7316,12 +7316,12 @@ CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcClient.cpp.o: ../src/rpc-mecha
   /usr/include/x86_64-linux-gnu/bits/sigthread.h \
   /usr/include/x86_64-linux-gnu/bits/signal_ext.h \
   ../modules/ur-threadder-api/cpp/include/ThreadManager.tpp \
-  /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/ur-rpc-template.h \
-  /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/mqtt-client/src/mosquitto.h \
-  /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/cJSON/cJSON.h \
-  /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/ur-logger-api/logger.h \
-  /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/pkg_src/api/wrappers/cpp/ur-rpc-template.hpp \
-  /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/ur-rpc-template.h \
+  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/ur-rpc-template.h \
+  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/mqtt-client/src/mosquitto.h \
+  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/cJSON/cJSON.h \
+  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/ur-logger-api/logger.h \
+  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/pkg_src/api/wrappers/cpp/ur-rpc-template.hpp \
+  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/ur-rpc-template.h \
   ../src/common/log.h \
   ../src/common/macro.h \
   /usr/include/c++/11/thread \
@@ -7687,12 +7687,12 @@ CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcClientInterfaceNew.cpp.o: ../s
   /usr/include/x86_64-linux-gnu/bits/sigthread.h \
   /usr/include/x86_64-linux-gnu/bits/signal_ext.h \
   ../modules/ur-threadder-api/cpp/include/ThreadManager.tpp \
-  /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/ur-rpc-template.h \
-  /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/mqtt-client/src/mosquitto.h \
-  /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/cJSON/cJSON.h \
-  /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/ur-logger-api/logger.h \
-  /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/pkg_src/api/wrappers/cpp/ur-rpc-template.hpp \
-  /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/ur-rpc-template.h \
+  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/ur-rpc-template.h \
+  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/mqtt-client/src/mosquitto.h \
+  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/cJSON/cJSON.h \
+  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/ur-logger-api/logger.h \
+  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/pkg_src/api/wrappers/cpp/ur-rpc-template.hpp \
+  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/ur-rpc-template.h \
   ../src/common/log.h \
   ../src/common/macro.h
 
@@ -10517,6 +10517,10 @@ CMakeFiles/ur-mavrouter.dir/src/ulog.cpp.o: ../src/ulog.cpp \
 
 ../src/rpc-mechanisms/RpcOperations.cpp:
 
+/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/pkg_src/api/wrappers/cpp/ur-rpc-template.hpp:
+
+/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/ur-rpc-template.h:
+
 ../src/rpc-mechanisms/RpcClient.hpp:
 
 ../src/rpc-mechanisms/RpcClient.cpp:
@@ -10570,8 +10574,6 @@ CMakeFiles/ur-mavrouter.dir/src/ulog.cpp.o: ../src/ulog.cpp \
 /usr/include/nlohmann/detail/meta/identity_tag.hpp:
 
 /usr/include/nlohmann/detail/meta/cpp_future.hpp:
-
-/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/ur-logger-api/logger.h:
 
 /usr/include/nlohmann/detail/meta/detected.hpp:
 
@@ -10671,8 +10673,6 @@ CMakeFiles/ur-mavrouter.dir/src/ulog.cpp.o: ../src/ulog.cpp \
 
 ../src/dedup.cpp:
 
-/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/mqtt-client/src/mosquitto.h:
-
 /usr/include/x86_64-linux-gnu/sys/ttydefaults.h:
 
 /usr/include/x86_64-linux-gnu/bits/termios-misc.h:
@@ -10692,6 +10692,8 @@ CMakeFiles/ur-mavrouter.dir/src/ulog.cpp.o: ../src/ulog.cpp \
 /usr/include/termios.h:
 
 ../src/common/xtermios.h:
+
+/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/cJSON/cJSON.h:
 
 ../src/common/xtermios.cpp:
 
@@ -10956,6 +10958,8 @@ CMakeFiles/ur-mavrouter.dir/src/ulog.cpp.o: ../src/ulog.cpp \
 /usr/include/c++/11/bits/erase_if.h:
 
 /usr/include/c++/11/bits/node_handle.h:
+
+/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/ur-logger-api/logger.h:
 
 /usr/include/c++/11/bits/enable_special_members.h:
 
@@ -11345,6 +11349,8 @@ CMakeFiles/ur-mavrouter.dir/src/ulog.cpp.o: ../src/ulog.cpp \
 
 /usr/include/stdint.h:
 
+/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/mqtt-client/src/mosquitto.h:
+
 /usr/include/c++/11/bits/ptr_traits.h:
 
 /usr/include/nlohmann/detail/input/input_adapters.hpp:
@@ -11526,8 +11532,6 @@ CMakeFiles/ur-mavrouter.dir/src/ulog.cpp.o: ../src/ulog.cpp \
 /usr/include/x86_64-linux-gnu/bits/resource.h:
 
 /usr/include/c++/11/bits/stl_iterator_base_types.h:
-
-/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/pkg_src/api/wrappers/cpp/ur-rpc-template.hpp:
 
 /usr/include/c++/11/bit:
 
@@ -12263,8 +12267,6 @@ CMakeFiles/ur-mavrouter.dir/src/ulog.cpp.o: ../src/ulog.cpp \
 
 ../src/rpc-mechanisms/RpcControllerNew.cpp:
 
-/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/cJSON/cJSON.h:
-
 ../modules/mavlink_c_library_v2/common/mavlink_msg_collision.h:
 
 ../modules/mavlink_c_library_v2/uAvionix/uAvionix.h:
@@ -12276,8 +12278,6 @@ CMakeFiles/ur-mavrouter.dir/src/ulog.cpp.o: ../src/ulog.cpp \
 /usr/include/c++/11/tr1/modified_bessel_func.tcc:
 
 ../modules/mavlink_c_library_v2/uAvionix/mavlink_msg_uavionix_adsb_transceiver_health_report.h:
-
-/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/ur-rpc-template.h:
 
 ../modules/mavlink_c_library_v2/common/mavlink_msg_mount_orientation.h:
 

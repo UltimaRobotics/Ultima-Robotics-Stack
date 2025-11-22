@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_DEFINES = -D_POSIX_C_SOURCE=200809L
 
-C_INCLUDES = -I/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-threadder-api/include -I/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/thirdparty
+C_INCLUDES = -I/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-threadder-api/include -I/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/thirdparty
 
 C_FLAGS = -O3 -DNDEBUG -Wall -Wextra -Wpedantic -std=c11
 

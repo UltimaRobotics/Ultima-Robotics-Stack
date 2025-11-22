@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1
+CMAKE_SOURCE_DIR = /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build
+CMAKE_BINARY_DIR = /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build
 
 # Include any dependencies generated for this target.
 include ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/depend.make
@@ -70,32 +70,32 @@ include ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/progress.make
 include ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/flags.make
 
 ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON.c.o: ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/flags.make
-ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON.c.o: /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/cJSON/cJSON.c
+ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON.c.o: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/cJSON/cJSON.c
 ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON.c.o: ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON.c.o"
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/cJSON && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON.c.o -MF CMakeFiles/cJSON.dir/cJSON.c.o.d -o CMakeFiles/cJSON.dir/cJSON.c.o -c /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/cJSON/cJSON.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON.c.o"
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/cJSON && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON.c.o -MF CMakeFiles/cJSON.dir/cJSON.c.o.d -o CMakeFiles/cJSON.dir/cJSON.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/cJSON/cJSON.c
 
 ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/cJSON.dir/cJSON.c.i"
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/cJSON && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/cJSON/cJSON.c > CMakeFiles/cJSON.dir/cJSON.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/cJSON && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/cJSON/cJSON.c > CMakeFiles/cJSON.dir/cJSON.c.i
 
 ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/cJSON.dir/cJSON.c.s"
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/cJSON && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/cJSON/cJSON.c -o CMakeFiles/cJSON.dir/cJSON.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/cJSON && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/cJSON/cJSON.c -o CMakeFiles/cJSON.dir/cJSON.c.s
 
 ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON_Utils.c.o: ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/flags.make
-ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON_Utils.c.o: /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/cJSON/cJSON_Utils.c
+ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON_Utils.c.o: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/cJSON/cJSON_Utils.c
 ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON_Utils.c.o: ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON_Utils.c.o"
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/cJSON && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON_Utils.c.o -MF CMakeFiles/cJSON.dir/cJSON_Utils.c.o.d -o CMakeFiles/cJSON.dir/cJSON_Utils.c.o -c /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/cJSON/cJSON_Utils.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON_Utils.c.o"
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/cJSON && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON_Utils.c.o -MF CMakeFiles/cJSON.dir/cJSON_Utils.c.o.d -o CMakeFiles/cJSON.dir/cJSON_Utils.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/cJSON/cJSON_Utils.c
 
 ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON_Utils.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/cJSON.dir/cJSON_Utils.c.i"
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/cJSON && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/cJSON/cJSON_Utils.c > CMakeFiles/cJSON.dir/cJSON_Utils.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/cJSON && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/cJSON/cJSON_Utils.c > CMakeFiles/cJSON.dir/cJSON_Utils.c.i
 
 ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON_Utils.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/cJSON.dir/cJSON_Utils.c.s"
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/cJSON && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/cJSON/cJSON_Utils.c -o CMakeFiles/cJSON.dir/cJSON_Utils.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/cJSON && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/cJSON/cJSON_Utils.c -o CMakeFiles/cJSON.dir/cJSON_Utils.c.s
 
 # Object files for target cJSON
 cJSON_OBJECTS = \
@@ -109,19 +109,19 @@ lib/libcjson.a: ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON.c.o
 lib/libcjson.a: ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/cJSON_Utils.c.o
 lib/libcjson.a: ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/build.make
 lib/libcjson.a: ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C static library ../../../lib/libcjson.a"
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/cJSON && $(CMAKE_COMMAND) -P CMakeFiles/cJSON.dir/cmake_clean_target.cmake
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/cJSON && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/cJSON.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C static library ../../../lib/libcjson.a"
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/cJSON && $(CMAKE_COMMAND) -P CMakeFiles/cJSON.dir/cmake_clean_target.cmake
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/cJSON && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/cJSON.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/build: lib/libcjson.a
 .PHONY : ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/build
 
 ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/clean:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/cJSON && $(CMAKE_COMMAND) -P CMakeFiles/cJSON.dir/cmake_clean.cmake
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/cJSON && $(CMAKE_COMMAND) -P CMakeFiles/cJSON.dir/cmake_clean.cmake
 .PHONY : ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/clean
 
 ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/depend:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1 /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/cJSON /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/cJSON /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1 /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/cJSON /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/cJSON /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : ur-rpc-template/deps/cJSON/CMakeFiles/cJSON.dir/depend
 

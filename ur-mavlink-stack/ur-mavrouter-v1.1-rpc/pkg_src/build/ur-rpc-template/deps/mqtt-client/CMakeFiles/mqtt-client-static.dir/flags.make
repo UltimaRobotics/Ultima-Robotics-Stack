@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_DEFINES = -DPACKAGE=\"ur-mavrouter\" -DWITH_THREADING -DWITH_TLS
 
-C_INCLUDES = -I/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/mqtt-client/include -I/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/mqtt-client/src
+C_INCLUDES = -I/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/mqtt-client/include -I/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/mqtt-client/src
 
 C_FLAGS =  -Wall -Wextra -pthread -Wno-unused-parameter -Wno-unused-variable -Wno-unused-result -Wno-sign-compare -O2 -DNDEBUG -fPIC   -Wno-address-of-packed-member -Wno-return-type -Wno-unused-result -O2 -g -std=gnu99
 

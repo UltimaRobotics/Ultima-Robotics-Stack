@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_DEFINES = -DPACKAGE=\"ur-mavrouter\" -D_POSIX_C_SOURCE=200809L
 
-C_INCLUDES = -I/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/modules/ur-threadder-api/include -I/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/thirdparty
+C_INCLUDES = -I/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/modules/ur-threadder-api/include -I/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/thirdparty
 
 C_FLAGS = -O3 -DNDEBUG   -Wno-address-of-packed-member -Wno-return-type -Wno-unused-result -O2 -g -Wall -Wextra -Wpedantic -std=c11
 

@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/g++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-mavdiscovery-shared/include -I/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-mavdiscovery-shared/../thirdparty/nholmann -I/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-mavdiscovery-shared/../ur-rpc-template/deps/nlohmann/include
+CXX_INCLUDES = -I/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-mavdiscovery-shared/include -I/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-mavdiscovery-shared/../thirdparty/nholmann -I/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/ur-mavdiscovery-shared/../ur-rpc-template/deps/nlohmann/include
 
 CXX_FLAGS = -O3 -DNDEBUG -std=gnu++17
 

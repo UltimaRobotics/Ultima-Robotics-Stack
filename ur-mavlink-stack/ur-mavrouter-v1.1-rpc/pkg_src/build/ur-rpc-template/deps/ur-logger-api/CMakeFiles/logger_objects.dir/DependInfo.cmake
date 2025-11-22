@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/ur-logger-api/logger.c" "ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/logger.c.o" "gcc" "ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/logger.c.o.d"
+  "/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-rpc-template/deps/ur-logger-api/logger.c" "ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/logger.c.o" "gcc" "ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/logger.c.o.d"
   )
 
 # Targets to which this target links.

@@ -49,6 +49,9 @@ private:
 
     // Send device discovery request to ur-mavdiscovery
     std::string sendDiscoveryRequest();
+    
+    // Send device discovery request with specific local transaction ID
+    std::string sendDiscoveryRequestWithLocalId(const std::string& localTransactionId);
 
     // Wait for response with timeout
     bool waitForResponse(const std::string& transactionId, std::chrono::milliseconds timeout);

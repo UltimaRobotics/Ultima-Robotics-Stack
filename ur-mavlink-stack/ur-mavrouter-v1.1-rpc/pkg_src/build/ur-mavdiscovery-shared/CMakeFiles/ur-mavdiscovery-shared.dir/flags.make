@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DPACKAGE=\"ur-mavrouter\"
 
-CXX_INCLUDES = -I/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/ur-mavdiscovery-shared/include -I/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/ur-mavdiscovery-shared/../thirdparty/nholmann -I/home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/ur-mavdiscovery-shared/../ur-rpc-template/deps/nlohmann/include
+CXX_INCLUDES = -I/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/ur-mavdiscovery-shared/include -I/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/ur-mavdiscovery-shared/../thirdparty/nholmann -I/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/ur-mavdiscovery-shared/../ur-rpc-template/deps/nlohmann/include
 
 CXX_FLAGS = -O3 -DNDEBUG   -Wno-address-of-packed-member -Wno-return-type -Wno-unused-result -O2 -g -std=gnu++17
 

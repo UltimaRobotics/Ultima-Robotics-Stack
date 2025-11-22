@@ -150,11 +150,26 @@ void DeviceDiscoveryCronJob::handleDiscoveryResponse(const std::string& topic, c
 
         log_info("[DISCOVERY_CRON] Processing response with transaction ID: %s", transactionId.c_str());
 
-        // Check if this is a device discovery response (our transaction IDs start with "device_discovery_")
-        if (transactionId.find("device_discovery_") != 0) {
-            log_debug("[DISCOVERY_CRON] Ignoring non-device-discovery response with ID: %s", transactionId.c_str());
+        // Find the local transaction ID that maps to this RPC transaction ID
+        std::string localTransactionId;
+        {
+            std::lock_guard<std::mutex> lock(responseMutex_);
+            for (const auto& pair : pendingResponses_) {
+                if (pair.second.contains("_rpc_transaction_id") && 
+                    pair.second["_rpc_transaction_id"].get<std::string>() == transactionId &&
+                    pair.second.contains("_pending") && pair.second["_pending"].get<bool>()) {
+                    localTransactionId = pair.first;
+                    break;
+                }
+            }
+        }
+
+        if (localTransactionId.empty()) {
+            log_debug("[DISCOVERY_CRON] No matching local transaction ID found for RPC transaction: %s", transactionId.c_str());
             return;
         }
+
+        log_info("[DISCOVERY_CRON] Found local transaction ID: %s for RPC transaction: %s", localTransactionId.c_str(), transactionId.c_str());
         
         // Parse the JSON-RPC 2.0 response structure
         bool success = false;
@@ -178,16 +193,31 @@ void DeviceDiscoveryCronJob::handleDiscoveryResponse(const std::string& topic, c
         // Store the structured response and notify waiting thread
         {
             std::lock_guard<std::mutex> lock(responseMutex_);
-            pendingResponses_[transactionId] = response;
-            // Add convenience fields for easier access
-            pendingResponses_[transactionId]["_extracted_success"] = success;
-            pendingResponses_[transactionId]["_extracted_result"] = resultData;
-            pendingResponses_[transactionId]["_extracted_error"] = errorMessage;
+            
+            // Check if we have a pending entry for this transaction
+            if (pendingResponses_.find(localTransactionId) != pendingResponses_.end()) {
+                // Merge the response data with the existing pending entry
+                pendingResponses_[localTransactionId].update(response);
+                // Add convenience fields for easier access
+                pendingResponses_[localTransactionId]["_extracted_success"] = success;
+                pendingResponses_[localTransactionId]["_extracted_result"] = resultData;
+                pendingResponses_[localTransactionId]["_extracted_error"] = errorMessage;
+                pendingResponses_[localTransactionId]["_pending"] = false; // Mark as completed
+            } else {
+                // No pending entry, store the response directly
+                pendingResponses_[localTransactionId] = response;
+                // Add convenience fields for easier access
+                pendingResponses_[localTransactionId]["_extracted_success"] = success;
+                pendingResponses_[localTransactionId]["_extracted_result"] = resultData;
+                pendingResponses_[localTransactionId]["_extracted_error"] = errorMessage;
+                pendingResponses_[localTransactionId]["_pending"] = false;
+            }
         }
         responseCondition_.notify_all();
         
-        log_info("[DISCOVERY_CRON] Stored discovery response for transaction: %s", transactionId.c_str());
+        log_info("[DISCOVERY_CRON] Stored discovery response for local transaction: %s (rpc: %s)", localTransactionId.c_str(), transactionId.c_str());
         log_info("[DISCOVERY_CRON] Response success: %s", success ? "true" : "false");
+        log_info("[DISCOVERY_CRON] Full response payload: %s", response.dump().c_str());
         if (!errorMessage.empty()) {
             log_info("[DISCOVERY_CRON] Response message: %s", errorMessage.c_str());
         }
@@ -209,16 +239,18 @@ void DeviceDiscoveryCronJob::performDeviceDiscovery() {
         log_info("[DISCOVERY_CRON] Starting device discovery process");
         
         // Send device discovery request
-        std::string transactionId = sendDiscoveryRequest();
-        if (transactionId.empty()) {
+        std::string localTransactionId = "device_discovery_" + std::to_string(std::time(nullptr)) + "_" + std::to_string(std::rand());
+        std::string rpcTransactionId = sendDiscoveryRequestWithLocalId(localTransactionId);
+        if (rpcTransactionId.empty()) {
             log_error("[DISCOVERY_CRON] Failed to send device discovery request");
             discoveryInProgress_.store(false);
             return;
         }
         
-        // Wait for response with 1 second timeout
-        if (!waitForResponse(transactionId, std::chrono::milliseconds(1000))) {
-            log_error("[DISCOVERY_CRON] Timeout waiting for device discovery response (transaction: %s)", transactionId.c_str());
+        // Wait for response with 1 second timeout using local transaction ID
+        if (!waitForResponse(localTransactionId, std::chrono::milliseconds(1000))) {
+            log_error("[DISCOVERY_CRON] Timeout waiting for device discovery response (local transaction: %s, rpc transaction: %s)", 
+                     localTransactionId.c_str(), rpcTransactionId.c_str());
             discoveryInProgress_.store(false);
             return;
         }
@@ -227,17 +259,30 @@ void DeviceDiscoveryCronJob::performDeviceDiscovery() {
         {
             std::lock_guard<std::mutex> lock(responseMutex_);
             
-            if (pendingResponses_.find(transactionId) != pendingResponses_.end()) {
-                const auto& response = pendingResponses_[transactionId];
+            if (pendingResponses_.find(localTransactionId) != pendingResponses_.end()) {
+                const auto& response = pendingResponses_[localTransactionId];
+                
+                log_info("[DISCOVERY_CRON] Processing response for local transaction: %s", localTransactionId.c_str());
+                log_info("[DISCOVERY_CRON] Response has _extracted_success: %s", 
+                         response.contains("_extracted_success") ? "true" : "false");
+                
+                if (response.contains("_extracted_success")) {
+                    log_info("[DISCOVERY_CRON] _extracted_success value: %s", 
+                             response["_extracted_success"].get<bool>() ? "true" : "false");
+                }
                 
                 if (response.contains("_extracted_success") && response["_extracted_success"].get<bool>()) {
                     json resultData = response["_extracted_result"];
+                    log_info("[DISCOVERY_CRON] Processing successful discovery response");
                     processDiscoveryResponse(resultData);
                 } else {
                     std::string errorMsg = response.value("_extracted_error", "Unknown error");
-                    log_error("[DISCOVERY_CRON] Device discovery request failed (transaction: %s): %s", 
-                             transactionId.c_str(), errorMsg.c_str());
+                    log_error("[DISCOVERY_CRON] Device discovery request failed (local transaction: %s): %s", 
+                             localTransactionId.c_str(), errorMsg.c_str());
+                    log_info("[DISCOVERY_CRON] Full response that caused error: %s", response.dump().c_str());
                 }
+            } else {
+                log_error("[DISCOVERY_CRON] No response found for local transaction: %s", localTransactionId.c_str());
             }
         }
         
@@ -265,17 +310,14 @@ void DeviceDiscoveryCronJob::performDeviceDiscovery() {
     log_info("[DISCOVERY_CRON] Device discovery thread exiting");
 }
 
-std::string DeviceDiscoveryCronJob::sendDiscoveryRequest() {
+std::string DeviceDiscoveryCronJob::sendDiscoveryRequestWithLocalId(const std::string& localTransactionId) {
     try {
-        log_info("[DISCOVERY_CRON] Sending device discovery request...");
-
-        // Generate unique transaction ID
-        std::string transactionId = "device_discovery_" + std::to_string(std::time(nullptr)) + "_" + std::to_string(std::rand());
+        log_info("[DISCOVERY_CRON] Sending device discovery request with local ID: %s", localTransactionId.c_str());
         
         // Create JSON-RPC 2.0 request
         json request = json::object();
         request["jsonrpc"] = "2.0";
-        request["id"] = transactionId;
+        request["id"] = localTransactionId;
         request["method"] = "device-list";
         
         // Parameters
@@ -292,7 +334,69 @@ std::string DeviceDiscoveryCronJob::sendDiscoveryRequest() {
             std::string returnedTransactionId = rpcRequestCallback_("ur-mavdiscovery", "device-list", requestStr);
             
             if (!returnedTransactionId.empty()) {
-                log_info("[DISCOVERY_CRON] Sent device discovery request with transaction: %s", returnedTransactionId.c_str());
+                log_info("[DISCOVERY_CRON] Sent device discovery request - local: %s, rpc: %s", 
+                        localTransactionId.c_str(), returnedTransactionId.c_str());
+                
+                // Store mapping between local ID and RPC ID for response matching
+                {
+                    std::lock_guard<std::mutex> lock(responseMutex_);
+                    pendingResponses_[localTransactionId]["_rpc_transaction_id"] = returnedTransactionId;
+                    pendingResponses_[localTransactionId]["_pending"] = true;
+                }
+                
+                return returnedTransactionId;
+            } else {
+                log_error("[DISCOVERY_CRON] Failed to send device discovery request via RPC callback");
+                return "";
+            }
+        } else {
+            log_error("[DISCOVERY_CRON] RPC request callback not set");
+            return "";
+        }
+
+    } catch (const std::exception& e) {
+        log_error("[DISCOVERY_CRON] Error sending device discovery request: %s", e.what());
+        return "";
+    }
+}
+
+std::string DeviceDiscoveryCronJob::sendDiscoveryRequest() {
+    try {
+        log_info("[DISCOVERY_CRON] Sending device discovery request...");
+
+        // Generate unique transaction ID for local tracking
+        std::string localTransactionId = "device_discovery_" + std::to_string(std::time(nullptr)) + "_" + std::to_string(std::rand());
+        
+        // Create JSON-RPC 2.0 request
+        json request = json::object();
+        request["jsonrpc"] = "2.0";
+        request["id"] = localTransactionId;
+        request["method"] = "device-list";
+        
+        // Parameters
+        json params = json::object();
+        params["include_unverified"] = false;
+        params["include_usb_info"] = true;
+        params["timeout_seconds"] = 1; // 1 second timeout as requested
+        request["params"] = params;
+
+        std::string requestStr = request.dump();
+        
+        // Use RPC callback to send request
+        if (rpcRequestCallback_) {
+            std::string returnedTransactionId = rpcRequestCallback_("ur-mavdiscovery", "device-list", requestStr);
+            
+            if (!returnedTransactionId.empty()) {
+                log_info("[DISCOVERY_CRON] Sent device discovery request with transaction: %s (local tracking: %s)", 
+                        returnedTransactionId.c_str(), localTransactionId.c_str());
+                
+                // Store mapping between local ID and RPC ID for response matching
+                {
+                    std::lock_guard<std::mutex> lock(responseMutex_);
+                    pendingResponses_[localTransactionId]["_rpc_transaction_id"] = returnedTransactionId;
+                    pendingResponses_[localTransactionId]["_pending"] = true;
+                }
+                
                 return returnedTransactionId;
             } else {
                 log_error("[DISCOVERY_CRON] Failed to send device discovery request via RPC callback");
@@ -321,9 +425,10 @@ bool DeviceDiscoveryCronJob::waitForResponse(const std::string& transactionId, s
     auto deadline = std::chrono::steady_clock::now() + timeout;
     
     if (responseCondition_.wait_until(lock, deadline, [&]() {
-        return pendingResponses_.find(transactionId) != pendingResponses_.end() || !running_.load();
+        return (pendingResponses_.find(transactionId) != pendingResponses_.end() && 
+                !pendingResponses_[transactionId].value("_pending", true)) || !running_.load();
     })) {
-        // Response received or job stopped
+        // Response received and processed or job stopped
         if (!running_.load()) {
             log_info("[DISCOVERY_CRON] Job stopped while waiting for response");
             return false;

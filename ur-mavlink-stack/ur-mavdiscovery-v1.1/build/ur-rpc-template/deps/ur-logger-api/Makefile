@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1
+CMAKE_SOURCE_DIR = /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build
+CMAKE_BINARY_DIR = /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -132,14 +132,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/ur-logger-api//CMakeFiles/progress.marks
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/ur-logger-api/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles 0
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/ur-rpc-template/deps/ur-logger-api//CMakeFiles/progress.marks
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/ur-logger-api/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/ur-logger-api/clean
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/ur-logger-api/clean
 .PHONY : clean
 
 # The main clean target
@@ -148,23 +148,23 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/ur-logger-api/preinstall
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/ur-logger-api/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/ur-logger-api/preinstall
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/ur-logger-api/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(CMAKE_COMMAND) -P /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles/VerifyGlobs.cmake
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(CMAKE_COMMAND) -P /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles/VerifyGlobs.cmake
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/rule:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/rule
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/rule
 .PHONY : ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/rule
 
 # Convenience name for target.
@@ -173,12 +173,12 @@ logger_objects: ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir
 
 # fast build rule for target.
 logger_objects/fast:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/build.make ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/build
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/build.make ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/build
 .PHONY : logger_objects/fast
 
 # Convenience name for target.
 ur-rpc-template/deps/ur-logger-api/CMakeFiles/ur-logger-api-static.dir/rule:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/ur-logger-api/CMakeFiles/ur-logger-api-static.dir/rule
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-template/deps/ur-logger-api/CMakeFiles/ur-logger-api-static.dir/rule
 .PHONY : ur-rpc-template/deps/ur-logger-api/CMakeFiles/ur-logger-api-static.dir/rule
 
 # Convenience name for target.
@@ -187,7 +187,7 @@ ur-logger-api-static: ur-rpc-template/deps/ur-logger-api/CMakeFiles/ur-logger-ap
 
 # fast build rule for target.
 ur-logger-api-static/fast:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/ur-logger-api/CMakeFiles/ur-logger-api-static.dir/build.make ur-rpc-template/deps/ur-logger-api/CMakeFiles/ur-logger-api-static.dir/build
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/ur-logger-api/CMakeFiles/ur-logger-api-static.dir/build.make ur-rpc-template/deps/ur-logger-api/CMakeFiles/ur-logger-api-static.dir/build
 .PHONY : ur-logger-api-static/fast
 
 logger.o: logger.c.o
@@ -195,7 +195,7 @@ logger.o: logger.c.o
 
 # target to build an object file
 logger.c.o:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/build.make ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/logger.c.o
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/build.make ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/logger.c.o
 .PHONY : logger.c.o
 
 logger.i: logger.c.i
@@ -203,7 +203,7 @@ logger.i: logger.c.i
 
 # target to preprocess a source file
 logger.c.i:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/build.make ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/logger.c.i
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/build.make ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/logger.c.i
 .PHONY : logger.c.i
 
 logger.s: logger.c.s
@@ -211,7 +211,7 @@ logger.s: logger.c.s
 
 # target to generate assembly for a file
 logger.c.s:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/build.make ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/logger.c.s
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(MAKE) $(MAKESILENT) -f ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/build.make ur-rpc-template/deps/ur-logger-api/CMakeFiles/logger_objects.dir/logger.c.s
 .PHONY : logger.c.s
 
 # Help Target
@@ -242,7 +242,7 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(CMAKE_COMMAND) -P /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles/VerifyGlobs.cmake
-	cd /home/fyou/Downloads/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(CMAKE_COMMAND) -P /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles/VerifyGlobs.cmake
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
