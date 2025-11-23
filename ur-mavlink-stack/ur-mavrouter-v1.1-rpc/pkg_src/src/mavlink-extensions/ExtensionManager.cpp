@@ -1,5 +1,7 @@
 
 #include "ExtensionManager.h"
+#include "../rpc-mechanisms/RpcControllerNew.hpp"
+#include "../endpoint_monitor.h"
 #include <fstream>
 #include <sstream>
 #include <algorithm>
@@ -187,6 +189,17 @@ unsigned int ExtensionManager::launchExtensionThread(const ExtensionConfig& conf
                 throw std::runtime_error("Failed to add endpoints");
             }
             
+            // Register this extension mainloop with the endpoint monitor
+            try {
+                if (EndpointMonitoring::GlobalMonitor::is_initialized()) {
+                    EndpointMonitoring::GlobalMonitor::get_instance().add_extension_mainloop(config.name, extensionLoop);
+                    log_info("Extension '%s': Registered with endpoint monitor", config.name.c_str());
+                }
+            } catch (const std::exception& e) {
+                log_warning("Extension '%s': Failed to register with endpoint monitor: %s", 
+                           config.name.c_str(), e.what());
+            }
+            
             log_info("Extension '%s': Starting event loop with %zu UDP and %zu TCP endpoints", 
                      config.name.c_str(), 
                      config.extension_thread_config.udp_configs.size(),
@@ -208,6 +221,17 @@ unsigned int ExtensionManager::launchExtensionThread(const ExtensionConfig& conf
         // CRITICAL: Always clean up resources - this happens whether the thread
         // exited normally via request_exit() or via exception
         log_info("Extension '%s': Beginning comprehensive resource cleanup", config.name.c_str());
+        
+        // Unregister this extension mainloop from the endpoint monitor
+        try {
+            if (EndpointMonitoring::GlobalMonitor::is_initialized()) {
+                EndpointMonitoring::GlobalMonitor::get_instance().remove_extension_mainloop(config.name);
+                log_info("Extension '%s': Unregistered from endpoint monitor", config.name.c_str());
+            }
+        } catch (const std::exception& e) {
+            log_warning("Extension '%s': Failed to unregister from endpoint monitor: %s", 
+                       config.name.c_str(), e.what());
+        }
         
         if (extensionLoop) {
             // STEP 1: Clear thread-local reference to prevent any new operations
@@ -237,7 +261,37 @@ unsigned int ExtensionManager::launchExtensionThread(const ExtensionConfig& conf
     
     unsigned int threadId = threadManager_.createThread(extensionFunc);
     std::string attachmentId = "extension_" + config.name;
-    threadManager_.registerThread(threadId, attachmentId);
+    
+    // CRITICAL FIX: Replace fixed sleep with proper thread synchronization
+    // Wait for thread to be ready before registration with exponential backoff
+    bool threadReady = false;
+    int retryCount = 0;
+    const int maxRetries = 10; // Maximum 500ms wait (10 * 50ms)
+    
+    while (!threadReady && retryCount < maxRetries) {
+        if (threadManager_.isThreadAlive(threadId)) {
+            threadReady = true;
+            break;
+        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        retryCount++;
+    }
+    
+    if (!threadReady) {
+        log_error("Extension '%s': Thread %u failed to become ready after %d retries", config.name.c_str(), threadId, maxRetries);
+        throw std::runtime_error("Thread failed to become ready for registration");
+    }
+    
+    log_info("Extension '%s': Thread %u is ready after %d retries, proceeding with registration", config.name.c_str(), threadId, retryCount);
+    
+    // CRITICAL FIX: Only register with RPC controller - ThreadManager registration is handled elsewhere
+    // The duplicate registration was causing "Attachment ID already registered" errors
+    if (rpcController_) {
+        rpcController_->registerThread(config.name, threadId, attachmentId);
+        log_info("Extension '%s' registered with RPC controller", config.name.c_str());
+    } else {
+        log_warning("Extension '%s' created but not registered with RPC controller (no reference)", config.name.c_str());
+    }
     
     log_info("Extension '%s' launched with thread ID %u (mainloop instance will be stored by thread)", 
              config.name.c_str(), threadId);
@@ -245,11 +299,19 @@ unsigned int ExtensionManager::launchExtensionThread(const ExtensionConfig& conf
 }
 
 std::string ExtensionManager::createExtension(const ExtensionConfig& config) {
-    std::lock_guard<std::mutex> lock(extensionsMutex_);
+    // CRITICAL FIX: Verify RPC controller is available before creating extensions
+    if (!rpcController_) {
+        log_error("RPC controller not available - cannot create extension '%s'", config.name.c_str());
+        return "RPC controller not available";
+    }
     
-    if (extensions_.find(config.name) != extensions_.end()) {
-        log_error("Extension '%s' already exists", config.name.c_str());
-        return "Extension already exists";
+    // CRITICAL FIX: Check for existing extension with minimal lock scope
+    {
+        std::lock_guard<std::mutex> lock(extensionsMutex_);
+        if (extensions_.find(config.name) != extensions_.end()) {
+            log_error("Extension '%s' already exists", config.name.c_str());
+            return "Extension already exists";
+        }
     }
     
     // Make a copy so we can modify it
@@ -265,11 +327,23 @@ std::string ExtensionManager::createExtension(const ExtensionConfig& config) {
                      extensionTypeToString(config.type).c_str());
         }
         
-        // Auto-assign based on type and availability
-        modifiedConfig.assigned_extension_point = assignAvailableExtensionPoint(*globalConfig_, modifiedConfig.type);
+        // CRITICAL FIX: Add retry mechanism for extension point assignment
+        std::string assignedPoint = assignAvailableExtensionPoint(*globalConfig_, modifiedConfig.type);
+        int retryCount = 0;
+        const int maxRetries = 3;
+        
+        while (assignedPoint.empty() && retryCount < maxRetries) {
+            log_warning("Extension point assignment failed for '%s' (attempt %d/%d), retrying...", 
+                       config.name.c_str(), retryCount + 1, maxRetries);
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            assignedPoint = assignAvailableExtensionPoint(*globalConfig_, modifiedConfig.type);
+            retryCount++;
+        }
+        
+        modifiedConfig.assigned_extension_point = assignedPoint;
         if (modifiedConfig.assigned_extension_point.empty()) {
-            log_error("No available extension points for extension '%s' of type '%s'", 
-                     config.name.c_str(), extensionTypeToString(config.type).c_str());
+            log_error("No available extension points for extension '%s' of type '%s' after %d retries", 
+                     config.name.c_str(), extensionTypeToString(config.type).c_str(), maxRetries);
             return "No available extension points";
         }
         log_info("Auto-assigned extension point '%s' to extension '%s'", 
@@ -392,9 +466,29 @@ std::string ExtensionManager::createExtension(const ExtensionConfig& config) {
     info.mainloopInstance = nullptr;
     
     try {
+        // CRITICAL FIX: Add extension to map BEFORE starting thread to prevent race condition
+        // The thread function needs to find this extension in the map to store the mainloop instance
+        {
+            std::lock_guard<std::mutex> lock(extensionsMutex_);
+            extensions_[modifiedConfig.name] = info;
+            log_info("Extension '%s' added to extensions map before thread start", modifiedConfig.name.c_str());
+        }
+        
+        // Now start the thread - it will be able to find itself in the extensions map
         info.threadId = launchExtensionThread(modifiedConfig);
         info.isRunning = true;
-        extensions_[modifiedConfig.name] = info;
+        
+        // Update the stored info with the actual thread ID and running status
+        {
+            std::lock_guard<std::mutex> lock(extensionsMutex_);
+            auto it = extensions_.find(modifiedConfig.name);
+            if (it != extensions_.end()) {
+                it->second.threadId = info.threadId;
+                it->second.isRunning = info.isRunning;
+                log_info("Extension '%s' updated with thread ID %u and running status", 
+                         modifiedConfig.name.c_str(), info.threadId);
+            }
+        }
         
         // Save configuration to file
         saveExtensionConfig(modifiedConfig.name);
@@ -403,6 +497,9 @@ std::string ExtensionManager::createExtension(const ExtensionConfig& config) {
                  modifiedConfig.name.c_str(), modifiedConfig.assigned_extension_point.c_str());
         return "Success";
     } catch (const std::exception& e) {
+        // Clean up: remove from map if thread creation failed
+        std::lock_guard<std::mutex> lock(extensionsMutex_);
+        extensions_.erase(modifiedConfig.name);
         log_error("Failed to create extension '%s': %s", config.name.c_str(), e.what());
         return std::string("Failed: ") + e.what();
     }
@@ -459,7 +556,12 @@ bool ExtensionManager::deleteExtension(const std::string& name) {
                 try {
                     threadManager_.stopThread(threadId);
                     threadManager_.joinThread(threadId, std::chrono::seconds(2));
-                    threadManager_.unregisterThread(attachmentId);
+                    // CRITICAL FIX: Use RPC controller for unregistration consistency
+                    if (rpcController_) {
+                        rpcController_->unregisterThread(name);
+                    } else {
+                        threadManager_.unregisterThread(attachmentId);
+                    }
                 } catch (const std::exception& e) {
                     log_error("Force termination failed: %s", e.what());
                 }
@@ -482,10 +584,16 @@ bool ExtensionManager::deleteExtension(const std::string& name) {
                     log_warning("Extension '%s' thread did not exit within timeout", name.c_str());
                 }
                 
-                // Unregister from thread manager
+                // Unregister from thread manager via RPC controller for consistency
                 try {
-                    threadManager_.unregisterThread(attachmentId);
-                    log_info("Extension '%s' unregistered from thread manager", name.c_str());
+                    if (rpcController_) {
+                        rpcController_->unregisterThread(name);
+                        log_info("Extension '%s' unregistered via RPC controller", name.c_str());
+                    } else {
+                        // Fallback to direct ThreadManager unregistration if RPC controller not available
+                        threadManager_.unregisterThread(attachmentId);
+                        log_info("Extension '%s' unregistered directly from thread manager (RPC controller unavailable)", name.c_str());
+                    }
                 } catch (const std::exception& e) {
                     log_warning("Failed to unregister extension '%s': %s", name.c_str(), e.what());
                 }
@@ -568,7 +676,12 @@ bool ExtensionManager::stopExtension(const std::string& name) {
             try {
                 threadManager_.stopThread(threadId);
                 threadManager_.joinThread(threadId, std::chrono::seconds(2));
-                threadManager_.unregisterThread(attachmentId);
+                // CRITICAL FIX: Use RPC controller for unregistration consistency
+                if (rpcController_) {
+                    rpcController_->unregisterThread(name);
+                } else {
+                    threadManager_.unregisterThread(attachmentId);
+                }
             } catch (const std::exception& e) {
                 log_error("Force termination failed: %s", e.what());
             }
@@ -598,10 +711,16 @@ bool ExtensionManager::stopExtension(const std::string& name) {
             log_warning("Extension '%s' thread did not exit within timeout", name.c_str());
         }
         
-        // STEP 4: Unregister from thread manager
+        // STEP 4: Unregister from thread manager via RPC controller for consistency
         try {
-            threadManager_.unregisterThread(attachmentId);
-            log_info("Extension '%s' unregistered from thread manager", name.c_str());
+            if (rpcController_) {
+                rpcController_->unregisterThread(name);
+                log_info("Extension '%s' unregistered via RPC controller", name.c_str());
+            } else {
+                // Fallback to direct ThreadManager unregistration if RPC controller not available
+                threadManager_.unregisterThread(attachmentId);
+                log_info("Extension '%s' unregistered directly from thread manager (RPC controller unavailable)", name.c_str());
+            }
         } catch (const std::exception& e) {
             log_warning("Failed to unregister extension '%s': %s", name.c_str(), e.what());
         }
@@ -650,7 +769,12 @@ bool ExtensionManager::startExtension(const std::string& name) {
                 
                 // Try to unregister the thread
                 try {
-                    threadManager_.unregisterThread(oldAttachmentId);
+                    // CRITICAL FIX: Use RPC controller for unregistration consistency
+                    if (rpcController_) {
+                        rpcController_->unregisterThread(name);
+                    } else {
+                        threadManager_.unregisterThread(oldAttachmentId);
+                    }
                     log_info("Old thread attachment '%s' unregistered", oldAttachmentId.c_str());
                 } catch (...) {
                     log_debug("Old thread attachment was already unregistered");
@@ -781,8 +905,27 @@ bool ExtensionManager::saveExtensionConfig(const std::string& name) {
     return true;
 }
 
+void ExtensionManager::setRpcController(RpcMechanisms::RpcController* rpcController) {
+    rpcController_ = rpcController;
+    log_info("RPC controller reference set in ExtensionManager");
+}
+
 bool ExtensionManager::loadExtensionConfigs(const std::string& configDir) {
     log_info("Loading extension configs from: %s", configDir.c_str());
+    
+    // CRITICAL FIX: Verify prerequisites before loading extensions
+    if (!rpcController_) {
+        log_error("Cannot load extensions: RPC controller not available");
+        return false;
+    }
+    
+    if (!globalConfig_) {
+        log_error("Cannot load extensions: Global configuration not available");
+        return false;
+    }
+    
+    int successCount = 0;
+    int failureCount = 0;
     
     // Scan for extension_*.json files
     DIR* dir = opendir(configDir.c_str());
@@ -801,6 +944,7 @@ bool ExtensionManager::loadExtensionConfigs(const std::string& configDir) {
             std::ifstream file(filepath);
             if (!file.is_open()) {
                 log_warning("Cannot open extension config: %s", filepath.c_str());
+                failureCount++;
                 continue;
             }
             
@@ -852,15 +996,36 @@ bool ExtensionManager::loadExtensionConfigs(const std::string& configDir) {
                     }
                 }
                 
-                createExtension(extConfig);
+                // CRITICAL FIX: Validate extension config before creation
+                if (!validateExtensionConfig(extConfig)) {
+                    log_error("Invalid extension configuration for '%s'", extConfig.name.c_str());
+                    failureCount++;
+                    continue;
+                }
+                
+                std::string result = createExtension(extConfig);
+                if (result == "Success") {
+                    successCount++;
+                    log_info("Extension '%s' created successfully from config file", extConfig.name.c_str());
+                } else {
+                    failureCount++;
+                    log_error("Failed to create extension '%s' from config: %s", extConfig.name.c_str(), result.c_str());
+                }
             } catch (const std::exception& e) {
-                log_error("Failed to parse extension config %s: %s", filepath.c_str(), e.what());
+                failureCount++;
+                log_error("Failed to parse or create extension from config %s: %s", filepath.c_str(), e.what());
             }
         }
     }
     
     closedir(dir);
-    return true;
+    
+    log_info("Extension loading completed: %d successful, %d failed", successCount, failureCount);
+    if (failureCount > 0) {
+        log_warning("Some extensions failed to load - check logs for details");
+    }
+    
+    return successCount > 0; // Return true if at least one extension loaded successfully
 }
 
 bool ExtensionManager::validateExtensionConfig(const ExtensionConfig& config) const {

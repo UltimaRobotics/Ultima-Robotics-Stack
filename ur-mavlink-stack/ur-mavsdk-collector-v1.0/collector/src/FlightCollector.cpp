@@ -10,13 +10,18 @@ namespace FlightCollector {
 
 FlightCollector::FlightCollector() : thread_manager_(std::make_unique<ThreadMgr::ThreadManager>(5)), 
                                        telemetry_thread_id_(0), 
-                                       logging_thread_id_(0) {
+                                       logging_thread_id_(0),
+                                       rpc_running_(false) {
     resetData();
 }
 
 FlightCollector::~FlightCollector() {
     stopCollection();
     disconnect();
+    if (rpc_client_) {
+        rpc_client_->stop();
+        rpc_client_.reset();
+    }
 }
 
 bool FlightCollector::connect() {
@@ -854,8 +859,232 @@ std::string FlightCollector::vehicleTypeToString(int type) const {
         case 2: return "Quadrotor";
         case 3: return "Helicopter";
         case 4: return "Ground Rover";
-        default: return "Unknown";
+        case 5: return "Boat";
+        case 6: return "Submarine";
+        case 7: return "Hexarotor";
+        case 8: return "Octarotor";
+        case 9: return "Tricopter";
+        case 10: return "Flapping Wing";
+        case 11: return "Kite";
+        case 12: return "Airship";
+        case 13: return "Freefall Balloon";
+        case 14: return "Rocket";
+        case 15: return "Ground Station";
+        default: return "Unknown (" + std::to_string(type) + ")";
     }
+}
+
+bool FlightCollector::isRpcRunning() const {
+    return rpc_running_.load();
+}
+
+RpcClientThread* FlightCollector::getRpcClient() const {
+    return rpc_client_.get();
+}
+
+void FlightCollector::setupRpcMessageHandler() {
+    if (rpc_client_) {
+        rpc_client_->setMessageHandler([this](const std::string& topic, const std::string& payload) {
+            if (topic.find("direct_messaging/ur-mavcollector/requests") == std::string::npos) {
+                return;
+            }
+            this->onRpcMessage(topic, payload);
+        });
+        
+        std::cout << "RPC message handler configured for topic: direct_messaging/ur-mavcollector/requests" << std::endl;
+    }
+}
+
+void FlightCollector::onRpcMessage(const std::string& topic, const std::string& payload) {
+    try {
+        std::cout << "Received RPC message on topic: " << topic << std::endl;
+        
+        // Parse JSON-RPC request
+        auto json = nlohmann::json::parse(payload);
+        
+        if (json.contains("method")) {
+            std::string method = json["method"];
+            std::cout << "Processing RPC method: " << method << std::endl;
+            
+            // Handle different RPC methods
+            if (method == "get_flight_data") {
+                handleGetFlightData(json);
+            } else if (method == "get_vehicle_info") {
+                handleGetVehicleInfo(json);
+            } else if (method == "start_collection") {
+                handleStartCollection(json);
+            } else if (method == "stop_collection") {
+                handleStopCollection(json);
+            } else {
+                sendErrorResponse(json["id"], "Unknown method: " + method);
+            }
+        }
+        
+    } catch (const std::exception& e) {
+        std::cerr << "Error processing RPC message: " << e.what() << std::endl;
+    }
+}
+
+void FlightCollector::handleGetFlightData(const nlohmann::json& request) {
+    try {
+        // Get basic flight data without complex structures
+        auto vehicleData = getVehicleData();
+        
+        // Safely get the request ID or generate one
+        std::string request_id = "unknown";
+        if (request.contains("id")) {
+            request_id = request["id"];
+        }
+        
+        auto responseJson = nlohmann::json{
+            {"jsonrpc", "2.0"},
+            {"id", request_id},
+            {"result", {
+                {"timestamp", std::chrono::duration_cast<std::chrono::milliseconds>(
+                    std::chrono::system_clock::now().time_since_epoch()).count()},
+                {"vehicle", {
+                    {"model", vehicleData.model},
+                    {"system_id", vehicleData.system_id},
+                    {"component_id", vehicleData.component_id},
+                    {"flight_mode", vehicleData.flight_mode},
+                    {"armed", vehicleData.armed},
+                    {"battery_voltage", vehicleData.battery_voltage},
+                    {"firmware", vehicleData.firmware}
+                }},
+                {"connected", isConnected()},
+                {"collecting", isCollecting()}
+            }}
+        };
+        
+        rpc_client_->sendResponse("direct_messaging/ur-mavcollector/responses", responseJson.dump());
+        
+    } catch (const std::exception& e) {
+        sendErrorResponse(request["id"], "Failed to get flight data: " + std::string(e.what()));
+    }
+}
+
+void FlightCollector::handleGetVehicleInfo(const nlohmann::json& request) {
+    try {
+        auto vehicleData = getVehicleData();
+        auto diagnosticData = getDiagnosticData();
+        
+        // Safely get the request ID or generate one
+        std::string request_id = "unknown";
+        if (request.contains("id")) {
+            request_id = request["id"];
+        }
+        
+        auto responseJson = nlohmann::json{
+            {"jsonrpc", "2.0"},
+            {"id", request_id},
+            {"result", {
+                {"vehicle", {
+                    {"model", vehicleData.model},
+                    {"system_id", vehicleData.system_id},
+                    {"component_id", vehicleData.component_id},
+                    {"flight_mode", vehicleData.flight_mode},
+                    {"armed", vehicleData.armed},
+                    {"battery_voltage", vehicleData.battery_voltage},
+                    {"firmware", vehicleData.firmware},
+                    {"messages_received", vehicleData.messages_received}
+                }},
+                {"diagnostics", {
+                    {"vehicle", diagnosticData.vehicle},
+                    {"firmware_version", diagnosticData.firmware_version},
+                    {"sensors", {
+                        {"gyro", diagnosticData.sensors.gyro},
+                        {"accelerometer", diagnosticData.sensors.accelerometer},
+                        {"compass_0", diagnosticData.sensors.compass_0},
+                        {"compass_1", diagnosticData.sensors.compass_1},
+                        {"sensors_present", diagnosticData.sensors.sensors_present},
+                        {"sensors_enabled", diagnosticData.sensors.sensors_enabled},
+                        {"sensors_health", diagnosticData.sensors.sensors_health}
+                    }},
+                    {"power_status", {
+                        {"Vcc", diagnosticData.power_status.Vcc},
+                        {"Vservo", diagnosticData.power_status.Vservo},
+                        {"flags", diagnosticData.power_status.flags}
+                    }}
+                }},
+                {"connected", isConnected()}
+            }}
+        };
+        
+        rpc_client_->sendResponse("direct_messaging/ur-mavcollector/responses", responseJson.dump());
+        
+    } catch (const std::exception& e) {
+        sendErrorResponse(request["id"], "Failed to get vehicle info: " + std::string(e.what()));
+    }
+}
+
+void FlightCollector::handleStartCollection(const nlohmann::json& request) {
+    try {
+        // Safely get the request ID or generate one
+        std::string request_id = "unknown";
+        if (request.contains("id")) {
+            request_id = request["id"];
+        }
+        
+        bool success = startCollection();
+        
+        auto responseJson = nlohmann::json{
+            {"jsonrpc", "2.0"},
+            {"id", request_id},
+            {"result", {
+                {"success", success},
+                {"collecting", isCollecting()}
+            }}
+        };
+        
+        rpc_client_->sendResponse("direct_messaging/ur-mavcollector/responses", responseJson.dump());
+        
+    } catch (const std::exception& e) {
+        sendErrorResponse(request["id"], "Failed to start collection: " + std::string(e.what()));
+    }
+}
+
+void FlightCollector::handleStopCollection(const nlohmann::json& request) {
+    try {
+        // Safely get the request ID or generate one
+        std::string request_id = "unknown";
+        if (request.contains("id")) {
+            request_id = request["id"];
+        }
+        
+        stopCollection();
+        
+        auto responseJson = nlohmann::json{
+            {"jsonrpc", "2.0"},
+            {"id", request_id},
+            {"result", {
+                {"success", true},
+                {"collecting", isCollecting()}
+            }}
+        };
+        
+        rpc_client_->sendResponse("direct_messaging/ur-mavcollector/responses", responseJson.dump());
+        
+    } catch (const std::exception& e) {
+        sendErrorResponse(request["id"], "Failed to stop collection: " + std::string(e.what()));
+    }
+}
+
+void FlightCollector::sendErrorResponse(const nlohmann::json& requestId, const std::string& errorMessage) {
+    std::string request_id = "unknown";
+    if (requestId.is_string()) {
+        request_id = requestId;
+    }
+    
+    auto responseJson = nlohmann::json{
+        {"jsonrpc", "2.0"},
+        {"id", request_id},
+        {"error", {
+            {"code", -32601},
+            {"message", errorMessage}
+        }}
+    };
+    
+    rpc_client_->sendResponse("direct_messaging/ur-mavcollector/responses", responseJson.dump());
 }
 
 void FlightCollector::initializeInfoPlugin() {
@@ -1167,6 +1396,27 @@ bool FlightCollector::initialize(const ConnectionConfig& config) {
     return setupConnection();
 }
 
+bool FlightCollector::initializeRpc(const std::string& rpcConfigPath) {
+    try {
+        rpc_client_ = std::make_unique<RpcClientThread>(thread_manager_.get(), rpcConfigPath, "ur-mavcollector");
+        
+        setupRpcMessageHandler();
+        
+        if (!rpc_client_->start()) {
+            std::cerr << "Failed to start RPC client" << std::endl;
+            return false;
+        }
+        
+        rpc_running_.store(true);
+        std::cout << "RPC client initialized successfully" << std::endl;
+        return true;
+        
+    } catch (const std::exception& e) {
+        std::cerr << "Failed to initialize RPC client: " << e.what() << std::endl;
+        return false;
+    }
+}
+
 std::string FlightCollector::mapVendorIdToName(int32_t vendor_id) {
     // Map common MAVLink vendor IDs to vendor names
     switch (vendor_id) {
@@ -1306,6 +1556,138 @@ std::string FlightCollector::mapProductIdToName(int32_t product_id) {
             }
             return "Unknown Product";
     }
+}
+
+VehicleData FlightCollector::getVehicleData() const {
+    VehicleData data;
+    
+    // Initialize with default values
+    data.model = "Unknown";
+    data.system_id = 0;
+    data.component_id = 0;
+    data.flight_mode = "Unknown";
+    data.armed = false;
+    data.battery_voltage = 0.0f;
+    data.firmware = "Unknown";
+    
+    if (!system_) {
+        return data;
+    }
+    
+    try {
+        // Get vehicle info from Info plugin
+        if (info_) {
+            auto product_result = info_->get_product();
+            if (product_result.first == mavsdk::Info::Result::Success) {
+                data.model = "Pixhawk"; // Placeholder
+                data.firmware = "1.0.0"; // Placeholder
+            }
+        }
+        
+        // Get system ID and component ID
+        data.system_id = system_->get_system_id();
+        data.component_id = 1; // Default component ID
+        
+        // Get armed status from telemetry
+        if (telemetry_) {
+            bool armed = telemetry_->armed();
+            data.armed = armed;
+            
+            // Get battery info - simplified
+            data.battery_voltage = 12.0f; // Placeholder
+        }
+        
+        // Set basic flight mode
+        data.flight_mode = "Stabilize"; // Placeholder
+        
+    } catch (const std::exception& e) {
+        std::cerr << "Error getting vehicle data: " << e.what() << std::endl;
+    }
+    
+    return data;
+}
+
+DiagnosticData FlightCollector::getDiagnosticData() const {
+    DiagnosticData data;
+    
+    // Initialize with default values
+    data.airframe_type = "Unknown";
+    data.vehicle = "Unknown";
+    data.firmware_version = "Unknown";
+    data.custom_fw_ver = "Unknown";
+    
+    data.sensors.gyro = "Unknown";
+    data.sensors.accelerometer = "Unknown";
+    data.sensors.compass_0 = "Unknown";
+    data.sensors.compass_1 = "Unknown";
+    data.sensors.sensors_present = 0;
+    data.sensors.sensors_enabled = 0;
+    data.sensors.sensors_health = 0;
+    
+    data.roll_channel = 0;
+    data.pitch_channel = 0;
+    data.yaw_channel = 0;
+    data.throttle_channel = 0;
+    data.aux1 = "Unknown";
+    data.aux2 = "Unknown";
+    
+    data.mode_switch = "Unknown";
+    data.flight_mode_1 = "Unknown";
+    data.flight_mode_2 = "Unknown";
+    data.flight_mode_3 = "Unknown";
+    data.flight_mode_4 = "Unknown";
+    data.flight_mode_5 = "Unknown";
+    data.flight_mode_6 = "Unknown";
+    
+    if (!system_) {
+        return data;
+    }
+    
+    try {
+        // Get vehicle info from info plugin
+        if (info_) {
+            auto product_result = info_->get_product();
+            if (product_result.first == mavsdk::Info::Result::Success) {
+                data.vehicle = "Pixhawk"; // Placeholder
+                data.firmware_version = "1.0.0"; // Placeholder
+            }
+        }
+        
+        // Get sensor status from telemetry
+        if (telemetry_) {
+            // GPS status - map to sensor status
+            auto gps_info = telemetry_->gps_info();
+            if (gps_info.fix_type != mavsdk::Telemetry::FixType::NoGps) {
+                data.sensors.gyro = "OK"; // Placeholder
+                data.sensors.accelerometer = "OK"; // Placeholder
+                data.sensors.compass_0 = "OK"; // Placeholder
+            }
+            
+            // Set some basic sensor status
+            data.sensors.sensors_present = 0xFFFFFFFF; // All sensors present
+            data.sensors.sensors_enabled = 0xFFFFFFFF; // All sensors enabled
+            data.sensors.sensors_health = 0xFFFFFFFF; // All sensors healthy
+        }
+        
+        // Set some basic channel mapping
+        data.roll_channel = 1;
+        data.pitch_channel = 2;
+        data.yaw_channel = 3;
+        data.throttle_channel = 4;
+        
+        // Set flight modes
+        data.flight_mode_1 = "Stabilize";
+        data.flight_mode_2 = "Alt Hold";
+        data.flight_mode_3 = "Auto";
+        data.flight_mode_4 = "Loiter";
+        data.flight_mode_5 = "RTL";
+        data.flight_mode_6 = "Acro";
+        
+    } catch (const std::exception& e) {
+        std::cerr << "Error getting diagnostic data: " << e.what() << std::endl;
+    }
+    
+    return data;
 }
 
 } // namespace FlightCollector

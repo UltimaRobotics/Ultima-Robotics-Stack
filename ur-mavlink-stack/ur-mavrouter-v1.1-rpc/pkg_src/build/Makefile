@@ -508,6 +508,30 @@ src/endpoint.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-mavrouter.dir/build.make CMakeFiles/ur-mavrouter.dir/src/endpoint.cpp.s
 .PHONY : src/endpoint.cpp.s
 
+src/endpoint_monitor.o: src/endpoint_monitor.cpp.o
+.PHONY : src/endpoint_monitor.o
+
+# target to build an object file
+src/endpoint_monitor.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-mavrouter.dir/build.make CMakeFiles/ur-mavrouter.dir/src/endpoint_monitor.cpp.o
+.PHONY : src/endpoint_monitor.cpp.o
+
+src/endpoint_monitor.i: src/endpoint_monitor.cpp.i
+.PHONY : src/endpoint_monitor.i
+
+# target to preprocess a source file
+src/endpoint_monitor.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-mavrouter.dir/build.make CMakeFiles/ur-mavrouter.dir/src/endpoint_monitor.cpp.i
+.PHONY : src/endpoint_monitor.cpp.i
+
+src/endpoint_monitor.s: src/endpoint_monitor.cpp.s
+.PHONY : src/endpoint_monitor.s
+
+# target to generate assembly for a file
+src/endpoint_monitor.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-mavrouter.dir/build.make CMakeFiles/ur-mavrouter.dir/src/endpoint_monitor.cpp.s
+.PHONY : src/endpoint_monitor.cpp.s
+
 src/endpoint_stats.o: src/endpoint_stats.cpp.o
 .PHONY : src/endpoint_stats.o
 
@@ -917,6 +941,9 @@ help:
 	@echo "... src/endpoint.o"
 	@echo "... src/endpoint.i"
 	@echo "... src/endpoint.s"
+	@echo "... src/endpoint_monitor.o"
+	@echo "... src/endpoint_monitor.i"
+	@echo "... src/endpoint_monitor.s"
 	@echo "... src/endpoint_stats.o"
 	@echo "... src/endpoint_stats.i"
 	@echo "... src/endpoint_stats.s"

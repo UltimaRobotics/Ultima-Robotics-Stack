@@ -37,9 +37,10 @@ public:
     /**
      * @brief Constructor
      * @param threadManager Reference to ThreadManager instance
+     * @param routerConfigPath Path to the router configuration file
      * @param verbose Enable verbose logging
      */
-    RpcOperationProcessor(ThreadMgr::ThreadManager& threadManager, bool verbose = false);
+    RpcOperationProcessor(ThreadMgr::ThreadManager& threadManager, const std::string& routerConfigPath = "", bool verbose = false);
 
     /**
      * @brief Destructor - ensures clean shutdown
@@ -105,6 +106,7 @@ private:
 
     // Configuration
     bool verbose_;
+    std::string routerConfigPath_;  // Path to router configuration file
     std::string responseTopic_;
     std::shared_ptr<RpcClientWrapper> rpcClient_;
 

@@ -3,15 +3,24 @@
 #include "../common/log.h"
 #include <thread>
 #include <chrono>
+#include <fstream>
 #include "../mavlink-extensions/ExtensionManager.h"
 #include "../../ur-mavdiscovery-shared/include/MavlinkDeviceStructs.hpp"
 #include "modules/nholmann/json.hpp"
 
 namespace RpcMechanisms {
 
-RpcController::RpcController(ThreadMgr::ThreadManager& threadManager) 
-    : operations_(std::make_unique<RpcOperations>(threadManager)) {
+RpcController::RpcController(ThreadMgr::ThreadManager& threadManager, const std::string& routerConfigPath) 
+    : operations_(std::make_unique<RpcOperations>(threadManager, routerConfigPath)),
+      routerConfigPath_(routerConfigPath),
+      startupTime_(std::chrono::system_clock::now()) {
     log_info("RpcController initialized with separated RPC client and operations");
+    
+    if (!routerConfigPath_.empty()) {
+        log_info("RpcController: Using router configuration path: %s", routerConfigPath_.c_str());
+    } else {
+        log_warning("RpcController: No router configuration path provided");
+    }
     
     // Initialize device discovery cron job
     discoveryCronJob_ = std::make_unique<DeviceDiscoveryCronJob>("", false);
@@ -22,6 +31,89 @@ RpcController::RpcController(ThreadMgr::ThreadManager& threadManager)
             return rpcClient_->sendRpcRequest(service, method, params);
         }
         return "";
+    });
+    
+    // Set mainloop startup callback for the cron job
+    discoveryCronJob_->setMainloopStartupCallback([this](const MavlinkShared::DeviceInfo& deviceInfo) -> std::string {
+        log_info("[STARTUP] ========================================");
+        log_info("[STARTUP] Startup trigger: Device discovered - starting services");
+        log_info("[STARTUP] Device: %s (baudrate: %d, sysid:%d, compid:%d)", 
+                deviceInfo.devicePath.c_str(), deviceInfo.baudrate, deviceInfo.sysid, deviceInfo.compid);
+        log_info("[STARTUP] ========================================");
+        
+        // Update router configuration with discovered device info
+        if (updateRouterConfigWithDevice(deviceInfo)) {
+            log_info("[STARTUP] Router configuration updated successfully");
+        } else {
+            log_warning("[STARTUP] Failed to update router configuration, using existing config");
+        }
+        
+        // Start mainloop using the same logic as handleDeviceAddedEvent
+        if (operations_) {
+            log_info("[STARTUP] Starting mainloop due to device discovery");
+            
+            // Start mainloop
+            auto startResult = this->startThread(ThreadTarget::MAINLOOP);
+            if (startResult.status == OperationStatus::SUCCESS) {
+                mainloopStarted_.store(true);
+                log_info("[STARTUP] Mainloop started successfully via device discovery");
+                
+                // Wait for mainloop to enter event loop before starting extensions
+                log_info("[STARTUP] Waiting for mainloop to enter event loop before loading extensions...");
+                bool mainloopReady = Mainloop::wait_for_event_loop(5000); // 5 second timeout
+                
+                if (mainloopReady) {
+                    log_info("[STARTUP] Mainloop is in event loop, loading and starting extensions");
+                    
+                    // Load and start extension configurations
+                    auto* extensionManager = operations_->getExtensionManager();
+                    if (extensionManager) {
+                        auto allExtensions = extensionManager->getAllExtensions();
+                        
+                        // Only load configs if no extensions are loaded yet
+                        if (allExtensions.empty()) {
+                            log_info("[STARTUP] Loading extension configurations...");
+                            std::string extensionConfDir = "config";
+                            bool loadResult = extensionManager->loadExtensionConfigs(extensionConfDir);
+                            log_info("[STARTUP] Extension config loading result: %s", loadResult ? "SUCCESS" : "FAILED");
+                            
+                            // Refresh the extensions list
+                            allExtensions = extensionManager->getAllExtensions();
+                            log_info("[STARTUP] Found %zu extensions after loading configs", allExtensions.size());
+                        } else {
+                            log_info("[STARTUP] Extensions already loaded (%zu found), ensuring they are started", allExtensions.size());
+                        }
+                        
+                        // Start all extensions using ExtensionManager directly
+                        for (const auto& extInfo : allExtensions) {
+                            log_info("[STARTUP] Starting extension: %s", extInfo.name.c_str());
+                            bool started = extensionManager->startExtension(extInfo.name);
+                            if (!started) {
+                                log_warning("[STARTUP] Failed to start extension %s", extInfo.name.c_str());
+                            } else {
+                                log_info("[STARTUP] Successfully started extension: %s", extInfo.name.c_str());
+                            }
+                        }
+                        
+                        log_info("[STARTUP] Startup sequence completed - mainloop and extensions running");
+                        return "Mainloop and extensions started successfully";
+                    } else {
+                        log_warning("[STARTUP] Extension manager not available, only mainloop started");
+                        return "Mainloop started (no extensions)";
+                    }
+                } else {
+                    log_error("[STARTUP] Mainloop failed to enter event loop within 5 seconds - extensions not started");
+                    return "Mainloop started but failed to enter event loop";
+                }
+                
+            } else {
+                log_error("[STARTUP] Failed to start mainloop: %s", startResult.message.c_str());
+                return "";
+            }
+        } else {
+            log_error("[STARTUP] Operations not available for mainloop startup");
+            return "";
+        }
     });
     
     log_info("Device discovery cron job initialized");
@@ -241,6 +333,11 @@ void RpcController::handleRpcMessage(const std::string& topic, const std::string
             
             response["result"] = nlohmann::json::parse(rpcResponse.toJson());
             
+        } else if (method == "runtime-info") {
+            // Get comprehensive runtime information including thread types and status
+            nlohmann::json runtimeInfo = getRuntimeInfo();
+            response["result"] = runtimeInfo;
+            
         } else if (method == "thread_operation") {
             std::string threadName = params.value("thread_name", "");
             std::string operation = params.value("operation", "status");
@@ -279,25 +376,67 @@ void RpcController::handleRpcMessage(const std::string& topic, const std::string
                 log_info("[RPC] Device added: %s (State: %s, Baudrate: %d)", devicePath.c_str(), deviceState.c_str(), baudrate);
             }
             
+            // Create device info structure and update configuration
+            MavlinkShared::DeviceInfo deviceInfo;
+            deviceInfo.devicePath = devicePath;
+            deviceInfo.state = MavlinkShared::DeviceState::VERIFIED;
+            deviceInfo.baudrate = baudrate;
+            deviceInfo.sysid = params.value("systemId", 1);
+            deviceInfo.compid = params.value("componentId", 1);
+            
+            // Update router configuration with discovered device info (preserve existing baudrate)
+            if (updateRouterConfigWithDevice(deviceInfo)) {
+                if (isStartupTrigger) {
+                    log_info("[STARTUP] Router configuration updated successfully");
+                } else {
+                    log_info("[RPC] Router configuration updated successfully");
+                }
+            } else {
+                if (isStartupTrigger) {
+                    log_warning("[STARTUP] Failed to update router configuration, using existing config");
+                } else {
+                    log_warning("[RPC] Failed to update router configuration, using existing config");
+                }
+            }
+            
             // Check if mainloop is already running
             if (isMainloopRunning()) {
-                log_info("[STARTUP] Mainloop already running, only ensuring extensions are started");
+                log_info("[STARTUP] Mainloop already running, loading and starting extensions");
                 
-                // Just ensure extensions are started
+                // Load and start extension configurations
                 auto* extensionManager = operations_->getExtensionManager();
                 if (extensionManager) {
                     auto allExtensions = extensionManager->getAllExtensions();
-                    log_info("[STARTUP] Ensuring %zu extensions are started...", allExtensions.size());
                     
+                    // Only load configs if no extensions are loaded yet
+                    if (allExtensions.empty()) {
+                        log_info("[STARTUP] Loading extension configurations...");
+                        std::string extensionConfDir = "config";
+                        bool loadResult = extensionManager->loadExtensionConfigs(extensionConfDir);
+                        log_info("[STARTUP] Extension config loading result: %s", loadResult ? "SUCCESS" : "FAILED");
+                        
+                        // Refresh the extensions list
+                        allExtensions = extensionManager->getAllExtensions();
+                        log_info("[STARTUP] Found %zu extensions after loading configs", allExtensions.size());
+                    } else {
+                        log_info("[STARTUP] Extensions already loaded (%zu found), ensuring they are started", allExtensions.size());
+                    }
+                    
+                    // Start all extensions using ExtensionManager directly
                     for (const auto& extInfo : allExtensions) {
-                        auto extResp = operations_->executeOperationOnThread(extInfo.name, ThreadOperation::START);
-                        if (extResp.status != OperationStatus::SUCCESS) {
-                            log_warning("[STARTUP] Failed to start extension %s: %s", extInfo.name.c_str(), extResp.message.c_str());
+                        log_info("[STARTUP] Starting extension: %s", extInfo.name.c_str());
+                        bool started = extensionManager->startExtension(extInfo.name);
+                        if (!started) {
+                            log_warning("[STARTUP] Failed to start extension %s", extInfo.name.c_str());
+                        } else {
+                            log_info("[STARTUP] Successfully started extension: %s", extInfo.name.c_str());
                         }
                     }
+                    
+                    response["result"] = {{"status", "success"}, {"message", "Device added: mainloop running, extensions started"}};
+                } else {
+                    response["result"] = {{"status", "partial"}, {"message", "Device added: mainloop running, no extensions available"}};
                 }
-                
-                response["result"] = {{"status", "success"}, {"message", "Device added: extensions ensured started"}};
                 
             } else {
                 // First, start the mainloop thread (this initializes the global config)
@@ -312,69 +451,82 @@ void RpcController::handleRpcMessage(const std::string& topic, const std::string
                 if (mainloopResp.status != OperationStatus::SUCCESS) {
                     response["error"] = {{"code", -32500}, {"message", "Failed to start mainloop: " + mainloopResp.message}};
                 } else {
-                    // Wait a moment for mainloop to initialize
-                    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+                    // Wait for mainloop to enter event loop with enhanced logging
+                    if (isStartupTrigger) {
+                        log_info("[STARTUP] Waiting for mainloop to enter event loop before loading extensions...");
+                    } else {
+                        log_info("[RPC] Waiting for mainloop to enter event loop before loading extensions...");
+                    }
                     
-                    // Now load and start extension configurations
-                    auto* extensionManager = operations_->getExtensionManager();
-                    if (extensionManager) {
-                        auto allExtensions = extensionManager->getAllExtensions();
-                        
-                        // Only load configs if no extensions are loaded yet
-                        if (allExtensions.empty()) {
-                            if (isStartupTrigger) {
-                                log_info("[STARTUP] Loading extension configurations...");
-                            } else {
-                                log_info("[RPC] Loading extension configurations...");
-                            }
-                            
-                            std::string extensionConfDir = "config";
-                            extensionManager->loadExtensionConfigs(extensionConfDir);
-                            
-                            // Refresh the extensions list
-                            allExtensions = extensionManager->getAllExtensions();
-                            
-                            if (isStartupTrigger) {
-                                log_info("[STARTUP] Loaded and started %zu extensions from config", allExtensions.size());
-                            } else {
-                                log_info("[RPC] Loaded and started %zu extensions from config", allExtensions.size());
-                            }
+                    // Use the new event loop wait mechanism
+                    bool mainloopReady = Mainloop::wait_for_event_loop(5000); // 5 second timeout
+                    
+                    if (mainloopReady) {
+                        if (isStartupTrigger) {
+                            log_info("[STARTUP] Mainloop is in event loop, loading and starting extensions");
                         } else {
-                            // Extensions already exist, ensure they're started
-                            if (isStartupTrigger) {
-                                log_info("[STARTUP] Extensions already loaded (%zu found)", allExtensions.size());
-                            } else {
-                                log_info("[RPC] Extensions already loaded (%zu found)", allExtensions.size());
+                            log_info("[RPC] Mainloop is in event loop, loading and starting extensions");
+                        }
+                        
+                        // Load and start extension configurations
+                        auto* extensionManager = operations_->getExtensionManager();
+                        if (extensionManager) {
+                            auto allExtensions = extensionManager->getAllExtensions();
+                            
+                            // Only load configs if no extensions are loaded yet
+                            if (allExtensions.empty()) {
+                                if (isStartupTrigger) {
+                                    log_info("[STARTUP] Loading extension configurations...");
+                                } else {
+                                    log_info("[RPC] Loading extension configurations...");
+                                }
+                                std::string extensionConfDir = "config";
+                                bool loadResult = extensionManager->loadExtensionConfigs(extensionConfDir);
+                                if (isStartupTrigger) {
+                                    log_info("[STARTUP] Extension config loading result: %s", loadResult ? "SUCCESS" : "FAILED");
+                                } else {
+                                    log_info("[RPC] Extension config loading result: %s", loadResult ? "SUCCESS" : "FAILED");
+                                }
+                                
+                                // Refresh the extensions list
+                                allExtensions = extensionManager->getAllExtensions();
                             }
                             
-                            // Start all existing extensions
+                            if (isStartupTrigger) {
+                                log_info("[STARTUP] Found %zu extensions after loading configs", allExtensions.size());
+                            } else {
+                                log_info("[RPC] Found %zu extensions after loading configs", allExtensions.size());
+                            }
+                            
+                            // Start all extensions
                             for (const auto& extInfo : allExtensions) {
-                                auto extResp = operations_->executeOperationOnThread(extInfo.name, ThreadOperation::START);
-                                if (extResp.status != OperationStatus::SUCCESS) {
-                                    if (isStartupTrigger) {
-                                        log_warning("[STARTUP] Failed to start extension %s: %s", extInfo.name.c_str(), extResp.message.c_str());
-                                    } else {
-                                        log_warning("[RPC] Failed to start extension %s: %s", extInfo.name.c_str(), extResp.message.c_str());
-                                    }
+                                if (isStartupTrigger) {
+                                    log_info("[STARTUP] Starting extension: %s", extInfo.name.c_str());
+                                } else {
+                                    log_info("[RPC] Starting extension: %s", extInfo.name.c_str());
+                                }
+                                bool success = extensionManager->startExtension(extInfo.name);
+                                if (isStartupTrigger) {
+                                    log_info("[STARTUP] Successfully started extension: %s", extInfo.name.c_str());
+                                } else {
+                                    log_info("[RPC] Successfully started extension: %s", extInfo.name.c_str());
                                 }
                             }
+                            
+                            if (isStartupTrigger) {
+                                log_info("[STARTUP] Startup sequence completed - mainloop and extensions running");
+                            } else {
+                                log_info("[RPC] Startup sequence completed - mainloop and extensions running");
+                            }
                         }
-                        
-                        std::string successMsg = isStartupTrigger ? 
-                            "Device discovered: mainloop and extensions started successfully" :
-                            "Device added: mainloop and extensions started";
-                        response["result"] = {{"status", "success"}, {"message", successMsg}};
                     } else {
+                        // Mainloop didn't enter event loop within timeout
                         if (isStartupTrigger) {
-                            log_warning("[STARTUP] No extension manager available, only mainloop started");
+                            log_error("[STARTUP] Mainloop failed to enter event loop within 5 seconds - extensions not started");
                         } else {
-                            log_warning("[RPC] No extension manager available, only mainloop started");
+                            log_error("[RPC] Mainloop failed to enter event loop within 5 seconds - extensions not started");
                         }
-                        
-                        std::string partialMsg = isStartupTrigger ?
-                            "Device discovered: mainloop started (no extensions)" :
-                            "Device added: mainloop started (no extensions)";
-                        response["result"] = {{"status", "partial"}, {"message", partialMsg}};
+                        response["error"] = {{"code", -32500}, {"message", "Mainloop failed to enter event loop within timeout"}};
                     }
                 }
             }
@@ -390,16 +542,18 @@ void RpcController::handleRpcMessage(const std::string& topic, const std::string
             std::string devicePath = params.value("devicePath", "unknown");
             log_info("[RPC] Device removed: %s", devicePath.c_str());
             
-            // First stop all extensions
+            // First stop all extensions using ExtensionManager directly
             auto* extensionManager = operations_->getExtensionManager();
             if (extensionManager) {
                 auto allExtensions = extensionManager->getAllExtensions();
                 log_info("[RPC] Stopping %zu extensions...", allExtensions.size());
                 
                 for (const auto& extInfo : allExtensions) {
-                    auto extResp = operations_->executeOperationOnThread(extInfo.name, ThreadOperation::STOP);
-                    if (extResp.status != OperationStatus::SUCCESS) {
-                        log_warning("[RPC] Failed to stop extension %s: %s", extInfo.name.c_str(), extResp.message.c_str());
+                    bool stopped = extensionManager->stopExtension(extInfo.name);
+                    if (!stopped) {
+                        log_warning("[RPC] Failed to stop extension %s", extInfo.name.c_str());
+                    } else {
+                        log_info("[RPC] Successfully stopped extension: %s", extInfo.name.c_str());
                     }
                 }
             } else {
@@ -469,6 +623,7 @@ RpcResponse RpcController::executeOperationOnThread(const std::string& threadNam
 
 void RpcController::setExtensionManager(MavlinkExtensions::ExtensionManager* extensionManager) {
     operations_->setExtensionManager(extensionManager);
+    extensionManager_ = extensionManager; // Store reference for runtime info
 }
 
 RpcResponse RpcController::startThread(ThreadTarget target) {
@@ -813,13 +968,18 @@ void RpcController::checkHeartbeatTimeout() {
     }
 }
 
-bool RpcController::isMainloopRunning() const {
+bool RpcController::isMainloopRunning() const
+{
     if (!operations_) {
         return false;
     }
     
+    // Check both thread state AND event loop readiness
     auto status = operations_->getThreadStatus("mainloop");
-    return status.status == OperationStatus::SUCCESS;
+    bool threadRunning = status.status == OperationStatus::SUCCESS;
+    bool inEventLoop = Mainloop::is_in_event_loop();
+    
+    return threadRunning && inEventLoop;
 }
 
 nlohmann::json RpcController::getStartupStatus() const {
@@ -902,6 +1062,48 @@ void RpcController::handleDeviceAddedEvent(const MavlinkShared::DeviceAddedEvent
             return;
         }
         
+        // Check if mainloop is already running (prevents duplicate startup)
+        if (isMainloopRunning()) {
+            log_info("[STARTUP] Mainloop already running, marking as started and ensuring extensions");
+            mainloopStarted_.store(true);
+            
+            // Ensure extensions are started using ExtensionManager directly
+            if (operations_) {
+                auto* extensionManager = operations_->getExtensionManager();
+                if (extensionManager) {
+                    auto allExtensions = extensionManager->getAllExtensions();
+                    
+                    // Only load configs if no extensions are loaded yet
+                    if (allExtensions.empty()) {
+                        log_info("[STARTUP] Loading extension configurations...");
+                        std::string extensionConfDir = "config";
+                        bool loadResult = extensionManager->loadExtensionConfigs(extensionConfDir);
+                        log_info("[STARTUP] Extension config loading result: %s", loadResult ? "SUCCESS" : "FAILED");
+                        
+                        // Refresh the extensions list
+                        allExtensions = extensionManager->getAllExtensions();
+                        log_info("[STARTUP] Found %zu extensions after loading configs", allExtensions.size());
+                    } else {
+                        log_info("[STARTUP] Extensions already loaded (%zu found), ensuring they are started", allExtensions.size());
+                    }
+                    
+                    // Start all extensions using ExtensionManager directly
+                    for (const auto& extInfo : allExtensions) {
+                        log_info("[STARTUP] Starting extension: %s", extInfo.name.c_str());
+                        bool started = extensionManager->startExtension(extInfo.name);
+                        if (!started) {
+                            log_warning("[STARTUP] Failed to start extension %s", extInfo.name.c_str());
+                        } else {
+                            log_info("[STARTUP] Successfully started extension: %s", extInfo.name.c_str());
+                        }
+                    }
+                } else {
+                    log_warning("[STARTUP] Extension manager not available, only mainloop started");
+                }
+            }
+            return;
+        }
+        
         // Start mainloop and extensions
         if (operations_) {
             log_info("[STARTUP] Starting mainloop due to device discovery");
@@ -912,19 +1114,50 @@ void RpcController::handleDeviceAddedEvent(const MavlinkShared::DeviceAddedEvent
                 mainloopStarted_.store(true);
                 log_info("[STARTUP] Mainloop started successfully via device discovery");
                 
-                // Load and start extensions
-                auto* extensionManager = operations_->getExtensionManager();
-                if (extensionManager) {
-                    auto allExtensions = extensionManager->getAllExtensions();
-                    for (const auto& extInfo : allExtensions) {
-                        // Start extension via RPC operations
-                        log_info("[STARTUP] Starting extension: %s", extInfo.name.c_str());
-                        // Note: Extensions are typically started via their own RPC mechanisms
-                        // For now, we'll just log that they should be started
-                    }
-                }
+                // Wait for mainloop to enter event loop before starting extensions
+                log_info("[STARTUP] Waiting for mainloop to enter event loop before loading extensions...");
+                bool mainloopReady = Mainloop::wait_for_event_loop(5000); // 5 second timeout
                 
-                log_info("[STARTUP] Startup sequence completed - mainloop running");
+                if (mainloopReady) {
+                    log_info("[STARTUP] Mainloop is in event loop, loading and starting extensions");
+                    
+                    // Load and start extension configurations
+                    auto* extensionManager = operations_->getExtensionManager();
+                    if (extensionManager) {
+                        auto allExtensions = extensionManager->getAllExtensions();
+                        
+                        // Only load configs if no extensions are loaded yet
+                        if (allExtensions.empty()) {
+                            log_info("[STARTUP] Loading extension configurations...");
+                            std::string extensionConfDir = "config";
+                            bool loadResult = extensionManager->loadExtensionConfigs(extensionConfDir);
+                            log_info("[STARTUP] Extension config loading result: %s", loadResult ? "SUCCESS" : "FAILED");
+                            
+                            // Refresh the extensions list
+                            allExtensions = extensionManager->getAllExtensions();
+                            log_info("[STARTUP] Found %zu extensions after loading configs", allExtensions.size());
+                        } else {
+                            log_info("[STARTUP] Extensions already loaded (%zu found), ensuring they are started", allExtensions.size());
+                        }
+                        
+                        // Start all extensions using ExtensionManager directly
+                        for (const auto& extInfo : allExtensions) {
+                            log_info("[STARTUP] Starting extension: %s", extInfo.name.c_str());
+                            bool started = extensionManager->startExtension(extInfo.name);
+                            if (!started) {
+                                log_warning("[STARTUP] Failed to start extension %s", extInfo.name.c_str());
+                            } else {
+                                log_info("[STARTUP] Successfully started extension: %s", extInfo.name.c_str());
+                            }
+                        }
+                        
+                        log_info("[STARTUP] Startup sequence completed - mainloop and extensions running");
+                    } else {
+                        log_warning("[STARTUP] Extension manager not available, only mainloop started");
+                    }
+                } else {
+                    log_error("[STARTUP] Mainloop failed to enter event loop within 5 seconds - extensions not started");
+                }
                 
             } else {
                 log_error("[STARTUP] Failed to start mainloop: %s", startResult.message.c_str());
@@ -935,6 +1168,300 @@ void RpcController::handleDeviceAddedEvent(const MavlinkShared::DeviceAddedEvent
         
     } catch (const std::exception& e) {
         log_error("[STARTUP] Failed to handle device added event: %s", e.what());
+    }
+}
+
+nlohmann::json RpcController::getRuntimeInfo() {
+    nlohmann::json runtimeInfo;
+    
+    try {
+        // Get current timestamp
+        auto now = std::chrono::system_clock::now();
+        auto time_t = std::chrono::system_clock::to_time_t(now);
+        runtimeInfo["timestamp"] = std::ctime(&time_t);
+        runtimeInfo["uptime_seconds"] = std::chrono::duration_cast<std::chrono::seconds>(
+            now - startupTime_).count();
+        
+        // Get all thread status
+        RpcResponse allThreadsResponse = operations_->getAllThreadStatus();
+        runtimeInfo["total_threads"] = 0;
+        runtimeInfo["running_threads"] = 0;
+        runtimeInfo["threads"] = nlohmann::json::array();
+        
+        if (allThreadsResponse.status == OperationStatus::SUCCESS && 
+            allThreadsResponse.threadStates.size() > 0) {
+            
+            for (const auto& pair : allThreadsResponse.threadStates) {
+                const std::string& threadName = pair.first;
+                const ThreadStateInfo& threadInfo = pair.second;
+                
+                nlohmann::json threadJson;
+                threadJson["name"] = threadName;
+                threadJson["thread_id"] = threadInfo.threadId;
+                threadJson["attachment_id"] = threadInfo.attachmentId;
+                threadJson["state"] = threadInfo.state;
+                threadJson["state_name"] = threadStateToString(static_cast<int>(threadInfo.state));
+                threadJson["is_alive"] = threadInfo.isAlive;
+                
+                // Determine thread nature/type
+                threadJson["nature"] = determineThreadNature(threadName);
+                threadJson["type"] = determineThreadType(threadName);
+                
+                // Add additional metadata based on thread type
+                if (threadName == "mainloop") {
+                    threadJson["description"] = "Main event loop for MAVLink message processing";
+                    threadJson["critical"] = true;
+                } else if (threadName.find("extension") != std::string::npos || 
+                          threadName.find("udp") != std::string::npos || 
+                          threadName.find("tcp") != std::string::npos) {
+                    threadJson["description"] = "Extension thread for protocol handling";
+                    threadJson["critical"] = false;
+                    
+                    // Try to get extension-specific info if available
+                    if (extensionManager_) {
+                        auto extInfo = extensionManager_->getExtensionInfo(threadName);
+                        if (!extInfo.name.empty()) {
+                            threadJson["extension_info"] = {
+                                {"config_file", extInfo.config.name},
+                                {"type", static_cast<int>(extInfo.config.type)},
+                                {"address", extInfo.config.address},
+                                {"port", extInfo.config.port},
+                                {"extension_point", extInfo.config.assigned_extension_point}
+                            };
+                        }
+                    }
+                } else if (threadName.find("http") != std::string::npos) {
+                    threadJson["description"] = "HTTP server thread for REST API";
+                    threadJson["critical"] = false;
+                } else if (threadName.find("stats") != std::string::npos) {
+                    threadJson["description"] = "Statistics collection thread";
+                    threadJson["critical"] = false;
+                } else {
+                    threadJson["description"] = "System thread";
+                    threadJson["critical"] = false;
+                }
+                
+                runtimeInfo["threads"].push_back(threadJson);
+                
+                // Update counters
+                runtimeInfo["total_threads"] = runtimeInfo["total_threads"].get<int>() + 1;
+                if (threadInfo.isAlive) {
+                    runtimeInfo["running_threads"] = runtimeInfo["running_threads"].get<int>() + 1;
+                }
+            }
+        }
+        
+        // Add system information
+        runtimeInfo["system"] = {
+            {"rpc_initialized", rpcInitialized_.load()},
+            {"discovery_triggered", discoveryTriggered_.load()},
+            {"mainloop_started", mainloopStarted_.load()},
+            {"client_id", rpcClientId_},
+            {"config_path", rpcConfigPath_}
+        };
+        
+        // Add extension information if available
+        if (extensionManager_) {
+            auto allExtensions = extensionManager_->getAllExtensions();
+            runtimeInfo["extensions"] = nlohmann::json::array();
+            
+            for (const auto& extInfo : allExtensions) {
+                nlohmann::json extJson;
+                extJson["name"] = extInfo.name;
+                extJson["type"] = static_cast<int>(extInfo.config.type);
+                extJson["config_file"] = extInfo.config.name;
+                extJson["address"] = extInfo.config.address;
+                extJson["port"] = extInfo.config.port;
+                extJson["extension_point"] = extInfo.config.assigned_extension_point;
+                extJson["loaded"] = true; // If it's in the list, it's loaded
+                extJson["thread_id"] = extInfo.threadId;
+                extJson["is_running"] = extInfo.isRunning;
+                
+                // Check if corresponding thread is running
+                bool threadRunning = false;
+                for (const auto& threadJson : runtimeInfo["threads"]) {
+                    if (threadJson["name"] == extInfo.name && threadJson["is_alive"]) {
+                        threadRunning = true;
+                        break;
+                    }
+                }
+                extJson["thread_running"] = threadRunning;
+                
+                runtimeInfo["extensions"].push_back(extJson);
+            }
+            
+            runtimeInfo["total_extensions"] = allExtensions.size();
+        } else {
+            runtimeInfo["extensions"] = nlohmann::json::array();
+            runtimeInfo["total_extensions"] = 0;
+        }
+        
+        // Add device discovery status
+        runtimeInfo["device_discovery"] = {
+            {"last_heartbeat", lastHeartbeatTime_.time_since_epoch().count()},
+            {"heartbeat_timeout_seconds", HEARTBEAT_TIMEOUT.count()},
+            {"heartbeat_active", 
+             (std::chrono::steady_clock::now() - lastHeartbeatTime_) < HEARTBEAT_TIMEOUT}
+        };
+        
+        runtimeInfo["status"] = "success";
+        runtimeInfo["message"] = "Runtime information retrieved successfully";
+        
+    } catch (const std::exception& e) {
+        runtimeInfo["status"] = "error";
+        runtimeInfo["message"] = std::string("Failed to get runtime info: ") + e.what();
+        log_error("Failed to get runtime info: %s", e.what());
+    }
+    
+    return runtimeInfo;
+}
+
+std::string RpcController::determineThreadNature(const std::string& threadName) {
+    if (threadName == "mainloop") {
+        return "core";
+    } else if (threadName.find("extension") != std::string::npos || 
+               threadName.find("udp") != std::string::npos || 
+               threadName.find("tcp") != std::string::npos ||
+               threadName.find("_ext_") != std::string::npos) {  // Extension naming pattern
+        return "extension";
+    } else if (threadName.find("http") != std::string::npos) {
+        return "service";
+    } else if (threadName.find("stats") != std::string::npos) {
+        return "monitoring";
+    } else {
+        return "system";
+    }
+}
+
+std::string RpcController::determineThreadType(const std::string& threadName) {
+    if (threadName == "mainloop") {
+        return "mainloop";
+    } else if (threadName.find("udp") != std::string::npos) {
+        return "udp_extension";
+    } else if (threadName.find("tcp") != std::string::npos) {
+        return "tcp_extension";
+    } else if (threadName.find("internal") != std::string::npos) {
+        return "internal_extension";
+    } else if (threadName.find("_ext_") != std::string::npos) {
+        return "extension";
+    } else if (threadName.find("http") != std::string::npos) {
+        return "http_server";
+    } else if (threadName.find("stats") != std::string::npos) {
+        return "statistics";
+    } else {
+        return "unknown";
+    }
+}
+
+std::string RpcController::threadStateToString(int state) {
+    switch (state) {
+        case 0: return "Stopped";
+        case 1: return "Running";
+        case 2: return "Paused";
+        case 3: return "Error";
+        case 4: return "Starting";
+        default: return "Unknown";
+    }
+}
+
+bool RpcController::updateRouterConfigWithDevice(const MavlinkShared::DeviceInfo& deviceInfo) {
+    try {
+        if (routerConfigPath_.empty()) {
+            log_error("[CONFIG] No router configuration path available");
+            return false;
+        }
+        
+        log_info("[CONFIG] Updating router configuration with device: %s", deviceInfo.devicePath.c_str());
+        log_info("[CONFIG] Using router configuration file: %s", routerConfigPath_.c_str());
+        
+        std::ifstream configFile(routerConfigPath_);
+        if (!configFile.is_open()) {
+            log_error("[CONFIG] Failed to open router configuration file: %s", routerConfigPath_.c_str());
+            return false;
+        }
+        
+        nlohmann::json configJson;
+        configFile >> configJson;
+        configFile.close();
+        
+        // Update or add the UART endpoint for the discovered device
+        bool deviceFound = false;
+        bool deviceUpdated = false;
+        
+        if (configJson.contains("uart_endpoints") && configJson["uart_endpoints"].is_array()) {
+            log_info("[CONFIG] Checking existing UART endpoints...");
+            
+            for (auto& endpoint : configJson["uart_endpoints"]) {
+                if (endpoint.contains("name") && endpoint["name"] == "flight_controller") {
+                    log_info("[CONFIG] Found flight_controller endpoint, updating device path from %s to %s", 
+                            endpoint.value("device", "unknown").c_str(), deviceInfo.devicePath.c_str());
+                    
+                    // CRITICAL: Preserve existing baudrate configuration, only update device path
+                    endpoint["device"] = deviceInfo.devicePath;
+                    deviceFound = true;
+                    deviceUpdated = true;
+                    break;
+                }
+            }
+            
+            if (!deviceFound) {
+                log_warning("[CONFIG] flight_controller endpoint not found, adding new endpoint");
+                // Add new UART endpoint with discovered device path and default baudrate
+                nlohmann::json newEndpoint;
+                newEndpoint["name"] = "flight_controller";
+                newEndpoint["device"] = deviceInfo.devicePath;
+                newEndpoint["baud"] = nlohmann::json::array({57600}); // Default baudrate
+                newEndpoint["flow_control"] = false;
+                
+                configJson["uart_endpoints"].push_back(newEndpoint);
+                deviceUpdated = true;
+            }
+        } else {
+            log_info("[CONFIG] No uart_endpoints array found, creating new one");
+            // Create uart_endpoints array with the discovered device
+            nlohmann::json newEndpoint;
+            newEndpoint["name"] = "flight_controller";
+            newEndpoint["device"] = deviceInfo.devicePath;
+            newEndpoint["baud"] = nlohmann::json::array({57600}); // Default baudrate
+            newEndpoint["flow_control"] = false;
+            
+            configJson["uart_endpoints"] = nlohmann::json::array({newEndpoint});
+            deviceUpdated = true;
+        }
+        
+        if (deviceUpdated) {
+            // Write updated config back to file
+            std::ofstream outFile(routerConfigPath_);
+            if (outFile.is_open()) {
+                outFile << configJson.dump(2);
+                outFile.close();
+                log_info("[CONFIG] Successfully updated router configuration file");
+                
+                // Log the updated configuration for verification
+                log_info("[CONFIG] Updated UART endpoints:");
+                if (configJson.contains("uart_endpoints")) {
+                    for (const auto& endpoint : configJson["uart_endpoints"]) {
+                        std::string device = endpoint.value("device", "unknown");
+                        std::string name = endpoint.value("name", "unnamed");
+                        auto baudArray = endpoint.value("baud", nlohmann::json::array());
+                        std::string baudStr = baudArray.empty() ? "unknown" : std::to_string(baudArray[0].get<int>());
+                        log_info("[CONFIG]   - %s: %s (baudrate: %s)", name.c_str(), device.c_str(), baudStr.c_str());
+                    }
+                }
+                
+                return true;
+            } else {
+                log_error("[CONFIG] Failed to write updated configuration to file: %s", routerConfigPath_.c_str());
+                return false;
+            }
+        } else {
+            log_info("[CONFIG] No configuration updates needed");
+            return true;
+        }
+        
+    } catch (const std::exception& e) {
+        log_error("[CONFIG] Error updating router configuration: %s", e.what());
+        return false;
     }
 }
 

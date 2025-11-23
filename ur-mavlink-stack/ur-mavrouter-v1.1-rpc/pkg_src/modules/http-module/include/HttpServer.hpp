@@ -161,6 +161,12 @@ public:
     void setRpcController(std::shared_ptr<void> rpcController);
 
     /**
+     * @brief Set router configuration path for device configuration updates
+     * @param routerConfigPath Path to the router configuration file
+     */
+    void setRouterConfigPath(const std::string& routerConfigPath);
+
+    /**
      * @brief Set extension manager for extension operations
      * @param extensionManager Shared pointer to extension manager
      */
@@ -174,6 +180,7 @@ private:
     mutable std::mutex mutex_;
     std::shared_ptr<void> rpcController_;
     std::shared_ptr<void> extensionManager_;
+    std::string routerConfigPath_;  // Path to router configuration file
 
     // MHD callback functions
     static MHD_Result accessHandlerCallback(void* cls, struct MHD_Connection* connection,

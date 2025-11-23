@@ -17,6 +17,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/ur-mavrouter.dir/src/dedup.cpp.o.d"
   "CMakeFiles/ur-mavrouter.dir/src/endpoint.cpp.o"
   "CMakeFiles/ur-mavrouter.dir/src/endpoint.cpp.o.d"
+  "CMakeFiles/ur-mavrouter.dir/src/endpoint_monitor.cpp.o"
+  "CMakeFiles/ur-mavrouter.dir/src/endpoint_monitor.cpp.o.d"
   "CMakeFiles/ur-mavrouter.dir/src/endpoint_stats.cpp.o"
   "CMakeFiles/ur-mavrouter.dir/src/endpoint_stats.cpp.o.d"
   "CMakeFiles/ur-mavrouter.dir/src/git_version.cpp.o"

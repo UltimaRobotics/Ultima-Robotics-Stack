@@ -794,8 +794,15 @@ int main(int argc, char *argv[])
         extensionManager.setGlobalConfig(&config);
 
         // Create RPC controller for thread management (independent of HTTP)
-        auto rpcController = std::make_shared<RpcMechanisms::RpcController>(threadManager);
+        std::string routerConfigPath = config.json_conf_file.empty() ? "" : config.json_conf_file;
+        auto rpcController = std::make_shared<RpcMechanisms::RpcController>(threadManager, routerConfigPath);
         log_info("main() - RPC controller created for thread management");
+        
+        if (!routerConfigPath.empty()) {
+            log_info("main() - RPC controller configured with router config: %s", routerConfigPath.c_str());
+        } else {
+            log_warning("main() - RPC controller created without router configuration path");
+        }
 
         // Initialize UR-RPC integration
         std::string rpcConfigPath = config.rpc_config_file.empty() ? "config/ur-mavrouter-rpc.json" : config.rpc_config_file;
@@ -804,6 +811,10 @@ int main(int argc, char *argv[])
         // Set extension manager for RPC controller before initialization
         rpcController->setExtensionManager(&extensionManager);
         log_info("main() - Extension manager attached to RPC controller");
+        
+        // Also set RPC controller reference in extension manager
+        extensionManager.setRpcController(rpcController.get());
+        log_info("main() - RPC controller attached to extension manager");
         
         if (rpcController->initializeRpcIntegration(rpcConfigPath, "ur-mavrouter")) {
             log_info("main() - UR-RPC integration initialized successfully");
@@ -1112,6 +1123,14 @@ int main(int argc, char *argv[])
                 httpServer->setRpcController(rpcController);
                 log_info("main() - RPC controller attached to HTTP server");
 
+                // Set router configuration path for HTTP server
+                if (!routerConfigPath.empty()) {
+                    httpServer->setRouterConfigPath(routerConfigPath);
+                    log_info("main() - Router configuration path attached to HTTP server: %s", routerConfigPath.c_str());
+                } else {
+                    log_warning("main() - No router configuration path available for HTTP server");
+                }
+
                 // Set extension manager for HTTP server
                 auto extensionManagerPtr = std::shared_ptr<MavlinkExtensions::ExtensionManager>(&extensionManager, [](MavlinkExtensions::ExtensionManager*){});
                 httpServer->setExtensionManager(extensionManagerPtr);
@@ -1163,6 +1182,37 @@ int main(int argc, char *argv[])
         log_info("main() - Registering mainloop restart callback (mainloop will not start automatically)");
         rpcController->registerRestartCallback("mainloop", [&config, &threadManager, &rpcController, &extensionManager]() -> unsigned int {
             log_info("Restart callback: Creating new mainloop thread");
+
+            // Reload configuration before starting mainloop to pick up any device path updates
+            try {
+                if (config.json_conf_file.empty()) {
+                    log_error("Restart callback: No router configuration file available in package config");
+                    log_warning("Restart callback: Using existing configuration");
+                } else {
+                    log_info("Restart callback: Reloading configuration from %s", config.json_conf_file.c_str());
+                    
+                    // Use the same JSON configuration loading mechanism as initial startup
+                    JsonConfig json_config;
+                    int ret = json_config.parse(config.json_conf_file);
+                    if (ret >= 0) {
+                        ret = json_config.extract_configuration(config);
+                        if (ret >= 0) {
+                            log_info("Restart callback: Configuration reloaded successfully");
+                            log_info("Restart callback: Reloaded config has %zu UART, %zu UDP, %zu TCP endpoints",
+                                    config.uart_configs.size(), config.udp_configs.size(), config.tcp_configs.size());
+                        } else {
+                            log_error("Restart callback: Failed to extract configuration from JSON (error code: %d)", ret);
+                            log_warning("Restart callback: Using existing configuration");
+                        }
+                    } else {
+                        log_error("Restart callback: Failed to parse JSON configuration file (error code: %d)", ret);
+                        log_warning("Restart callback: Using existing configuration");
+                    }
+                }
+            } catch (const std::exception& e) {
+                log_error("Restart callback: Failed to reload configuration: %s", e.what());
+                log_warning("Restart callback: Using existing configuration");
+            }
 
             // Create new mainloop thread
             auto mainloopFunc = [&config]() {

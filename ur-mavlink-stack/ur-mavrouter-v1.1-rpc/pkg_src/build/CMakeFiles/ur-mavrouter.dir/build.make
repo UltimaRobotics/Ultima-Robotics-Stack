@@ -139,10 +139,24 @@ CMakeFiles/ur-mavrouter.dir/src/endpoint_stats.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ur-mavrouter.dir/src/endpoint_stats.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/endpoint_stats.cpp -o CMakeFiles/ur-mavrouter.dir/src/endpoint_stats.cpp.s
 
+CMakeFiles/ur-mavrouter.dir/src/endpoint_monitor.cpp.o: CMakeFiles/ur-mavrouter.dir/flags.make
+CMakeFiles/ur-mavrouter.dir/src/endpoint_monitor.cpp.o: ../src/endpoint_monitor.cpp
+CMakeFiles/ur-mavrouter.dir/src/endpoint_monitor.cpp.o: CMakeFiles/ur-mavrouter.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/endpoint_monitor.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur-mavrouter.dir/src/endpoint_monitor.cpp.o -MF CMakeFiles/ur-mavrouter.dir/src/endpoint_monitor.cpp.o.d -o CMakeFiles/ur-mavrouter.dir/src/endpoint_monitor.cpp.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/endpoint_monitor.cpp
+
+CMakeFiles/ur-mavrouter.dir/src/endpoint_monitor.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ur-mavrouter.dir/src/endpoint_monitor.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/endpoint_monitor.cpp > CMakeFiles/ur-mavrouter.dir/src/endpoint_monitor.cpp.i
+
+CMakeFiles/ur-mavrouter.dir/src/endpoint_monitor.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ur-mavrouter.dir/src/endpoint_monitor.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/endpoint_monitor.cpp -o CMakeFiles/ur-mavrouter.dir/src/endpoint_monitor.cpp.s
+
 CMakeFiles/ur-mavrouter.dir/src/git_version.cpp.o: CMakeFiles/ur-mavrouter.dir/flags.make
 CMakeFiles/ur-mavrouter.dir/src/git_version.cpp.o: ../src/git_version.cpp
 CMakeFiles/ur-mavrouter.dir/src/git_version.cpp.o: CMakeFiles/ur-mavrouter.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/git_version.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/git_version.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur-mavrouter.dir/src/git_version.cpp.o -MF CMakeFiles/ur-mavrouter.dir/src/git_version.cpp.o.d -o CMakeFiles/ur-mavrouter.dir/src/git_version.cpp.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/git_version.cpp
 
 CMakeFiles/ur-mavrouter.dir/src/git_version.cpp.i: cmake_force
@@ -156,7 +170,7 @@ CMakeFiles/ur-mavrouter.dir/src/git_version.cpp.s: cmake_force
 CMakeFiles/ur-mavrouter.dir/src/logendpoint.cpp.o: CMakeFiles/ur-mavrouter.dir/flags.make
 CMakeFiles/ur-mavrouter.dir/src/logendpoint.cpp.o: ../src/logendpoint.cpp
 CMakeFiles/ur-mavrouter.dir/src/logendpoint.cpp.o: CMakeFiles/ur-mavrouter.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/logendpoint.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/logendpoint.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur-mavrouter.dir/src/logendpoint.cpp.o -MF CMakeFiles/ur-mavrouter.dir/src/logendpoint.cpp.o.d -o CMakeFiles/ur-mavrouter.dir/src/logendpoint.cpp.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/logendpoint.cpp
 
 CMakeFiles/ur-mavrouter.dir/src/logendpoint.cpp.i: cmake_force
@@ -170,7 +184,7 @@ CMakeFiles/ur-mavrouter.dir/src/logendpoint.cpp.s: cmake_force
 CMakeFiles/ur-mavrouter.dir/src/main.cpp.o: CMakeFiles/ur-mavrouter.dir/flags.make
 CMakeFiles/ur-mavrouter.dir/src/main.cpp.o: ../src/main.cpp
 CMakeFiles/ur-mavrouter.dir/src/main.cpp.o: CMakeFiles/ur-mavrouter.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/main.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur-mavrouter.dir/src/main.cpp.o -MF CMakeFiles/ur-mavrouter.dir/src/main.cpp.o.d -o CMakeFiles/ur-mavrouter.dir/src/main.cpp.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/main.cpp
 
 CMakeFiles/ur-mavrouter.dir/src/main.cpp.i: cmake_force
@@ -184,7 +198,7 @@ CMakeFiles/ur-mavrouter.dir/src/main.cpp.s: cmake_force
 CMakeFiles/ur-mavrouter.dir/src/mainloop.cpp.o: CMakeFiles/ur-mavrouter.dir/flags.make
 CMakeFiles/ur-mavrouter.dir/src/mainloop.cpp.o: ../src/mainloop.cpp
 CMakeFiles/ur-mavrouter.dir/src/mainloop.cpp.o: CMakeFiles/ur-mavrouter.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/mainloop.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/mainloop.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur-mavrouter.dir/src/mainloop.cpp.o -MF CMakeFiles/ur-mavrouter.dir/src/mainloop.cpp.o.d -o CMakeFiles/ur-mavrouter.dir/src/mainloop.cpp.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/mainloop.cpp
 
 CMakeFiles/ur-mavrouter.dir/src/mainloop.cpp.i: cmake_force
@@ -198,7 +212,7 @@ CMakeFiles/ur-mavrouter.dir/src/mainloop.cpp.s: cmake_force
 CMakeFiles/ur-mavrouter.dir/src/pollable.cpp.o: CMakeFiles/ur-mavrouter.dir/flags.make
 CMakeFiles/ur-mavrouter.dir/src/pollable.cpp.o: ../src/pollable.cpp
 CMakeFiles/ur-mavrouter.dir/src/pollable.cpp.o: CMakeFiles/ur-mavrouter.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/pollable.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/pollable.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur-mavrouter.dir/src/pollable.cpp.o -MF CMakeFiles/ur-mavrouter.dir/src/pollable.cpp.o.d -o CMakeFiles/ur-mavrouter.dir/src/pollable.cpp.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/pollable.cpp
 
 CMakeFiles/ur-mavrouter.dir/src/pollable.cpp.i: cmake_force
@@ -212,7 +226,7 @@ CMakeFiles/ur-mavrouter.dir/src/pollable.cpp.s: cmake_force
 CMakeFiles/ur-mavrouter.dir/src/timeout.cpp.o: CMakeFiles/ur-mavrouter.dir/flags.make
 CMakeFiles/ur-mavrouter.dir/src/timeout.cpp.o: ../src/timeout.cpp
 CMakeFiles/ur-mavrouter.dir/src/timeout.cpp.o: CMakeFiles/ur-mavrouter.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/timeout.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/timeout.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur-mavrouter.dir/src/timeout.cpp.o -MF CMakeFiles/ur-mavrouter.dir/src/timeout.cpp.o.d -o CMakeFiles/ur-mavrouter.dir/src/timeout.cpp.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/timeout.cpp
 
 CMakeFiles/ur-mavrouter.dir/src/timeout.cpp.i: cmake_force
@@ -226,7 +240,7 @@ CMakeFiles/ur-mavrouter.dir/src/timeout.cpp.s: cmake_force
 CMakeFiles/ur-mavrouter.dir/src/ulog.cpp.o: CMakeFiles/ur-mavrouter.dir/flags.make
 CMakeFiles/ur-mavrouter.dir/src/ulog.cpp.o: ../src/ulog.cpp
 CMakeFiles/ur-mavrouter.dir/src/ulog.cpp.o: CMakeFiles/ur-mavrouter.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/ulog.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/ulog.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur-mavrouter.dir/src/ulog.cpp.o -MF CMakeFiles/ur-mavrouter.dir/src/ulog.cpp.o.d -o CMakeFiles/ur-mavrouter.dir/src/ulog.cpp.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/ulog.cpp
 
 CMakeFiles/ur-mavrouter.dir/src/ulog.cpp.i: cmake_force
@@ -240,7 +254,7 @@ CMakeFiles/ur-mavrouter.dir/src/ulog.cpp.s: cmake_force
 CMakeFiles/ur-mavrouter.dir/src/tlog.cpp.o: CMakeFiles/ur-mavrouter.dir/flags.make
 CMakeFiles/ur-mavrouter.dir/src/tlog.cpp.o: ../src/tlog.cpp
 CMakeFiles/ur-mavrouter.dir/src/tlog.cpp.o: CMakeFiles/ur-mavrouter.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/tlog.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/tlog.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur-mavrouter.dir/src/tlog.cpp.o -MF CMakeFiles/ur-mavrouter.dir/src/tlog.cpp.o.d -o CMakeFiles/ur-mavrouter.dir/src/tlog.cpp.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/tlog.cpp
 
 CMakeFiles/ur-mavrouter.dir/src/tlog.cpp.i: cmake_force
@@ -254,7 +268,7 @@ CMakeFiles/ur-mavrouter.dir/src/tlog.cpp.s: cmake_force
 CMakeFiles/ur-mavrouter.dir/src/common/conf_file.cpp.o: CMakeFiles/ur-mavrouter.dir/flags.make
 CMakeFiles/ur-mavrouter.dir/src/common/conf_file.cpp.o: ../src/common/conf_file.cpp
 CMakeFiles/ur-mavrouter.dir/src/common/conf_file.cpp.o: CMakeFiles/ur-mavrouter.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/common/conf_file.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/common/conf_file.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur-mavrouter.dir/src/common/conf_file.cpp.o -MF CMakeFiles/ur-mavrouter.dir/src/common/conf_file.cpp.o.d -o CMakeFiles/ur-mavrouter.dir/src/common/conf_file.cpp.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/common/conf_file.cpp
 
 CMakeFiles/ur-mavrouter.dir/src/common/conf_file.cpp.i: cmake_force
@@ -268,7 +282,7 @@ CMakeFiles/ur-mavrouter.dir/src/common/conf_file.cpp.s: cmake_force
 CMakeFiles/ur-mavrouter.dir/src/common/json_config.cpp.o: CMakeFiles/ur-mavrouter.dir/flags.make
 CMakeFiles/ur-mavrouter.dir/src/common/json_config.cpp.o: ../src/common/json_config.cpp
 CMakeFiles/ur-mavrouter.dir/src/common/json_config.cpp.o: CMakeFiles/ur-mavrouter.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/common/json_config.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/common/json_config.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur-mavrouter.dir/src/common/json_config.cpp.o -MF CMakeFiles/ur-mavrouter.dir/src/common/json_config.cpp.o.d -o CMakeFiles/ur-mavrouter.dir/src/common/json_config.cpp.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/common/json_config.cpp
 
 CMakeFiles/ur-mavrouter.dir/src/common/json_config.cpp.i: cmake_force
@@ -282,7 +296,7 @@ CMakeFiles/ur-mavrouter.dir/src/common/json_config.cpp.s: cmake_force
 CMakeFiles/ur-mavrouter.dir/src/common/log.cpp.o: CMakeFiles/ur-mavrouter.dir/flags.make
 CMakeFiles/ur-mavrouter.dir/src/common/log.cpp.o: ../src/common/log.cpp
 CMakeFiles/ur-mavrouter.dir/src/common/log.cpp.o: CMakeFiles/ur-mavrouter.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/common/log.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/common/log.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur-mavrouter.dir/src/common/log.cpp.o -MF CMakeFiles/ur-mavrouter.dir/src/common/log.cpp.o.d -o CMakeFiles/ur-mavrouter.dir/src/common/log.cpp.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/common/log.cpp
 
 CMakeFiles/ur-mavrouter.dir/src/common/log.cpp.i: cmake_force
@@ -296,7 +310,7 @@ CMakeFiles/ur-mavrouter.dir/src/common/log.cpp.s: cmake_force
 CMakeFiles/ur-mavrouter.dir/src/common/util.cpp.o: CMakeFiles/ur-mavrouter.dir/flags.make
 CMakeFiles/ur-mavrouter.dir/src/common/util.cpp.o: ../src/common/util.cpp
 CMakeFiles/ur-mavrouter.dir/src/common/util.cpp.o: CMakeFiles/ur-mavrouter.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/common/util.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/common/util.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur-mavrouter.dir/src/common/util.cpp.o -MF CMakeFiles/ur-mavrouter.dir/src/common/util.cpp.o.d -o CMakeFiles/ur-mavrouter.dir/src/common/util.cpp.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/common/util.cpp
 
 CMakeFiles/ur-mavrouter.dir/src/common/util.cpp.i: cmake_force
@@ -310,7 +324,7 @@ CMakeFiles/ur-mavrouter.dir/src/common/util.cpp.s: cmake_force
 CMakeFiles/ur-mavrouter.dir/src/common/xtermios.cpp.o: CMakeFiles/ur-mavrouter.dir/flags.make
 CMakeFiles/ur-mavrouter.dir/src/common/xtermios.cpp.o: ../src/common/xtermios.cpp
 CMakeFiles/ur-mavrouter.dir/src/common/xtermios.cpp.o: CMakeFiles/ur-mavrouter.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/common/xtermios.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/common/xtermios.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur-mavrouter.dir/src/common/xtermios.cpp.o -MF CMakeFiles/ur-mavrouter.dir/src/common/xtermios.cpp.o.d -o CMakeFiles/ur-mavrouter.dir/src/common/xtermios.cpp.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/common/xtermios.cpp
 
 CMakeFiles/ur-mavrouter.dir/src/common/xtermios.cpp.i: cmake_force
@@ -324,7 +338,7 @@ CMakeFiles/ur-mavrouter.dir/src/common/xtermios.cpp.s: cmake_force
 CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcClient.cpp.o: CMakeFiles/ur-mavrouter.dir/flags.make
 CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcClient.cpp.o: ../src/rpc-mechanisms/RpcClient.cpp
 CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcClient.cpp.o: CMakeFiles/ur-mavrouter.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcClient.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcClient.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcClient.cpp.o -MF CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcClient.cpp.o.d -o CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcClient.cpp.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/RpcClient.cpp
 
 CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcClient.cpp.i: cmake_force
@@ -338,7 +352,7 @@ CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcClient.cpp.s: cmake_force
 CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcOperations.cpp.o: CMakeFiles/ur-mavrouter.dir/flags.make
 CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcOperations.cpp.o: ../src/rpc-mechanisms/RpcOperations.cpp
 CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcOperations.cpp.o: CMakeFiles/ur-mavrouter.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcOperations.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcOperations.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcOperations.cpp.o -MF CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcOperations.cpp.o.d -o CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcOperations.cpp.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/RpcOperations.cpp
 
 CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcOperations.cpp.i: cmake_force
@@ -352,7 +366,7 @@ CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcOperations.cpp.s: cmake_force
 CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcClientInterfaceNew.cpp.o: CMakeFiles/ur-mavrouter.dir/flags.make
 CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcClientInterfaceNew.cpp.o: ../src/rpc-mechanisms/RpcClientInterfaceNew.cpp
 CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcClientInterfaceNew.cpp.o: CMakeFiles/ur-mavrouter.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcClientInterfaceNew.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcClientInterfaceNew.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcClientInterfaceNew.cpp.o -MF CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcClientInterfaceNew.cpp.o.d -o CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcClientInterfaceNew.cpp.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/RpcClientInterfaceNew.cpp
 
 CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcClientInterfaceNew.cpp.i: cmake_force
@@ -366,7 +380,7 @@ CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcClientInterfaceNew.cpp.s: cmak
 CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcControllerNew.cpp.o: CMakeFiles/ur-mavrouter.dir/flags.make
 CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcControllerNew.cpp.o: ../src/rpc-mechanisms/RpcControllerNew.cpp
 CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcControllerNew.cpp.o: CMakeFiles/ur-mavrouter.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcControllerNew.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcControllerNew.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcControllerNew.cpp.o -MF CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcControllerNew.cpp.o.d -o CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcControllerNew.cpp.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/RpcControllerNew.cpp
 
 CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcControllerNew.cpp.i: cmake_force
@@ -380,7 +394,7 @@ CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcControllerNew.cpp.s: cmake_for
 CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/DeviceDiscoveryCronJob.cpp.o: CMakeFiles/ur-mavrouter.dir/flags.make
 CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/DeviceDiscoveryCronJob.cpp.o: ../src/rpc-mechanisms/DeviceDiscoveryCronJob.cpp
 CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/DeviceDiscoveryCronJob.cpp.o: CMakeFiles/ur-mavrouter.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/DeviceDiscoveryCronJob.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/DeviceDiscoveryCronJob.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/DeviceDiscoveryCronJob.cpp.o -MF CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/DeviceDiscoveryCronJob.cpp.o.d -o CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/DeviceDiscoveryCronJob.cpp.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/DeviceDiscoveryCronJob.cpp
 
 CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/DeviceDiscoveryCronJob.cpp.i: cmake_force
@@ -394,7 +408,7 @@ CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/DeviceDiscoveryCronJob.cpp.s: cma
 CMakeFiles/ur-mavrouter.dir/src/mavlink-extensions/ExtensionManager.cpp.o: CMakeFiles/ur-mavrouter.dir/flags.make
 CMakeFiles/ur-mavrouter.dir/src/mavlink-extensions/ExtensionManager.cpp.o: ../src/mavlink-extensions/ExtensionManager.cpp
 CMakeFiles/ur-mavrouter.dir/src/mavlink-extensions/ExtensionManager.cpp.o: CMakeFiles/ur-mavrouter.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/mavlink-extensions/ExtensionManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/ur-mavrouter.dir/src/mavlink-extensions/ExtensionManager.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur-mavrouter.dir/src/mavlink-extensions/ExtensionManager.cpp.o -MF CMakeFiles/ur-mavrouter.dir/src/mavlink-extensions/ExtensionManager.cpp.o.d -o CMakeFiles/ur-mavrouter.dir/src/mavlink-extensions/ExtensionManager.cpp.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/mavlink-extensions/ExtensionManager.cpp
 
 CMakeFiles/ur-mavrouter.dir/src/mavlink-extensions/ExtensionManager.cpp.i: cmake_force
@@ -412,6 +426,7 @@ ur__mavrouter_OBJECTS = \
 "CMakeFiles/ur-mavrouter.dir/src/dedup.cpp.o" \
 "CMakeFiles/ur-mavrouter.dir/src/endpoint.cpp.o" \
 "CMakeFiles/ur-mavrouter.dir/src/endpoint_stats.cpp.o" \
+"CMakeFiles/ur-mavrouter.dir/src/endpoint_monitor.cpp.o" \
 "CMakeFiles/ur-mavrouter.dir/src/git_version.cpp.o" \
 "CMakeFiles/ur-mavrouter.dir/src/logendpoint.cpp.o" \
 "CMakeFiles/ur-mavrouter.dir/src/main.cpp.o" \
@@ -440,6 +455,7 @@ ur-mavrouter: CMakeFiles/ur-mavrouter.dir/src/binlog.cpp.o
 ur-mavrouter: CMakeFiles/ur-mavrouter.dir/src/dedup.cpp.o
 ur-mavrouter: CMakeFiles/ur-mavrouter.dir/src/endpoint.cpp.o
 ur-mavrouter: CMakeFiles/ur-mavrouter.dir/src/endpoint_stats.cpp.o
+ur-mavrouter: CMakeFiles/ur-mavrouter.dir/src/endpoint_monitor.cpp.o
 ur-mavrouter: CMakeFiles/ur-mavrouter.dir/src/git_version.cpp.o
 ur-mavrouter: CMakeFiles/ur-mavrouter.dir/src/logendpoint.cpp.o
 ur-mavrouter: CMakeFiles/ur-mavrouter.dir/src/main.cpp.o
@@ -473,7 +489,7 @@ ur-mavrouter: /usr/lib/x86_64-linux-gnu/libssl.so
 ur-mavrouter: /usr/lib/x86_64-linux-gnu/libcrypto.so
 ur-mavrouter: ur-rpc-template/deps/ur-logger-api/libur-logger-api.a
 ur-mavrouter: CMakeFiles/ur-mavrouter.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Linking CXX executable ur-mavrouter"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Linking CXX executable ur-mavrouter"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ur-mavrouter.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

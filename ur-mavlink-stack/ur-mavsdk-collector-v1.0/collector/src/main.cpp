@@ -63,13 +63,14 @@ void printUsage(const char* program_name) {
     std::cout << "Usage: " << program_name << " [options]" << std::endl;
     std::cout << "Options:" << std::endl;
     std::cout << "  -c, --config <file>    Configuration JSON file (required)" << std::endl;
+    std::cout << "  -r, --rpc_config <file> RPC configuration JSON file (required)" << std::endl;
     std::cout << "  -h, --help             Show this help message" << std::endl;
     std::cout << "  -v, --verbose          Enable verbose output" << std::endl;
     std::cout << "  -j, --json             Output in JSON format (default: pretty format)" << std::endl;
     std::cout << std::endl;
     std::cout << "Note: Refresh rate is fixed at " << DATA_REFRESH_INTERVAL_MS << "ms" << std::endl;
     std::cout << "Example:" << std::endl;
-    std::cout << "  " << program_name << " -c config.json" << std::endl;
+    std::cout << "  " << program_name << " -c config.json -r rpc_config.json" << std::endl;
 }
 
 void printPrettyOutput(const FlightCollector::FlightDataCollection& data) {
@@ -140,6 +141,7 @@ void printPrettyOutput(const FlightCollector::FlightDataCollection& data) {
 
 int main(int argc, char* argv[]) {
     std::string config_file;
+    std::string rpc_config_file;
     bool verbose = false;
     bool json_output = false;
     
@@ -155,6 +157,13 @@ int main(int argc, char* argv[]) {
                 config_file = argv[++i];
             } else {
                 std::cerr << "Error: --config requires a filename" << std::endl;
+                return 1;
+            }
+        } else if (arg == "-r" || arg == "--rpc_config") {
+            if (i + 1 < argc) {
+                rpc_config_file = argv[++i];
+            } else {
+                std::cerr << "Error: --rpc_config requires a filename" << std::endl;
                 return 1;
             }
         } else if (arg == "-v" || arg == "--verbose") {
@@ -176,6 +185,12 @@ int main(int argc, char* argv[]) {
     
     if (config_file.empty()) {
         std::cerr << "Error: Configuration file is required" << std::endl;
+        printUsage(argv[0]);
+        return 1;
+    }
+    
+    if (rpc_config_file.empty()) {
+        std::cerr << "Error: RPC configuration file is required" << std::endl;
         printUsage(argv[0]);
         return 1;
     }
@@ -215,6 +230,20 @@ int main(int argc, char* argv[]) {
         if (!collector.initialize(config)) {
             std::cerr << "Failed to initialize collector" << std::endl;
             return 1;
+        }
+        
+        // Initialize RPC client
+        if (verbose) {
+            std::cout << "Initializing RPC client with config: " << rpc_config_file << std::endl;
+        }
+        
+        if (!collector.initializeRpc(rpc_config_file)) {
+            std::cerr << "Failed to initialize RPC client" << std::endl;
+            return 1;
+        }
+        
+        if (verbose) {
+            std::cout << "RPC client initialized successfully" << std::endl;
         }
         
         // Setup connection callback

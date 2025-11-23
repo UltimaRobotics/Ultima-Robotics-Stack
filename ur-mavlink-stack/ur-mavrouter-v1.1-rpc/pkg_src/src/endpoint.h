@@ -182,6 +182,7 @@ public:
         uint16_t sys_comp_id = ((sysid & 0xff) << 8) | (compid & 0xff);
         return has_sys_comp_id(sys_comp_id);
     }
+    bool has_any_sys_comp_id() const;
 
     AcceptState accept_msg(const struct buffer *pbuf) const;
 

@@ -4,6 +4,7 @@
 #include <nlohmann/json.hpp>
 #include <ctime>
 #include <cstdlib>
+#include <thread>
 
 using json = nlohmann::json;
 
@@ -86,8 +87,14 @@ void DeviceDiscoveryCronJob::handleHeartbeatMessage(const std::string& /*topic*/
         return;
     }
 
+    // After first successful discovery, only allow periodic discoveries (every 5 minutes)
+    if (firstJobCompleted_.load()) {
+        log_debug("[DISCOVERY_CRON] Ignoring heartbeat - first discovery completed, relying on periodic scheduling");
+        return;
+    }
+
     try {
-        log_info("[DISCOVERY_CRON] Heartbeat received from ur-mavdiscovery, starting device discovery");
+        log_info("[DISCOVERY_CRON] Heartbeat received from ur-mavdiscovery, starting first-time device discovery");
 
         // Start discovery in a separate thread
         threadManager_->createThread([this]() {
@@ -290,8 +297,8 @@ void DeviceDiscoveryCronJob::performDeviceDiscovery() {
         
         // Mark first job as completed
         if (!firstJobCompleted_.exchange(true)) {
-            log_info("[DISCOVERY_CRON] First device discovery job completed successfully");
-            log_info("[DISCOVERY_CRON] Switching to periodic scheduling (every 5 minutes)");
+            log_info("[DISCOVERY_CRON] First device discovery job completed successfully - one-time startup operation complete");
+            log_info("[DISCOVERY_CRON] Future heartbeats will be ignored (startup-only mode)");
         }
         
     } catch (const std::exception& e) {
@@ -418,6 +425,11 @@ void DeviceDiscoveryCronJob::setRpcRequestCallback(std::function<std::string(con
     log_info("[DISCOVERY_CRON] RPC request callback set");
 }
 
+void DeviceDiscoveryCronJob::setMainloopStartupCallback(std::function<std::string(const MavlinkShared::DeviceInfo&)> callback) {
+    mainloopStartupCallback_ = callback;
+    log_info("[DISCOVERY_CRON] Mainloop startup callback set with device info support");
+}
+
 bool DeviceDiscoveryCronJob::waitForResponse(const std::string& transactionId, std::chrono::milliseconds timeout) {
     std::unique_lock<std::mutex> lock(responseMutex_);
     
@@ -478,14 +490,14 @@ void DeviceDiscoveryCronJob::processDiscoveryResponse(const nlohmann::json& resp
                 log_error("[DISCOVERY_CRON] Failed to process device entry: %s", e.what());
             }
         }
-        
+
         if (!devices.empty()) {
             log_info("[DISCOVERY_CRON] Found %zu devices, processing...", devices.size());
             processDiscoveredDevices(devices);
         } else {
             log_info("[DISCOVERY_CRON] No devices found in discovery response");
         }
-        
+
     } catch (const std::exception& e) {
         log_error("[DISCOVERY_CRON] Error processing discovery response: %s", e.what());
     }
@@ -528,31 +540,18 @@ void DeviceDiscoveryCronJob::stopPeriodicScheduling() {
 }
 
 void DeviceDiscoveryCronJob::periodicSchedulingThread() {
-    log_info("[DISCOVERY_CRON] Periodic scheduling thread started");
+    log_info("[DISCOVERY_CRON] Periodic scheduling thread started (one-time startup mode)");
     
     while (periodicSchedulingRunning_.load() && running_.load()) {
-        // Wait for first job to complete or timeout
+        // Wait for first job to complete
         std::unique_lock<std::mutex> lock(periodicSchedulingMutex_);
         
         if (firstJobCompleted_.load()) {
-            // First job completed, run every 5 minutes
-            if (periodicSchedulingCondition_.wait_for(lock, std::chrono::minutes(PERIODIC_INTERVAL_MINUTES), [this]() {
-                return !periodicSchedulingRunning_.load() || !running_.load();
-            })) {
-                break; // Stop requested
-            }
-            
-            if (periodicSchedulingRunning_.load() && running_.load()) {
-                log_info("[DISCOVERY_CRON] Periodic device discovery triggered");
-                
-                // Run device discovery in separate thread
-                threadManager_->createThread([this]() {
-                    this->performDeviceDiscovery();
-                });
-            }
+            log_info("[DISCOVERY_CRON] First discovery completed - stopping periodic scheduling (one-time startup mode)");
+            break; // Exit after first successful discovery
         } else {
-            // Wait for first job to complete
-            if (periodicSchedulingCondition_.wait_for(lock, std::chrono::seconds(30), [this]() {
+            // Wait for first job to complete or timeout (reduced from 30s to 5s for faster responsiveness)
+            if (periodicSchedulingCondition_.wait_for(lock, std::chrono::seconds(5), [this]() {
                 return !periodicSchedulingRunning_.load() || !running_.load() || firstJobCompleted_.load();
             })) {
                 break; // Stop requested
@@ -560,7 +559,7 @@ void DeviceDiscoveryCronJob::periodicSchedulingThread() {
         }
     }
     
-    log_info("[DISCOVERY_CRON] Periodic scheduling thread exiting");
+    log_info("[DISCOVERY_CRON] Periodic scheduling thread exiting (one-time startup mode completed)");
 }
 
 void DeviceDiscoveryCronJob::processDiscoveredDevices(const std::vector<MavlinkShared::DeviceInfo>& devices) {
@@ -571,11 +570,26 @@ void DeviceDiscoveryCronJob::processDiscoveredDevices(const std::vector<MavlinkS
             discoveredDevices_ = devices;
         }
         
-        // Trigger device added events for each device
+        // Trigger device added events for each device and start mainloop
         for (const auto& device : devices) {
-            MavlinkShared::DeviceAddedEvent deviceEvent(device);
-            // This would be handled by the main application
             log_info("[DISCOVERY_CRON] Triggering device added event for: %s", device.devicePath.c_str());
+            
+            // Start mainloop directly using callback with device info
+            if (mainloopStartupCallback_) {
+                log_info("[DISCOVERY_CRON] Starting mainloop for device: %s (baudrate: %d)", 
+                        device.devicePath.c_str(), device.baudrate);
+                
+                // Call mainloop startup with device information
+                std::string response = mainloopStartupCallback_(device);
+                
+                if (!response.empty()) {
+                    log_info("[DISCOVERY_CRON] Mainloop started successfully for device: %s", device.devicePath.c_str());
+                } else {
+                    log_error("[DISCOVERY_CRON] Failed to start mainloop for device: %s", device.devicePath.c_str());
+                }
+            } else {
+                log_error("[DISCOVERY_CRON] Mainloop startup callback not available for device: %s", device.devicePath.c_str());
+            }
         }
         
     } catch (const std::exception& e) {

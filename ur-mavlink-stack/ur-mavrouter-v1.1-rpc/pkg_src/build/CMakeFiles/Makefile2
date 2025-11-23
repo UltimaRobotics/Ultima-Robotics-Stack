@@ -231,12 +231,12 @@ CMakeFiles/ur-mavrouter.dir/all: ur-rpc-template/pkg_src/api/wrappers/cpp/CMakeF
 CMakeFiles/ur-mavrouter.dir/all: ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-mavrouter.dir/build.make CMakeFiles/ur-mavrouter.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-mavrouter.dir/build.make CMakeFiles/ur-mavrouter.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76 "Built target ur-mavrouter"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77 "Built target ur-mavrouter"
 .PHONY : CMakeFiles/ur-mavrouter.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/ur-mavrouter.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles 82
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles 83
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/ur-mavrouter.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles 0
 .PHONY : CMakeFiles/ur-mavrouter.dir/rule
@@ -311,7 +311,7 @@ ur-rpc-template/CMakeFiles/ur-rpc-template.dir/all: ur-rpc-template/deps/mqtt-cl
 ur-rpc-template/CMakeFiles/ur-rpc-template.dir/all: ur-rpc-template/deps/ur-logger-api/CMakeFiles/ur-logger-api-static.dir/all
 	$(MAKE) $(MAKESILENT) -f ur-rpc-template/CMakeFiles/ur-rpc-template.dir/build.make ur-rpc-template/CMakeFiles/ur-rpc-template.dir/depend
 	$(MAKE) $(MAKESILENT) -f ur-rpc-template/CMakeFiles/ur-rpc-template.dir/build.make ur-rpc-template/CMakeFiles/ur-rpc-template.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=80,81,82 "Built target ur-rpc-template"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=81,82,83 "Built target ur-rpc-template"
 .PHONY : ur-rpc-template/CMakeFiles/ur-rpc-template.dir/all
 
 # Build rule for subdir invocation for target.
@@ -444,7 +444,7 @@ ur-rpc-template/pkg_src/api/wrappers/cpp/CMakeFiles/ur-rpc-dcpp.dir/all: ur-rpc-
 ur-rpc-template/pkg_src/api/wrappers/cpp/CMakeFiles/ur-rpc-dcpp.dir/all: ur-rpc-template/deps/ur-logger-api/CMakeFiles/ur-logger-api-static.dir/all
 	$(MAKE) $(MAKESILENT) -f ur-rpc-template/pkg_src/api/wrappers/cpp/CMakeFiles/ur-rpc-dcpp.dir/build.make ur-rpc-template/pkg_src/api/wrappers/cpp/CMakeFiles/ur-rpc-dcpp.dir/depend
 	$(MAKE) $(MAKESILENT) -f ur-rpc-template/pkg_src/api/wrappers/cpp/CMakeFiles/ur-rpc-dcpp.dir/build.make ur-rpc-template/pkg_src/api/wrappers/cpp/CMakeFiles/ur-rpc-dcpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=77,78,79 "Built target ur-rpc-dcpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/CMakeFiles --progress-num=78,79,80 "Built target ur-rpc-dcpp"
 .PHONY : ur-rpc-template/pkg_src/api/wrappers/cpp/CMakeFiles/ur-rpc-dcpp.dir/all
 
 # Build rule for subdir invocation for target.

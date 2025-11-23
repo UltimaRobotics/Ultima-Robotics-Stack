@@ -340,6 +340,30 @@ src/ConfigLoader.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-mavdiscovery.dir/build.make CMakeFiles/ur-mavdiscovery.dir/src/ConfigLoader.cpp.s
 .PHONY : src/ConfigLoader.cpp.s
 
+src/DeviceDiscoveryCronJob.o: src/DeviceDiscoveryCronJob.cpp.o
+.PHONY : src/DeviceDiscoveryCronJob.o
+
+# target to build an object file
+src/DeviceDiscoveryCronJob.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-mavdiscovery.dir/build.make CMakeFiles/ur-mavdiscovery.dir/src/DeviceDiscoveryCronJob.cpp.o
+.PHONY : src/DeviceDiscoveryCronJob.cpp.o
+
+src/DeviceDiscoveryCronJob.i: src/DeviceDiscoveryCronJob.cpp.i
+.PHONY : src/DeviceDiscoveryCronJob.i
+
+# target to preprocess a source file
+src/DeviceDiscoveryCronJob.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-mavdiscovery.dir/build.make CMakeFiles/ur-mavdiscovery.dir/src/DeviceDiscoveryCronJob.cpp.i
+.PHONY : src/DeviceDiscoveryCronJob.cpp.i
+
+src/DeviceDiscoveryCronJob.s: src/DeviceDiscoveryCronJob.cpp.s
+.PHONY : src/DeviceDiscoveryCronJob.s
+
+# target to generate assembly for a file
+src/DeviceDiscoveryCronJob.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-mavdiscovery.dir/build.make CMakeFiles/ur-mavdiscovery.dir/src/DeviceDiscoveryCronJob.cpp.s
+.PHONY : src/DeviceDiscoveryCronJob.cpp.s
+
 src/DeviceManager.o: src/DeviceManager.cpp.o
 .PHONY : src/DeviceManager.o
 
@@ -556,6 +580,30 @@ src/SerialPort.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-mavdiscovery.dir/build.make CMakeFiles/ur-mavdiscovery.dir/src/SerialPort.cpp.s
 .PHONY : src/SerialPort.cpp.s
 
+src/USBDeviceTracker.o: src/USBDeviceTracker.cpp.o
+.PHONY : src/USBDeviceTracker.o
+
+# target to build an object file
+src/USBDeviceTracker.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-mavdiscovery.dir/build.make CMakeFiles/ur-mavdiscovery.dir/src/USBDeviceTracker.cpp.o
+.PHONY : src/USBDeviceTracker.cpp.o
+
+src/USBDeviceTracker.i: src/USBDeviceTracker.cpp.i
+.PHONY : src/USBDeviceTracker.i
+
+# target to preprocess a source file
+src/USBDeviceTracker.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-mavdiscovery.dir/build.make CMakeFiles/ur-mavdiscovery.dir/src/USBDeviceTracker.cpp.i
+.PHONY : src/USBDeviceTracker.cpp.i
+
+src/USBDeviceTracker.s: src/USBDeviceTracker.cpp.s
+.PHONY : src/USBDeviceTracker.s
+
+# target to generate assembly for a file
+src/USBDeviceTracker.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-mavdiscovery.dir/build.make CMakeFiles/ur-mavdiscovery.dir/src/USBDeviceTracker.cpp.s
+.PHONY : src/USBDeviceTracker.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -608,6 +656,9 @@ help:
 	@echo "... src/ConfigLoader.o"
 	@echo "... src/ConfigLoader.i"
 	@echo "... src/ConfigLoader.s"
+	@echo "... src/DeviceDiscoveryCronJob.o"
+	@echo "... src/DeviceDiscoveryCronJob.i"
+	@echo "... src/DeviceDiscoveryCronJob.s"
 	@echo "... src/DeviceManager.o"
 	@echo "... src/DeviceManager.i"
 	@echo "... src/DeviceManager.s"
@@ -635,6 +686,9 @@ help:
 	@echo "... src/SerialPort.o"
 	@echo "... src/SerialPort.i"
 	@echo "... src/SerialPort.s"
+	@echo "... src/USBDeviceTracker.o"
+	@echo "... src/USBDeviceTracker.i"
+	@echo "... src/USBDeviceTracker.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

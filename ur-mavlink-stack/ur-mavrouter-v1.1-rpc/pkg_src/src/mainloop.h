@@ -20,6 +20,12 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <unordered_map>
+#include <atomic>
+#include <thread>
+#include <condition_variable>
+#include <mutex>
+#include <functional>
 
 #include "common/log.h"
 
@@ -69,6 +75,24 @@ public:
     bool dedup_check_msg(const buffer *buf);
 
     void print_statistics();
+
+    // Endpoint monitoring methods
+    void start_endpoint_monitoring();
+    void stop_endpoint_monitoring();
+    bool is_endpoint_monitoring_active() const;
+
+    /**
+     * @brief Check if mainloop is in event loop (ready for extensions)
+     * @return true if mainloop is processing events
+     */
+    static bool is_in_event_loop();
+
+    /**
+     * @brief Wait for mainloop to enter event loop
+     * @param timeout_ms Maximum time to wait in milliseconds
+     * @return true if mainloop entered event loop, false on timeout
+     */
+    static bool wait_for_event_loop(int timeout_ms = 5000);
 
     int epollfd = -1;
     bool should_process_tcp_hangups = false;
@@ -155,6 +179,11 @@ private:
     // FD tracking for extension threads
     std::map<int, std::string> _tracked_fds;
     std::mutex _tracked_fds_mutex;
+
+    // Event loop ready flag for extension startup coordination
+    static std::atomic<bool> _mainloop_in_event_loop;
+    static std::mutex _mainloop_ready_mutex;
+    static std::condition_variable _mainloop_ready_cv;
 
     Mainloop() = default;
     Mainloop(const Mainloop &) = delete;

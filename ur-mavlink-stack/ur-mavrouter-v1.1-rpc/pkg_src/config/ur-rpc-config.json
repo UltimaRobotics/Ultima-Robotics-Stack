@@ -17,7 +17,8 @@
   "json_added_pubs": {
     "topics": [
       "direct_messaging/ur-mavrouter/responses",
-      "direct_messaging/ur-mavdiscovery/requests"
+      "direct_messaging/ur-mavdiscovery/requests",
+      "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification"
     ]
   },
   "json_added_subs": {

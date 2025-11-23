@@ -32,9 +32,15 @@ std::string RpcResponse::toJson() const {
     return ss.str();
 }
 
-RpcOperations::RpcOperations(ThreadMgr::ThreadManager& threadManager)
-    : threadManager_(threadManager) {
+RpcOperations::RpcOperations(ThreadMgr::ThreadManager& threadManager, const std::string& routerConfigPath)
+    : threadManager_(threadManager), routerConfigPath_(routerConfigPath) {
     log_info("RpcOperations initialized");
+    
+    if (!routerConfigPath_.empty()) {
+        log_info("RpcOperations: Using router configuration path: %s", routerConfigPath_.c_str());
+    } else {
+        log_warning("RpcOperations: No router configuration path provided");
+    }
 }
 
 RpcOperations::~RpcOperations() {
@@ -139,6 +145,46 @@ RpcResponse RpcOperations::executeOperationOnThread(const std::string& threadNam
                                                    ThreadOperation operation) {
     RpcResponse response;
 
+    // For START operation, check for restart callback even if thread not registered
+    if (operation == ThreadOperation::START) {
+        std::function<unsigned int()> restartCallback;
+        bool hasCallback = false;
+        
+        {
+            std::lock_guard<std::mutex> lock(registryMutex_);
+            auto it = threadRegistry_.find(threadName);
+            if (it == threadRegistry_.end()) {
+                // Thread not registered - check if we have a restart callback
+                auto callbackIt = restartCallbacks_.find(threadName);
+                if (callbackIt != restartCallbacks_.end()) {
+                    restartCallback = callbackIt->second;
+                    hasCallback = true;
+                }
+            }
+        }
+        
+        if (hasCallback) {
+            log_info("RPC: Thread '%s' not registered, but restart callback exists - creating new thread", 
+                     threadName.c_str());
+            
+            // Create thread using the callback
+            unsigned int newThreadId = restartCallback();
+            
+            response.status = OperationStatus::SUCCESS;
+            response.message = "Thread created successfully with ID: " + std::to_string(newThreadId);
+            
+            // Get thread info
+            std::lock_guard<std::mutex> lock(registryMutex_);
+            ThreadStateInfo info = getThreadStateInfo(threadName);
+            response.threadStates[threadName] = info;
+            
+            log_info("RPC: Thread '%s' created successfully with ID %u", 
+                     threadName.c_str(), newThreadId);
+            return response;
+        }
+    }
+
+    // Normal processing for registered threads or non-START operations
     std::lock_guard<std::mutex> lock(registryMutex_);
     auto it = threadRegistry_.find(threadName);
     if (it == threadRegistry_.end()) {
@@ -153,8 +199,102 @@ RpcResponse RpcOperations::executeOperationOnThread(const std::string& threadNam
     try {
         switch (operation) {
             case ThreadOperation::START:
-                response.status = OperationStatus::INVALID_OPERATION;
-                response.message = "Cannot start thread - use restart instead";
+                // For start, check if thread is already running
+                if (info.isAlive) {
+                    response.status = OperationStatus::ALREADY_IN_STATE;
+                    response.message = "Thread is already running";
+                } else {
+                    // Thread is not alive - attempt to restart it
+                    log_info("RPC: Thread '%s' (ID: %u) is not alive, attempting restart", 
+                             threadName.c_str(), threadId);
+                    
+                    // Look for restart callback while holding the lock
+                    std::function<unsigned int()> restartCallback;
+                    bool hasCallback = false;
+                    
+                    {
+                        std::lock_guard<std::mutex> lock(registryMutex_);
+                        auto callbackIt = restartCallbacks_.find(threadName);
+                        if (callbackIt != restartCallbacks_.end()) {
+                            restartCallback = callbackIt->second;
+                            hasCallback = true;
+                            log_info("RPC: Found restart callback for thread '%s'", threadName.c_str());
+                        } else {
+                            log_error("RPC: No restart callback found for thread '%s'", threadName.c_str());
+                        }
+                    }
+                    
+                    if (hasCallback) {
+                        // Clean up old thread resources
+                        log_info("RPC: Cleaning up old thread '%s' (ID: %u)", 
+                                 threadName.c_str(), threadId);
+                        
+                        // Force kill the old thread if it's still registered
+                        try {
+                            // First try to stop it gracefully
+                            threadManager_.stopThread(threadId);
+                            
+                            // Wait a bit for graceful shutdown
+                            if (!threadManager_.joinThread(threadId, std::chrono::milliseconds(500))) {
+                                log_warning("RPC: Thread '%s' did not stop gracefully, forcing cleanup", 
+                                           threadName.c_str());
+                            }
+                        } catch (const std::exception& e) {
+                            log_warning("RPC: Exception during thread cleanup: %s (this is expected for dead threads)", 
+                                       e.what());
+                        }
+                        
+                        // Try to unregister from thread manager first (before removing from our registry)
+                        try {
+                            std::string attachmentId;
+                            {
+                                std::lock_guard<std::mutex> lock(registryMutex_);
+                                auto attachIt = threadAttachments_.find(threadName);
+                                if (attachIt != threadAttachments_.end()) {
+                                    attachmentId = attachIt->second;
+                                }
+                            }
+                            
+                            if (!attachmentId.empty()) {
+                                threadManager_.unregisterThread(attachmentId);
+                                log_info("RPC: Successfully unregistered attachment '%s' from thread manager", 
+                                        attachmentId.c_str());
+                            }
+                        } catch (const std::exception& e) {
+                            // Ignore errors - thread may not be registered or already cleaned up
+                            log_info("RPC: Could not unregister attachment: %s (this is normal for dead threads)", 
+                                    e.what());
+                        }
+                        
+                        // Unregister old thread from our registry
+                        {
+                            std::lock_guard<std::mutex> lock(registryMutex_);
+                            threadRegistry_.erase(threadName);
+                            threadAttachments_.erase(threadName);
+                        }
+                        
+                        // Create new thread using the callback
+                        log_info("RPC: Creating new thread for '%s'", threadName.c_str());
+                        unsigned int newThreadId = restartCallback();
+                        
+                        response.status = OperationStatus::SUCCESS;
+                        response.message = "Thread restarted successfully with new ID: " + 
+                                         std::to_string(newThreadId);
+                        
+                        // Get updated thread info
+                        std::lock_guard<std::mutex> lock(registryMutex_);
+                        ThreadStateInfo info = getThreadStateInfo(threadName);
+                        response.threadStates[threadName] = info;
+                        
+                        log_info("RPC: Thread '%s' restarted successfully with new ID %u", 
+                                 threadName.c_str(), newThreadId);
+                    } else {
+                        response.status = OperationStatus::FAILED;
+                        response.message = "Thread is not alive and no restart callback registered";
+                        log_error("RPC: Cannot restart thread '%s' - no restart callback available", 
+                                 threadName.c_str());
+                    }
+                }
                 break;
 
             case ThreadOperation::STOP:
@@ -317,7 +457,63 @@ std::vector<std::string> RpcOperations::getThreadNamesForTarget(ThreadTarget tar
         }
     }
 
+    // Also add threads that have restart callbacks but aren't registered yet
+    for (const auto& pair : restartCallbacks_) {
+        const std::string& threadName = pair.first;
+        
+        // Skip if already added
+        if (std::find(names.begin(), names.end(), threadName) != names.end()) {
+            continue;
+        }
+        
+        switch (target) {
+            case ThreadTarget::MAINLOOP:
+                if (threadName == "mainloop") {
+                    names.push_back(threadName);
+                }
+                break;
+            case ThreadTarget::HTTP_SERVER:
+                if (threadName == "http_server") {
+                    names.push_back(threadName);
+                }
+                break;
+            case ThreadTarget::STATISTICS:
+                if (threadName.find("stats") != std::string::npos) {
+                    names.push_back(threadName);
+                }
+                break;
+            case ThreadTarget::ALL:
+                names.push_back(threadName);
+                break;
+        }
+    }
+
     return names;
+}
+
+unsigned int RpcOperations::executeRestartCallback(const std::string& threadName) {
+    std::lock_guard<std::mutex> lock(registryMutex_);
+    
+    auto callbackIt = restartCallbacks_.find(threadName);
+    if (callbackIt != restartCallbacks_.end()) {
+        log_info("Executing restart callback for thread: %s", threadName.c_str());
+        
+        // Call the restart callback to create and start the thread
+        unsigned int newThreadId = callbackIt->second();
+        
+        if (newThreadId != 0) {
+            // Update the registry with the new thread ID
+            threadRegistry_[threadName] = newThreadId;
+            log_info("Thread %s restarted successfully with new ID: %u", threadName.c_str(), newThreadId);
+        } else {
+            log_error("Thread %s restart callback returned 0", threadName.c_str());
+        }
+        
+        return newThreadId;
+    } else {
+        log_error("No restart callback found for thread: %s", threadName.c_str());
+        return 0;
+    }
 }
 
 ThreadOperation RpcOperations::stringToThreadOperation(const std::string& operation) {

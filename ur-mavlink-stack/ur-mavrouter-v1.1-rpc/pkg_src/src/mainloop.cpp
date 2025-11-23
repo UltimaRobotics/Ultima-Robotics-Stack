@@ -31,9 +31,15 @@
 
 #include "autolog.h"
 #include "tlog.h"
+#include "endpoint_monitor.h"
 
 Mainloop Mainloop::_instance{};
 bool Mainloop::_initialized = false;
+
+// Event loop coordination members
+std::atomic<bool> Mainloop::_mainloop_in_event_loop{false};
+std::mutex Mainloop::_mainloop_ready_mutex;
+std::condition_variable Mainloop::_mainloop_ready_cv;
 
 // Thread-local storage for extension thread mainloop instances
 // Main thread uses nullptr (uses singleton)
@@ -265,6 +271,7 @@ void Mainloop::request_exit(int retcode)
     // This ensures extension threads don't affect the main router
     if (this == &_instance) {
         log_info("Main router requesting exit (retcode=%d)", retcode);
+        exit(retcode);
     } else {
         log_info("Extension mainloop %p requesting exit (retcode=%d)", this, retcode);
     }
@@ -396,6 +403,35 @@ void Mainloop::route_msg(struct buffer *buf)
                   buf->curr.msg_id,
                   buf->curr.target_sysid,
                   buf->curr.target_compid);
+
+        // Notify endpoint monitor of UDP unknown messages with enhanced tracking
+        try {
+            if (EndpointMonitoring::GlobalMonitor::is_initialized()) {
+                // Try to identify which UDP endpoint triggered the unknown message
+                for (const auto &e : this->g_endpoints) {
+                    if (e->get_type() == ENDPOINT_TYPE_UDP && e->fd >= 0) {
+                        // Extract remote endpoint information if available
+                        std::string remote_ip = "unknown";
+                        uint16_t remote_port = 0;
+
+                        // For UDP endpoints, we can try to get the last remote address
+                        auto* udp_endpoint = static_cast<UdpEndpoint*>(e.get());
+                        if (udp_endpoint) {
+                            // Note: This would require extending UdpEndpoint to expose last remote address
+                            // For now, we'll use the message information
+                            remote_ip = "unknown";
+                            remote_port = 0;
+                        }
+
+                        EndpointMonitoring::GlobalMonitor::get_instance().notify_udp_unknown_messages(
+                            e->get_name(), 1, remote_ip, remote_port, buf->curr.msg_id);
+                        break; // Only notify once per unknown message
+                    }
+                }
+            }
+        } catch (const std::exception& e) {
+            log_debug("Failed to notify endpoint monitor of UDP unknown messages: %s", e.what());
+        }
     }
 }
 
@@ -463,6 +499,21 @@ int Mainloop::loop()
     add_timeout(LOG_AGGREGATE_INTERVAL_SEC * MSEC_PER_SEC,
                 std::bind(&Mainloop::_log_aggregate_timeout, this, std::placeholders::_1),
                 this);
+
+    // Start endpoint monitoring for main router instance
+    // This is launched after mainloop setup but before the event loop starts
+    if (this == &_instance) {
+        log_info("Starting endpoint monitoring for main router");
+        start_endpoint_monitoring();
+    }
+
+    // Signal that mainloop is now ready and entering event loop
+    // This is the critical point where extensions can safely start
+    if (this == &_instance) {
+        log_info("Mainloop entering event loop - signaling readiness for extensions");
+        _mainloop_in_event_loop.store(true);
+        _mainloop_ready_cv.notify_all();
+    }
 
     while (!_should_exit.load(std::memory_order_relaxed)) {
         int i;
@@ -551,6 +602,18 @@ int Mainloop::loop()
         delete current;
     }
 
+    // Clear event loop ready flag before cleanup
+    if (this == &_instance) {
+        log_info("Mainloop exiting event loop - clearing readiness flag");
+        _mainloop_in_event_loop.store(false);
+    }
+
+    // Stop endpoint monitoring for main router instance
+    if (this == &_instance) {
+        log_info("Stopping endpoint monitoring for main router");
+        stop_endpoint_monitoring();
+    }
+
     return _retcode;
 }
 
@@ -580,6 +643,102 @@ void Mainloop::print_statistics()
             stats->print_summary();
         }
     }
+}
+
+void Mainloop::start_endpoint_monitoring()
+{
+    // Only start monitoring for the main router instance
+    if (this != &_instance) {
+        log_info("Endpoint monitoring only supported on main router instance");
+        return;
+    }
+    
+    try {
+        // Initialize global monitor with enhanced real-time monitoring configuration
+        EndpointMonitoring::MonitorConfig config;
+        config.check_interval_ms = 1000;  // Check every second
+        config.enable_detailed_logging = false;
+        config.monitored_types = {"TCP", "UDP"};
+        
+        // Enhanced connection-based tracking
+        config.enable_connection_tracking = true;
+        config.track_connection_metrics = true;
+        config.track_protocol_details = true;
+        config.cleanup_interval_ms = 30000;
+        
+        // Real-time monitoring publishing
+        config.enable_realtime_publishing = true;
+        config.realtime_topic = "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification";
+        config.publish_interval_ms = 2000;  // Publish every 2 seconds
+        config.publish_on_change = true;     // Also publish on immediate changes
+        config.include_connection_details = true;
+        config.include_metrics = true;
+        
+        EndpointMonitoring::GlobalMonitor::initialize(*this, config);
+        
+        // Start the monitoring thread
+        auto& monitor = EndpointMonitoring::GlobalMonitor::get_instance();
+        if (monitor.start()) {
+            log_info("Endpoint monitoring started successfully with real-time publishing");
+            
+            // Note: RPC client should be set up after RPC system is initialized
+            // This would typically be done in the RPC initialization code:
+            // 
+            // auto rpc_client = get_rpc_client_instance(); // Get from RPC system
+            // monitor.set_rpc_client(rpc_client);
+            // log_info("RPC client configured for endpoint monitoring publishing");
+            
+        } else {
+            log_error("Failed to start endpoint monitoring");
+        }
+    } catch (const std::exception& e) {
+        log_error("Exception starting endpoint monitoring: %s", e.what());
+    }
+}
+
+void Mainloop::stop_endpoint_monitoring()
+{
+    // Only stop monitoring for the main router instance
+    if (this != &_instance) {
+        return;
+    }
+    
+    try {
+        EndpointMonitoring::GlobalMonitor::cleanup();
+        log_info("Endpoint monitoring stopped");
+    } catch (const std::exception& e) {
+        log_error("Exception stopping endpoint monitoring: %s", e.what());
+    }
+}
+
+bool Mainloop::is_endpoint_monitoring_active() const
+{
+    // Only applicable to main router instance
+    if (this != &_instance) {
+        return false;
+    }
+    
+    try {
+        return EndpointMonitoring::GlobalMonitor::is_initialized() && 
+               EndpointMonitoring::GlobalMonitor::get_instance().is_running();
+    } catch (...) {
+        return false;
+    }
+}
+
+bool Mainloop::is_in_event_loop()
+{
+    return _mainloop_in_event_loop.load();
+}
+
+bool Mainloop::wait_for_event_loop(int timeout_ms)
+{
+    std::unique_lock<std::mutex> lock(_mainloop_ready_mutex);
+    auto timeout = std::chrono::milliseconds(timeout_ms);
+    
+    return _mainloop_ready_cv.wait_for(lock, timeout, []() {
+        return _mainloop_in_event_loop.load();
+    });
 }
 
 static bool _print_statistics_timeout_cb(void *data)

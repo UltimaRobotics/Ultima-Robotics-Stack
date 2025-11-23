@@ -69,6 +69,7 @@ set(SRC_FILES
     src/dedup.cpp
     src/endpoint.cpp
     src/endpoint_stats.cpp
+    src/endpoint_monitor.cpp
     src/git_version.cpp
     src/logendpoint.cpp
     src/main.cpp

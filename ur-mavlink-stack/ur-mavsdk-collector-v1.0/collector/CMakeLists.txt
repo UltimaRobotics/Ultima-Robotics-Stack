@@ -8,6 +8,7 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # Find required packages
 find_package(PkgConfig REQUIRED)
+find_package(Threads REQUIRED)
 
 # Find system libraries
 pkg_check_modules(JSONCPP REQUIRED jsoncpp)
@@ -20,6 +21,13 @@ option(BUILD_TESTS "Build tests" OFF)
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${JSONCPP_INCLUDE_DIRS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/../thirdparty/ur-threadder-api/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../thirdparty/ur-threadder-api/cpp/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../ur-rpc-template/pkg_src/api/wrappers/cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../ur-rpc-template
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../ur-rpc-template/deps/cJSON
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../ur-rpc-template/deps/mqtt-client/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../ur-rpc-template/deps/ur-logger-api
 )
 
 # Source files
@@ -28,6 +36,7 @@ set(COLLECTOR_SOURCES
     src/ConfigParser.cpp
     src/DataStructures.cpp
     src/JsonFormatter.cpp
+    src/RpcClientThread.cpp
 )
 
 # Header files
@@ -36,6 +45,7 @@ set(COLLECTOR_HEADERS
     include/ConfigParser.h
     include/DataStructures.h
     include/JsonFormatter.h
+    include/RpcClientThread.h
 )
 
 # Create static library
@@ -45,21 +55,31 @@ add_library(ur-mavcollector-mavsdk STATIC ${COLLECTOR_SOURCES} ${COLLECTOR_HEADE
 target_include_directories(ur-mavcollector-mavsdk PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/../mavsdk/core/include
     ${CMAKE_CURRENT_SOURCE_DIR}/../mavsdk/core/include/mavsdk
-    ${CMAKE_CURRENT_SOURCE_DIR}/../mavsdk/plugins
     ${CMAKE_CURRENT_SOURCE_DIR}/../mavsdk/plugins/telemetry/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/../mavsdk/plugins/param/include
     ${CMAKE_CURRENT_SOURCE_DIR}/../mavsdk/plugins/info/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../mavsdk/plugins/param/include
     ${CMAKE_CURRENT_SOURCE_DIR}/../mavsdk/plugins/battery/include
     ${CMAKE_CURRENT_SOURCE_DIR}/../thirdparty/mavlink
     ${THREADDER_INCLUDE_DIRS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../ur-rpc-template/deps/mqtt-client/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../ur-rpc-template/deps/ur-logger-api
 )
 
 # Link libraries
 target_link_libraries(ur-mavcollector-mavsdk PRIVATE
     mavsdk
+    mavsdk_plugins
+    ${CMAKE_CURRENT_BINARY_DIR}/../ur-threadder-api_build/libthreadmanager.a
+    ${CMAKE_CURRENT_BINARY_DIR}/../ur-threadder-api_build/cpp/libthreadmanager_cpp.a
+    Threads::Threads
     ${THREADDER_LIBS}
     ${JSONCPP_LIBRARIES}
     pthread
+    ur-rpc-template
+    ur-rpc-cpp
+    mqtt-client-static
+    cjson
+    ur-logger-api-static
 )
 
 # Compiler flags
@@ -76,22 +96,32 @@ if(BUILD_CLI)
     target_link_libraries(ur-mavcollector-mavsdk-cli PRIVATE
         ur-mavcollector-mavsdk
         mavsdk
+        mavsdk_plugins
+        ${CMAKE_CURRENT_BINARY_DIR}/../ur-threadder-api_build/libthreadmanager.a
+        ${CMAKE_CURRENT_BINARY_DIR}/../ur-threadder-api_build/cpp/libthreadmanager_cpp.a
+        Threads::Threads
         ${THREADDER_LIBS}
         ${JSONCPP_LIBRARIES}
         pthread
+        ur-rpc-template
+        ur-rpc-cpp
+        mqtt-client-static
+        cjson
+        ur-logger-api-static
     )
     
     # Add MAVSDK include paths to CLI executable
     target_include_directories(ur-mavcollector-mavsdk-cli PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/../mavsdk/core/include
         ${CMAKE_CURRENT_SOURCE_DIR}/../mavsdk/core/include/mavsdk
-        ${CMAKE_CURRENT_SOURCE_DIR}/../mavsdk/plugins
         ${CMAKE_CURRENT_SOURCE_DIR}/../mavsdk/plugins/telemetry/include
-        ${CMAKE_CURRENT_SOURCE_DIR}/../mavsdk/plugins/param/include
         ${CMAKE_CURRENT_SOURCE_DIR}/../mavsdk/plugins/info/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/../mavsdk/plugins/param/include
         ${CMAKE_CURRENT_SOURCE_DIR}/../mavsdk/plugins/battery/include
         ${CMAKE_CURRENT_SOURCE_DIR}/../thirdparty/mavlink
         ${THREADDER_INCLUDE_DIRS}
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../ur-rpc-template/deps/mqtt-client/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../ur-rpc-template/deps/ur-logger-api
     )
     
     target_compile_options(ur-mavcollector-mavsdk-cli PRIVATE

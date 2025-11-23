@@ -1,0 +1,46 @@
+# Build directories
+**/build/
+**/build-*/
+**/*build*/
+
+# Specific build folders in Ultima-Robotics-Stack
+ur-licence-mann/build/
+ur-mavlink-stack/ur-mavcollector-v1.1/build/
+ur-mavlink-stack/ur-mavdiscovery-v1.1/build/
+ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/
+ur-mavlink-stack/ur-mavsdk-collector-v1.0/build/
+ur-netbench-mann/build/
+ur-qmi-pack/ur-qmi-ident/build/
+ur-qmi-pack/ur-qmi-launcher/build/
+ur-qmi-pack/ur-qmi-watchdog/build/
+ur-rpc-mastered-main/ur-logger-api/build/
+ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/
+ur-vpn-extended/build/
+ur-webif/backend-datalink/build/
+ur-webif/frontendpp/build/
+
+# CMake generated files
+**/CMakeCache.txt
+**/CMakeFiles/
+**/cmake_install.cmake
+**/Makefile
+**/*.cmake
+
+# IDE and editor files
+**/.vscode/
+**/.idea/
+**/*.swp
+**/*.swo
+***~
+**/.DS_Store
+
+# Log files
+**/*.log
+**/logs/
+
+# Temporary files
+**/*.tmp
+**/*.temp
+**/tmp/
+
+

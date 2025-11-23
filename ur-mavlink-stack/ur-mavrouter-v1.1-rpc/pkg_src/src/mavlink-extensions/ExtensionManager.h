@@ -10,6 +10,11 @@
 #include "../mainloop.h"
 #include "../config.h"
 
+// Forward declaration
+namespace RpcMechanisms {
+    class RpcController;
+}
+
 namespace MavlinkExtensions {
 
 enum class ExtensionType {
@@ -59,6 +64,9 @@ public:
     bool saveExtensionConfig(const std::string& name);
     bool loadExtensionConfigs(const std::string& configDir);
     
+    // RPC controller registration
+    void setRpcController(RpcMechanisms::RpcController* rpcController);
+    
     // Extension point assignment
     std::string assignAvailableExtensionPoint(const Configuration& globalConfig, ExtensionType type = ExtensionType::UDP);
     
@@ -77,6 +85,7 @@ private:
     mutable std::mutex extensionsMutex_;
     std::string extensionConfDir_;
     const Configuration* globalConfig_;
+    RpcMechanisms::RpcController* rpcController_{nullptr};
     
     std::string getConfigFilePath(const std::string& name) const;
     bool validateExtensionConfig(const ExtensionConfig& config) const;

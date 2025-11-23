@@ -3,7 +3,7 @@
   "assigned_extension_point": "udp-extension-point-1",
   "extension_thread_config": {
     "general": {
-      "tcp_server_port": 55360
+      "tcp_server_port": 51876
     },
     "udp_endpoints": [
       {

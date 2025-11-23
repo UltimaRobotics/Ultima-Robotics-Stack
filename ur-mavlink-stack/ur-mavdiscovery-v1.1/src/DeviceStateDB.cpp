@@ -32,6 +32,10 @@ void DeviceStateDB::updateDevice(const std::string& devicePath, const DeviceInfo
         it->second->messages = info.messages;
         it->second->mavlinkVersion = info.mavlinkVersion;
         it->second->timestamp = info.timestamp;
+        
+        // Update USB information including bus tracking
+        it->second->usbInfo = info.usbInfo;
+        
         LOG_INFO("Device updated in state DB: " + devicePath);
     }
 }

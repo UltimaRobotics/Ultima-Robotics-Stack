@@ -29,8 +29,9 @@ public:
     /**
      * @brief Constructor
      * @param threadManager Reference to the thread manager
+     * @param routerConfigPath Path to the router configuration file
      */
-    explicit RpcController(ThreadMgr::ThreadManager& threadManager);
+    explicit RpcController(ThreadMgr::ThreadManager& threadManager, const std::string& routerConfigPath = "");
     
     /**
      * @brief Destructor
@@ -197,6 +198,7 @@ private:
     
     // Configuration
     std::string rpcConfigPath_;
+    std::string routerConfigPath_;  // Path to router configuration file
     std::string rpcClientId_;
     std::atomic<bool> rpcInitialized_{false};
     mutable std::mutex rpcMutex_;
@@ -207,6 +209,14 @@ private:
     // UR-RPC private methods
     void setupRpcMessageHandlers();
     
+    // Runtime information method
+    nlohmann::json getRuntimeInfo();
+    
+    // Helper methods for runtime info
+    std::string determineThreadNature(const std::string& threadName);
+    std::string determineThreadType(const std::string& threadName);
+    std::string threadStateToString(int state);
+    
     // Startup mechanism private methods
     void handleHeartbeatMessage(const std::string& payload);
     void triggerDeviceDiscovery();
@@ -214,6 +224,9 @@ private:
     void handleDeviceAddedEvent(const MavlinkShared::DeviceAddedEvent& event);
     bool isMainloopRunning() const;
     void checkHeartbeatTimeout();
+    
+    // Configuration management methods
+    bool updateRouterConfigWithDevice(const MavlinkShared::DeviceInfo& deviceInfo);
     
     // Startup state tracking
     std::atomic<bool> discoveryTriggered_{false};
@@ -228,6 +241,12 @@ private:
     
     // Device discovery cron job (new implementation)
     std::unique_ptr<DeviceDiscoveryCronJob> discoveryCronJob_;
+    
+    // Extension manager reference
+    MavlinkExtensions::ExtensionManager* extensionManager_{nullptr};
+    
+    // Startup time tracking
+    std::chrono::system_clock::time_point startupTime_;
     
     // Heartbeat timeout configuration
     static constexpr std::chrono::seconds HEARTBEAT_TIMEOUT{30}; // 30 seconds timeout

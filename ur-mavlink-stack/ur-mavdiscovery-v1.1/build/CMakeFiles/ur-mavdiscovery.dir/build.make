@@ -237,6 +237,34 @@ CMakeFiles/ur-mavdiscovery.dir/src/RpcOperationProcessor.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ur-mavdiscovery.dir/src/RpcOperationProcessor.cpp.s"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/src/RpcOperationProcessor.cpp -o CMakeFiles/ur-mavdiscovery.dir/src/RpcOperationProcessor.cpp.s
 
+CMakeFiles/ur-mavdiscovery.dir/src/DeviceDiscoveryCronJob.cpp.o: CMakeFiles/ur-mavdiscovery.dir/flags.make
+CMakeFiles/ur-mavdiscovery.dir/src/DeviceDiscoveryCronJob.cpp.o: ../src/DeviceDiscoveryCronJob.cpp
+CMakeFiles/ur-mavdiscovery.dir/src/DeviceDiscoveryCronJob.cpp.o: CMakeFiles/ur-mavdiscovery.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/ur-mavdiscovery.dir/src/DeviceDiscoveryCronJob.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur-mavdiscovery.dir/src/DeviceDiscoveryCronJob.cpp.o -MF CMakeFiles/ur-mavdiscovery.dir/src/DeviceDiscoveryCronJob.cpp.o.d -o CMakeFiles/ur-mavdiscovery.dir/src/DeviceDiscoveryCronJob.cpp.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/src/DeviceDiscoveryCronJob.cpp
+
+CMakeFiles/ur-mavdiscovery.dir/src/DeviceDiscoveryCronJob.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ur-mavdiscovery.dir/src/DeviceDiscoveryCronJob.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/src/DeviceDiscoveryCronJob.cpp > CMakeFiles/ur-mavdiscovery.dir/src/DeviceDiscoveryCronJob.cpp.i
+
+CMakeFiles/ur-mavdiscovery.dir/src/DeviceDiscoveryCronJob.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ur-mavdiscovery.dir/src/DeviceDiscoveryCronJob.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/src/DeviceDiscoveryCronJob.cpp -o CMakeFiles/ur-mavdiscovery.dir/src/DeviceDiscoveryCronJob.cpp.s
+
+CMakeFiles/ur-mavdiscovery.dir/src/USBDeviceTracker.cpp.o: CMakeFiles/ur-mavdiscovery.dir/flags.make
+CMakeFiles/ur-mavdiscovery.dir/src/USBDeviceTracker.cpp.o: ../src/USBDeviceTracker.cpp
+CMakeFiles/ur-mavdiscovery.dir/src/USBDeviceTracker.cpp.o: CMakeFiles/ur-mavdiscovery.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/ur-mavdiscovery.dir/src/USBDeviceTracker.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ur-mavdiscovery.dir/src/USBDeviceTracker.cpp.o -MF CMakeFiles/ur-mavdiscovery.dir/src/USBDeviceTracker.cpp.o.d -o CMakeFiles/ur-mavdiscovery.dir/src/USBDeviceTracker.cpp.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/src/USBDeviceTracker.cpp
+
+CMakeFiles/ur-mavdiscovery.dir/src/USBDeviceTracker.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ur-mavdiscovery.dir/src/USBDeviceTracker.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/src/USBDeviceTracker.cpp > CMakeFiles/ur-mavdiscovery.dir/src/USBDeviceTracker.cpp.i
+
+CMakeFiles/ur-mavdiscovery.dir/src/USBDeviceTracker.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ur-mavdiscovery.dir/src/USBDeviceTracker.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/src/USBDeviceTracker.cpp -o CMakeFiles/ur-mavdiscovery.dir/src/USBDeviceTracker.cpp.s
+
 # Object files for target ur-mavdiscovery
 ur__mavdiscovery_OBJECTS = \
 "CMakeFiles/ur-mavdiscovery.dir/src/main.cpp.o" \
@@ -250,7 +278,9 @@ ur__mavdiscovery_OBJECTS = \
 "CMakeFiles/ur-mavdiscovery.dir/src/CallbackDispatcher.cpp.o" \
 "CMakeFiles/ur-mavdiscovery.dir/src/DeviceManager.cpp.o" \
 "CMakeFiles/ur-mavdiscovery.dir/src/RpcClient.cpp.o" \
-"CMakeFiles/ur-mavdiscovery.dir/src/RpcOperationProcessor.cpp.o"
+"CMakeFiles/ur-mavdiscovery.dir/src/RpcOperationProcessor.cpp.o" \
+"CMakeFiles/ur-mavdiscovery.dir/src/DeviceDiscoveryCronJob.cpp.o" \
+"CMakeFiles/ur-mavdiscovery.dir/src/USBDeviceTracker.cpp.o"
 
 # External object files for target ur-mavdiscovery
 ur__mavdiscovery_EXTERNAL_OBJECTS =
@@ -267,6 +297,8 @@ ur-mavdiscovery: CMakeFiles/ur-mavdiscovery.dir/src/CallbackDispatcher.cpp.o
 ur-mavdiscovery: CMakeFiles/ur-mavdiscovery.dir/src/DeviceManager.cpp.o
 ur-mavdiscovery: CMakeFiles/ur-mavdiscovery.dir/src/RpcClient.cpp.o
 ur-mavdiscovery: CMakeFiles/ur-mavdiscovery.dir/src/RpcOperationProcessor.cpp.o
+ur-mavdiscovery: CMakeFiles/ur-mavdiscovery.dir/src/DeviceDiscoveryCronJob.cpp.o
+ur-mavdiscovery: CMakeFiles/ur-mavdiscovery.dir/src/USBDeviceTracker.cpp.o
 ur-mavdiscovery: CMakeFiles/ur-mavdiscovery.dir/build.make
 ur-mavdiscovery: ur-threadder-api/libthreadmanager.a
 ur-mavdiscovery: ur-threadder-api/cpp/libthreadmanager_cpp.a
@@ -281,7 +313,7 @@ ur-mavdiscovery: /usr/lib/x86_64-linux-gnu/libssl.so
 ur-mavdiscovery: /usr/lib/x86_64-linux-gnu/libcrypto.so
 ur-mavdiscovery: ur-rpc-template/deps/ur-logger-api/libur-logger-api.a
 ur-mavdiscovery: CMakeFiles/ur-mavdiscovery.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX executable ur-mavdiscovery"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Linking CXX executable ur-mavdiscovery"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ur-mavdiscovery.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

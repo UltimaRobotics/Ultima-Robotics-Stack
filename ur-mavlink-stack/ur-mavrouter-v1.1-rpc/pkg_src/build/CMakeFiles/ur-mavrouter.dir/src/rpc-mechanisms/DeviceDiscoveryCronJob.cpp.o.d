@@ -329,4 +329,5 @@ CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/DeviceDiscoveryCronJob.cpp.o: \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/../modules/ur-threadder-api/cpp/include/ThreadManager.tpp \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/../ur-mavdiscovery-shared/include/MavlinkDeviceStructs.hpp \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../common/log.h \
- /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../common/macro.h
+ /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../common/macro.h \
+ /usr/include/c++/11/thread /usr/include/c++/11/bits/this_thread_sleep.h

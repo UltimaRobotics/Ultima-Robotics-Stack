@@ -392,12 +392,29 @@ void DeviceVerifier::extractUSBInfo(DeviceInfo& info) {
                 const char* idVendor = udev_device_get_sysattr_value(usb_dev, "idVendor");
                 const char* idProduct = udev_device_get_sysattr_value(usb_dev, "idProduct");
                 const char* product = udev_device_get_sysattr_value(usb_dev, "product");
+                
+                // Get USB bus information
+                const char* busnum = udev_device_get_sysattr_value(usb_dev, "busnum");
+                const char* devnum = udev_device_get_sysattr_value(usb_dev, "devnum");
 
                 if (manufacturer) info.usbInfo.manufacturer = manufacturer;
                 if (serial) info.usbInfo.serialNumber = serial;
                 if (idVendor) info.usbInfo.vendorId = idVendor;
                 if (idProduct) info.usbInfo.productId = idProduct;
                 if (product) info.usbInfo.deviceName = product;
+                if (busnum) info.usbInfo.usbBusNumber = busnum;
+                if (devnum) info.usbInfo.usbDeviceAddress = devnum;
+
+                // Generate physical device ID if we have the required information
+                if (!info.usbInfo.usbBusNumber.empty() && 
+                    !info.usbInfo.vendorId.empty() && 
+                    !info.usbInfo.productId.empty() && 
+                    !info.usbInfo.serialNumber.empty()) {
+                    info.usbInfo.physicalDeviceId = info.usbInfo.usbBusNumber + ":" + 
+                                                   info.usbInfo.vendorId + ":" + 
+                                                   info.usbInfo.productId + ":" + 
+                                                   info.usbInfo.serialNumber;
+                }
 
                 // Check if all required fields are present
                 bool dataComplete = !info.usbInfo.manufacturer.empty() &&
@@ -414,6 +431,9 @@ void DeviceVerifier::extractUSBInfo(DeviceInfo& info) {
                              ", Serial: " + info.usbInfo.serialNumber +
                              ", VID: " + info.usbInfo.vendorId + 
                              ", PID: " + info.usbInfo.productId +
+                             ", Bus: " + info.usbInfo.usbBusNumber +
+                             ", DevAddr: " + info.usbInfo.usbDeviceAddress +
+                             ", PhysicalID: " + info.usbInfo.physicalDeviceId +
                              ", Board: " + info.usbInfo.boardName +
                              ", Type: " + info.usbInfo.autopilotType);
                     
@@ -426,7 +446,9 @@ void DeviceVerifier::extractUSBInfo(DeviceInfo& info) {
                               ", Serial: " + (info.usbInfo.serialNumber.empty() ? "MISSING" : "OK") +
                               ", VID: " + (info.usbInfo.vendorId.empty() ? "MISSING" : "OK") +
                               ", PID: " + (info.usbInfo.productId.empty() ? "MISSING" : "OK") +
-                              ", DeviceName: " + (info.usbInfo.deviceName.empty() ? "MISSING" : "OK"));
+                              ", DeviceName: " + (info.usbInfo.deviceName.empty() ? "MISSING" : "OK") +
+                              ", Bus: " + (info.usbInfo.usbBusNumber.empty() ? "MISSING" : "OK") +
+                              ", DevAddr: " + (info.usbInfo.usbDeviceAddress.empty() ? "MISSING" : "OK"));
                     
                     // Clear partial data for retry
                     info.usbInfo.manufacturer.clear();
@@ -434,6 +456,9 @@ void DeviceVerifier::extractUSBInfo(DeviceInfo& info) {
                     info.usbInfo.vendorId.clear();
                     info.usbInfo.productId.clear();
                     info.usbInfo.deviceName.clear();
+                    info.usbInfo.usbBusNumber.clear();
+                    info.usbInfo.usbDeviceAddress.clear();
+                    info.usbInfo.physicalDeviceId.clear();
                 }
             }
 
@@ -455,6 +480,11 @@ void DeviceVerifier::saveDeviceToRuntimeFile(const DeviceInfo& info) {
     deviceJson["serialNumber"] = info.usbInfo.serialNumber;
     deviceJson["vendorId"] = info.usbInfo.vendorId;
     deviceJson["productId"] = info.usbInfo.productId;
+    
+    // USB Bus Tracking Information
+    deviceJson["usbBusNumber"] = info.usbInfo.usbBusNumber;
+    deviceJson["usbDeviceAddress"] = info.usbInfo.usbDeviceAddress;
+    deviceJson["physicalDeviceId"] = info.usbInfo.physicalDeviceId;
     
     // Flight Controller Identification
     deviceJson["boardClass"] = info.usbInfo.boardClass;

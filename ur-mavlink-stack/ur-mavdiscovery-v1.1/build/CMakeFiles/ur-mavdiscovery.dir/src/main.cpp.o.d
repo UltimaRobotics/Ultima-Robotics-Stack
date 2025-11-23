@@ -314,8 +314,11 @@ CMakeFiles/ur-mavdiscovery.dir/src/main.cpp.o: \
  /usr/include/nlohmann/json.hpp /usr/include/c++/11/set \
  /usr/include/c++/11/bits/stl_set.h \
  /usr/include/c++/11/bits/stl_multiset.h \
+ /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/include/DeviceDiscoveryCronJob.hpp \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/include/../ur-mavdiscovery-shared/include/MavlinkDeviceStructs.hpp \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/include/../ur-mavdiscovery-shared/include/MavlinkEventSerializer.hpp \
+ /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/include/DeviceStateDB.hpp \
+ /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/include/USBDeviceTracker.hpp \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/include/Logger.hpp \
  /usr/include/c++/11/fstream \
  /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \

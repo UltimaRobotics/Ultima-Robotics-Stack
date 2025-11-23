@@ -39,6 +39,9 @@ public:
 
     // Set RPC request callback function
     void setRpcRequestCallback(std::function<std::string(const std::string&, const std::string&, const std::string&)> callback);
+    
+    // Set mainloop startup callback function - now accepts device info for configuration updates
+    void setMainloopStartupCallback(std::function<std::string(const MavlinkShared::DeviceInfo&)> callback);
 
     // Check if heartbeat has been received
     bool hasReceivedHeartbeat() const;
@@ -99,6 +102,9 @@ private:
 
     // RPC request callback
     std::function<std::string(const std::string&, const std::string&, const std::string&)> rpcRequestCallback_;
+    
+    // Mainloop startup callback - now accepts device info for configuration updates
+    std::function<std::string(const MavlinkShared::DeviceInfo&)> mainloopStartupCallback_;
 
     // Timeout constants
     const std::chrono::seconds heartbeatTimeout_{10}; // 10 seconds

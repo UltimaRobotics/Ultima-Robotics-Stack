@@ -53,7 +53,13 @@ pkg_check_modules(ZLIB REQUIRED zlib)
 
 # Build third-party dependencies (only static ones)
 add_subdirectory(thirdparty)
+
+# Force static build for ThreadManager before building it
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build shared libraries" FORCE)
 add_subdirectory(thirdparty/ur-threadder-api ur-threadder-api_build)
+
+# Add ur-rpc-template as subdirectory
+add_subdirectory(../ur-rpc-template ur_rpc_template_build)
 
 # Then build MAVSDK core and plugins
 add_subdirectory(mavsdk)

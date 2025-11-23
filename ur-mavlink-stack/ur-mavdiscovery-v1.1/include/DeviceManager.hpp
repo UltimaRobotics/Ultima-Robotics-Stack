@@ -4,6 +4,7 @@
 #include "ConfigLoader.hpp"
 #include "RpcClient.hpp"
 #include "RpcOperationProcessor.hpp"
+#include "DeviceDiscoveryCronJob.hpp"
 #include "../ur-threadder-api/cpp/include/ThreadManager.hpp"
 #include "../ur-mavdiscovery-shared/include/MavlinkDeviceStructs.hpp"
 #include "../ur-mavdiscovery-shared/include/MavlinkEventSerializer.hpp"
@@ -27,6 +28,10 @@ public:
     bool initializeRpc(const std::string& rpcConfigPath = "");
     void shutdownRpc();
     bool isRpcRunning() const;
+    
+    // Cron job management methods
+    bool startCronJob();
+    void stopCronJob();
 
 private:
     void onDeviceAdded(const std::string& devicePath);
@@ -58,4 +63,7 @@ private:
     std::unique_ptr<RpcClient> rpcClient_;
     std::unique_ptr<RpcOperationProcessor> operationProcessor_;
     std::atomic<bool> rpcRunning_;
+    
+    // Cron job component
+    std::unique_ptr<DeviceDiscoveryCronJob> cronJob_;
 };

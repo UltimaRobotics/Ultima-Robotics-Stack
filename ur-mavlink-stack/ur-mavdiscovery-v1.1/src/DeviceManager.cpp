@@ -6,6 +6,7 @@
 #include "CallbackDispatcher.hpp"
 #include "Logger.hpp"
 #include "DeviceStateDB.hpp"
+#include "USBDeviceTracker.hpp"
 #include <thread>
 #include <chrono>
 
@@ -160,16 +161,61 @@ void DeviceManager::onDeviceRemoved(const std::string& devicePath) {
 
     auto it = verifiers_.find(devicePath);
     if (it != verifiers_.end()) {
-        // Send RPC device removed notification using ur-rpc-template structure
-        sendDeviceRemovedRpcNotifications(devicePath);
+        // Use USB device tracker to handle device removal
+        auto& tracker = USBDeviceTracker::getInstance();
+        std::string physicalId = tracker.getPhysicalDeviceId(devicePath);
+        
+        // Check if this is the primary path before removing
+        bool wasPrimary = tracker.isPrimaryPath(devicePath);
+        std::string newPrimaryPath;
+        
+        if (!physicalId.empty()) {
+            // Get the new primary path before removal
+            auto devicePaths = tracker.getDevicePaths(physicalId);
+            for (const auto& path : devicePaths) {
+                if (path != devicePath) {
+                    newPrimaryPath = path;
+                    break;
+                }
+            }
+        }
+        
+        // Remove from tracker
+        tracker.removeDevice(devicePath);
+        
+        // Only send RPC notifications if this was the primary path
+        if (wasPrimary) {
+            LOG_INFO("Primary device path removed: " + devicePath + " for physical device: " + physicalId);
+            
+            // Send RPC device removed notification using ur-rpc-template structure
+            sendDeviceRemovedRpcNotifications(devicePath);
 
-        // Send shared bus notification
-        sendDeviceRemovedSharedNotification(devicePath);
+            // Send shared bus notification
+            sendDeviceRemovedSharedNotification(devicePath);
+            
+            // If there's a new primary path, send notifications for it
+            if (!newPrimaryPath.empty()) {
+                LOG_INFO("Notifying new primary path: " + newPrimaryPath + " for physical device: " + physicalId);
+                
+                // Get the device info for the new primary path from DeviceStateDB
+                auto& deviceDB = DeviceStateDB::getInstance();
+                auto newDeviceInfo = deviceDB.getDevice(newPrimaryPath);
+                
+                if (newDeviceInfo && newDeviceInfo->state.load() == DeviceState::VERIFIED) {
+                    // Send notifications for the new primary device
+                    sendDeviceAddedRpcNotifications(*newDeviceInfo);
+                    sendDeviceVerifiedNotification(*newDeviceInfo);
+                }
+            }
+        } else {
+            LOG_INFO("Secondary device path removed: " + devicePath + " for physical device: " + physicalId + 
+                    " - skipping notifications (primary still available)");
+        }
 
 #ifdef HTTP_ENABLED
         DeviceConfig deviceConfig = config_.getConfig();
-        if (deviceConfig.enableHTTP) {
-            // Send stop request to MAVRouter mainloop
+        if (deviceConfig.enableHTTP && wasPrimary) {
+            // Send stop request to MAVRouter mainloop only for primary device removal
             LOG_INFO("Sending mainloop stop request to MAVRouter for device removal: " + devicePath);
             std::string stopEndpoint = "http://" + deviceConfig.httpConfig.serverAddress + ":" + 
                                       std::to_string(deviceConfig.httpConfig.serverPort) + "/api/threads/mainloop/stop";
@@ -189,11 +235,40 @@ void DeviceManager::onDeviceRemoved(const std::string& devicePath) {
 void DeviceManager::onDeviceVerified(const std::string& devicePath, const DeviceInfo& info) {
     LOG_INFO("Device verified: " + devicePath);
     
-    // Send RPC notifications for verified device using ur-rpc-template structure
-    sendDeviceAddedRpcNotifications(info);
+    // Use USB device tracker to handle duplicate devices
+    auto& tracker = USBDeviceTracker::getInstance();
     
-    // Send shared bus notification
-    sendDeviceVerifiedNotification(info);
+    // Check if this device is already registered as part of a physical device
+    if (tracker.hasPhysicalDevice(info.usbInfo.physicalDeviceId)) {
+        std::string primaryPath = tracker.getPrimaryDevicePath(info.usbInfo.physicalDeviceId);
+        
+        if (tracker.isPrimaryPath(devicePath)) {
+            // This is the primary path - send notifications
+            LOG_INFO("Primary device path verified: " + devicePath + " for physical device: " + 
+                    info.usbInfo.physicalDeviceId);
+            
+            // Send RPC notifications for verified device using ur-rpc-template structure
+            sendDeviceAddedRpcNotifications(info);
+            
+            // Send shared bus notification
+            sendDeviceVerifiedNotification(info);
+        } else {
+            // This is a secondary path - don't send duplicate notifications
+            LOG_INFO("Secondary device path verified: " + devicePath + " for physical device: " + 
+                    info.usbInfo.physicalDeviceId + " (primary: " + primaryPath + 
+                    ") - skipping duplicate notifications");
+        }
+    } else {
+        // New physical device - register it and send notifications
+        tracker.registerDevice(devicePath, info);
+        LOG_INFO("New physical device registered: " + info.usbInfo.physicalDeviceId);
+        
+        // Send RPC notifications for verified device using ur-rpc-template structure
+        sendDeviceAddedRpcNotifications(info);
+        
+        // Send shared bus notification
+        sendDeviceVerifiedNotification(info);
+    }
 }
 
 void DeviceManager::sendDeviceAddedRpcNotifications(const DeviceInfo& info) {
@@ -308,6 +383,12 @@ bool DeviceManager::initializeRpc(const std::string& rpcConfigPath) {
         rpcRunning_.store(true);
         LOG_INFO("RPC system initialized successfully");
         
+        // Initialize and start cron job AFTER RPC client is connected to broker
+        if (!startCronJob()) {
+            LOG_ERROR("Failed to start device discovery cron job");
+            // Continue running even if cron job fails
+        }
+        
         return true;
         
     } catch (const std::exception& e) {
@@ -319,6 +400,9 @@ bool DeviceManager::initializeRpc(const std::string& rpcConfigPath) {
 void DeviceManager::shutdownRpc() {
     if (rpcRunning_.load()) {
         rpcRunning_.store(false);
+        
+        // Stop cron job first
+        stopCronJob();
         
         if (operationProcessor_) {
             operationProcessor_.reset();
@@ -491,6 +575,9 @@ MavlinkShared::DeviceInfo DeviceManager::convertToSharedDeviceInfo(const DeviceI
     sharedInfo.usbInfo.boardClass = info.usbInfo.boardClass;
     sharedInfo.usbInfo.boardName = info.usbInfo.boardName;
     sharedInfo.usbInfo.autopilotType = info.usbInfo.autopilotType;
+    sharedInfo.usbInfo.usbBusNumber = info.usbInfo.usbBusNumber;
+    sharedInfo.usbInfo.usbDeviceAddress = info.usbInfo.usbDeviceAddress;
+    sharedInfo.usbInfo.physicalDeviceId = info.usbInfo.physicalDeviceId;
     
     // Convert MAVLink messages
     for (const auto& msg : info.messages) {
@@ -501,4 +588,56 @@ MavlinkShared::DeviceInfo DeviceManager::convertToSharedDeviceInfo(const DeviceI
     }
     
     return sharedInfo;
+}
+
+// Cron job management methods
+bool DeviceManager::startCronJob() {
+    try {
+        // Wait for RPC client to be available with retry mechanism
+        int retryCount = 0;
+        const int maxRetries = 20;
+        const int retryDelayMs = 500;
+        
+        while ((!rpcClient_ || !rpcClient_->isRunning()) && retryCount < maxRetries) {
+            LOG_INFO("Waiting for RPC client to be available for cron job... (attempt " + 
+                     std::to_string(retryCount + 1) + "/" + std::to_string(maxRetries) + ")");
+            std::this_thread::sleep_for(std::chrono::milliseconds(retryDelayMs));
+            retryCount++;
+        }
+        
+        if (!rpcClient_ || !rpcClient_->isRunning()) {
+            LOG_ERROR("RPC client still not available for cron job after " + 
+                     std::to_string(maxRetries) + " attempts");
+            return false;
+        }
+        
+        LOG_INFO("RPC client is now available, starting device discovery cron job");
+        
+        // Create cron job instance
+        cronJob_ = std::make_unique<DeviceDiscoveryCronJob>(*threadManager_, *rpcClient_);
+        
+        // Start the cron job
+        if (!cronJob_->start()) {
+            LOG_ERROR("Failed to start device discovery cron job");
+            cronJob_.reset();
+            return false;
+        }
+        
+        LOG_INFO("Device discovery cron job started successfully - will push notifications every 1 second");
+        return true;
+        
+    } catch (const std::exception& e) {
+        LOG_ERROR("Failed to start cron job: " + std::string(e.what()));
+        cronJob_.reset();
+        return false;
+    }
+}
+
+void DeviceManager::stopCronJob() {
+    if (cronJob_) {
+        LOG_INFO("Stopping device discovery cron job...");
+        cronJob_->stop();
+        cronJob_.reset();
+        LOG_INFO("Device discovery cron job stopped");
+    }
 }

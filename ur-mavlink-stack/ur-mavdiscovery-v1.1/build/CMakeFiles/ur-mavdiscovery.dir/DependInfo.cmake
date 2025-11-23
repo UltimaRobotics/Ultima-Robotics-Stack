@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/src/CallbackDispatcher.cpp" "CMakeFiles/ur-mavdiscovery.dir/src/CallbackDispatcher.cpp.o" "gcc" "CMakeFiles/ur-mavdiscovery.dir/src/CallbackDispatcher.cpp.o.d"
   "/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/src/ConfigLoader.cpp" "CMakeFiles/ur-mavdiscovery.dir/src/ConfigLoader.cpp.o" "gcc" "CMakeFiles/ur-mavdiscovery.dir/src/ConfigLoader.cpp.o.d"
+  "/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/src/DeviceDiscoveryCronJob.cpp" "CMakeFiles/ur-mavdiscovery.dir/src/DeviceDiscoveryCronJob.cpp.o" "gcc" "CMakeFiles/ur-mavdiscovery.dir/src/DeviceDiscoveryCronJob.cpp.o.d"
   "/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/src/DeviceManager.cpp" "CMakeFiles/ur-mavdiscovery.dir/src/DeviceManager.cpp.o" "gcc" "CMakeFiles/ur-mavdiscovery.dir/src/DeviceManager.cpp.o.d"
   "/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/src/DeviceMonitor.cpp" "CMakeFiles/ur-mavdiscovery.dir/src/DeviceMonitor.cpp.o" "gcc" "CMakeFiles/ur-mavdiscovery.dir/src/DeviceMonitor.cpp.o.d"
   "/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/src/DeviceStateDB.cpp" "CMakeFiles/ur-mavdiscovery.dir/src/DeviceStateDB.cpp.o" "gcc" "CMakeFiles/ur-mavdiscovery.dir/src/DeviceStateDB.cpp.o.d"
@@ -19,6 +20,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/src/RpcClient.cpp" "CMakeFiles/ur-mavdiscovery.dir/src/RpcClient.cpp.o" "gcc" "CMakeFiles/ur-mavdiscovery.dir/src/RpcClient.cpp.o.d"
   "/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/src/RpcOperationProcessor.cpp" "CMakeFiles/ur-mavdiscovery.dir/src/RpcOperationProcessor.cpp.o" "gcc" "CMakeFiles/ur-mavdiscovery.dir/src/RpcOperationProcessor.cpp.o.d"
   "/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/src/SerialPort.cpp" "CMakeFiles/ur-mavdiscovery.dir/src/SerialPort.cpp.o" "gcc" "CMakeFiles/ur-mavdiscovery.dir/src/SerialPort.cpp.o.d"
+  "/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/src/USBDeviceTracker.cpp" "CMakeFiles/ur-mavdiscovery.dir/src/USBDeviceTracker.cpp.o" "gcc" "CMakeFiles/ur-mavdiscovery.dir/src/USBDeviceTracker.cpp.o.d"
   "/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/src/main.cpp" "CMakeFiles/ur-mavdiscovery.dir/src/main.cpp.o" "gcc" "CMakeFiles/ur-mavdiscovery.dir/src/main.cpp.o.d"
   )
 

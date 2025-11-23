@@ -231,12 +231,12 @@ CMakeFiles/ur-mavdiscovery.dir/all: ur-rpc-template/pkg_src/api/wrappers/cpp/CMa
 CMakeFiles/ur-mavdiscovery.dir/all: ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-mavdiscovery.dir/build.make CMakeFiles/ur-mavdiscovery.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-mavdiscovery.dir/build.make CMakeFiles/ur-mavdiscovery.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles --progress-num=49,50,51,52,53,54,55,56,57,58,59,60,61 "Built target ur-mavdiscovery"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles --progress-num=49,50,51,52,53,54,55,56,57,58,59,60,61,62,63 "Built target ur-mavdiscovery"
 .PHONY : CMakeFiles/ur-mavdiscovery.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/ur-mavdiscovery.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles 70
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles 72
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/ur-mavdiscovery.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles 0
 .PHONY : CMakeFiles/ur-mavdiscovery.dir/rule
@@ -311,7 +311,7 @@ ur-rpc-template/CMakeFiles/ur-rpc-template.dir/all: ur-rpc-template/deps/mqtt-cl
 ur-rpc-template/CMakeFiles/ur-rpc-template.dir/all: ur-rpc-template/deps/ur-logger-api/CMakeFiles/ur-logger-api-static.dir/all
 	$(MAKE) $(MAKESILENT) -f ur-rpc-template/CMakeFiles/ur-rpc-template.dir/build.make ur-rpc-template/CMakeFiles/ur-rpc-template.dir/depend
 	$(MAKE) $(MAKESILENT) -f ur-rpc-template/CMakeFiles/ur-rpc-template.dir/build.make ur-rpc-template/CMakeFiles/ur-rpc-template.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles --progress-num=68,69,70 "Built target ur-rpc-template"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles --progress-num=70,71,72 "Built target ur-rpc-template"
 .PHONY : ur-rpc-template/CMakeFiles/ur-rpc-template.dir/all
 
 # Build rule for subdir invocation for target.
@@ -444,7 +444,7 @@ ur-rpc-template/pkg_src/api/wrappers/cpp/CMakeFiles/ur-rpc-dcpp.dir/all: ur-rpc-
 ur-rpc-template/pkg_src/api/wrappers/cpp/CMakeFiles/ur-rpc-dcpp.dir/all: ur-rpc-template/deps/ur-logger-api/CMakeFiles/ur-logger-api-static.dir/all
 	$(MAKE) $(MAKESILENT) -f ur-rpc-template/pkg_src/api/wrappers/cpp/CMakeFiles/ur-rpc-dcpp.dir/build.make ur-rpc-template/pkg_src/api/wrappers/cpp/CMakeFiles/ur-rpc-dcpp.dir/depend
 	$(MAKE) $(MAKESILENT) -f ur-rpc-template/pkg_src/api/wrappers/cpp/CMakeFiles/ur-rpc-dcpp.dir/build.make ur-rpc-template/pkg_src/api/wrappers/cpp/CMakeFiles/ur-rpc-dcpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles --progress-num=65,66,67 "Built target ur-rpc-dcpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles --progress-num=67,68,69 "Built target ur-rpc-dcpp"
 .PHONY : ur-rpc-template/pkg_src/api/wrappers/cpp/CMakeFiles/ur-rpc-dcpp.dir/all
 
 # Build rule for subdir invocation for target.
@@ -470,7 +470,7 @@ ur-rpc-template/pkg_src/api/wrappers/cpp/CMakeFiles/ur-rpc-dcpp.dir/clean:
 ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/all:
 	$(MAKE) $(MAKESILENT) -f ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/build.make ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/depend
 	$(MAKE) $(MAKESILENT) -f ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/build.make ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles --progress-num=62,63,64 "Built target ur-mavdiscovery-shared"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/build/CMakeFiles --progress-num=64,65,66 "Built target ur-mavdiscovery-shared"
 .PHONY : ur-mavdiscovery-shared/CMakeFiles/ur-mavdiscovery-shared.dir/all
 
 # Build rule for subdir invocation for target.

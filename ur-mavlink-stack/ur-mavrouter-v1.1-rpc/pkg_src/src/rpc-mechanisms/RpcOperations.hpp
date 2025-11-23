@@ -105,8 +105,9 @@ public:
     /**
      * @brief Constructor
      * @param threadManager Reference to the thread manager
+     * @param routerConfigPath Path to the router configuration file
      */
-    explicit RpcOperations(ThreadMgr::ThreadManager& threadManager);
+    explicit RpcOperations(ThreadMgr::ThreadManager& threadManager, const std::string& routerConfigPath = "");
     
     /**
      * @brief Destructor
@@ -190,9 +191,16 @@ public:
     std::vector<std::string> getThreadNamesForTarget(ThreadTarget target);
     
     /**
+     * @brief Execute restart callback for a specific thread
+     * @param threadName Thread name to restart
+     * @return Thread ID of the new thread, 0 if failed
+     */
+    unsigned int executeRestartCallback(const std::string& threadName);
+    
+    /**
      * @brief Convert string to thread operation
      * @param operation String representation of operation
-     * @return ThreadOperation enum
+     * @return Thread operation enum
      */
     static ThreadOperation stringToThreadOperation(const std::string& operation);
 
@@ -205,6 +213,7 @@ private:
     
     MavlinkExtensions::ExtensionManager* extensionManager_{nullptr};
     bool verbose_{false};
+    std::string routerConfigPath_;  // Path to router configuration file
     mutable std::mutex operationsMutex_;
     
     ThreadStateInfo getThreadStateInfo(const std::string& threadName);

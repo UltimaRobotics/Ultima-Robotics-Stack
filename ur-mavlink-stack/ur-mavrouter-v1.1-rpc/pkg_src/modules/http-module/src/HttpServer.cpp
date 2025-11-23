@@ -60,6 +60,11 @@ void HttpServer::setRpcController(std::shared_ptr<void> rpcController) {
     rpcController_ = rpcController;
 }
 
+void HttpServer::setRouterConfigPath(const std::string& routerConfigPath) {
+    routerConfigPath_ = routerConfigPath;
+    std::cout << "[HTTP] Router configuration path set to: " << routerConfigPath_ << std::endl;
+}
+
 void HttpServer::setExtensionManager(std::shared_ptr<void> extensionManager) {
     extensionManager_ = extensionManager;
     
@@ -169,11 +174,19 @@ void HttpServer::setExtensionManager(std::shared_ptr<void> extensionManager) {
                 
                 // If device path was provided, update the router configuration
                 if (!devicePath.empty()) {
-                    std::string configPath = "config/router-config.json";
+                    if (routerConfigPath_.empty()) {
+                        std::cout << "[HTTP] Error: No router configuration path set" << std::endl;
+                        resp.statusCode = 500;
+                        resp.contentType = "application/json";
+                        resp.content = "{\"error\":\"Router configuration path not set\"}";
+                        return resp;
+                    }
+                    
                     std::cout << "[HTTP] Updating router configuration with device: " << devicePath << std::endl;
+                    std::cout << "[HTTP] Using router configuration file: " << routerConfigPath_ << std::endl;
                     
                     try {
-                        std::ifstream configFile(configPath);
+                        std::ifstream configFile(routerConfigPath_);
                         if (configFile.is_open()) {
                             nlohmann::json configJson;
                             configFile >> configJson;
@@ -181,48 +194,74 @@ void HttpServer::setExtensionManager(std::shared_ptr<void> extensionManager) {
                             
                             // Update or add the UART endpoint for the discovered device
                             bool deviceFound = false;
+                            bool deviceUpdated = false;
                             if (configJson.contains("uart_endpoints") && configJson["uart_endpoints"].is_array()) {
+                                std::cout << "[HTTP] Checking existing UART endpoints..." << std::endl;
+                                
                                 for (auto& endpoint : configJson["uart_endpoints"]) {
-                                    if (endpoint.contains("device") && endpoint["device"] == devicePath) {
-                                        // Device already exists, update baudrate
-                                        endpoint["baud"] = nlohmann::json::array({baudrate});
+                                    if (endpoint.contains("name") && endpoint["name"] == "flight_controller") {
+                                        std::string oldDevice = endpoint.value("device", "unknown");
+                                        std::cout << "[HTTP] Found flight_controller endpoint, updating device path from " << oldDevice << " to " << devicePath << std::endl;
+                                        
+                                        // CRITICAL: Preserve existing baudrate configuration, only update device path
+                                        endpoint["device"] = devicePath;
                                         deviceFound = true;
-                                        std::cout << "[HTTP] Updated existing UART endpoint for " << devicePath << std::endl;
+                                        deviceUpdated = true;
                                         break;
                                     }
                                 }
                                 
                                 if (!deviceFound) {
-                                    // Add new UART endpoint
+                                    std::cout << "[HTTP] flight_controller endpoint not found, adding new endpoint" << std::endl;
+                                    // Add new UART endpoint with discovered device path and default baudrate
                                     nlohmann::json newEndpoint;
-                                    newEndpoint["name"] = "discovered_device";
+                                    newEndpoint["name"] = "flight_controller";
                                     newEndpoint["device"] = devicePath;
-                                    newEndpoint["baud"] = nlohmann::json::array({baudrate});
+                                    newEndpoint["baud"] = nlohmann::json::array({57600}); // Default baudrate
                                     newEndpoint["flow_control"] = false;
                                     
                                     configJson["uart_endpoints"].push_back(newEndpoint);
+                                    deviceUpdated = true;
                                     std::cout << "[HTTP] Added new UART endpoint for " << devicePath << std::endl;
                                 }
                             } else {
-                                // Create uart_endpoints array if it doesn't exist
+                                std::cout << "[HTTP] No uart_endpoints array found, creating new one" << std::endl;
+                                // Create uart_endpoints array with the discovered device
                                 nlohmann::json newEndpoint;
-                                newEndpoint["name"] = "discovered_device";
+                                newEndpoint["name"] = "flight_controller";
                                 newEndpoint["device"] = devicePath;
-                                newEndpoint["baud"] = nlohmann::json::array({baudrate});
+                                newEndpoint["baud"] = nlohmann::json::array({57600}); // Default baudrate
                                 newEndpoint["flow_control"] = false;
                                 
                                 configJson["uart_endpoints"] = nlohmann::json::array({newEndpoint});
+                                deviceUpdated = true;
                                 std::cout << "[HTTP] Created uart_endpoints array with " << devicePath << std::endl;
                             }
                             
-                            // Write updated config back to file
-                            std::ofstream outFile(configPath);
-                            if (outFile.is_open()) {
-                                outFile << configJson.dump(2);
-                                outFile.close();
-                                std::cout << "[HTTP] Successfully updated router configuration file" << std::endl;
+                            if (deviceUpdated) {
+                                // Write updated config back to file
+                                std::ofstream outFile(routerConfigPath_);
+                                if (outFile.is_open()) {
+                                    outFile << configJson.dump(2);
+                                    outFile.close();
+                                    std::cout << "[HTTP] Successfully updated router configuration file" << std::endl;
+                                    
+                                    // Log the updated configuration for verification
+                                    std::cout << "[HTTP] Updated UART endpoints:" << std::endl;
+                                    if (configJson.contains("uart_endpoints")) {
+                                        for (const auto& endpoint : configJson["uart_endpoints"]) {
+                                            std::string device = endpoint.value("device", "unknown");
+                                            std::string name = endpoint.value("name", "unnamed");
+                                            auto baudArray = endpoint.value("baud", nlohmann::json::array());
+                                            std::string baudStr = baudArray.empty() ? "unknown" : std::to_string(baudArray[0].get<int>());
+                                            std::cout << "[HTTP]   - " << name << ": " << device << " (baudrate: " << baudStr << ")" << std::endl;
+                                        }
+                                    }
+                                } else {
+                                    std::cout << "[HTTP] Warning: Failed to write updated configuration" << std::endl;
+                                }
                             } else {
-                                std::cout << "[HTTP] Warning: Failed to write updated configuration" << std::endl;
+                                std::cout << "[HTTP] No configuration updates needed" << std::endl;
                             }
                         } else {
                             std::cout << "[HTTP] Warning: Failed to open router configuration file" << std::endl;

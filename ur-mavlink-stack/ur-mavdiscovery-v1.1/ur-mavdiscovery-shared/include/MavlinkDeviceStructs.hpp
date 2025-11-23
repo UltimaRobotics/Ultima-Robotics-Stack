@@ -39,6 +39,9 @@ struct USBDeviceInfo {
     std::string boardClass;      // Flight controller class (e.g., "Pixhawk", "ArduPilot")
     std::string boardName;        // Specific board name (e.g., "PX4 FMU V2", "Cube Orange")
     std::string autopilotType;    // Type of autopilot (e.g., "PX4", "ArduPilot", "Generic")
+    std::string usbBusNumber;     // USB bus number (e.g., "1", "2")
+    std::string usbDeviceAddress; // USB device address on the bus (e.g., "1", "2")
+    std::string physicalDeviceId; // Unique identifier for the physical device (bus:vendor:product:serial)
     
     USBDeviceInfo() = default;
 };

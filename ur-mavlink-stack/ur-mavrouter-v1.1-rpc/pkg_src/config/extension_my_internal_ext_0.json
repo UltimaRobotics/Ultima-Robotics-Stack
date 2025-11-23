@@ -1,9 +1,9 @@
 {
-  "address": "172.18.0.0",
+  "address": "127.0.0.1",
   "assigned_extension_point": "internal-router-point-1",
   "extension_thread_config": {
     "general": {
-      "tcp_server_port": 56449
+      "tcp_server_port": 56278
     },
     "udp_endpoints": [
       {
@@ -13,7 +13,7 @@
         "port": 43001
       },
       {
-        "address": "172.18.0.0",
+        "address": "127.0.0.1",
         "mode": "Client",
         "name": "my_internal_ext_0",
         "port": 44552

@@ -1,7 +1,7 @@
 
 {
   "address": "0.0.0.0",
-  "port": 5000,
+  "port": 5760,
   "threadPoolSize": 4,
   "connectionLimit": 100,
   "connectionTimeout": 30,

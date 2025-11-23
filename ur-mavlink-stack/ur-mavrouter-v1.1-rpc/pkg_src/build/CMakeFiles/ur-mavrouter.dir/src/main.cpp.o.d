@@ -687,6 +687,7 @@ CMakeFiles/ur-mavrouter.dir/src/main.cpp.o: \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/logendpoint.h \
  /usr/include/aio.h \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/mainloop.h \
+ /usr/include/c++/11/condition_variable \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/binlog.h \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/config.h \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/dedup.h \
@@ -694,8 +695,7 @@ CMakeFiles/ur-mavrouter.dir/src/main.cpp.o: \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/common/json_config.h \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/common/../../modules/nholmann/json.hpp \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/modules/ur-threadder-api/cpp/include/ThreadManager.hpp \
- /usr/include/c++/11/future /usr/include/c++/11/condition_variable \
- /usr/include/c++/11/bits/atomic_futex.h \
+ /usr/include/c++/11/future /usr/include/c++/11/bits/atomic_futex.h \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/modules/ur-threadder-api/include/thread_manager.h \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/modules/ur-threadder-api/include/json_config.h \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/modules/ur-threadder-api/include/thread_manager.h \

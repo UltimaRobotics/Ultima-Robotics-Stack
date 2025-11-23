@@ -2,6 +2,7 @@
 #include "Logger.hpp"
 #include "DeviceStateDB.hpp"
 #include "DeviceInfo.hpp"
+#include "USBDeviceTracker.hpp"
 #include <chrono>
 
 RpcOperationProcessor::RpcOperationProcessor(const DeviceConfig& config, RpcClient& rpcClient, bool verbose)
@@ -321,9 +322,12 @@ int RpcOperationProcessor::handleDeviceList(const json& params, std::string& res
         auto& deviceDB = DeviceStateDB::getInstance();
         auto allDevices = deviceDB.getAllDevices();
         
+        // Get USB device tracker instance to filter primary paths only (avoid duplicates)
+        auto& tracker = USBDeviceTracker::getInstance();
+        
         for (const auto& deviceInfo : allDevices) {
-            // Only include verified devices
-            if (deviceInfo->state == DeviceState::VERIFIED) {
+            // Only include verified devices that are primary paths to avoid duplicates
+            if (deviceInfo->state == DeviceState::VERIFIED && tracker.isPrimaryPath(deviceInfo->devicePath)) {
                 json deviceJson;
                 deviceJson["devicePath"] = deviceInfo->devicePath;
                 deviceJson["baudrate"] = deviceInfo->baudrate;

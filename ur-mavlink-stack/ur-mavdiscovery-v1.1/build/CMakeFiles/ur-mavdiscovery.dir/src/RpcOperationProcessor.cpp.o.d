@@ -312,4 +312,5 @@ CMakeFiles/ur-mavdiscovery.dir/src/RpcOperationProcessor.cpp.o: \
  /usr/include/c++/11/bits/fstream.tcc /usr/include/c++/11/iostream \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/include/DeviceStateDB.hpp \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/include/DeviceInfo.hpp \
- /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/include/../thirdparty/nholmann/json.hpp
+ /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/include/../thirdparty/nholmann/json.hpp \
+ /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavdiscovery-v1.1/include/USBDeviceTracker.hpp

@@ -69,6 +69,8 @@ set(SOURCES
     src/DeviceManager.cpp
     src/RpcClient.cpp
     src/RpcOperationProcessor.cpp
+    src/DeviceDiscoveryCronJob.cpp
+    src/USBDeviceTracker.cpp
 )
 
 # Conditionally add HTTP client source

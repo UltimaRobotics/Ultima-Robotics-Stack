@@ -3,16 +3,18 @@
 #include "DataStructures.h"
 #include "ConfigParser.h"
 #include "JsonFormatter.h"
+#include "RpcClientThread.h"
 #include <mavsdk/mavsdk.h>
-#include <mavsdk/plugins/telemetry/telemetry.h>
-#include <mavsdk/plugins/info/info.h>
-#include <mavsdk/plugins/param/param.h>
+#include <plugins/telemetry/telemetry.h>
+#include <plugins/info/info.h>
+#include <plugins/param/param.h>
 #include <functional>
 #include <memory>
 #include <thread>
 #include <atomic>
 #include <mutex>
 #include <ThreadManager.hpp>
+#include <nlohmann/json.hpp>
 
 // Forward declarations to avoid circular dependencies
 namespace mavsdk {
@@ -44,6 +46,13 @@ public:
      * @return true if initialization successful, false otherwise
      */
     bool initialize(const ConnectionConfig& config);
+    
+    /**
+     * @brief Initialize RPC client thread
+     * @param rpcConfigPath Path to RPC configuration file
+     * @return true if RPC initialization successful, false otherwise
+     */
+    bool initializeRpc(const std::string& rpcConfigPath);
     
     /**
      * @brief Connect to flight controller
@@ -132,6 +141,18 @@ public:
      * @return Connection statistics string
      */
     std::string getConnectionStats() const;
+    
+    /**
+     * @brief Check if RPC client is running
+     * @return true if RPC client is running, false otherwise
+     */
+    bool isRpcRunning() const;
+    
+    /**
+     * @brief Get RPC client instance
+     * @return Pointer to RPC client thread
+     */
+    RpcClientThread* getRpcClient() const;
 
 private:
     // MAVSDK components
@@ -162,6 +183,10 @@ private:
     unsigned int logging_thread_id_;
     std::atomic<bool> should_stop_{false};
     
+    // RPC client
+    std::unique_ptr<RpcClientThread> rpc_client_;
+    std::atomic<bool> rpc_running_{false};
+    
     // Private methods
     bool setupConnection();
     void initializeInfoPlugin(); // Initialize Info plugin and get system information
@@ -175,6 +200,13 @@ private:
     void updateMessageRate(uint16_t message_id);
     void updateDiagnosticParameter(const std::string& name, float value);
     void resetData();
+    void setupRpcMessageHandler(); // Setup RPC message handler
+    void onRpcMessage(const std::string& topic, const std::string& payload); // Handle RPC messages
+    void handleGetFlightData(const nlohmann::json& request);
+    void handleGetVehicleInfo(const nlohmann::json& request);
+    void handleStartCollection(const nlohmann::json& request);
+    void handleStopCollection(const nlohmann::json& request);
+    void sendErrorResponse(const nlohmann::json& requestId, const std::string& errorMessage);
     std::string mapVendorIdToName(int32_t vendor_id);
     std::string mapProductIdToName(int32_t product_id);
     

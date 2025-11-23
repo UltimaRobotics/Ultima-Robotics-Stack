@@ -1,0 +1,4546 @@
+{
+  "collection_info": {
+    "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+    "total_messages": 51,
+    "collection_time": "2025-11-23T15:08:40.820559",
+    "broker": "127.0.0.1:1899"
+  },
+  "messages": [
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:20.809707",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "internal-router-point-1",
+        "header": {
+          "sequence": 0,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:20.809",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:20.809914",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "udp-extension-point-1",
+        "header": {
+          "sequence": 1,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:20.809",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:20.810220",
+      "sequence": 0,
+      "payload": {
+        "endpoints": {
+          "extensions": {
+            "my_internal_ext_0": [],
+            "test_extension_1": []
+          },
+          "main_router": [
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 49,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:20.809",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "test_extension_1",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 0,
+                "multicast_messages": 0,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:20.809",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-2",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 0
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:20.809",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-1",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 0
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:20.809",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-3",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 0
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 37,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:20.809",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-4",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 0,
+                "multicast_messages": 0,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 52,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:20.809",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "my_internal_ext_0",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 0,
+                "multicast_messages": 0,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 35,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:20.809",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-3",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 0,
+                "multicast_messages": 0,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 59,
+              "has_client": true,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:20.809",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-1",
+              "occupied": true,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 0,
+                "multicast_messages": 0,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 33,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:20.809",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-2",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 0,
+                "multicast_messages": 0,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 29,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:20.809",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-3",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 0,
+                "multicast_messages": 0,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 39,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:20.809",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-5",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 0,
+                "multicast_messages": 0,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 27,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:20.809",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-2",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 0,
+                "multicast_messages": 0,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 53,
+              "has_client": true,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:20.809",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-1",
+              "occupied": true,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 0,
+                "multicast_messages": 0,
+                "unique_endpoints": 0
+              }
+            }
+          ]
+        },
+        "header": {
+          "sequence": 2,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:20.809",
+          "type": "endpoint_monitoring",
+          "version": "1.0"
+        },
+        "summary": {
+          "connection_tracking": true,
+          "monitoring_enabled": true,
+          "occupied_endpoints": 2,
+          "total_endpoints": 13
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:21.810585",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "udp-extension-point-1",
+        "header": {
+          "sequence": 3,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:21.810",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:21.810734",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "internal-router-point-1",
+        "header": {
+          "sequence": 4,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:21.810",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:22.810960",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "udp-extension-point-1",
+        "header": {
+          "sequence": 5,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:22.810",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:22.811109",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "internal-router-point-1",
+        "header": {
+          "sequence": 6,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:22.810",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:22.811321",
+      "sequence": 0,
+      "payload": {
+        "endpoints": {
+          "extensions": {
+            "my_internal_ext_0": [],
+            "test_extension_1": []
+          },
+          "main_router": [
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 49,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:22.810",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "test_extension_1",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 816,
+                "multicast_messages": 12,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:22.810",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-2",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:22.810",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-1",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:22.810",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-3",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 37,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:22.810",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-4",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 816,
+                "multicast_messages": 12,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 52,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:22.810",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "my_internal_ext_0",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 816,
+                "multicast_messages": 12,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 35,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:22.810",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-3",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 816,
+                "multicast_messages": 12,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 59,
+              "has_client": true,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:22.810",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-1",
+              "occupied": true,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 816,
+                "multicast_messages": 12,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 33,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:22.810",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-2",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 816,
+                "multicast_messages": 12,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 29,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:22.810",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-3",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 816,
+                "multicast_messages": 12,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 39,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:22.810",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-5",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 816,
+                "multicast_messages": 12,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 27,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:22.810",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-2",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 816,
+                "multicast_messages": 12,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 53,
+              "has_client": true,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:22.810",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-1",
+              "occupied": true,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 816,
+                "multicast_messages": 12,
+                "unique_endpoints": 0
+              }
+            }
+          ]
+        },
+        "header": {
+          "sequence": 7,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:22.810",
+          "type": "endpoint_monitoring",
+          "version": "1.0"
+        },
+        "summary": {
+          "connection_tracking": true,
+          "monitoring_enabled": true,
+          "occupied_endpoints": 2,
+          "total_endpoints": 13
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:23.811719",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "udp-extension-point-1",
+        "header": {
+          "sequence": 8,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:23.811",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:23.811885",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "internal-router-point-1",
+        "header": {
+          "sequence": 9,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:23.811",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:24.812126",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "udp-extension-point-1",
+        "header": {
+          "sequence": 10,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:24.811",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:24.812245",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "internal-router-point-1",
+        "header": {
+          "sequence": 11,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:24.811",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:24.812383",
+      "sequence": 0,
+      "payload": {
+        "endpoints": {
+          "extensions": {
+            "my_internal_ext_0": [],
+            "test_extension_1": []
+          },
+          "main_router": [
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 49,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:24.811",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "test_extension_1",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 240,
+                "multicast_messages": 3,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:24.811",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-2",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:24.811",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-1",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:24.811",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-3",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 37,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:24.811",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-4",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 240,
+                "multicast_messages": 3,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 52,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:24.811",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "my_internal_ext_0",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 240,
+                "multicast_messages": 3,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 35,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:24.811",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-3",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 240,
+                "multicast_messages": 3,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 59,
+              "has_client": true,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:24.811",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-1",
+              "occupied": true,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 240,
+                "multicast_messages": 3,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 33,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:24.811",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-2",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 240,
+                "multicast_messages": 3,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 29,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:24.811",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-3",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 240,
+                "multicast_messages": 3,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 39,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:24.811",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-5",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 240,
+                "multicast_messages": 3,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 27,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:24.811",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-2",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 240,
+                "multicast_messages": 3,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 53,
+              "has_client": true,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:24.811",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-1",
+              "occupied": true,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 240,
+                "multicast_messages": 3,
+                "unique_endpoints": 0
+              }
+            }
+          ]
+        },
+        "header": {
+          "sequence": 12,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:24.811",
+          "type": "endpoint_monitoring",
+          "version": "1.0"
+        },
+        "summary": {
+          "connection_tracking": true,
+          "monitoring_enabled": true,
+          "occupied_endpoints": 2,
+          "total_endpoints": 13
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:25.812786",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "udp-extension-point-1",
+        "header": {
+          "sequence": 13,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:25.812",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:25.812907",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "internal-router-point-1",
+        "header": {
+          "sequence": 14,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:25.812",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:26.813084",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "udp-extension-point-1",
+        "header": {
+          "sequence": 15,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:26.812",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:26.813199",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "internal-router-point-1",
+        "header": {
+          "sequence": 16,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:26.812",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:26.813335",
+      "sequence": 0,
+      "payload": {
+        "endpoints": {
+          "extensions": {
+            "my_internal_ext_0": [],
+            "test_extension_1": []
+          },
+          "main_router": [
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 49,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:26.812",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "test_extension_1",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 5998,
+                "multicast_messages": 1073756720,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:26.812",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-2",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:26.812",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-1",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:26.812",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-3",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 37,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:26.812",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-4",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 5998,
+                "multicast_messages": 1073756720,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 52,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:26.812",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "my_internal_ext_0",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 5998,
+                "multicast_messages": 1073756720,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 35,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:26.812",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-3",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 5998,
+                "multicast_messages": 1073756720,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 59,
+              "has_client": true,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:26.812",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-1",
+              "occupied": true,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 5998,
+                "multicast_messages": 1073756720,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 33,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:26.812",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-2",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 5998,
+                "multicast_messages": 1073756720,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 29,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:26.812",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-3",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 5998,
+                "multicast_messages": 1073756720,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 39,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:26.812",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-5",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 5998,
+                "multicast_messages": 1073756720,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 27,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:26.812",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-2",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 5998,
+                "multicast_messages": 1073756720,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 53,
+              "has_client": true,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:26.812",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-1",
+              "occupied": true,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 5998,
+                "multicast_messages": 1073756720,
+                "unique_endpoints": 0
+              }
+            }
+          ]
+        },
+        "header": {
+          "sequence": 17,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:26.812",
+          "type": "endpoint_monitoring",
+          "version": "1.0"
+        },
+        "summary": {
+          "connection_tracking": true,
+          "monitoring_enabled": true,
+          "occupied_endpoints": 2,
+          "total_endpoints": 13
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:27.813684",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "udp-extension-point-1",
+        "header": {
+          "sequence": 18,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:27.813",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:27.813892",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "internal-router-point-1",
+        "header": {
+          "sequence": 19,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:27.813",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:28.813959",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "udp-extension-point-1",
+        "header": {
+          "sequence": 20,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:28.813",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:28.814091",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "internal-router-point-1",
+        "header": {
+          "sequence": 21,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:28.813",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:28.814326",
+      "sequence": 0,
+      "payload": {
+        "endpoints": {
+          "extensions": {
+            "my_internal_ext_0": [],
+            "test_extension_1": []
+          },
+          "main_router": [
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 49,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:28.813",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "test_extension_1",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073846096,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:28.813",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-2",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:28.813",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-1",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:28.813",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-3",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 37,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:28.813",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-4",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073846096,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 52,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:28.813",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "my_internal_ext_0",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073846096,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 35,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:28.813",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-3",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073846096,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 59,
+              "has_client": true,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:28.813",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-1",
+              "occupied": true,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073846096,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 33,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:28.813",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-2",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073846096,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 29,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:28.813",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-3",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073846096,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 39,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:28.813",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-5",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073846096,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 27,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:28.813",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-2",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073846096,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 53,
+              "has_client": true,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:28.813",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-1",
+              "occupied": true,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073846096,
+                "unique_endpoints": 0
+              }
+            }
+          ]
+        },
+        "header": {
+          "sequence": 22,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:28.813",
+          "type": "endpoint_monitoring",
+          "version": "1.0"
+        },
+        "summary": {
+          "connection_tracking": true,
+          "monitoring_enabled": true,
+          "occupied_endpoints": 2,
+          "total_endpoints": 13
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:29.814654",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "udp-extension-point-1",
+        "header": {
+          "sequence": 23,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:29.814",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:29.814815",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "internal-router-point-1",
+        "header": {
+          "sequence": 24,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:29.814",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:30.814998",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "udp-extension-point-1",
+        "header": {
+          "sequence": 25,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:30.814",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:30.815140",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "internal-router-point-1",
+        "header": {
+          "sequence": 26,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:30.814",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:30.815299",
+      "sequence": 0,
+      "payload": {
+        "endpoints": {
+          "extensions": {
+            "my_internal_ext_0": [],
+            "test_extension_1": []
+          },
+          "main_router": [
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 49,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:30.814",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "test_extension_1",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073844656,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:30.814",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-2",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:30.814",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-1",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:30.814",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-3",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 37,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:30.814",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-4",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073844656,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 52,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:30.814",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "my_internal_ext_0",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073844656,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 35,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:30.814",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-3",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073844656,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 59,
+              "has_client": true,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:30.814",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-1",
+              "occupied": true,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073844656,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 33,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:30.814",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-2",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073844656,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 29,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:30.814",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-3",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073844656,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 39,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:30.814",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-5",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073844656,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 27,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:30.814",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-2",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073844656,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 53,
+              "has_client": true,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:30.814",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-1",
+              "occupied": true,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073844656,
+                "unique_endpoints": 0
+              }
+            }
+          ]
+        },
+        "header": {
+          "sequence": 27,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:30.814",
+          "type": "endpoint_monitoring",
+          "version": "1.0"
+        },
+        "summary": {
+          "connection_tracking": true,
+          "monitoring_enabled": true,
+          "occupied_endpoints": 2,
+          "total_endpoints": 13
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:31.815706",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "udp-extension-point-1",
+        "header": {
+          "sequence": 28,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:31.815",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:31.815947",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "internal-router-point-1",
+        "header": {
+          "sequence": 29,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:31.815",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:32.816020",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "udp-extension-point-1",
+        "header": {
+          "sequence": 30,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:32.815",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:32.816194",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "internal-router-point-1",
+        "header": {
+          "sequence": 31,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:32.815",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:32.816399",
+      "sequence": 0,
+      "payload": {
+        "endpoints": {
+          "extensions": {
+            "my_internal_ext_0": [],
+            "test_extension_1": []
+          },
+          "main_router": [
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 49,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:32.815",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "test_extension_1",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073842816,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:32.815",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-2",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:32.815",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-1",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:32.815",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-3",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 37,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:32.815",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-4",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073842816,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 52,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:32.815",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "my_internal_ext_0",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073842816,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 35,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:32.815",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-3",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073842816,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 59,
+              "has_client": true,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:32.815",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-1",
+              "occupied": true,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073842816,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 33,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:32.815",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-2",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073842816,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 29,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:32.815",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-3",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073842816,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 39,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:32.815",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-5",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073842816,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 27,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:32.815",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-2",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073842816,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 53,
+              "has_client": true,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:32.815",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-1",
+              "occupied": true,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073842816,
+                "unique_endpoints": 0
+              }
+            }
+          ]
+        },
+        "header": {
+          "sequence": 32,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:32.815",
+          "type": "endpoint_monitoring",
+          "version": "1.0"
+        },
+        "summary": {
+          "connection_tracking": true,
+          "monitoring_enabled": true,
+          "occupied_endpoints": 2,
+          "total_endpoints": 13
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:33.816694",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "udp-extension-point-1",
+        "header": {
+          "sequence": 33,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:33.816",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:33.816838",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "internal-router-point-1",
+        "header": {
+          "sequence": 34,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:33.816",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:34.817086",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "udp-extension-point-1",
+        "header": {
+          "sequence": 35,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:34.816",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:34.817268",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "internal-router-point-1",
+        "header": {
+          "sequence": 36,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:34.816",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:34.817435",
+      "sequence": 0,
+      "payload": {
+        "endpoints": {
+          "extensions": {
+            "my_internal_ext_0": [],
+            "test_extension_1": []
+          },
+          "main_router": [
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 49,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:34.816",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "test_extension_1",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073826032,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:34.816",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-2",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:34.816",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-1",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:34.816",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-3",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 37,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:34.816",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-4",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073826032,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 52,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:34.816",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "my_internal_ext_0",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073826032,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 35,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:34.816",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-3",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073826032,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 59,
+              "has_client": true,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:34.816",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-1",
+              "occupied": true,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073826032,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 33,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:34.816",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-2",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073826032,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 29,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:34.816",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-3",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073826032,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 39,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:34.816",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-5",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073826032,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 27,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:34.816",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-2",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073826032,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 53,
+              "has_client": true,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:34.816",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-1",
+              "occupied": true,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073826032,
+                "unique_endpoints": 0
+              }
+            }
+          ]
+        },
+        "header": {
+          "sequence": 37,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:34.816",
+          "type": "endpoint_monitoring",
+          "version": "1.0"
+        },
+        "summary": {
+          "connection_tracking": true,
+          "monitoring_enabled": true,
+          "occupied_endpoints": 2,
+          "total_endpoints": 13
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:35.817649",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "udp-extension-point-1",
+        "header": {
+          "sequence": 38,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:35.817",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:35.817785",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "internal-router-point-1",
+        "header": {
+          "sequence": 39,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:35.817",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:36.818021",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "udp-extension-point-1",
+        "header": {
+          "sequence": 40,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:36.817",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:36.818222",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "internal-router-point-1",
+        "header": {
+          "sequence": 41,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:36.817",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:36.818394",
+      "sequence": 0,
+      "payload": {
+        "endpoints": {
+          "extensions": {
+            "my_internal_ext_0": [],
+            "test_extension_1": []
+          },
+          "main_router": [
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 49,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:36.817",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "test_extension_1",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073839984,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:36.817",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-2",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:36.817",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-1",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:36.817",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-3",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 37,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:36.817",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-4",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073839984,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 52,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:36.817",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "my_internal_ext_0",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073839984,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 35,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:36.817",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-3",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073839984,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 59,
+              "has_client": true,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:36.817",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-1",
+              "occupied": true,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073839984,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 33,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:36.817",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-2",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073839984,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 29,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:36.817",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-3",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073839984,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 39,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:36.817",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-5",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073839984,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 27,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:36.817",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-2",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073839984,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 53,
+              "has_client": true,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:36.817",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-1",
+              "occupied": true,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073839984,
+                "unique_endpoints": 0
+              }
+            }
+          ]
+        },
+        "header": {
+          "sequence": 42,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:36.817",
+          "type": "endpoint_monitoring",
+          "version": "1.0"
+        },
+        "summary": {
+          "connection_tracking": true,
+          "monitoring_enabled": true,
+          "occupied_endpoints": 2,
+          "total_endpoints": 13
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:37.818647",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "udp-extension-point-1",
+        "header": {
+          "sequence": 43,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:37.818",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:37.818851",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "internal-router-point-1",
+        "header": {
+          "sequence": 44,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:37.818",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:38.818981",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "udp-extension-point-1",
+        "header": {
+          "sequence": 45,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:38.818",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:38.819156",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "internal-router-point-1",
+        "header": {
+          "sequence": 46,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:38.818",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:38.819350",
+      "sequence": 0,
+      "payload": {
+        "endpoints": {
+          "extensions": {
+            "my_internal_ext_0": [],
+            "test_extension_1": []
+          },
+          "main_router": [
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 49,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:38.818",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "test_extension_1",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073772416,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:38.818",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-2",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:38.818",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-1",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": -1,
+              "has_client": false,
+              "has_server": false,
+              "last_activity": "2025-11-23 15:08:38.818",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "tcp-extension-point-3",
+              "occupied": false,
+              "tcp_details": {
+                "active_clients": 0,
+                "last_client_ip": "",
+                "last_client_port": 11
+              },
+              "type": "TCP"
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 37,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:38.818",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-4",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073772416,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 52,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:38.818",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "my_internal_ext_0",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073772416,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 35,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:38.818",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-3",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073772416,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 59,
+              "has_client": true,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:38.818",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-1",
+              "occupied": true,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073772416,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 33,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:38.818",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-2",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073772416,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 29,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:38.818",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-3",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073772416,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 39,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:38.818",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "udp-extension-point-5",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073772416,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 27,
+              "has_client": false,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:38.818",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-2",
+              "occupied": false,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073772416,
+                "unique_endpoints": 0
+              }
+            },
+            {
+              "connection_info": "",
+              "connection_state": 0,
+              "fd": 53,
+              "has_client": true,
+              "has_server": true,
+              "last_activity": "2025-11-23 15:08:38.818",
+              "metrics": {
+                "active_connections": 0,
+                "connection_attempts": 0,
+                "failed_connections": 0,
+                "total_connections": 0,
+                "unknown_messages": 0
+              },
+              "name": "internal-router-point-1",
+              "occupied": true,
+              "type": "UDP",
+              "udp_details": {
+                "broadcast_messages": 0,
+                "last_remote_ip": "",
+                "last_remote_port": 6098,
+                "multicast_messages": 1073772416,
+                "unique_endpoints": 0
+              }
+            }
+          ]
+        },
+        "header": {
+          "sequence": 47,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:38.818",
+          "type": "endpoint_monitoring",
+          "version": "1.0"
+        },
+        "summary": {
+          "connection_tracking": true,
+          "monitoring_enabled": true,
+          "occupied_endpoints": 2,
+          "total_endpoints": 13
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:39.819683",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "udp-extension-point-1",
+        "header": {
+          "sequence": 48,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:39.819",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:39.819885",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "internal-router-point-1",
+        "header": {
+          "sequence": 49,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:39.819",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    },
+    {
+      "topic": "ur-shared-bus/ur-mavlink-stack/ur-mavrouter/notification",
+      "timestamp": "2025-11-23T15:08:40.820040",
+      "sequence": 0,
+      "payload": {
+        "change_type": "occupancy",
+        "endpoint_name": "udp-extension-point-1",
+        "header": {
+          "sequence": 50,
+          "source": "ur-mavrouter",
+          "timestamp": "2025-11-23 15:08:40.819",
+          "type": "endpoint_status_change",
+          "version": "1.0"
+        },
+        "new_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": false
+        },
+        "old_status": {
+          "active_connections": 0,
+          "connection_state": 0,
+          "occupied": true
+        }
+      }
+    }
+  ]
+}

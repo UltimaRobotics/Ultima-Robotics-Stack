@@ -13,8 +13,14 @@
 
 namespace URRpcIntegration {
 
-RpcOperationProcessor::RpcOperationProcessor(ThreadMgr::ThreadManager& threadManager, bool verbose)
-    : threadManager_(threadManager), verbose_(verbose) {
+RpcOperationProcessor::RpcOperationProcessor(ThreadMgr::ThreadManager& threadManager, const std::string& routerConfigPath, bool verbose)
+    : threadManager_(threadManager), routerConfigPath_(routerConfigPath), verbose_(verbose) {
+    
+    if (!routerConfigPath_.empty()) {
+        std::cout << "[RPC_PROCESSOR] Using router configuration path: " << routerConfigPath_ << std::endl;
+    } else {
+        std::cout << "[RPC_PROCESSOR] No router configuration path provided" << std::endl;
+    }
     
     initializeBuiltInHandlers();
     
@@ -554,9 +560,16 @@ int RpcOperationProcessor::handleStartMainloop(const nlohmann::json& params, con
     
     // Update the router configuration with the provided device information
     if (!devicePath.empty()) {
+        if (routerConfigPath_.empty()) {
+            std::cout << "[RPC_PROCESSOR] Error: No router configuration path available" << std::endl;
+            return -1;
+        }
+        
         try {
-            std::string configFile = "config/router-config.json";
-            std::ifstream file(configFile);
+            std::cout << "[RPC_PROCESSOR] Updating router configuration with device: " << devicePath << std::endl;
+            std::cout << "[RPC_PROCESSOR] Using router configuration file: " << routerConfigPath_ << std::endl;
+            
+            std::ifstream file(routerConfigPath_);
             
             if (file.is_open()) {
                 nlohmann::json config;
@@ -568,7 +581,7 @@ int RpcOperationProcessor::handleStartMainloop(const nlohmann::json& params, con
                 config["baudrate"] = baudrate;
                 
                 // Write the updated configuration back to the file
-                std::ofstream outFile(configFile);
+                std::ofstream outFile(routerConfigPath_);
                 if (outFile.is_open()) {
                     outFile << config.dump(4);
                     outFile.close();
@@ -610,8 +623,37 @@ int RpcOperationProcessor::handleStartMainloop(const nlohmann::json& params, con
         return -1;
     }
     
-    // Wait a moment for mainloop to initialize
-    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    // Wait for mainloop to initialize with maximum 300ms delay
+    int retryCount = 0;
+    const int maxRetries = 3; // 300ms maximum (3 * 100ms)
+    if (verbose) {
+        std::cout << "[RPC] Waiting for mainloop to be ready before loading extensions..." << std::endl;
+    }
+    
+    // Check if mainloop is running before proceeding with extensions
+    bool mainloopReady = false;
+    while (retryCount < maxRetries) {
+        auto mainloopStatus = rpcController_->getThreadStatus("mainloop");
+        if (mainloopStatus.status == RpcMechanisms::OperationStatus::SUCCESS) {
+            mainloopReady = true;
+            break;
+        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        retryCount++;
+        if (verbose) {
+            std::cout << "[RPC] Waiting for mainloop readiness... (" << retryCount << "/" << maxRetries << ")" << std::endl;
+        }
+    }
+    
+    if (!mainloopReady) {
+        if (verbose) {
+            std::cout << "[RPC] Warning: Mainloop may not be fully ready after 300ms, proceeding with extension loading anyway" << std::endl;
+        }
+    } else {
+        if (verbose) {
+            std::cout << "[RPC] Mainloop is ready, loading and starting extensions" << std::endl;
+        }
+    }
     
     // Now load and start extension configurations
     if (extensionManager_) {
@@ -624,7 +666,13 @@ int RpcOperationProcessor::handleStartMainloop(const nlohmann::json& params, con
             }
             
             std::string extensionConfDir = "config";
-            extensionManager_->loadExtensionConfigs(extensionConfDir);
+            bool loadResult = extensionManager_->loadExtensionConfigs(extensionConfDir);
+            
+            if (!loadResult) {
+                if (verbose) {
+                    std::cout << "[RPC] Warning: Extension configuration loading failed or no extensions found" << std::endl;
+                }
+            }
             
             // Get all extensions after loading configs
             allExtensions = extensionManager_->getAllExtensions();
@@ -633,23 +681,40 @@ int RpcOperationProcessor::handleStartMainloop(const nlohmann::json& params, con
                 std::cout << "[RPC] Found " << allExtensions.size() << " extension configurations to start" << std::endl;
             }
             
-            // Start all extensions
+            // CRITICAL FIX: Add validation and error recovery for extension startup
+            int successCount = 0;
+            int failureCount = 0;
+            
+            // Start all extensions with error handling
             for (const auto& extInfo : allExtensions) {
                 if (verbose) {
                     std::cout << "[RPC] Starting extension: " << extInfo.name << std::endl;
                 }
                 
-                bool startResult = extensionManager_->startExtension(extInfo.name);
-                
-                if (startResult) {
-                    if (verbose) {
-                        std::cout << "[RPC] Successfully started extension: " << extInfo.name << std::endl;
+                try {
+                    bool startResult = extensionManager_->startExtension(extInfo.name);
+                    
+                    if (startResult) {
+                        successCount++;
+                        if (verbose) {
+                            std::cout << "[RPC] Successfully started extension: " << extInfo.name << std::endl;
+                        }
+                    } else {
+                        failureCount++;
+                        if (verbose) {
+                            std::cout << "[RPC] Failed to start extension: " << extInfo.name << std::endl;
+                        }
                     }
-                } else {
+                } catch (const std::exception& e) {
+                    failureCount++;
                     if (verbose) {
-                        std::cout << "[RPC] Failed to start extension: " << extInfo.name << std::endl;
+                        std::cout << "[RPC] Exception starting extension '" << extInfo.name << "': " << e.what() << std::endl;
                     }
                 }
+            }
+            
+            if (verbose) {
+                std::cout << "[RPC] Extension startup completed: " << successCount << " successful, " << failureCount << " failed" << std::endl;
             }
         } else {
             if (verbose) {

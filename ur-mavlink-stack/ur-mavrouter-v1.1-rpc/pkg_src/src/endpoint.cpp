@@ -30,7 +30,10 @@
 #include <linux/serial.h>
 #include <net/if.h>
 #include <netdb.h>
+#include <netinet/in.h>
 #include <netinet/tcp.h>
+#include "mainloop.h"
+#include "endpoint_monitor.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -248,7 +251,7 @@ int Endpoint::handle_read()
             }
         } else {
             _add_sys_comp_id(buf.curr.src_sysid, buf.curr.src_compid);
-            Mainloop::get_instance().route_msg(&buf);
+            Mainloop::instance().route_msg(&buf);
         }
     }
 
@@ -519,6 +522,11 @@ bool Endpoint::has_sys_comp_id(unsigned sys_comp_id) const
     }
 
     return false;
+}
+
+bool Endpoint::has_any_sys_comp_id() const
+{
+    return !_sys_comp_ids.empty();
 }
 
 Endpoint::AcceptState Endpoint::accept_msg(const struct buffer *pbuf) const
@@ -1871,7 +1879,33 @@ int TcpEndpoint::accept(int listener_fd)
         return -1;
     }
 
-    log_info("TCP [%d]%s: Connection accepted", fd, _name.c_str());
+    // Extract client IP and port for enhanced monitoring
+    std::string client_ip;
+    uint16_t client_port = 0;
+    
+    char client_ip_str[INET6_ADDRSTRLEN];
+    if (sock->sa_family == AF_INET) {
+        struct sockaddr_in* addr_in = (struct sockaddr_in*)sock;
+        inet_ntop(AF_INET, &(addr_in->sin_addr), client_ip_str, INET_ADDRSTRLEN);
+        client_ip = std::string(client_ip_str);
+        client_port = ntohs(addr_in->sin_port);
+    } else if (sock->sa_family == AF_INET6) {
+        struct sockaddr_in6* addr_in6 = (struct sockaddr_in6*)sock;
+        inet_ntop(AF_INET6, &(addr_in6->sin6_addr), client_ip_str, INET6_ADDRSTRLEN);
+        client_ip = std::string(client_ip_str);
+        client_port = ntohs(addr_in6->sin6_port);
+    }
+
+    log_info("TCP [%d]%s: Connection accepted from %s:%d", fd, _name.c_str(), client_ip.c_str(), client_port);
+
+    // Notify endpoint monitor of TCP connection acceptance with enhanced details
+    try {
+        if (EndpointMonitoring::GlobalMonitor::is_initialized()) {
+            EndpointMonitoring::GlobalMonitor::get_instance().notify_tcp_connection_accepted(_name, fd, client_ip, client_port);
+        }
+    } catch (const std::exception& e) {
+        log_debug("Failed to notify endpoint monitor of TCP connection: %s", e.what());
+    }
 
     int tcp_nodelay_state = 1;
     if (setsockopt(fd, IPPROTO_TCP, TCP_NODELAY, (char *)&tcp_nodelay_state, sizeof(int)) < 0) {
