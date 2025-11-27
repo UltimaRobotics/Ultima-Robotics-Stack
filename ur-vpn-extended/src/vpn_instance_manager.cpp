@@ -10,6 +10,9 @@ VPNInstanceManager::VPNInstanceManager()
     : thread_manager_(std::make_unique<ThreadMgr::ThreadManager>(20)),
       running_(true),
       verbose_(false),
+      stats_logging_enabled_(true),
+      openvpn_stats_logging_(true),
+      wireguard_stats_logging_(true),
       config_save_pending_(false) {
 
     json cleanup_start_log;

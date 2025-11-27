@@ -46,6 +46,11 @@ void VPNInstanceManager::launchInstanceThread(VPNInstance& instance) {
         });
 
         wrapper->setStatsCallback([this, name = instance.name](const openvpn::VPNStats& stats) {
+            // Check if stats logging is enabled for OpenVPN
+            if (!isStatsLoggingEnabled() || !isOpenVPNStatsLoggingEnabled()) {
+                return; // Skip stats logging if disabled
+            }
+            
             // Capture by value to avoid holding mutex during callback
             uint64_t session_start = 0;
             uint64_t session_seconds = 0;
@@ -177,6 +182,11 @@ void VPNInstanceManager::launchInstanceThread(VPNInstance& instance) {
         });
 
         wrapper->setStatsCallback([this, name = instance.name](const wireguard::VPNStats& stats) {
+            // Check if stats logging is enabled for WireGuard
+            if (!isStatsLoggingEnabled() || !isWireGuardStatsLoggingEnabled()) {
+                return; // Skip stats logging if disabled
+            }
+            
             // Capture by value to avoid holding mutex during callback
             uint64_t session_start = 0;
             uint64_t session_seconds = 0;

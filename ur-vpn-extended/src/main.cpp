@@ -1,4 +1,6 @@
 #include "vpn_instance_manager.hpp"
+#include "vpn_rpc_client.hpp"
+#include "vpn_rpc_operation_processor.hpp"
 #ifdef HTTP_ENABLED
 #include "http_server.hpp"
 #endif
@@ -9,7 +11,8 @@
 #include <chrono>
 #include <csignal>
 #include <vector>
-#include <memory> // Required for std::unique_ptr
+#include <memory>
+#include <getopt.h>
 
 std::atomic<bool> g_running(true);
 
@@ -20,6 +23,9 @@ http_server::HTTPServer* g_http_server = nullptr;
 std::thread* g_http_thread = nullptr;
 #endif
 std::string g_cache_file_path;
+// RPC client global pointers
+std::unique_ptr<VpnRpcClient> g_rpcClient = nullptr;
+std::unique_ptr<vpn_manager::VpnRpcOperationProcessor> g_rpcProcessor = nullptr;
 
 // Force cleanup WireGuard interfaces without relying on threads
 void forceCleanupWireGuardInterfaces() {
@@ -121,7 +127,7 @@ void forceCleanupWireGuardInterfaces() {
 void signalHandler(int signal) {
 
     std::cout << "Performing Graceful Exit on Interrup" << std::endl;
-
+    exit(0);
     std::cout << json({
         {"type", "signal"},
         {"signal", signal},
@@ -143,7 +149,24 @@ void signalHandler(int signal) {
     // Force cleanup WireGuard interfaces first (independent of thread management)
     forceCleanupWireGuardInterfaces();
 
-    // Step 1: Stop HTTP server first (prevents new operations)
+    // Step 2: Stop RPC client first (prevents new operations)
+    if (g_rpcClient) {
+        std::cout << json({
+            {"type", "shutdown_verbose"},
+            {"step", "RPC_CLIENT_STOP_START"},
+            {"message", "Stopping RPC client to prevent new operations"}
+        }).dump() << std::endl;
+
+        g_rpcClient->stop();
+
+        std::cout << json({
+            {"type", "shutdown_verbose"},
+            {"step", "RPC_CLIENT_STOP_COMPLETE"},
+            {"message", "RPC client stopped"}
+        }).dump() << std::endl;
+    }
+
+    // Step 3: Stop HTTP server
 #ifdef HTTP_ENABLED
     if (g_http_server) {
         std::cout << json({
@@ -164,7 +187,7 @@ void signalHandler(int signal) {
     }
 #endif
 
-    // Step 2: Track and stop all VPN instances
+    // Step 4: Track and stop all VPN instances
     std::cout << json({
         {"type", "shutdown_verbose"},
         {"step", "TRACK_INSTANCES_START"},
@@ -172,7 +195,7 @@ void signalHandler(int signal) {
     }).dump() << std::endl;
 
 
-    // Step 3: Execute comprehensive VPN instance shutdown
+    // Step 5: Execute comprehensive VPN instance shutdown
     if (g_manager) {
         std::cout << json({
             {"type", "shutdown_verbose"},
@@ -191,7 +214,7 @@ void signalHandler(int signal) {
 
     }
 
-    // Step 4: Join HTTP thread if it was started
+    // Step 6: Join HTTP thread if it was started
 #ifdef HTTP_ENABLED
     if (g_http_thread && g_http_thread->joinable()) {
         std::cout << json({
@@ -212,7 +235,7 @@ void signalHandler(int signal) {
     }
 #endif
 
-    // Step 5: Save cached data
+    // Step 7: Save cached data
     if (g_manager && !g_cache_file_path.empty()) {
         std::cout << json({
             {"type", "shutdown_verbose"},
@@ -232,7 +255,7 @@ void signalHandler(int signal) {
 
     }
 
-    // Step 6: Delete HTTP server object
+    // Step 8: Delete HTTP server object
 #ifdef HTTP_ENABLED
     if (g_http_server) {
         std::cout << json({
@@ -254,7 +277,40 @@ void signalHandler(int signal) {
     }
 #endif
 
-    // Step 7: Final shutdown message
+    // Step 9: Cleanup RPC client and processor
+    if (g_rpcProcessor) {
+        std::cout << json({
+            {"type", "shutdown_verbose"},
+            {"step", "RPC_PROCESSOR_DELETE_START"},
+            {"message", "Cleaning up RPC operation processor"}
+        }).dump() << std::endl;
+
+        g_rpcProcessor.reset();
+
+        std::cout << json({
+            {"type", "shutdown_verbose"},
+            {"step", "RPC_PROCESSOR_DELETE_COMPLETE"},
+            {"message", "RPC operation processor cleaned up"}
+        }).dump() << std::endl;
+    }
+
+    if (g_rpcClient) {
+        std::cout << json({
+            {"type", "shutdown_verbose"},
+            {"step", "RPC_CLIENT_DELETE_START"},
+            {"message", "Cleaning up RPC client"}
+        }).dump() << std::endl;
+
+        g_rpcClient.reset();
+
+        std::cout << json({
+            {"type", "shutdown_verbose"},
+            {"step", "RPC_CLIENT_DELETE_COMPLETE"},
+            {"message", "RPC client cleaned up"}
+        }).dump() << std::endl;
+    }
+
+    // Step 10: Final shutdown message
     std::cout << json({
         {"type", "shutdown_verbose"},
         {"step", "SHUTDOWN_COMPLETE"},
@@ -273,49 +329,49 @@ void signalHandler(int signal) {
 }
 
 void printUsage(const char* program_name) {
-    std::cout << "Usage: " << program_name << " <master-config.json>" << std::endl;
-    std::cout << "\nMaster Configuration Format:" << std::endl;
-    std::cout << R"({
-  "config_file_path": "path/to/vpn-profiles.json",
-  "cached_data_path": "path/to/cached-data.json"
-})" << std::endl;
-    std::cout << "\nVPN Profiles Configuration (referenced by config_file_path):" << std::endl;
-    std::cout << R"({
-  "vpn_profiles": [
-    {
-      "id": "profile_1",
-      "name": "My VPN",
-      "protocol": "OpenVPN",
-      "server": "vpn.example.com",
-      "port": 1194,
-      "config_file": {
-        "content": "<configuration content>"
-      }
-    }
-  ]
-})" << std::endl;
-    std::cout << "\nCached Data Format (referenced by cached_data_path):" << std::endl;
-    std::cout << R"({
-  "instances": [
-    {
-      "id": "profile_1",
-      "enabled": true,
-      "auto_connect": false,
-      "status": "Ready",
-      "last_used": "Never"
-    }
-  ]
-})" << std::endl;
+    std::cout << "Usage: " << program_name << " [OPTIONS]" << std::endl;
+    std::cout << std::endl;
+    std::cout << "OPTIONS:" << std::endl;
+    std::cout << "  -h, --help              Show this help message" << std::endl;
+    std::cout << "  -pkg_config <file>      Path to master configuration JSON file" << std::endl;
+    std::cout << "  -rpc_config <file>      Path to RPC configuration JSON file" << std::endl;
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        printUsage(argv[0]);
+    std::string master_config_file;
+    std::string rpc_config_file;
+    
+    // Manual argument parsing to avoid getopt_long issue
+    for (int i = 1; i < argc; i++) {
+        std::string arg = argv[i];
+        if (arg == "-h" || arg == "--help") {
+            printUsage(argv[0]);
+            return 0;
+        } else if (arg == "-pkg_config" || arg == "--pkg_config") {
+            if (i + 1 < argc) {
+                master_config_file = argv[++i];
+            } else {
+                std::cerr << "Error: " << arg << " requires a file path argument" << std::endl;
+                return 1;
+            }
+        } else if (arg == "-rpc_config" || arg == "--rpc_config") {
+            if (i + 1 < argc) {
+                rpc_config_file = argv[++i];
+            } else {
+                std::cerr << "Error: " << arg << " requires a file path argument" << std::endl;
+                return 1;
+            }
+        } else {
+            std::cerr << "Unknown option: " << arg << ". Use -h for help." << std::endl;
+            return 1;
+        }
+    }
+    
+    // Check for required arguments
+    if (master_config_file.empty()) {
+        std::cerr << "Missing master configuration file. Use -pkg_config <file>. Use -h for help." << std::endl;
         return 1;
     }
-
-    // Load master config file
-    std::string master_config_file = argv[1];
 
     std::ifstream master_file(master_config_file);
     if (!master_file.good()) {
@@ -493,6 +549,47 @@ int main(int argc, char* argv[]) {
     // Parse verbose mode
     bool verbose_mode = master_config.value("verbose", false);
 
+    // Parse stats logging configuration
+    bool stats_logging_enabled = true;
+    bool openvpn_stats_logging = true;
+    bool wireguard_stats_logging = true;
+    
+    if (master_config.contains("stats_logging")) {
+        auto stats_config = master_config["stats_logging"];
+        stats_logging_enabled = stats_config.value("enabled", true);
+        openvpn_stats_logging = stats_config.value("openvpn", true);
+        wireguard_stats_logging = stats_config.value("wireguard", true);
+    }
+
+    // Parse RPC configuration
+    std::string rpc_config_path = rpc_config_file;
+    // No longer reading from master config, using command line argument directly
+    
+    bool rpc_enabled = !rpc_config_path.empty();
+    
+    // Validate RPC config file if provided
+    if (rpc_enabled) {
+        std::ifstream rpc_file(rpc_config_path);
+        if (!rpc_file.good()) {
+            json error = {
+                {"type", "error"},
+                {"message", "RPC config file not found"},
+                {"file", rpc_config_path}
+            };
+            std::cout << error.dump() << std::endl;
+            return 1;
+        }
+    }
+    
+    if (verbose_mode) {
+        json rpc_info = {
+            {"type", "rpc_config"},
+            {"enabled", rpc_enabled},
+            {"config_file", rpc_config_path}
+        };
+        std::cout << rpc_info.dump() << std::endl;
+    }
+
     // Register signal handlers for graceful shutdown
     signal(SIGINT, signalHandler);
     signal(SIGTERM, signalHandler);
@@ -512,6 +609,22 @@ int main(int argc, char* argv[]) {
             {"message", "Verbose mode enabled"}
         };
         std::cout << verbose_info.dump() << std::endl;
+    }
+
+    // Set stats logging configuration
+    manager.setStatsLoggingEnabled(stats_logging_enabled);
+    manager.setOpenVPNStatsLogging(openvpn_stats_logging);
+    manager.setWireGuardStatsLogging(wireguard_stats_logging);
+    
+    if (verbose_mode) {
+        json stats_info = {
+            {"type", "verbose"},
+            {"message", "Stats logging configuration"},
+            {"stats_logging_enabled", stats_logging_enabled},
+            {"openvpn_stats_logging", openvpn_stats_logging},
+            {"wireguard_stats_logging", wireguard_stats_logging}
+        };
+        std::cout << stats_info.dump() << std::endl;
     }
 
     // Set global event callback to print JSON events
@@ -593,6 +706,73 @@ int main(int argc, char* argv[]) {
         std::cout << http_warning.dump() << std::endl;
     }
 #endif
+
+    // Initialize RPC client if enabled
+    if (rpc_enabled) {
+        try {
+            // Initialize RPC client
+            g_rpcClient = std::make_unique<VpnRpcClient>(rpc_config_path, "ur-vpn-manager");
+
+            // Initialize operation processor
+            g_rpcProcessor = std::make_unique<vpn_manager::VpnRpcOperationProcessor>(manager, verbose_mode);
+
+            // CRITICAL: Set message handler BEFORE starting the client
+            std::cout << "[Main] Setting up message handler..." << std::endl;
+            g_rpcClient->setMessageHandler([&](const std::string &topic, const std::string &payload) {
+                if (verbose_mode) {
+                    std::cout << "[Main] Custom handler received message on topic: " << topic << std::endl;
+                }
+                // Only process messages on the request topic
+                if (topic.find("direct_messaging/ur-vpn-manager/requests") == std::string::npos) {
+                    return;
+                }
+
+                // Process the request using operation processor
+                if (g_rpcProcessor) {
+                    g_rpcProcessor->processRequest(payload.c_str(), payload.size());
+                }
+            });
+            std::cout << "[Main] Message handler configured successfully" << std::endl;
+
+            // Start RPC client - handler must be set first
+            std::cout << "[Main] Starting RPC client..." << std::endl;
+            if (!g_rpcClient->start()) {
+                std::cerr << "[Main] Failed to start RPC client" << std::endl;
+                return 1;
+            }
+
+            // Wait for RPC client to initialize
+            std::this_thread::sleep_for(std::chrono::seconds(2));
+
+            if (!g_rpcClient->isRunning()) {
+                std::cerr << "[Main] RPC client failed to start" << std::endl;
+                return 1;
+            }
+
+            std::cout << "[Main] RPC client is running and ready to process requests" << std::endl;
+            std::cout << "[Main] Listening on: direct_messaging/ur-vpn-manager/requests" << std::endl;
+            std::cout << "[Main] Responding on: direct_messaging/ur-vpn-manager/responses" << std::endl;
+            std::cout << "[Main] Press Ctrl+C to stop..." << std::endl;
+
+        } catch (const std::exception& e) {
+            json error = {
+                {"type", "error"},
+                {"message", "Failed to initialize RPC client"},
+                {"error", e.what()},
+                {"config_file", rpc_config_path}
+            };
+            std::cout << error.dump() << std::endl;
+            g_rpcClient.reset();
+            g_rpcProcessor.reset();
+            rpc_enabled = false;
+        }
+    } else {
+        json rpc_disabled = {
+            {"type", "rpc_client"},
+            {"message", "RPC client is disabled - no configuration provided"}
+        };
+        std::cout << rpc_disabled.dump() << std::endl;
+    }
 
     // Start all enabled instances
     json startup = {

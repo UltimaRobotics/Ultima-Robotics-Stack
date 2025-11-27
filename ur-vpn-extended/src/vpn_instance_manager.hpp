@@ -277,6 +277,14 @@ public:
     // Verbose mode
     void setVerbose(bool verbose);
     bool isVerbose() const;
+    
+    // Stats logging control
+    void setStatsLoggingEnabled(bool enabled);
+    bool isStatsLoggingEnabled() const;
+    void setOpenVPNStatsLogging(bool enabled);
+    bool isOpenVPNStatsLoggingEnabled() const;
+    void setWireGuardStatsLogging(bool enabled);
+    bool isWireGuardStatsLoggingEnabled() const;
 
     // Routing Rules Management (Legacy)
     bool addRoutingRule(const RoutingRule& rule);
@@ -311,6 +319,9 @@ private:
     EventCallback global_event_callback_;
     std::atomic<bool> running_;
     std::atomic<bool> verbose_;
+    std::atomic<bool> stats_logging_enabled_;
+    std::atomic<bool> openvpn_stats_logging_;
+    std::atomic<bool> wireguard_stats_logging_;
     std::atomic<bool> config_save_pending_;
     std::thread config_save_thread_;
     std::thread route_monitor_thread_;

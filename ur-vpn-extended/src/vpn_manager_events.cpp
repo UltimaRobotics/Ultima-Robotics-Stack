@@ -32,4 +32,29 @@ bool VPNInstanceManager::isVerbose() const {
     return verbose_;
 }
 
+// Stats logging control methods
+void VPNInstanceManager::setStatsLoggingEnabled(bool enabled) {
+    stats_logging_enabled_ = enabled;
+}
+
+bool VPNInstanceManager::isStatsLoggingEnabled() const {
+    return stats_logging_enabled_;
+}
+
+void VPNInstanceManager::setOpenVPNStatsLogging(bool enabled) {
+    openvpn_stats_logging_ = enabled;
+}
+
+bool VPNInstanceManager::isOpenVPNStatsLoggingEnabled() const {
+    return openvpn_stats_logging_;
+}
+
+void VPNInstanceManager::setWireGuardStatsLogging(bool enabled) {
+    wireguard_stats_logging_ = enabled;
+}
+
+bool VPNInstanceManager::isWireGuardStatsLoggingEnabled() const {
+    return wireguard_stats_logging_;
+}
+
 } // namespace vpn_manager

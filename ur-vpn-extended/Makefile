@@ -5,7 +5,7 @@ CMAKE_CXX_COMPILER = g++
 
 # Default target
 all: $(BUILD_DIR)
-	cd $(BUILD_DIR) && cmake -DCMAKE_C_COMPILER=$(CMAKE_C_COMPILER) -DCMAKE_CXX_COMPILER=$(CMAKE_CXX_COMPILER) .. && make -j1
+	cd $(BUILD_DIR) && cmake -DCMAKE_C_COMPILER=$(CMAKE_C_COMPILER) -DCMAKE_CXX_COMPILER=$(CMAKE_CXX_COMPILER) .. && make -j10
 
 # Create build directory
 $(BUILD_DIR):

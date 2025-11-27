@@ -2,6 +2,20 @@
   "instances": [
     {
       "auto_connect": true,
+      "enabled": false,
+      "id": "list_openvpn_test",
+      "last_used": "",
+      "status": "Ready"
+    },
+    {
+      "auto_connect": true,
+      "enabled": false,
+      "id": "list_wg_test",
+      "last_used": "",
+      "status": "Ready"
+    },
+    {
+      "auto_connect": true,
       "enabled": true,
       "id": "ovpn0",
       "last_used": "",
@@ -15,5 +29,5 @@
       "status": "Disconnected"
     }
   ],
-  "last_saved": 1761562461
+  "last_saved": 1764248670
 }

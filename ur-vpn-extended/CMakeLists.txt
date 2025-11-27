@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(vpn-instance-manager)
+project(ur-vpn-manager)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -16,6 +16,10 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/ur-vpn-parser/thirdparty
     ${CMAKE_SOURCE_DIR}/ur-threadder-api/cpp/include
     ${CMAKE_SOURCE_DIR}/ur-threadder-api/include
+    ${CMAKE_SOURCE_DIR}/ur-rpc-template
+    ${CMAKE_SOURCE_DIR}/ur-rpc-template/pkg_src/api/wrappers/cpp
+    ${CMAKE_SOURCE_DIR}/ur-rpc-template/deps/mosquitto
+    ${CMAKE_SOURCE_DIR}/ur-rpc-template/deps/cjson
 )
 
 # Add subdirectories
@@ -23,6 +27,7 @@ add_subdirectory(ur-openvpn-library/src)
 add_subdirectory(ur-wg_library/wireguard-wrapper)
 add_subdirectory(ur-vpn-parser)
 add_subdirectory(ur-threadder-api)
+add_subdirectory(ur-rpc-template)
 
 # HTTP Server detection
 if(HTTP_ENABLED)
@@ -51,10 +56,12 @@ set(VPN_MANAGER_MODULES
     src/vpn_manager_stats.cpp
     src/wireguard_routing_provider.cpp
     src/openvpn_routing_provider.cpp
+    src/vpn_rpc_client.cpp
+    src/vpn_rpc_operation_processor.cpp
 )
 
 # Executable
-add_executable(vpn-instance-manager
+add_executable(ur-vpn-manager
     src/main.cpp
     src/http_server.cpp
     ${VPN_MANAGER_MODULES}
@@ -63,26 +70,27 @@ add_executable(vpn-instance-manager
 
 # HTTP Server configuration
 if(HTTP_ENABLED)
-    target_compile_definitions(vpn-instance-manager PRIVATE HTTP_ENABLED)
+    target_compile_definitions(ur-vpn-manager PRIVATE HTTP_ENABLED)
     message(STATUS "HTTP server support: ENABLED")
 else()
     message(STATUS "HTTP server support: DISABLED")
 endif()
 
 # Link libraries
-target_link_libraries(vpn-instance-manager
+target_link_libraries(ur-vpn-manager
     openvpn_cpp_wrapper
     wireguard_cpp_wrapper
     vpn_parser_lib
     threadmanager_cpp
     threadmanager
+    ur-rpc-template
     pthread
 )
 
 # Link HTTP library if enabled
 if(HTTP_ENABLED)
-    target_link_libraries(vpn-instance-manager ${MICROHTTPD_LIBRARIES})
+    target_link_libraries(ur-vpn-manager ${MICROHTTPD_LIBRARIES})
 endif()
 
 # Installation
-install(TARGETS vpn-instance-manager DESTINATION bin)
+install(TARGETS ur-vpn-manager DESTINATION bin)
