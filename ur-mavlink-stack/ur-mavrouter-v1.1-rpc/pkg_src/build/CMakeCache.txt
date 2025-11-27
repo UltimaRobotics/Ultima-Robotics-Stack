@@ -343,6 +343,9 @@ UrRpcCppWrapper_SOURCE_DIR:STATIC=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-ma
 //Build with HTTP server support
 _BUILD_HTTP:BOOL=OFF
 
+//Enable UART reconnection on failure
+_ENABLE_UART_RECONNECTION:BOOL=OFF
+
 //Value Computed by CMake
 cJSONStaticLib_BINARY_DIR:STATIC=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/ur-rpc-template/deps/cJSON
 
@@ -356,7 +359,7 @@ cJSONStaticLib_SOURCE_DIR:STATIC=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-mav
 cJSON_INCLUDE_DIR:PATH=cJSON_INCLUDE_DIR-NOTFOUND
 
 //Path to a library.
-cJSON_LIBRARY:FILEPATH=cJSON_LIBRARY-NOTFOUND
+cJSON_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libcjson.so
 
 //Dependencies for the target
 mqtt-client-static_LIB_DEPENDS:STATIC=general;/usr/lib/x86_64-linux-gnu/libssl.so;general;/usr/lib/x86_64-linux-gnu/libcrypto.so;

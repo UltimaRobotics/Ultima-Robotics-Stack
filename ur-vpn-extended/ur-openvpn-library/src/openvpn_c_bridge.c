@@ -6,6 +6,11 @@
 #include <arpa/inet.h>
 #include <sys/time.h>
 #include <unistd.h>
+#include <stdio.h>
+#include <stdarg.h>
+
+// Include logger for verbosity control
+#include "../ur-rpc-template/deps/ur-logger-api/logger.h"
 
 // Include OpenVPN lib-src headers (C only)
 #include "source-port/lib-src/syshead.h"
@@ -123,11 +128,29 @@ int openvpn_bridge_parse_config(openvpn_bridge_ctx_t *ctx, const char *config_fi
     init_options(&ctx->c.options, true);
 
     // Parse config file
-    const char *args[3] = {"openvpn", "--config", config_file};
+    const char *args[5];
     int argc = 3;
+    
+    args[0] = "openvpn";
+    args[1] = "--config";
+    args[2] = config_file;
+    
+    // Add --verb 0 if OpenVPN library logging is disabled
+    bool logging_enabled = logger_is_source_enabled(LOG_SOURCE_OPENVPN_LIBRARY);
+    
+    if (!logging_enabled) {
+        args[3] = "--verb";
+        args[4] = "0";
+        argc = 5;
+    }
     
     parse_argv(&ctx->c.options, argc, (char **)args, M_USAGE, 
                OPT_P_DEFAULT, NULL, ctx->c.es);
+
+    // Override verb level in options struct to take precedence over config file
+    if (!logging_enabled) {
+        ctx->c.options.verbosity = 0;
+    }
 
     // Post-process options
     options_postprocess(&ctx->c.options, ctx->c.es);

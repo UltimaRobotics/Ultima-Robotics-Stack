@@ -8980,16 +8980,8 @@ CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcControllerNew.cpp.o: ../src/rp
   ../modules/ur-threadder-api/cpp/include/ThreadManager.hpp \
   ../src/common/log.h \
   ../src/common/macro.h \
-  /usr/include/c++/11/thread \
-  /usr/include/c++/11/bits/this_thread_sleep.h \
-  /usr/include/c++/11/fstream \
-  /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
-  /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \
-  /usr/include/c++/11/bits/fstream.tcc \
-  ../src/mavlink-extensions/ExtensionManager.h \
-  ../modules/ur-threadder-api/cpp/include/ThreadManager.hpp \
-  ../src/mainloop.h \
-  ../src/binlog.h \
+  ../src/common/json_config.h \
+  ../modules/nholmann/json.hpp \
   ../src/logendpoint.h \
   ../src/common/conf_file.h \
   /usr/include/aio.h \
@@ -9332,9 +9324,19 @@ CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcControllerNew.cpp.o: ../src/rp
   /usr/include/c++/11/deque \
   /usr/include/c++/11/bits/stl_deque.h \
   /usr/include/c++/11/bits/deque.tcc \
+  ../src/mainloop.h \
+  /usr/include/c++/11/thread \
+  /usr/include/c++/11/bits/this_thread_sleep.h \
+  ../src/binlog.h \
   ../src/config.h \
   ../src/dedup.h \
   ../src/ulog.h \
+  /usr/include/c++/11/fstream \
+  /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
+  /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \
+  /usr/include/c++/11/bits/fstream.tcc \
+  ../src/mavlink-extensions/ExtensionManager.h \
+  ../modules/ur-threadder-api/cpp/include/ThreadManager.hpp \
   ../modules/nholmann/json.hpp
 
 CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcOperations.cpp.o: ../src/rpc-mechanisms/RpcOperations.cpp \

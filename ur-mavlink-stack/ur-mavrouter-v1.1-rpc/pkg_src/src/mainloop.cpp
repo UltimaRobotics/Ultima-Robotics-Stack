@@ -467,6 +467,12 @@ void Mainloop::handle_tcp_connection()
 {
     log_debug("TCP Server: New client");
 
+    // Check if TCP server socket is still valid
+    if (g_tcp_fd < 0) {
+        log_warning("TCP Server: Socket is closed, ignoring connection attempt");
+        return;
+    }
+
     auto *tcp = new TcpEndpoint{"dynamic"};
 
     int fd = tcp->accept(g_tcp_fd);
@@ -539,7 +545,12 @@ int Mainloop::loop()
 
         for (i = 0; i < r; i++) {
             if (events[i].data.ptr == &g_tcp_fd) {
-                handle_tcp_connection();
+                // Only handle TCP connections if the socket is still valid
+                if (g_tcp_fd >= 0) {
+                    handle_tcp_connection();
+                } else {
+                    log_debug("Mainloop: Ignoring TCP event on closed socket");
+                }
                 continue;
             }
 
@@ -568,14 +579,26 @@ int Mainloop::loop()
                 } else {
                     log_warning("Non-critical fd %i got error, handling gracefully", p->fd);
 
-                    // Special handling for UART endpoints to prevent infinite error loops
+                    // Close endpoint immediately on error to prevent runtime bugs
                     auto *endpoint = dynamic_cast<Endpoint*>(p);
-                    if (endpoint && endpoint->get_type() == ENDPOINT_TYPE_UART) {
-                        auto *uart_endpoint = static_cast<UartEndpoint*>(endpoint);
-                        uart_endpoint->_handle_epoll_error();
+                    if (endpoint) {
+                        if (endpoint->get_type() == ENDPOINT_TYPE_UART) {
+                            auto *uart_endpoint = static_cast<UartEndpoint*>(endpoint);
+                            uart_endpoint->_handle_epoll_error();
+                        } else if (endpoint->get_type() == ENDPOINT_TYPE_TCP) {
+                            auto *tcp_endpoint = static_cast<TcpEndpoint*>(endpoint);
+                            tcp_endpoint->close();
+                        } else {
+                            // For UDP and other endpoint types, just remove from epoll immediately
+                            log_info("Removing endpoint %s [%d] due to epoll error", 
+                                   endpoint->get_type().c_str(), endpoint->fd);
+                            remove_fd(endpoint->fd);
+                            should_process_tcp_hangups = true;
+                        }
                     } else {
-                        // Mark for cleanup/reconnection for other endpoint types
-                        should_process_tcp_hangups = true;
+                        // For non-endpoint pollables, remove from epoll immediately
+                        log_info("Removing pollable fd %d due to epoll error", p->fd);
+                        remove_fd(p->fd);
                     }
                 }
             }
@@ -869,7 +892,12 @@ bool Mainloop::add_endpoints(const Configuration &config)
 
     // Create TCP server
     if (config.tcp_port != 0u) {
-        g_tcp_fd = tcp_open(config.tcp_port);
+        if (g_tcp_fd >= 0) {
+            log_info("Mainloop::add_endpoints() - TCP server already exists on port %lu, keeping existing", config.tcp_port);
+        } else {
+            log_info("Mainloop::add_endpoints() - Creating TCP server on port %lu", config.tcp_port);
+            g_tcp_fd = tcp_open(config.tcp_port);
+        }
     }
 
     // Create Log endpoint
@@ -932,6 +960,36 @@ void Mainloop::clear_endpoints()
     g_endpoints.clear();
 }
 
+void Mainloop::clear_uart_endpoints()
+{
+    log_info("Mainloop::clear_uart_endpoints() - Removing all UART endpoints");
+    
+    // Remove UART endpoints from epoll and close their file descriptors
+    for (auto it = g_endpoints.begin(); it != g_endpoints.end();) {
+        auto endpoint = it->get();
+        
+        if (endpoint && endpoint->get_type() == ENDPOINT_TYPE_UART) {
+            log_info("Mainloop::clear_uart_endpoints() - Removing UART endpoint: %s [fd=%d]", 
+                    endpoint->get_name().c_str(), endpoint->fd);
+            
+            // Remove from epoll if fd is valid
+            if (endpoint->fd >= 0) {
+                remove_fd(endpoint->fd);
+                untrack_fd(endpoint->fd);
+                ::close(endpoint->fd);
+                endpoint->fd = -1;
+            }
+            
+            // Remove from endpoints vector
+            it = g_endpoints.erase(it);
+        } else {
+            ++it;
+        }
+    }
+    
+    log_info("Mainloop::clear_uart_endpoints() - Completed UART endpoint cleanup");
+}
+
 void Mainloop::track_fd(int fd, const std::string& description)
 {
     if (fd < 0) return;
@@ -992,6 +1050,30 @@ void Mainloop::force_close_all_tracked_fds()
     
     _tracked_fds.clear();
     log_info("All tracked FDs closed and cleared");
+}
+
+void Mainloop::force_close_tcp_server()
+{
+    if (g_tcp_fd >= 0) {
+        log_info("Force closing TCP server FD %d", g_tcp_fd);
+        
+        // Remove from epoll if epollfd is valid
+        if (epollfd >= 0) {
+            int ret = epoll_ctl(epollfd, EPOLL_CTL_DEL, g_tcp_fd, nullptr);
+            if (ret < 0 && errno != ENOENT && errno != EBADF) {
+                log_debug("Could not remove TCP server FD %d from epoll: %m", g_tcp_fd);
+            }
+        }
+        
+        // Untrack and close the TCP server FD
+        untrack_fd(g_tcp_fd);
+        close(g_tcp_fd);
+        g_tcp_fd = -1;
+        
+        log_info("TCP server force closed successfully");
+    } else {
+        log_debug("TCP server already closed, nothing to force close");
+    }
 }
 
 int Mainloop::tcp_open(unsigned long tcp_port)

@@ -1,13 +1,18 @@
 #include "logger.h"
+#include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
 
 /* Global logger configuration */
 static logger_config_t g_logger = {
     .min_level = LOG_INFO,
-    .flags = LOG_FLAG_CONSOLE | LOG_FLAG_TIMESTAMP,
+    .flags = (log_flags_t)(LOG_FLAG_CONSOLE | LOG_FLAG_TIMESTAMP),
     .file_handle = NULL,
     .log_filename = NULL,
     .mutex = PTHREAD_MUTEX_INITIALIZER,
-    .initialized = 0
+    .initialized = 0,
+    .logging_enabled = true,
+    .source_enabled = {true, true, true, true, true, true, true, true, true, true}
 };
 
 /* Level strings */
@@ -48,7 +53,7 @@ int logger_init(log_level_t min_level, log_flags_t flags, const char *filename) 
         }
         
         /* Store filename */
-        g_logger.log_filename = malloc(strlen(filename) + 1);
+        g_logger.log_filename = (char*)malloc(strlen(filename) + 1);
         if (g_logger.log_filename) {
             strcpy(g_logger.log_filename, filename);
         }
@@ -109,6 +114,26 @@ log_flags_t logger_get_flags(void) {
 const char* logger_level_string(log_level_t level) {
     if (level >= LOG_DEBUG && level <= LOG_FATAL) {
         return level_strings[level];
+    }
+    return "UNKNOWN";
+}
+
+const char* log_source_string(log_source_t source) {
+    static const char* source_strings[] = {
+        "UNKNOWN",
+        "UR_RPC_TEMPLATE",
+        "THREAD_MANAGER",
+        "VPN_MANAGER",
+        "OPENVPN_LIBRARY",
+        "WIREGUARD_LIBRARY",
+        "HTTP_SERVER",
+        "RPC_CLIENT",
+        "RPC_PROCESSOR",
+        "EXTERNAL_BINARY"
+    };
+    
+    if (source >= LOG_SOURCE_UNKNOWN && source <= LOG_SOURCE_EXTERNAL_BINARY) {
+        return source_strings[source];
     }
     return "UNKNOWN";
 }
@@ -187,9 +212,71 @@ static void logger_output(log_level_t level, const char *message) {
     }
 }
 
+static void logger_output_with_source(log_level_t level, log_source_t source, const char *message) {
+    char timestamp[32] = {0};
+    char thread_id_str[32] = {0};
+    
+    /* Format timestamp if requested */
+    if (g_logger.flags & LOG_FLAG_TIMESTAMP) {
+        format_timestamp(timestamp, sizeof(timestamp));
+    }
+    
+    /* Format thread ID if requested */
+    if (g_logger.flags & LOG_FLAG_THREAD_ID) {
+        snprintf(thread_id_str, sizeof(thread_id_str), "[%lu] ", 
+                (unsigned long)pthread_self());
+    }
+    
+    /* Output to console */
+    if (g_logger.flags & LOG_FLAG_CONSOLE) {
+        FILE *output = (level >= LOG_ERROR) ? stderr : stdout;
+        
+        if (g_logger.flags & LOG_FLAG_COLOR) {
+            fprintf(output, "%s", logger_level_color(level));
+        }
+        
+        if (g_logger.flags & LOG_FLAG_TIMESTAMP) {
+            fprintf(output, "[%s] ", timestamp);
+        }
+        
+        if (g_logger.flags & LOG_FLAG_THREAD_ID) {
+            fprintf(output, "%s", thread_id_str);
+        }
+        
+        fprintf(output, "[%5s] [%s] %s", logger_level_string(level), log_source_string(source), message);
+        
+        if (g_logger.flags & LOG_FLAG_COLOR) {
+            fprintf(output, "%s", COLOR_RESET);
+        }
+        
+        fprintf(output, "\n");
+        fflush(output);
+    }
+    
+    /* Output to file */
+    if ((g_logger.flags & LOG_FLAG_FILE) && g_logger.file_handle) {
+        if (g_logger.flags & LOG_FLAG_TIMESTAMP) {
+            fprintf(g_logger.file_handle, "[%s] ", timestamp);
+        }
+        
+        if (g_logger.flags & LOG_FLAG_THREAD_ID) {
+            fprintf(g_logger.file_handle, "%s", thread_id_str);
+        }
+        
+        fprintf(g_logger.file_handle, "[%5s] [%s] %s\n", 
+                logger_level_string(level), log_source_string(source), message);
+        fflush(g_logger.file_handle);
+    }
+}
+
 void logger_log(log_level_t level, const char *file, int line, const char *func, const char *format, ...) {
     /* Check if we should log this level */
     if (level < g_logger.min_level) {
+        return;
+    }
+    
+    /* Check if global logging is enabled */
+    if (!g_logger.logging_enabled) {
         return;
     }
     
@@ -197,7 +284,7 @@ void logger_log(log_level_t level, const char *file, int line, const char *func,
     
     /* If not initialized, use default console output */
     if (!g_logger.initialized) {
-        g_logger.flags = LOG_FLAG_CONSOLE | LOG_FLAG_TIMESTAMP;
+        g_logger.flags = (log_flags_t)(LOG_FLAG_CONSOLE | LOG_FLAG_TIMESTAMP);
     }
     
     char message[2048];
@@ -221,6 +308,94 @@ void logger_log(log_level_t level, const char *file, int line, const char *func,
     pthread_mutex_unlock(&g_logger.mutex);
 }
 
+void logger_log_with_source(log_level_t level, log_source_t source, const char *file, int line, const char *func, const char *format, ...) {
+    /* Check if we should log this level */
+    if (level < g_logger.min_level) {
+        return;
+    }
+    
+    /* Check if global logging is enabled */
+    if (!g_logger.logging_enabled) {
+        return;
+    }
+    
+    /* Check if source logging is enabled */
+    if (source >= LOG_SOURCE_UNKNOWN && source <= LOG_SOURCE_EXTERNAL_BINARY) {
+        if (!g_logger.source_enabled[source]) {
+            return;
+        }
+    }
+    
+    pthread_mutex_lock(&g_logger.mutex);
+    
+    /* If not initialized, use default console output */
+    if (!g_logger.initialized) {
+        g_logger.flags = (log_flags_t)(LOG_FLAG_CONSOLE | LOG_FLAG_TIMESTAMP);
+    }
+    
+    char message[2048];
+    char formatted_message[2560];
+    va_list args;
+    
+    /* Format the user message */
+    va_start(args, format);
+    vsnprintf(message, sizeof(message), format, args);
+    va_end(args);
+    
+    /* Add file/line/function information */
+    const char *basename = strrchr(file, '/');
+    basename = basename ? basename + 1 : file;
+    
+    snprintf(formatted_message, sizeof(formatted_message), 
+             "%s (%s:%d in %s())", message, basename, line, func);
+    
+    logger_output_with_source(level, source, formatted_message);
+    
+    pthread_mutex_unlock(&g_logger.mutex);
+}
+
+void logger_set_enabled(bool enabled) {
+    pthread_mutex_lock(&g_logger.mutex);
+    g_logger.logging_enabled = enabled;
+    pthread_mutex_unlock(&g_logger.mutex);
+}
+
+bool logger_is_enabled(void) {
+    pthread_mutex_lock(&g_logger.mutex);
+    bool enabled = g_logger.logging_enabled;
+    pthread_mutex_unlock(&g_logger.mutex);
+    return enabled;
+}
+
+void logger_set_source_enabled(log_source_t source, bool enabled) {
+    if (source >= LOG_SOURCE_UNKNOWN && source <= LOG_SOURCE_EXTERNAL_BINARY) {
+        pthread_mutex_lock(&g_logger.mutex);
+        g_logger.source_enabled[source] = enabled;
+        pthread_mutex_unlock(&g_logger.mutex);
+    }
+}
+
+bool logger_is_source_enabled(log_source_t source) {
+    if (source >= LOG_SOURCE_UNKNOWN && source <= LOG_SOURCE_EXTERNAL_BINARY) {
+        pthread_mutex_lock(&g_logger.mutex);
+        bool enabled = g_logger.logging_enabled && g_logger.source_enabled[source];
+        pthread_mutex_unlock(&g_logger.mutex);
+        return enabled;
+    }
+    return false;
+}
+
+void logger_configure_sources(bool logging_enabled, const bool source_enabled[10]) {
+    pthread_mutex_lock(&g_logger.mutex);
+    g_logger.logging_enabled = logging_enabled;
+    if (source_enabled) {
+        for (int i = 0; i < 10; i++) {
+            g_logger.source_enabled[i] = source_enabled[i];
+        }
+    }
+    pthread_mutex_unlock(&g_logger.mutex);
+}
+
 void logger_log_simple(log_level_t level, const char *format, ...) {
     /* Check if we should log this level */
     if (level < g_logger.min_level) {
@@ -231,7 +406,7 @@ void logger_log_simple(log_level_t level, const char *format, ...) {
     
     /* If not initialized, use default console output */
     if (!g_logger.initialized) {
-        g_logger.flags = LOG_FLAG_CONSOLE | LOG_FLAG_TIMESTAMP;
+        g_logger.flags = (log_flags_t)(LOG_FLAG_CONSOLE | LOG_FLAG_TIMESTAMP);
     }
     
     char message[2048];

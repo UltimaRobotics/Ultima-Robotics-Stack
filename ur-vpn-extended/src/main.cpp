@@ -14,6 +14,11 @@
 #include <memory>
 #include <getopt.h>
 
+// Include logger API
+extern "C" {
+#include "../ur-rpc-template/deps/ur-logger-api/logger.h"
+}
+
 std::atomic<bool> g_running(true);
 
 // Global pointers for signal handler access
@@ -561,6 +566,29 @@ int main(int argc, char* argv[]) {
         wireguard_stats_logging = stats_config.value("wireguard", true);
     }
 
+    // Parse logging configuration
+    bool logging_enabled = true;
+    bool source_logging[10] = {true, true, true, true, true, true, true, true, true, true};
+    
+    if (master_config.contains("logging")) {
+        auto logging_config = master_config["logging"];
+        logging_enabled = logging_config.value("enabled", true);
+        
+        if (logging_config.contains("sources")) {
+            auto sources = logging_config["sources"];
+            source_logging[0] = sources.value("unknown", true);                    // LOG_SOURCE_UNKNOWN
+            source_logging[1] = sources.value("ur_rpc_template", true);            // LOG_SOURCE_UR_RPC_TEMPLATE
+            source_logging[2] = sources.value("thread_manager", true);            // LOG_SOURCE_THREAD_MANAGER
+            source_logging[3] = sources.value("vpn_manager", true);               // LOG_SOURCE_VPN_MANAGER
+            source_logging[4] = sources.value("openvpn_library", true);           // LOG_SOURCE_OPENVPN_LIBRARY
+            source_logging[5] = sources.value("wireguard_library", true);         // LOG_SOURCE_WIREGUARD_LIBRARY
+            source_logging[6] = sources.value("http_server", true);               // LOG_SOURCE_HTTP_SERVER
+            source_logging[7] = sources.value("rpc_client", true);                // LOG_SOURCE_RPC_CLIENT
+            source_logging[8] = sources.value("rpc_processor", true);             // LOG_SOURCE_RPC_PROCESSOR
+            source_logging[9] = sources.value("external_binary", true);           // LOG_SOURCE_EXTERNAL_BINARY
+        }
+    }
+
     // Parse RPC configuration
     std::string rpc_config_path = rpc_config_file;
     // No longer reading from master config, using command line argument directly
@@ -616,15 +644,32 @@ int main(int argc, char* argv[]) {
     manager.setOpenVPNStatsLogging(openvpn_stats_logging);
     manager.setWireGuardStatsLogging(wireguard_stats_logging);
     
+    // Configure logging sources
+    logger_configure_sources(logging_enabled, source_logging);
+    
     if (verbose_mode) {
         json stats_info = {
             {"type", "verbose"},
             {"message", "Stats logging configuration"},
-            {"stats_logging_enabled", stats_logging_enabled},
-            {"openvpn_stats_logging", openvpn_stats_logging},
-            {"wireguard_stats_logging", wireguard_stats_logging}
+            {"data", {
+                {"stats_logging_enabled", stats_logging_enabled},
+                {"openvpn_stats_logging", openvpn_stats_logging},
+                {"wireguard_stats_logging", wireguard_stats_logging}
+            }}
         };
         std::cout << stats_info.dump() << std::endl;
+        
+        json logging_info = {
+            {"type", "verbose"},
+            {"message", "Source logging configuration"},
+            {"data", {
+                {"logging_enabled", logging_enabled},
+                {"vpn_manager", source_logging[3]},
+                {"openvpn_library", source_logging[4]},
+                {"wireguard_library", source_logging[5]}
+            }}
+        };
+        std::cout << logging_info.dump() << std::endl;
     }
 
     // Set global event callback to print JSON events
@@ -795,7 +840,9 @@ int main(int argc, char* argv[]) {
         {"type", "info"},
         {"message", "Entering main monitoring loop - printing status every 10 seconds"}
     };
-    std::cout << loop_start.dump() << std::endl;
+    if (logger_is_source_enabled(LOG_SOURCE_VPN_MANAGER)) {
+        std::cout << loop_start.dump() << std::endl;
+    }
     
     while (g_running) {
         // Get aggregated status
@@ -807,7 +854,9 @@ int main(int argc, char* argv[]) {
             {"instance_count", status.size()},
             {"timestamp", time(nullptr)}
         };
-        std::cout << status_msg.dump() << std::endl;
+        if (logger_is_source_enabled(LOG_SOURCE_VPN_MANAGER)) {
+            std::cout << status_msg.dump() << std::endl;
+        }
 
         std::this_thread::sleep_for(std::chrono::seconds(10));
     }

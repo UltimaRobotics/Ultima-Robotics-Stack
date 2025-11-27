@@ -32,6 +32,7 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty
     ${CMAKE_CURRENT_SOURCE_DIR}/source-port
     ${OPENSSL_INCLUDE_DIRS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../ur-rpc-template/deps/ur-logger-api
 )
 
 # C Bridge - Pure C interface to lib-src
@@ -71,6 +72,7 @@ add_library(openvpn_cpp_wrapper STATIC
 target_link_libraries(openvpn_cpp_wrapper
     openvpn_c_bridge
     ${OPENSSL_LIBRARIES}
+    ur-logger-api-static
     pthread
 )
 

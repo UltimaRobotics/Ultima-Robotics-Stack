@@ -8,6 +8,11 @@
 #include <chrono>
 #include <future>
 
+// Include logger for source control
+extern "C" {
+    #include "../ur-rpc-template/deps/ur-logger-api/logger.h"
+}
+
 namespace vpn_manager {
 
 void VPNInstanceManager::launchInstanceThread(VPNInstance& instance) {
@@ -128,11 +133,13 @@ void VPNInstanceManager::launchInstanceThread(VPNInstance& instance) {
             while (!instance.should_stop && running_) {
                 if (!wrapper->isConnected()) {
                     if (instance.auto_connect) {
-                        std::cout << json({
-                            {"type", "auto_reconnect"},
-                            {"instance", instance.name},
-                            {"message", "Attempting auto-reconnect"}
-                        }).dump() << std::endl;
+                        if (logger_is_source_enabled(LOG_SOURCE_VPN_MANAGER)) {
+                            std::cout << json({
+                                {"type", "auto_reconnect"},
+                                {"instance", instance.name},
+                                {"message", "Attempting auto-reconnect"}
+                            }).dump() << std::endl;
+                        }
                         wrapper->reconnect();
                     } else {
                         break;
@@ -264,11 +271,13 @@ void VPNInstanceManager::launchInstanceThread(VPNInstance& instance) {
             while (!instance.should_stop && running_) {
                 if (!wrapper->isConnected()) {
                     if (instance.auto_connect) {
-                        std::cout << json({
-                            {"type", "auto_reconnect"},
-                            {"instance", instance.name},
-                            {"message", "Attempting auto-reconnect"}
-                        }).dump() << std::endl;
+                        if (logger_is_source_enabled(LOG_SOURCE_VPN_MANAGER)) {
+                            std::cout << json({
+                                {"type", "auto_reconnect"},
+                                {"instance", instance.name},
+                                {"message", "Attempting auto-reconnect"}
+                            }).dump() << std::endl;
+                        }
                         wrapper->reconnect();
                     } else {
                         break;

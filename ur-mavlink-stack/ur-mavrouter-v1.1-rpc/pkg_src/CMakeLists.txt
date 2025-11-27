@@ -7,6 +7,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Option to enable HTTP server build
 option(_BUILD_HTTP "Build with HTTP server support" OFF)
 
+# Option to enable UART reconnection
+option(_ENABLE_UART_RECONNECTION "Enable UART reconnection on failure" OFF)
+
 add_definitions(-DPACKAGE="ur-mavrouter")
 add_definitions(-Wno-address-of-packed-member)
 add_definitions(-Wno-return-type)
@@ -47,6 +50,14 @@ else()
     set(HTTP_MODULE_LIBS "")
     set(HTTP_MODULE_INCLUDE_DIRS "")
     set(MHD_INCLUDE_DIRS "")
+endif()
+
+# Conditionally enable UART reconnection
+if(_ENABLE_UART_RECONNECTION)
+    message(STATUS "UART reconnection enabled")
+    add_definitions(-D_ENABLE_UART_RECONNECTION)
+else()
+    message(STATUS "UART reconnection disabled")
 endif()
 
 include_directories(

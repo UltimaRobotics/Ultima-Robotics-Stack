@@ -303,24 +303,17 @@ CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcControllerNew.cpp.o: \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/../modules/ur-threadder-api/cpp/include/ThreadManager.hpp \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../common/log.h \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../common/macro.h \
- /usr/include/c++/11/thread /usr/include/c++/11/bits/this_thread_sleep.h \
- /usr/include/c++/11/fstream \
- /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
- /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \
- /usr/include/c++/11/bits/fstream.tcc \
- /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../mavlink-extensions/ExtensionManager.h \
- /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/modules/ur-threadder-api/cpp/include/ThreadManager.hpp \
- /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../mavlink-extensions/../mainloop.h \
- /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../mavlink-extensions/../binlog.h \
- /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../mavlink-extensions/../logendpoint.h \
- /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../mavlink-extensions/../common/conf_file.h \
+ /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../common/json_config.h \
+ /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../common/../../modules/nholmann/json.hpp \
+ /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../common/../logendpoint.h \
+ /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../common/../common/conf_file.h \
  /usr/include/aio.h /usr/include/dirent.h \
  /usr/include/x86_64-linux-gnu/bits/dirent.h \
  /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
  /usr/include/x86_64-linux-gnu/bits/local_lim.h \
  /usr/include/linux/limits.h \
  /usr/include/x86_64-linux-gnu/bits/dirent_ext.h \
- /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../mavlink-extensions/../endpoint.h \
+ /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../common/../endpoint.h \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/common/mavlink.h \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/modules/mavlink_c_library_v2/ardupilotmega/mavlink.h \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/modules/mavlink_c_library_v2/ardupilotmega/version.h \
@@ -622,7 +615,7 @@ CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcControllerNew.cpp.o: \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/modules/mavlink_c_library_v2/ardupilotmega/../icarous/./mavlink_msg_icarous_heartbeat.h \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/modules/mavlink_c_library_v2/ardupilotmega/../icarous/./mavlink_msg_icarous_kinematic_bands.h \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/modules/mavlink_c_library_v2/ardupilotmega/../mavlink_get_info.h \
- /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../mavlink-extensions/../comm.h \
+ /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../common/../comm.h \
  /usr/include/arpa/inet.h /usr/include/netinet/in.h \
  /usr/include/x86_64-linux-gnu/sys/socket.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h \
@@ -644,12 +637,21 @@ CMakeFiles/ur-mavrouter.dir/src/rpc-mechanisms/RpcControllerNew.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/in.h \
  /usr/include/x86_64-linux-gnu/asm/termbits.h \
  /usr/include/asm-generic/termbits.h /usr/include/inttypes.h \
- /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../mavlink-extensions/../pollable.h \
- /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../mavlink-extensions/../timeout.h \
- /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../mavlink-extensions/../endpoint_stats.h \
+ /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../common/../pollable.h \
+ /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../common/../timeout.h \
+ /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../common/../endpoint_stats.h \
  /usr/include/c++/11/deque /usr/include/c++/11/bits/stl_deque.h \
  /usr/include/c++/11/bits/deque.tcc \
- /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../mavlink-extensions/../config.h \
- /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../mavlink-extensions/../dedup.h \
- /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../mavlink-extensions/../ulog.h \
+ /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../mainloop.h \
+ /usr/include/c++/11/thread /usr/include/c++/11/bits/this_thread_sleep.h \
+ /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../binlog.h \
+ /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../config.h \
+ /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../dedup.h \
+ /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../ulog.h \
+ /usr/include/c++/11/fstream \
+ /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
+ /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \
+ /usr/include/c++/11/bits/fstream.tcc \
+ /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/src/rpc-mechanisms/../mavlink-extensions/ExtensionManager.h \
+ /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/modules/ur-threadder-api/cpp/include/ThreadManager.hpp \
  /home/fyou/Desktop/Ultima-Robotics-Stack/ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/./modules/nholmann/json.hpp

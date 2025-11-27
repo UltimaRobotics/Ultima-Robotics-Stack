@@ -792,7 +792,11 @@ bool UartEndpoint::setup(UartEndpointConfig conf)
 
     if (!this->open(conf.device.c_str())) {
         log_warning("UART %s: Initial connection failed, will retry", _name.c_str());
+#ifdef _ENABLE_UART_RECONNECTION
         schedule_reconnect();
+#else
+        log_warning("UART %s: Reconnection disabled - endpoint will remain inactive", _name.c_str());
+#endif
         return true; // Don't fail setup, let reconnection handle it
     }
 
@@ -1041,7 +1045,11 @@ void UartEndpoint::handle_connection_lost()
         fd = -1;
     }
     _valid = false;
+#ifdef _ENABLE_UART_RECONNECTION
     schedule_reconnect();
+#else
+    log_warning("UART %s: Connection closed - reconnection disabled", _name.c_str());
+#endif
 }
 
 void UartEndpoint::schedule_reconnect()
@@ -1312,9 +1320,13 @@ void UartEndpoint::_handle_epoll_error()
     _valid = false;
     
     // Schedule reconnection if not already scheduled
+#ifdef _ENABLE_UART_RECONNECTION
     if (_reconnect_timeout == nullptr) {
         schedule_reconnect();
     }
+#else
+    log_warning("UART %s: EPOLL error handled - reconnection disabled", _name.c_str());
+#endif
 }
 
 bool UartEndpoint::validate_config(const UartEndpointConfig &config)

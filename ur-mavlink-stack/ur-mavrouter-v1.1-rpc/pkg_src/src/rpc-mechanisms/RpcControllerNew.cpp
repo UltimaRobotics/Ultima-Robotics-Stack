@@ -1,6 +1,8 @@
 #include "RpcControllerNew.hpp"
 #include "DeviceDiscoveryCronJob.hpp"
 #include "../common/log.h"
+#include "../common/json_config.h"
+#include "../mainloop.h"
 #include <thread>
 #include <chrono>
 #include <fstream>
@@ -270,19 +272,14 @@ void RpcController::setupRpcMessageHandlers() {
 
 void RpcController::handleRpcMessage(const std::string& topic, const std::string& payload) {
     try {
-        log_info("[RPC_CONTROLLER] Handling RPC message from topic: %s (payload size: %zu)", topic.c_str(), payload.size());
         log_debug("[RPC_CONTROLLER] Message payload: %s", payload.c_str());
         
         // Handle heartbeat messages from ur-mavdiscovery (startup mechanism trigger)
         if (topic == "clients/ur-mavdiscovery/heartbeat") {
-            log_info("[RPC_CONTROLLER] Processing heartbeat message from ur-mavdiscovery");
             // Route to DeviceDiscoveryCronJob
             if (discoveryCronJob_) {
                 discoveryCronJob_->handleHeartbeatMessage(topic, payload);
-                log_info("[RPC_CONTROLLER] Heartbeat routed to DeviceDiscoveryCronJob (heartbeat received: %s)", 
-                        discoveryCronJob_->hasReceivedHeartbeat() ? "yes" : "no");
             } else {
-                log_warning("[RPC_CONTROLLER] DeviceDiscoveryCronJob not available for heartbeat");
             }
             return;
         }
@@ -391,6 +388,55 @@ void RpcController::handleRpcMessage(const std::string& topic, const std::string
                 } else {
                     log_info("[RPC] Router configuration updated successfully");
                 }
+                
+                // CRITICAL FIX: Recreate UART endpoints in main router's mainloop
+                // This ensures the flight_controller endpoint is recreated after device reconnect
+                try {
+                    log_info("[RPC] Recreating UART endpoints in main router after device reconnect");
+                    
+                    // Reload configuration from file to get updated UART settings
+                    JsonConfig json_config;
+                    std::string configFilePath = routerConfigPath_; // This is already the full path to the JSON file
+                    int ret = json_config.parse(configFilePath);
+                    if (ret >= 0) {
+                        Configuration config;
+                        ret = json_config.extract_configuration(config);
+                        if (ret >= 0) {
+                            log_info("[RPC] Configuration reloaded: %zu UART, %zu UDP, %zu TCP endpoints",
+                                    config.uart_configs.size(), config.udp_configs.size(), config.tcp_configs.size());
+                            
+                            // Get the main router's mainloop instance and recreate endpoints
+                            auto& mainloop = Mainloop::get_instance();
+                            
+                            // Check if TCP server needs to be recreated
+                            if (config.tcp_port != 0) {
+                                log_info("[RPC] Ensuring TCP server is available on port %lu", config.tcp_port);
+                                // The add_endpoints() will recreate the TCP server if needed
+                            }
+                            
+                            // Add the updated UART endpoints
+                            if (mainloop.add_endpoints(config)) {
+                                log_info("[RPC] Successfully recreated UART endpoints in main router");
+                                if (!config.uart_configs.empty()) {
+                                    for (const auto& uartConfig : config.uart_configs) {
+                                        log_info("[RPC] UART endpoint recreated: %s on %s (baudrate: %d)",
+                                               uartConfig.name.c_str(), uartConfig.device.c_str(), 
+                                               uartConfig.baudrates.empty() ? 0 : uartConfig.baudrates[0]);
+                                    }
+                                }
+                            } else {
+                                log_error("[RPC] Failed to recreate UART endpoints in main router");
+                            }
+                        } else {
+                            log_error("[RPC] Failed to extract configuration from JSON (error code: %d)", ret);
+                        }
+                    } else {
+                        log_error("[RPC] Failed to parse JSON configuration file (error code: %d)", ret);
+                    }
+                } catch (const std::exception& e) {
+                    log_error("[RPC] Exception while recreating UART endpoints: %s", e.what());
+                }
+                
             } else {
                 if (isStartupTrigger) {
                     log_warning("[STARTUP] Failed to update router configuration, using existing config");
@@ -560,9 +606,24 @@ void RpcController::handleRpcMessage(const std::string& topic, const std::string
                 log_warning("[RPC] No extension manager available");
             }
             
-            // Then stop the mainloop thread
+            // Then stop the mainloop thread FIRST to ensure event loop is not running
             auto mainloopResp = this->stopThread(ThreadTarget::MAINLOOP);
             log_info("[RPC] Mainloop stop result: %s", mainloopResp.message.c_str());
+            
+            // CRITICAL FIX: Clear ALL endpoints AFTER stopping mainloop to avoid race conditions
+            // This ensures clean state without concurrent access issues
+            try {
+                log_info("[RPC] Force closing TCP server and clearing all endpoints for clean disconnect");
+                auto& mainloop = Mainloop::get_instance();
+                mainloop.force_close_tcp_server();
+                log_info("[RPC] TCP server force closed successfully");
+                
+                log_info("[RPC] Clearing ALL endpoints from main router after mainloop stopped");
+                mainloop.clear_endpoints();
+                log_info("[RPC] All endpoints cleared successfully");
+            } catch (const std::exception& e) {
+                log_error("[RPC] Exception while cleaning up endpoints: %s", e.what());
+            }
             
             // Return combined status
             if (mainloopResp.status != OperationStatus::SUCCESS) {
@@ -979,7 +1040,18 @@ bool RpcController::isMainloopRunning() const
     bool threadRunning = status.status == OperationStatus::SUCCESS;
     bool inEventLoop = Mainloop::is_in_event_loop();
     
-    return threadRunning && inEventLoop;
+    // Enhanced detection: If event loop is ready, consider mainloop as running
+    // even if thread registration is temporarily lost during device reconnect
+    if (inEventLoop) {
+        log_debug("RpcController::isMainloopRunning() - Event loop is ready, considering mainloop as running");
+        return true;
+    }
+    
+    bool isRunning = threadRunning && inEventLoop;
+    log_debug("RpcController::isMainloopRunning() - Thread running: %s, Event loop: %s, Overall: %s",
+             threadRunning ? "yes" : "no", inEventLoop ? "yes" : "no", isRunning ? "yes" : "no");
+    
+    return isRunning;
 }
 
 nlohmann::json RpcController::getStartupStatus() const {

@@ -2,6 +2,11 @@
 #include "vpn_instance_manager.hpp"
 #include <iostream>
 
+// Include logger for source control
+extern "C" {
+    #include "../ur-rpc-template/deps/ur-logger-api/logger.h"
+}
+
 namespace vpn_manager {
 
 void VPNInstanceManager::setGlobalEventCallback(EventCallback callback) {
@@ -12,6 +17,11 @@ void VPNInstanceManager::emitEvent(const std::string& instance_name,
                                      const std::string& event_type,
                                      const std::string& message,
                                      const json& data) {
+    // Check if VPN Manager logging is enabled
+    if (!logger_is_source_enabled(LOG_SOURCE_VPN_MANAGER)) {
+        return;
+    }
+    
     AggregatedEvent event;
     event.instance_name = instance_name;
     event.event_type = event_type;

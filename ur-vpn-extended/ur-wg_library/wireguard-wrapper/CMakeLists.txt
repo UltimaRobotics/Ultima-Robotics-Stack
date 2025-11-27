@@ -19,6 +19,7 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/../thirdparty
     ${CMAKE_CURRENT_SOURCE_DIR}/../../ur-threadder-api/include
     ${CMAKE_CURRENT_SOURCE_DIR}/../../ur-threadder-api/cpp/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../ur-rpc-template/deps/ur-logger-api
 )
 
 # C Bridge library
@@ -40,6 +41,7 @@ add_library(wireguard_cpp_wrapper STATIC
 target_link_libraries(wireguard_cpp_wrapper
     wireguard_c_bridge
     threadmanager_cpp
+    ur-logger-api-static
     pthread
 )
 

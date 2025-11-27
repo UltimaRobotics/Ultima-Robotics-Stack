@@ -8,6 +8,11 @@
 #include <future> // Required for std::async and std::future
 #include <thread> // Required for std::this_thread
 
+// Include logger for source control
+extern "C" {
+    #include "../ur-rpc-template/deps/ur-logger-api/logger.h"
+}
+
 namespace openvpn {
 
 OpenVPNWrapper::OpenVPNWrapper()
@@ -125,7 +130,9 @@ bool OpenVPNWrapper::disconnect() {
         already_stopped_log["type"] = "verbose";
         already_stopped_log["message"] = "OpenVPN disconnect called but already stopped";
         already_stopped_log["config_file"] = config_file_;
-        std::cout << already_stopped_log.dump() << std::endl;
+        if (logger_is_source_enabled(LOG_SOURCE_OPENVPN_LIBRARY)) {
+            std::cout << already_stopped_log.dump() << std::endl;
+        }
         return false;
     }
 
@@ -133,7 +140,9 @@ bool OpenVPNWrapper::disconnect() {
     disconnect_start_log["type"] = "verbose";
     disconnect_start_log["message"] = "OpenVPN disconnect started";
     disconnect_start_log["config_file"] = config_file_;
-    std::cout << disconnect_start_log.dump() << std::endl;
+    if (logger_is_source_enabled(LOG_SOURCE_OPENVPN_LIBRARY)) {
+        std::cout << disconnect_start_log.dump() << std::endl;
+    }
 
     running_ = false; // Signal threads to stop
     connected_ = false;
@@ -142,7 +151,9 @@ bool OpenVPNWrapper::disconnect() {
     flags_log["type"] = "verbose";
     flags_log["message"] = "OpenVPN running and connected flags set to false";
     flags_log["config_file"] = config_file_;
-    std::cout << flags_log.dump() << std::endl;
+    if (logger_is_source_enabled(LOG_SOURCE_OPENVPN_LIBRARY)) {
+        std::cout << flags_log.dump() << std::endl;
+    }
 
     setState(ConnectionState::DISCONNECTED);
     emitEvent("disconnecting", "Stopping VPN connection");
@@ -153,7 +164,9 @@ bool OpenVPNWrapper::disconnect() {
         signal_log["type"] = "verbose";
         signal_log["message"] = "OpenVPN sending SIGTERM signal to bridge";
         signal_log["config_file"] = config_file_;
-        std::cout << signal_log.dump() << std::endl;
+        if (logger_is_source_enabled(LOG_SOURCE_OPENVPN_LIBRARY)) {
+            std::cout << signal_log.dump() << std::endl;
+        }
 
         openvpn_bridge_signal(bridge_ctx_, SIGTERM);
 
@@ -161,7 +174,9 @@ bool OpenVPNWrapper::disconnect() {
         signal_sent_log["type"] = "verbose";
         signal_sent_log["message"] = "OpenVPN SIGTERM signal sent successfully";
         signal_sent_log["config_file"] = config_file_;
-        std::cout << signal_sent_log.dump() << std::endl;
+        if (logger_is_source_enabled(LOG_SOURCE_OPENVPN_LIBRARY)) {
+            std::cout << signal_sent_log.dump() << std::endl;
+        }
     }
 
     // Wait for worker thread
@@ -170,7 +185,9 @@ bool OpenVPNWrapper::disconnect() {
         worker_join_log["type"] = "verbose";
         worker_join_log["message"] = "OpenVPN waiting for worker thread to join";
         worker_join_log["config_file"] = config_file_;
-        std::cout << worker_join_log.dump() << std::endl;
+        if (logger_is_source_enabled(LOG_SOURCE_OPENVPN_LIBRARY)) {
+            std::cout << worker_join_log.dump() << std::endl;
+        }
 
         worker_thread_->join();
 
@@ -178,13 +195,17 @@ bool OpenVPNWrapper::disconnect() {
         worker_joined_log["type"] = "verbose";
         worker_joined_log["message"] = "OpenVPN worker thread joined successfully";
         worker_joined_log["config_file"] = config_file_;
-        std::cout << worker_joined_log.dump() << std::endl;
+        if (logger_is_source_enabled(LOG_SOURCE_OPENVPN_LIBRARY)) {
+            std::cout << worker_joined_log.dump() << std::endl;
+        }
     } else {
         json no_worker_log;
         no_worker_log["type"] = "verbose";
         no_worker_log["message"] = "OpenVPN worker thread not joinable or null";
         no_worker_log["config_file"] = config_file_;
-        std::cout << no_worker_log.dump() << std::endl;
+        if (logger_is_source_enabled(LOG_SOURCE_OPENVPN_LIBRARY)) {
+            std::cout << no_worker_log.dump() << std::endl;
+        }
     }
 
     // Wait for stats thread
@@ -193,7 +214,9 @@ bool OpenVPNWrapper::disconnect() {
         stats_join_log["type"] = "verbose";
         stats_join_log["message"] = "OpenVPN waiting for stats thread to join";
         stats_join_log["config_file"] = config_file_;
-        std::cout << stats_join_log.dump() << std::endl;
+        if (logger_is_source_enabled(LOG_SOURCE_OPENVPN_LIBRARY)) {
+            std::cout << stats_join_log.dump() << std::endl;
+        }
 
         stats_thread_->join();
 
@@ -201,13 +224,17 @@ bool OpenVPNWrapper::disconnect() {
         stats_joined_log["type"] = "verbose";
         stats_joined_log["message"] = "OpenVPN stats thread joined successfully";
         stats_joined_log["config_file"] = config_file_;
-        std::cout << stats_joined_log.dump() << std::endl;
+        if (logger_is_source_enabled(LOG_SOURCE_OPENVPN_LIBRARY)) {
+            std::cout << stats_joined_log.dump() << std::endl;
+        }
     } else {
         json no_stats_log;
         no_stats_log["type"] = "verbose";
         no_stats_log["message"] = "OpenVPN stats thread not joinable or null";
         no_stats_log["config_file"] = config_file_;
-        std::cout << no_stats_log.dump() << std::endl;
+        if (logger_is_source_enabled(LOG_SOURCE_OPENVPN_LIBRARY)) {
+            std::cout << no_stats_log.dump() << std::endl;
+        }
     }
 
     emitEvent("disconnected", "VPN connection stopped");
@@ -216,7 +243,9 @@ bool OpenVPNWrapper::disconnect() {
     complete_log["type"] = "verbose";
     complete_log["message"] = "OpenVPN disconnect completed successfully";
     complete_log["config_file"] = config_file_;
-    std::cout << complete_log.dump() << std::endl;
+    if (logger_is_source_enabled(LOG_SOURCE_OPENVPN_LIBRARY)) {
+        std::cout << complete_log.dump() << std::endl;
+    }
 
     return true;
 }
@@ -429,7 +458,9 @@ void OpenVPNWrapper::statsLoop() {
     exit_log["message"] = "OpenVPN statsLoop exiting";
     exit_log["config_file"] = config_file_;
     exit_log["running"] = running_.load();
-    std::cout << exit_log.dump() << std::endl;
+    if (logger_is_source_enabled(LOG_SOURCE_OPENVPN_LIBRARY)) {
+        std::cout << exit_log.dump() << std::endl;
+    }
 }
 
 void OpenVPNWrapper::updateStats() {
@@ -505,7 +536,9 @@ void OpenVPNWrapper::updateStats() {
                 fail_log["message"] = "OpenVPN updateStats: openvpn_bridge_get_stats failed";
                 fail_log["config_file"] = config_file_;
                 fail_log["error_code"] = result;
-                std::cout << fail_log.dump() << std::endl;
+                if (logger_is_source_enabled(LOG_SOURCE_OPENVPN_LIBRARY)) {
+                    std::cout << fail_log.dump() << std::endl;
+                }
             }
         } catch (const std::exception& e) {
             // Handle potential exceptions from future.get()
@@ -514,7 +547,9 @@ void OpenVPNWrapper::updateStats() {
             error_log["message"] = "OpenVPN updateStats: Exception getting future result";
             error_log["config_file"] = config_file_;
             error_log["error"] = e.what();
-            std::cout << error_log.dump() << std::endl;
+            if (logger_is_source_enabled(LOG_SOURCE_OPENVPN_LIBRARY)) {
+                std::cout << error_log.dump() << std::endl;
+            }
         }
     } else {
         // If timeout, stats update is skipped silently
@@ -522,7 +557,9 @@ void OpenVPNWrapper::updateStats() {
         timeout_log["type"] = "verbose";
         timeout_log["message"] = "OpenVPN updateStats: Timeout waiting for get_stats";
         timeout_log["config_file"] = config_file_;
-        std::cout << timeout_log.dump() << std::endl;
+        if (logger_is_source_enabled(LOG_SOURCE_OPENVPN_LIBRARY)) {
+            std::cout << timeout_log.dump() << std::endl;
+        }
     }
 }
 
@@ -643,7 +680,9 @@ std::vector<OpenVPNWrapper::RouteRule> OpenVPNWrapper::getRouteRules() const {
         error_log["type"] = "error";
         error_log["message"] = "Failed to parse route rules JSON";
         error_log["error"] = e.what();
-        std::cout << error_log.dump() << std::endl;
+        if (logger_is_source_enabled(LOG_SOURCE_OPENVPN_LIBRARY)) {
+            std::cout << error_log.dump() << std::endl;
+        }
     }
     
     free(json_str);
@@ -705,7 +744,9 @@ void OpenVPNWrapper::route_callback_wrapper(
         error_log["type"] = "error";
         error_log["message"] = "Failed to parse route event";
         error_log["error"] = e.what();
-        std::cout << error_log.dump() << std::endl;
+        if (logger_is_source_enabled(LOG_SOURCE_OPENVPN_LIBRARY)) {
+            std::cout << error_log.dump() << std::endl;
+        }
     }
 }
 

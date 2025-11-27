@@ -5,6 +5,11 @@
 #include <future> // Include for std::async and std::future
 #include <unistd.h> // For usleep
 
+// Include logger for source control
+extern "C" {
+    #include "../ur-rpc-template/deps/ur-logger-api/logger.h"
+}
+
 namespace wireguard {
 
 WireGuardWrapper::WireGuardWrapper()
@@ -16,6 +21,13 @@ WireGuardWrapper::WireGuardWrapper()
       worker_thread_id_(0),
       worker_thread_created_(false),
       routing_ctx_(nullptr) {
+    
+    json constructor_log;
+    constructor_log["type"] = "verbose";
+    constructor_log["message"] = "WireGuard constructor called";
+    if (logger_is_source_enabled(LOG_SOURCE_WIREGUARD_LIBRARY)) {
+        std::cout << constructor_log.dump() << std::endl;
+    }
 
     wireguard_bridge_init_static();
     bridge_ctx_ = wireguard_bridge_create_context();
@@ -35,7 +47,9 @@ WireGuardWrapper::~WireGuardWrapper() {
     destructor_log["config_file"] = config_file_;
     destructor_log["running"] = running_.load();
     destructor_log["connected"] = connected_.load();
-    std::cout << destructor_log.dump() << std::endl;
+    if (logger_is_source_enabled(LOG_SOURCE_WIREGUARD_LIBRARY)) {
+        std::cout << destructor_log.dump() << std::endl;
+    }
 
     running_ = false;
     
@@ -49,17 +63,20 @@ WireGuardWrapper::~WireGuardWrapper() {
         worker_join_log["type"] = "verbose";
         worker_join_log["message"] = "WireGuard destructor stopping worker thread";
         worker_join_log["config_file"] = config_file_;
-        std::cout << worker_join_log.dump() << std::endl;
+        if (logger_is_source_enabled(LOG_SOURCE_WIREGUARD_LIBRARY)) {
+            std::cout << worker_join_log.dump() << std::endl;
+        }
 
         try {
             thread_manager_->stopThread(worker_thread_id_);
-            thread_manager_->joinThread(worker_thread_id_);
         } catch (const std::exception& e) {
             json error_log;
             error_log["type"] = "error";
             error_log["message"] = "Failed to stop worker thread";
             error_log["error"] = e.what();
-            std::cout << error_log.dump() << std::endl;
+            if (logger_is_source_enabled(LOG_SOURCE_WIREGUARD_LIBRARY)) {
+                std::cout << error_log.dump() << std::endl;
+            }
         }
         worker_thread_created_ = false;
     }
@@ -69,7 +86,9 @@ WireGuardWrapper::~WireGuardWrapper() {
         destroy_log["type"] = "verbose";
         destroy_log["message"] = "WireGuard destructor destroying bridge context";
         destroy_log["config_file"] = config_file_;
-        std::cout << destroy_log.dump() << std::endl;
+        if (logger_is_source_enabled(LOG_SOURCE_WIREGUARD_LIBRARY)) {
+            std::cout << destroy_log.dump() << std::endl;
+        }
 
         wireguard_bridge_destroy_context(bridge_ctx_);
     }
@@ -78,7 +97,9 @@ WireGuardWrapper::~WireGuardWrapper() {
     uninit_log["type"] = "verbose";
     uninit_log["message"] = "WireGuard destructor calling bridge uninit";
     uninit_log["config_file"] = config_file_;
-    std::cout << uninit_log.dump() << std::endl;
+    if (logger_is_source_enabled(LOG_SOURCE_WIREGUARD_LIBRARY)) {
+        std::cout << uninit_log.dump() << std::endl;
+    }
 
     wireguard_bridge_uninit_static();
 
@@ -86,7 +107,9 @@ WireGuardWrapper::~WireGuardWrapper() {
     complete_log["type"] = "verbose";
     complete_log["message"] = "WireGuard destructor completed";
     complete_log["config_file"] = config_file_;
-    std::cout << complete_log.dump() << std::endl;
+    if (logger_is_source_enabled(LOG_SOURCE_WIREGUARD_LIBRARY)) {
+        std::cout << complete_log.dump() << std::endl;
+    }
 }
 
 bool WireGuardWrapper::initializeFromFile(const std::string& config_file) {
@@ -196,7 +219,9 @@ bool WireGuardWrapper::disconnect() {
         log["type"] = "verbose";
         log["message"] = "WireGuard disconnect called but bridge_ctx is null";
         log["config_file"] = config_file_;
-        std::cout << log.dump() << std::endl;
+        if (logger_is_source_enabled(LOG_SOURCE_WIREGUARD_LIBRARY)) {
+            std::cout << log.dump() << std::endl;
+        }
         return false;
     }
 
@@ -206,8 +231,10 @@ bool WireGuardWrapper::disconnect() {
     start_log["config_file"] = config_file_;
     start_log["running"] = running_.load();
     start_log["connected"] = connected_.load();
-    std::cout << start_log.dump() << std::endl;
-    std::cout.flush();
+    if (logger_is_source_enabled(LOG_SOURCE_WIREGUARD_LIBRARY)) {
+        std::cout << start_log.dump() << std::endl;
+        std::cout.flush();
+    }
 
     // Set flags FIRST to signal threads to stop
     running_ = false;
@@ -217,52 +244,42 @@ bool WireGuardWrapper::disconnect() {
     flags_log["type"] = "verbose";
     flags_log["message"] = "WireGuard running and connected flags set to false";
     flags_log["config_file"] = config_file_;
-    std::cout << flags_log.dump() << std::endl;
-    std::cout.flush();
+    if (logger_is_source_enabled(LOG_SOURCE_WIREGUARD_LIBRARY)) {
+        std::cout << flags_log.dump() << std::endl;
+        std::cout.flush();
+    }
 
     setState(ConnectionState::DISCONNECTED);
     emitEvent("disconnecting", "Cleaning up WireGuard interface");
 
     // Give threads a moment to detect the flag change
-    usleep(100000); // 100ms
-
-    // No need to join stats_thread_ as it's removed.
-    // The C bridge handles its own internal threading for stats.
-
-    // Wait for worker thread to exit
-    if (worker_thread_created_ && thread_manager_) {
-        json worker_join_log;
-        worker_join_log["type"] = "verbose";
-        worker_join_log["message"] = "WireGuard waiting for worker thread to stop";
-        worker_join_log["config_file"] = config_file_;
+    json worker_join_log;
+    worker_join_log["type"] = "verbose";
+    worker_join_log["message"] = "WireGuard waiting for worker thread to stop";
+    worker_join_log["config_file"] = config_file_;
+    if (logger_is_source_enabled(LOG_SOURCE_WIREGUARD_LIBRARY)) {
         std::cout << worker_join_log.dump() << std::endl;
         std::cout.flush();
+    }
 
-        try {
-            thread_manager_->stopThread(worker_thread_id_);
-            thread_manager_->joinThread(worker_thread_id_);
-            worker_thread_created_ = false;
-
-            json worker_joined_log;
-            worker_joined_log["type"] = "verbose";
-            worker_joined_log["message"] = "WireGuard worker thread stopped successfully";
-            worker_joined_log["config_file"] = config_file_;
+    try {
+        thread_manager_->stopThread(worker_thread_id_);
+        json worker_joined_log;
+        worker_joined_log["type"] = "verbose";
+        worker_joined_log["message"] = "WireGuard worker thread stopped successfully";
+        worker_joined_log["config_file"] = config_file_;
+        if (logger_is_source_enabled(LOG_SOURCE_WIREGUARD_LIBRARY)) {
             std::cout << worker_joined_log.dump() << std::endl;
             std::cout.flush();
-        } catch (const std::exception& e) {
-            json error_log;
-            error_log["type"] = "error";
-            error_log["message"] = "Failed to stop worker thread";
-            error_log["error"] = e.what();
+        }
+    } catch (const std::exception& e) {
+        json error_log;
+        error_log["type"] = "error";
+        error_log["message"] = "Failed to stop worker thread";
+        error_log["error"] = e.what();
+        if (logger_is_source_enabled(LOG_SOURCE_WIREGUARD_LIBRARY)) {
             std::cout << error_log.dump() << std::endl;
         }
-    } else {
-        json no_worker_log;
-        no_worker_log["type"] = "verbose";
-        no_worker_log["message"] = "WireGuard worker thread not created";
-        no_worker_log["config_file"] = config_file_;
-        std::cout << no_worker_log.dump() << std::endl;
-        std::cout.flush();
     }
 
     // Cleanup the interface (remove routes, DNS, bring down, delete)
@@ -270,17 +287,21 @@ bool WireGuardWrapper::disconnect() {
     cleanup_start_log["type"] = "verbose";
     cleanup_start_log["message"] = "WireGuard calling wireguard_bridge_cleanup_interface";
     cleanup_start_log["config_file"] = config_file_;
-    std::cout << cleanup_start_log.dump() << std::endl;
+    if (logger_is_source_enabled(LOG_SOURCE_WIREGUARD_LIBRARY)) {
+        std::cout << cleanup_start_log.dump() << std::endl;
+    }
 
     if (wireguard_bridge_cleanup_interface(bridge_ctx_) < 0) {
         last_error_ = "Failed to cleanup interface";
 
         json cleanup_error_log;
-        cleanup_error_log["type"] = "verbose";
+        cleanup_error_log["type"] = "error";
         cleanup_error_log["message"] = "WireGuard interface cleanup failed";
         cleanup_error_log["config_file"] = config_file_;
         cleanup_error_log["error"] = last_error_;
-        std::cout << cleanup_error_log.dump() << std::endl;
+        if (logger_is_source_enabled(LOG_SOURCE_WIREGUARD_LIBRARY)) {
+            std::cout << cleanup_error_log.dump() << std::endl;
+        }
 
         emitEvent("error", last_error_);
         // Continue with disconnect even if cleanup fails
@@ -289,24 +310,30 @@ bool WireGuardWrapper::disconnect() {
         cleanup_success_log["type"] = "verbose";
         cleanup_success_log["message"] = "WireGuard interface cleanup successful";
         cleanup_success_log["config_file"] = config_file_;
-        std::cout << cleanup_success_log.dump() << std::endl;
+        if (logger_is_source_enabled(LOG_SOURCE_WIREGUARD_LIBRARY)) {
+            std::cout << cleanup_success_log.dump() << std::endl;
+        }
     }
 
     json disconnect_start_log;
     disconnect_start_log["type"] = "verbose";
     disconnect_start_log["message"] = "WireGuard calling wireguard_bridge_disconnect";
     disconnect_start_log["config_file"] = config_file_;
-    std::cout << disconnect_start_log.dump() << std::endl;
+    if (logger_is_source_enabled(LOG_SOURCE_WIREGUARD_LIBRARY)) {
+        std::cout << disconnect_start_log.dump() << std::endl;
+    }
 
     if (wireguard_bridge_disconnect(bridge_ctx_) < 0) {
         last_error_ = "Failed to disconnect";
 
         json disconnect_error_log;
-        disconnect_error_log["type"] = "verbose";
+        disconnect_error_log["type"] = "error";
         disconnect_error_log["message"] = "WireGuard bridge disconnect failed";
         disconnect_error_log["config_file"] = config_file_;
         disconnect_error_log["error"] = last_error_;
-        std::cout << disconnect_error_log.dump() << std::endl;
+        if (logger_is_source_enabled(LOG_SOURCE_WIREGUARD_LIBRARY)) {
+            std::cout << disconnect_error_log.dump() << std::endl;
+        }
 
         emitEvent("error", last_error_);
         return false;
@@ -316,7 +343,9 @@ bool WireGuardWrapper::disconnect() {
     disconnect_success_log["type"] = "verbose";
     disconnect_success_log["message"] = "WireGuard bridge disconnect successful";
     disconnect_success_log["config_file"] = config_file_;
-    std::cout << disconnect_success_log.dump() << std::endl;
+    if (logger_is_source_enabled(LOG_SOURCE_WIREGUARD_LIBRARY)) {
+        std::cout << disconnect_success_log.dump() << std::endl;
+    }
 
     emitEvent("shutdown", "WireGuard tunnel closed");
 
@@ -324,12 +353,14 @@ bool WireGuardWrapper::disconnect() {
     complete_log["type"] = "verbose";
     complete_log["message"] = "WireGuard disconnect completed";
     complete_log["config_file"] = config_file_;
-    std::cout << complete_log.dump() << std::endl;
+    if (logger_is_source_enabled(LOG_SOURCE_WIREGUARD_LIBRARY)) {
+        std::cout << complete_log.dump() << std::endl;
+    }
 
     return true;
 }
 
-bool WireGuardWrapper::reconnect() {
+bool wireguard::WireGuardWrapper::reconnect() {
     setState(ConnectionState::RECONNECTING);
     emitEvent("reconnecting", "Attempting to reconnect");
 
@@ -346,36 +377,44 @@ bool WireGuardWrapper::reconnect() {
     return true;
 }
 
-ConnectionState WireGuardWrapper::getState() const {
+wireguard::ConnectionState wireguard::WireGuardWrapper::getState() const {
     return state_.load();
 }
 
-VPNStats WireGuardWrapper::getStats() const {
+wireguard::VPNStats wireguard::WireGuardWrapper::getStats() const {
     std::lock_guard<std::mutex> lock(stats_mutex_);
     return current_stats_;
 }
 
-bool WireGuardWrapper::isConnected() const {
+bool wireguard::WireGuardWrapper::isConnected() const {
     return connected_.load();
 }
 
-void WireGuardWrapper::setEventCallback(EventCallback callback) {
+void wireguard::WireGuardWrapper::setEventCallback(EventCallback callback) {
     event_callback_ = callback;
 }
 
-void WireGuardWrapper::setStatsCallback(StatsCallback callback) {
+void wireguard::WireGuardWrapper::setStatsCallback(StatsCallback callback) {
     stats_callback_ = callback;
+    if (callback) {
+        VPNStats stats = getStats();
+        callback(stats);
+    }
 }
 
-json WireGuardWrapper::getStatusJson() const {
+json wireguard::WireGuardWrapper::getStatusJson() const {
     json j;
     j["state"] = stateToString(state_.load());
     j["connected"] = connected_.load();
     j["timestamp"] = std::time(nullptr);
+    j["running"] = running_.load();
+    j["last_error"] = last_error_;
+    j["config_file"] = config_file_;
+    j["worker_thread_id"] = worker_thread_id_;
     return j;
 }
 
-json WireGuardWrapper::getStatsJson() const {
+json wireguard::WireGuardWrapper::getStatsJson() const {
     std::lock_guard<std::mutex> lock(stats_mutex_);
 
     json j;
@@ -398,14 +437,14 @@ json WireGuardWrapper::getStatsJson() const {
     return j;
 }
 
-json WireGuardWrapper::getLastErrorJson() const {
+json wireguard::WireGuardWrapper::getLastErrorJson() const {
     json j;
     j["error"] = last_error_;
     j["timestamp"] = std::time(nullptr);
     return j;
 }
 
-void WireGuardWrapper::workerLoop() {
+void wireguard::WireGuardWrapper::workerLoop() {
     while (running_) {
         usleep(1000000); // 1 second
 
@@ -422,10 +461,10 @@ void WireGuardWrapper::workerLoop() {
 // Statistics are now handled by the C bridge and a callback.
 
 // New callback handler for stats updates from the C bridge
-void WireGuardWrapper::onStatsUpdate(const wireguard_bridge_stats_t* stats) {
+void wireguard::WireGuardWrapper::onStatsUpdate(const wireguard_bridge_stats_t* stats) {
     if (!stats || !running_.load()) return;
 
-    VPNStats vpn_stats;
+    wireguard::VPNStats vpn_stats;
     
     // Use instance-level tracking instead of static to support multiple instances
     static thread_local uint64_t last_bytes_sent = 0;
@@ -515,17 +554,19 @@ void WireGuardWrapper::onStatsUpdate(const wireguard_bridge_stats_t* stats) {
         emitEvent("stats", "Statistics updated", stats_data);
     } catch (const std::exception& e) {
         json error_log;
-        error_log["type"] = "verbose";
+        error_log["type"] = "error";
         error_log["message"] = "WireGuard onStatsUpdate: JSON serialization error";
         error_log["config_file"] = config_file_;
         error_log["error"] = e.what();
-        std::cout << error_log.dump() << std::endl;
+        if (logger_is_source_enabled(LOG_SOURCE_WIREGUARD_LIBRARY)) {
+            std::cout << error_log.dump() << std::endl;
+        }
     }
 }
 
-void WireGuardWrapper::emitEvent(const std::string& type, const std::string& message, const json& data) {
+void wireguard::WireGuardWrapper::emitEvent(const std::string& type, const std::string& message, const json& data) {
     if (event_callback_) {
-        VPNEvent event;
+        wireguard::VPNEvent event;
         event.type = type;
         event.message = message;
         event.state = state_.load();
@@ -536,14 +577,14 @@ void WireGuardWrapper::emitEvent(const std::string& type, const std::string& mes
     }
 }
 
-void WireGuardWrapper::setState(ConnectionState new_state) {
+void wireguard::WireGuardWrapper::setState(ConnectionState new_state) {
     auto old_state = state_.exchange(new_state);
     if (old_state != new_state) {
         emitEvent("status", "State changed to " + stateToString(new_state));
     }
 }
 
-std::string WireGuardWrapper::stateToString(ConnectionState state) const {
+std::string wireguard::WireGuardWrapper::stateToString(ConnectionState state) const {
     switch (state) {
         case ConnectionState::INITIAL: return "initial";
         case ConnectionState::CONFIGURING: return "configuring";
@@ -555,8 +596,9 @@ std::string WireGuardWrapper::stateToString(ConnectionState state) const {
         default: return "unknown";
     }
 }
+}
 
-json WireGuardWrapper::RouteRule::to_json() const {
+json wireguard::WireGuardWrapper::RouteRule::to_json() const {
     json j;
     j["id"] = id;
     j["name"] = name;
@@ -573,7 +615,7 @@ json WireGuardWrapper::RouteRule::to_json() const {
     return j;
 }
 
-WireGuardWrapper::RouteRule WireGuardWrapper::RouteRule::from_json(const json& j) {
+wireguard::WireGuardWrapper::RouteRule wireguard::WireGuardWrapper::RouteRule::from_json(const json& j) {
     RouteRule rule;
     rule.id = j.value("id", "");
     rule.name = j.value("name", "");
@@ -590,7 +632,7 @@ WireGuardWrapper::RouteRule WireGuardWrapper::RouteRule::from_json(const json& j
     return rule;
 }
 
-bool WireGuardWrapper::addRouteRule(const RouteRule& rule) {
+bool wireguard::WireGuardWrapper::addRouteRule(const RouteRule& rule) {
     if (!routing_ctx_) {
         return false;
     }
@@ -599,7 +641,7 @@ bool WireGuardWrapper::addRouteRule(const RouteRule& rule) {
     return wireguard_bridge_routing_add_rule_json(routing_ctx_, rule_json.c_str()) == 0;
 }
 
-bool WireGuardWrapper::removeRouteRule(const std::string& rule_id) {
+bool wireguard::WireGuardWrapper::removeRouteRule(const std::string& rule_id) {
     if (!routing_ctx_) {
         return false;
     }
@@ -607,7 +649,7 @@ bool WireGuardWrapper::removeRouteRule(const std::string& rule_id) {
     return wireguard_bridge_routing_remove_rule(routing_ctx_, rule_id.c_str()) == 0;
 }
 
-std::vector<WireGuardWrapper::RouteRule> WireGuardWrapper::getRouteRules() const {
+std::vector<wireguard::WireGuardWrapper::RouteRule> wireguard::WireGuardWrapper::getRouteRules() const {
     std::vector<RouteRule> rules;
     
     if (!routing_ctx_) {
@@ -631,14 +673,16 @@ std::vector<WireGuardWrapper::RouteRule> WireGuardWrapper::getRouteRules() const
         error_log["type"] = "error";
         error_log["message"] = "Failed to parse route rules JSON";
         error_log["error"] = e.what();
-        std::cout << error_log.dump() << std::endl;
+        if (logger_is_source_enabled(LOG_SOURCE_WIREGUARD_LIBRARY)) {
+            std::cout << error_log.dump() << std::endl;
+        }
     }
     
     free(json_str);
     return rules;
 }
 
-WireGuardWrapper::RouteRule WireGuardWrapper::getRouteRule(const std::string& rule_id) const {
+wireguard::WireGuardWrapper::RouteRule wireguard::WireGuardWrapper::getRouteRule(const std::string& rule_id) const {
     auto rules = getRouteRules();
     for (const auto& rule : rules) {
         if (rule.id == rule_id) {
@@ -648,7 +692,7 @@ WireGuardWrapper::RouteRule WireGuardWrapper::getRouteRule(const std::string& ru
     return RouteRule();
 }
 
-bool WireGuardWrapper::applyPreConnectionRoutes() {
+bool wireguard::WireGuardWrapper::applyPreConnectionRoutes() {
     if (!routing_ctx_) {
         return false;
     }
@@ -656,7 +700,7 @@ bool WireGuardWrapper::applyPreConnectionRoutes() {
     return wireguard_bridge_routing_apply_pre_connect(routing_ctx_) >= 0;
 }
 
-bool WireGuardWrapper::detectPostConnectionRoutes() {
+bool wireguard::WireGuardWrapper::detectPostConnectionRoutes() {
     if (!routing_ctx_) {
         return false;
     }
@@ -664,23 +708,23 @@ bool WireGuardWrapper::detectPostConnectionRoutes() {
     return wireguard_bridge_routing_detect_post_connect(routing_ctx_) >= 0;
 }
 
-void WireGuardWrapper::setRouteEventCallback(RouteEventCallback callback) {
+void wireguard::WireGuardWrapper::setRouteEventCallback(RouteEventCallback callback) {
     route_event_callback_ = callback;
 }
 
-void WireGuardWrapper::route_callback_wrapper(
+void wireguard::WireGuardWrapper::route_callback_wrapper(
     const char* event_type,
     const char* rule_json,
     const char* error_msg,
-    void* user_data
-) {
+    void* user_data) {
+    
     auto* wrapper = static_cast<WireGuardWrapper*>(user_data);
     if (!wrapper || !wrapper->route_event_callback_) {
         return;
     }
     
     try {
-        json j = json::parse(rule_json);
+        json j = json::parse(rule_json ? rule_json : "{}");
         RouteRule rule = RouteRule::from_json(j);
         
         wrapper->route_event_callback_(
@@ -693,8 +737,8 @@ void WireGuardWrapper::route_callback_wrapper(
         error_log["type"] = "error";
         error_log["message"] = "Failed to parse route event";
         error_log["error"] = e.what();
-        std::cout << error_log.dump() << std::endl;
+        if (logger_is_source_enabled(LOG_SOURCE_WIREGUARD_LIBRARY)) {
+            std::cout << error_log.dump() << std::endl;
+        }
     }
 }
-
-} // namespace wireguard

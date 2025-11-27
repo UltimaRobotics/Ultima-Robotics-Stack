@@ -12,5 +12,19 @@
     "enabled": false,
     "openvpn": false,
     "wireguard": false
+  },
+  "logging": {
+    "enabled": false,
+    "sources": {
+      "vpn_manager": false,
+      "openvpn_library": false,
+      "wireguard_library": false,
+      "ur_rpc_template": false,
+      "thread_manager": false,
+      "http_server": false,
+      "rpc_client": true,
+      "rpc_processor": true,
+      "external_binary": false
+    }
   }
 }

@@ -63,6 +63,8 @@ public:
 
     bool add_endpoints(const Configuration &config);
     void clear_endpoints();
+    void clear_uart_endpoints();
+    void force_close_tcp_server();
     
     // FD tracking for extension threads
     void track_fd(int fd, const std::string& description);
