@@ -393,6 +393,7 @@ void openvpn_bridge_destroy_context(openvpn_bridge_ctx_t *ctx) {
 
 typedef struct {
     ovpn_routing_ctx_t *ovpn_routing;
+    openvpn_bridge_ctx_t *bridge_ctx;  // Add reference to bridge context
     openvpn_bridge_route_callback_t callback;
     void *user_data;
 } openvpn_routing_bridge_ctx_t;
@@ -444,6 +445,7 @@ openvpn_routing_ctx_t openvpn_bridge_routing_init(openvpn_bridge_ctx_t *ctx) {
         return NULL;
     }
     
+    routing_ctx->bridge_ctx = ctx;  // Store reference to bridge context
     routing_ctx->ovpn_routing = ovpn_routing_init(interface_name);
     if (!routing_ctx->ovpn_routing) {
         free(routing_ctx);
@@ -535,4 +537,121 @@ void openvpn_bridge_routing_set_callback(openvpn_routing_ctx_t routing_ctx,
     bridge_ctx->user_data = user_data;
     
     ovpn_routing_set_callback(bridge_ctx->ovpn_routing, openvpn_routing_event_wrapper, bridge_ctx);
+}
+
+/* Route Control System API Implementation */
+
+int openvpn_bridge_routing_set_control_mode(openvpn_routing_ctx_t routing_ctx,
+                                           bool prevent_default_routes,
+                                           bool selective_routing) {
+    if (!routing_ctx) {
+        return -1;
+    }
+    
+    openvpn_routing_bridge_ctx_t *bridge_ctx = (openvpn_routing_bridge_ctx_t*)routing_ctx;
+    
+    if (!bridge_ctx->bridge_ctx || !bridge_ctx->bridge_ctx->c.c1.route_list) {
+        return -1;
+    }
+    
+    // Access the route control system from the OpenVPN context
+    struct route_control_system *ctrl = &bridge_ctx->bridge_ctx->c.c1.route_list->route_control;
+    
+    route_control_set_prevent_defaults(ctrl, prevent_default_routes);
+    route_control_set_selective_mode(ctrl, selective_routing);
+    
+    return 0;
+}
+
+int openvpn_bridge_routing_set_prevent_defaults(openvpn_routing_ctx_t routing_ctx,
+                                               bool prevent) {
+    if (!routing_ctx) {
+        return -1;
+    }
+    
+    openvpn_routing_bridge_ctx_t *bridge_ctx = (openvpn_routing_bridge_ctx_t*)routing_ctx;
+    
+    if (!bridge_ctx->bridge_ctx || !bridge_ctx->bridge_ctx->c.c1.route_list) {
+        return -1;
+    }
+    
+    // Access the route control system from the OpenVPN context
+    struct route_control_system *ctrl = &bridge_ctx->bridge_ctx->c.c1.route_list->route_control;
+    
+    route_control_set_prevent_defaults(ctrl, prevent);
+    
+    return 0;
+}
+
+int openvpn_bridge_routing_set_selective_mode(openvpn_routing_ctx_t routing_ctx,
+                                             bool selective) {
+    if (!routing_ctx) {
+        return -1;
+    }
+    
+    openvpn_routing_bridge_ctx_t *bridge_ctx = (openvpn_routing_bridge_ctx_t*)routing_ctx;
+    
+    if (!bridge_ctx->bridge_ctx || !bridge_ctx->bridge_ctx->c.c1.route_list) {
+        return -1;
+    }
+    
+    // Access the route control system from the OpenVPN context
+    struct route_control_system *ctrl = &bridge_ctx->bridge_ctx->c.c1.route_list->route_control;
+    
+    route_control_set_selective_mode(ctrl, selective);
+    
+    return 0;
+}
+
+int openvpn_bridge_routing_add_custom_rule(openvpn_routing_ctx_t routing_ctx,
+                                          const char *rule_json) {
+    if (!routing_ctx || !rule_json) {
+        return -1;
+    }
+    
+    openvpn_routing_bridge_ctx_t *bridge_ctx = (openvpn_routing_bridge_ctx_t*)routing_ctx;
+    
+    // Import the rule from JSON and apply it
+    int result = ovpn_routing_import_json(bridge_ctx->ovpn_routing, rule_json);
+    if (result == 0) {
+        return ovpn_routing_apply_rules(bridge_ctx->ovpn_routing);
+    }
+    
+    return result;
+}
+
+char* openvpn_bridge_routing_get_statistics(openvpn_routing_ctx_t routing_ctx) {
+    if (!routing_ctx) {
+        return NULL;
+    }
+    
+    openvpn_routing_bridge_ctx_t *bridge_ctx = (openvpn_routing_bridge_ctx_t*)routing_ctx;
+    
+    // Try to get statistics from the route control system first
+    if (bridge_ctx->bridge_ctx && bridge_ctx->bridge_ctx->c.c1.route_list) {
+        struct route_control_system *ctrl = &bridge_ctx->bridge_ctx->c.c1.route_list->route_control;
+        
+        if (ctrl->initialized) {
+            // Create JSON with real statistics
+            char *stats = malloc(512);
+            if (stats) {
+                snprintf(stats, 512, 
+                    "{\"routes_prevented\":%u,\"routes_allowed\":%u,\"default_routes_prevented\":%u,\"last_decision_time\":%ld}",
+                    ctrl->routes_prevented,
+                    ctrl->routes_allowed, 
+                    ctrl->default_routes_prevented,
+                    ctrl->last_decision_time);
+                return stats;
+            }
+        }
+    }
+    
+    // Fallback to routing system export or default
+    char *stats = ovpn_routing_export_json(bridge_ctx->ovpn_routing);
+    if (!stats) {
+        // Return a default JSON object if no statistics available
+        stats = strdup("{\"routes_prevented\":0,\"routes_allowed\":0,\"default_routes_prevented\":0}");
+    }
+    
+    return stats;
 }

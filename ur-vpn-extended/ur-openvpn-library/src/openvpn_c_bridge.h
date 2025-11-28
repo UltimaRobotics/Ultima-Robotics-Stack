@@ -159,6 +159,22 @@ void openvpn_bridge_routing_set_callback(openvpn_routing_ctx_t routing_ctx,
                                          openvpn_bridge_route_callback_t callback,
                                          void *user_data);
 
+/* Route Control System API */
+int openvpn_bridge_routing_set_control_mode(openvpn_routing_ctx_t routing_ctx,
+                                           bool prevent_default_routes,
+                                           bool selective_routing);
+
+int openvpn_bridge_routing_set_prevent_defaults(openvpn_routing_ctx_t routing_ctx,
+                                               bool prevent);
+
+int openvpn_bridge_routing_set_selective_mode(openvpn_routing_ctx_t routing_ctx,
+                                             bool selective);
+
+int openvpn_bridge_routing_add_custom_rule(openvpn_routing_ctx_t routing_ctx,
+                                          const char *rule_json);
+
+char* openvpn_bridge_routing_get_statistics(openvpn_routing_ctx_t routing_ctx);
+
 #ifdef __cplusplus
 }
 #endif

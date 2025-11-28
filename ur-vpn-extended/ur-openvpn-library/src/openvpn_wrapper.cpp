@@ -750,4 +750,87 @@ void OpenVPNWrapper::route_callback_wrapper(
     }
 }
 
+// Route Control System Method Implementations
+
+bool OpenVPNWrapper::setRouteControlMode(bool preventDefaultRoutes, bool selectiveRouting) {
+    if (!routing_ctx_) {
+        last_error_ = "Routing context not initialized";
+        return false;
+    }
+    
+    int result = openvpn_bridge_routing_set_control_mode(routing_ctx_, preventDefaultRoutes, selectiveRouting);
+    if (result != 0) {
+        last_error_ = "Failed to set route control mode";
+        return false;
+    }
+    
+    return true;
+}
+
+bool OpenVPNWrapper::setPreventDefaultRoutes(bool prevent) {
+    if (!routing_ctx_) {
+        last_error_ = "Routing context not initialized";
+        return false;
+    }
+    
+    int result = openvpn_bridge_routing_set_prevent_defaults(routing_ctx_, prevent);
+    if (result != 0) {
+        last_error_ = "Failed to set prevent default routes";
+        return false;
+    }
+    
+    return true;
+}
+
+bool OpenVPNWrapper::setSelectiveRouting(bool selective) {
+    if (!routing_ctx_) {
+        last_error_ = "Routing context not initialized";
+        return false;
+    }
+    
+    int result = openvpn_bridge_routing_set_selective_mode(routing_ctx_, selective);
+    if (result != 0) {
+        last_error_ = "Failed to set selective routing";
+        return false;
+    }
+    
+    return true;
+}
+
+bool OpenVPNWrapper::addCustomRouteRule(const RouteRule& rule) {
+    if (!routing_ctx_) {
+        last_error_ = "Routing context not initialized";
+        return false;
+    }
+    
+    try {
+        std::string rule_json = rule.to_json().dump();
+        int result = openvpn_bridge_routing_add_custom_rule(routing_ctx_, rule_json.c_str());
+        if (result != 0) {
+            last_error_ = "Failed to add custom route rule";
+            return false;
+        }
+        
+        return true;
+    } catch (const std::exception& e) {
+        last_error_ = std::string("Failed to serialize route rule: ") + e.what();
+        return false;
+    }
+}
+
+std::string OpenVPNWrapper::getRouteStatistics() const {
+    if (!routing_ctx_) {
+        return "{\"error\": \"Routing context not initialized\"}";
+    }
+    
+    char* stats_cstr = openvpn_bridge_routing_get_statistics(routing_ctx_);
+    if (!stats_cstr) {
+        return "{\"error\": \"Failed to get route statistics\"}";
+    }
+    
+    std::string result(stats_cstr);
+    free(stats_cstr); // Free the allocated string from C API
+    return result;
+}
+
 } // namespace openvpn

@@ -225,6 +225,38 @@ struct route_ipv6_gateway_info
         addrs[RGI_N_ADDRESSES]; /* local addresses attached to iface */
 };
 
+/*
+ * Route Control System - Default route management
+ */
+
+/* Route decision context structure */
+struct route_decision_context {
+    const struct route_ipv4 *route;
+    const struct tuntap *tt;
+    const struct route_list *rl;
+    bool is_default_route;
+    bool is_split_route;
+    const char *decision_reason;
+};
+
+/* Route control system structure */
+struct route_control_system {
+    bool prevent_default_routes;
+    bool selective_routing;
+    bool initialized;
+    
+    /* Callback function pointers */
+    bool (*filter_callback)(const struct route_decision_context *ctx, void *user_data);
+    bool (*decision_callback)(const struct route_decision_context *ctx, void *user_data);
+    void *user_data;
+    
+    /* Statistics and tracking */
+    unsigned int routes_prevented;
+    unsigned int routes_allowed;
+    unsigned int default_routes_prevented;
+    time_t last_decision_time;
+};
+
 struct route_list
 {
 #define RL_DID_REDIRECT_DEFAULT_GATEWAY (1 << 0)
@@ -237,6 +269,9 @@ struct route_list
     unsigned int flags; /* RG_x flags */
     struct route_ipv4 *routes;
     struct gc_arena gc;
+    
+    /* NEW: Route control system */
+    struct route_control_system route_control;
 };
 
 struct route_ipv6_list
@@ -425,5 +460,37 @@ route_did_redirect_default_gateway(const struct route_list *rl)
 {
     return rl && BOOL_CAST(rl->iflags & RL_DID_REDIRECT_DEFAULT_GATEWAY);
 }
+
+/* Route control functions */
+bool route_control_init(struct route_control_system *ctrl);
+void route_control_cleanup(struct route_control_system *ctrl);
+
+void route_control_set_prevent_defaults(struct route_control_system *ctrl, bool prevent);
+void route_control_set_selective_mode(struct route_control_system *ctrl, bool selective);
+
+bool route_control_should_add_route(const struct route_ipv4 *route,
+                                   const struct tuntap *tt,
+                                   const struct route_list *rl,
+                                   struct route_control_system *ctrl);
+
+bool route_control_is_default_route_prevented(const struct route_list *rl,
+                                             struct route_control_system *ctrl);
+
+bool route_control_should_prevent_default(const struct route_list *rl,
+                                         const struct tuntap *tt,
+                                         struct route_control_system *ctrl);
+
+void route_control_set_filter_callback(struct route_control_system *ctrl,
+                                      bool (*callback)(const struct route_decision_context *ctx, void *user_data),
+                                      void *user_data);
+
+void route_control_set_decision_callback(struct route_control_system *ctrl,
+                                        bool (*callback)(const struct route_decision_context *ctx, void *user_data),
+                                        void *user_data);
+
+/* Route decision helpers */
+bool is_default_route(const struct route_ipv4 *route);
+bool is_split_default_route(const struct route_ipv4 *route);
+const char* route_control_get_decision_reason(const struct route_decision_context *ctx);
 
 #endif /* ifndef ROUTE_H */

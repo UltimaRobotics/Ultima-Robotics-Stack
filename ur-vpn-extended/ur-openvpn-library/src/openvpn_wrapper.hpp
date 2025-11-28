@@ -114,6 +114,13 @@ public:
   bool applyPreConnectionRoutes();
   bool detectPostConnectionRoutes();
   void setRouteEventCallback(RouteEventCallback callback);
+  
+  // Route Control System Methods
+  bool setRouteControlMode(bool preventDefaultRoutes, bool selectiveRouting);
+  bool setPreventDefaultRoutes(bool prevent);
+  bool setSelectiveRouting(bool selective);
+  bool addCustomRouteRule(const RouteRule& rule);
+  std::string getRouteStatistics() const;
 
 private:
   openvpn_bridge_ctx_t *bridge_ctx_;
@@ -144,6 +151,9 @@ private:
   void setState(ConnectionState new_state);
   std::string stateToString(ConnectionState state) const;
   
+  // Getters
+  ConnectionState getConnectionState() const;
+
   static void route_callback_wrapper(
       const char* event_type,
       const char* rule_json,

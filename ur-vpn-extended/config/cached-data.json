@@ -1,12 +1,4 @@
 {
-  "instances": [
-    {
-      "auto_connect": true,
-      "enabled": true,
-      "id": "FYU-ovpn0",
-      "last_used": "",
-      "status": "Disconnected"
-    }
-  ],
-  "last_saved": 1764343321
+  "instances": [],
+  "last_saved": 1764346210
 }

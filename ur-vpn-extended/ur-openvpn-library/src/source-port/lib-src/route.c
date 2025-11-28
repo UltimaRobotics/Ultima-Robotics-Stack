@@ -25,6 +25,7 @@
  */
 #include <stddef.h>
 #include <stdbool.h>
+#include <time.h>
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -520,6 +521,9 @@ add_route_ipv6_to_option_list(struct route_ipv6_option_list *l, const char *pref
 static void
 clear_route_list(struct route_list *rl)
 {
+    /* NEW: Cleanup route control system first */
+    route_control_cleanup(&rl->route_control);
+    
     gc_free(&rl->gc);
     CLEAR(*rl);
 }
@@ -609,6 +613,9 @@ init_route_list(struct route_list *rl, const struct route_option_list *opt,
     bool ret = true;
 
     clear_route_list(rl);
+
+    /* NEW: Initialize route control system */
+    route_control_init(&rl->route_control);
 
     rl->flags = opt->flags;
 
@@ -949,6 +956,13 @@ redirect_default_route_to_vpn(struct route_list *rl, const struct tuntap *tt, un
     const char err[] = "NOTE: unable to redirect IPv4 default gateway --";
     bool ret = true;
 
+    /* NEW: Check if default routes are prevented by route control system */
+    if (rl && route_control_should_prevent_default(rl, tt, &rl->route_control))
+    {
+        msg(M_INFO, "Route Control: default route redirection prevented by control policy");
+        return true; /* Return success but don't actually redirect */
+    }
+
     if (rl && rl->flags & RG_ENABLE)
     {
         bool local = rl->flags & RG_LOCAL;
@@ -1130,6 +1144,14 @@ add_routes(struct route_list *rl, struct route_ipv6_list *rl6, const struct tunt
             {
                 delete_route(r, tt, flags, &rl->rgi, es, ctx);
             }
+            
+            /* NEW: Apply route control logic before adding route */
+            if (!route_control_should_add_route(r, tt, rl, &rl->route_control))
+            {
+                msg(M_INFO, "Route Control: skipping route addition due to control policy");
+                continue; /* Skip this route */
+            }
+            
             ret = add_route(r, tt, flags, &rl->rgi, es, ctx) && ret;
         }
         rl->iflags |= RL_ROUTES_ADDED;
@@ -4043,3 +4065,285 @@ test_local_addr(const in_addr_t addr, const struct route_gateway_info *rgi) /* P
 }
 
 #endif /* if defined(_WIN32) */
+
+/*
+ * Route Control System Implementation
+ */
+
+bool
+route_control_init(struct route_control_system *ctrl)
+{
+    if (!ctrl)
+    {
+        return false;
+    }
+    
+    CLEAR(*ctrl);
+    ctrl->prevent_default_routes = true;  /* Enable by default for testing */
+    ctrl->selective_routing = false;
+    ctrl->initialized = true;
+    ctrl->last_decision_time = time(NULL);
+    
+    msg(M_INFO, "Route Control System initialized with default route prevention ENABLED");
+    return true;
+}
+
+void
+route_control_cleanup(struct route_control_system *ctrl)
+{
+    if (!ctrl || !ctrl->initialized)
+    {
+        return;
+    }
+    
+    msg(M_INFO, "Route Control System: prevented %u routes, allowed %u routes, prevented %u default routes",
+        ctrl->routes_prevented, ctrl->routes_allowed, ctrl->default_routes_prevented);
+    
+    CLEAR(*ctrl);
+}
+
+void
+route_control_set_prevent_defaults(struct route_control_system *ctrl, bool prevent)
+{
+    if (!ctrl || !ctrl->initialized)
+    {
+        return;
+    }
+    
+    ctrl->prevent_default_routes = prevent;
+    msg(M_INFO, "Route Control: default route prevention %s", prevent ? "ENABLED" : "DISABLED");
+}
+
+void
+route_control_set_selective_mode(struct route_control_system *ctrl, bool selective)
+{
+    if (!ctrl || !ctrl->initialized)
+    {
+        return;
+    }
+    
+    ctrl->selective_routing = selective;
+    msg(M_INFO, "Route Control: selective routing %s", selective ? "ENABLED" : "DISABLED");
+}
+
+bool
+is_default_route(const struct route_ipv4 *route)
+{
+    if (!route)
+    {
+        return false;
+    }
+    
+    /* Check for 0.0.0.0/0 (standard default route) */
+    if (route->network == 0 && route->netmask == 0)
+    {
+        return true;
+    }
+    
+    return false;
+}
+
+bool
+is_split_default_route(const struct route_ipv4 *route)
+{
+    if (!route)
+    {
+        return false;
+    }
+    
+    /* Check for 0.0.0.0/1 (first half of split default) */
+    if (route->network == 0 && route->netmask == 0x80000000)
+    {
+        return true;
+    }
+    
+    /* Check for 128.0.0.0/1 (second half of split default) */
+    if (route->network == 0x80000000 && route->netmask == 0x80000000)
+    {
+        return true;
+    }
+    
+    return false;
+}
+
+static void
+update_route_statistics(struct route_control_system *ctrl, bool prevented, bool is_default)
+{
+    if (!ctrl)
+    {
+        return;
+    }
+    
+    ctrl->last_decision_time = time(NULL);
+    
+    if (prevented)
+    {
+        ctrl->routes_prevented++;
+        if (is_default)
+        {
+            ctrl->default_routes_prevented++;
+        }
+    }
+    else
+    {
+        ctrl->routes_allowed++;
+    }
+}
+
+bool
+route_control_should_add_route(const struct route_ipv4 *route,
+                               const struct tuntap *tt,
+                               const struct route_list *rl,
+                               struct route_control_system *ctrl)
+{
+    if (!route || !ctrl || !ctrl->initialized)
+    {
+        return true; /* Default to allowing route if control system not ready */
+    }
+    
+    struct gc_arena gc = gc_new();
+    struct route_decision_context ctx;
+    CLEAR(ctx);
+    ctx.route = route;
+    ctx.tt = tt;
+    ctx.rl = rl;
+    ctx.is_default_route = is_default_route(route);
+    ctx.is_split_route = is_split_default_route(route);
+    ctx.decision_reason = "standard processing";
+    
+    /* Check if this is a default route that should be prevented */
+    if ((ctx.is_default_route || ctx.is_split_route) && ctrl->prevent_default_routes)
+    {
+        ctx.decision_reason = "default route prevention enabled";
+        update_route_statistics(ctrl, true, ctx.is_default_route);
+        
+        msg(M_INFO, "Route Control: PREVENTING default route %s/%d -> %s (reason: %s)",
+             print_in_addr_t(route->network, IA_EMPTY_IF_UNDEF, &gc),
+             netmask_to_netbits2(route->netmask),
+             print_in_addr_t(route->gateway, IA_EMPTY_IF_UNDEF, &gc),
+             ctx.decision_reason);
+        
+        gc_free(&gc);
+        return false;
+    }
+    
+    /* Apply custom filter callback if available */
+    if (ctrl->filter_callback)
+    {
+        bool allow = ctrl->filter_callback(&ctx, ctrl->user_data);
+        if (!allow)
+        {
+            ctx.decision_reason = "custom filter callback";
+            update_route_statistics(ctrl, true, ctx.is_default_route);
+            
+            msg(M_INFO, "Route Control: PREVENTING route %s/%d -> %s (reason: %s)",
+                 print_in_addr_t(route->network, IA_EMPTY_IF_UNDEF, &gc),
+                 netmask_to_netbits2(route->netmask),
+                 print_in_addr_t(route->gateway, IA_EMPTY_IF_UNDEF, &gc),
+                 ctx.decision_reason);
+            
+            gc_free(&gc);
+            return false;
+        }
+    }
+    
+    /* Apply custom decision callback if available */
+    if (ctrl->decision_callback)
+    {
+        bool allow = ctrl->decision_callback(&ctx, ctrl->user_data);
+        ctx.decision_reason = "custom decision callback";
+        update_route_statistics(ctrl, !allow, ctx.is_default_route);
+        
+        msg(M_INFO, "Route Control: %s route %s/%d -> %s (reason: %s)",
+             allow ? "ALLOWING" : "PREVENTING",
+             print_in_addr_t(route->network, IA_EMPTY_IF_UNDEF, &gc),
+             netmask_to_netbits2(route->netmask),
+             print_in_addr_t(route->gateway, IA_EMPTY_IF_UNDEF, &gc),
+             ctx.decision_reason);
+        
+        gc_free(&gc);
+        return allow;
+    }
+    
+    /* Default: allow the route */
+    update_route_statistics(ctrl, false, ctx.is_default_route);
+    
+    msg(M_INFO, "Route Control: ALLOWING route %s/%d -> %s (reason: %s)",
+         print_in_addr_t(route->network, IA_EMPTY_IF_UNDEF, &gc),
+         netmask_to_netbits2(route->netmask),
+         print_in_addr_t(route->gateway, IA_EMPTY_IF_UNDEF, &gc),
+         ctx.decision_reason);
+    
+    gc_free(&gc);
+    return true;
+}
+
+bool
+route_control_should_prevent_default(const struct route_list *rl,
+                                     const struct tuntap *tt,
+                                     struct route_control_system *ctrl)
+{
+    if (!ctrl || !ctrl->initialized)
+    {
+        return false;
+    }
+    
+    if (!ctrl->prevent_default_routes)
+    {
+        return false;
+    }
+    
+    /* Additional logic can be added here for more sophisticated decision making */
+    dmsg(D_ROUTE, "Route Control: default route prevention check - PREVENT enabled");
+    return true;
+}
+
+bool
+route_control_is_default_route_prevented(const struct route_list *rl,
+                                         struct route_control_system *ctrl)
+{
+    return route_control_should_prevent_default(rl, NULL, ctrl);
+}
+
+void
+route_control_set_filter_callback(struct route_control_system *ctrl,
+                                  bool (*callback)(const struct route_decision_context *ctx, void *user_data),
+                                  void *user_data)
+{
+    if (!ctrl || !ctrl->initialized)
+    {
+        return;
+    }
+    
+    ctrl->filter_callback = callback;
+    ctrl->user_data = user_data;
+    
+    msg(M_INFO, "Route Control: filter callback %s", callback ? "REGISTERED" : "CLEARED");
+}
+
+void
+route_control_set_decision_callback(struct route_control_system *ctrl,
+                                    bool (*callback)(const struct route_decision_context *ctx, void *user_data),
+                                    void *user_data)
+{
+    if (!ctrl || !ctrl->initialized)
+    {
+        return;
+    }
+    
+    ctrl->decision_callback = callback;
+    ctrl->user_data = user_data;
+    
+    msg(M_INFO, "Route Control: decision callback %s", callback ? "REGISTERED" : "CLEARED");
+}
+
+const char*
+route_control_get_decision_reason(const struct route_decision_context *ctx)
+{
+    if (!ctx)
+    {
+        return "invalid context";
+    }
+    
+    return ctx->decision_reason ? ctx->decision_reason : "no reason specified";
+}
