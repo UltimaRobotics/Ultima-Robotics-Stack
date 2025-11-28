@@ -759,7 +759,10 @@ int main(int argc, char* argv[]) {
             g_rpcClient = std::make_unique<VpnRpcClient>(rpc_config_path, "ur-vpn-manager");
 
             // Initialize operation processor
-            g_rpcProcessor = std::make_unique<vpn_manager::VpnRpcOperationProcessor>(manager, verbose_mode);
+            g_rpcProcessor = std::make_unique<vpn_manager::VpnRpcOperationProcessor>(manager, *g_rpcClient, verbose_mode);
+            
+            // Set response topic for the processor
+            g_rpcProcessor->setResponseTopic("direct_messaging/ur-vpn-manager/responses");
 
             // CRITICAL: Set message handler BEFORE starting the client
             std::cout << "[Main] Setting up message handler..." << std::endl;

@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/mqtt_broker.dir/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o"
-  "CMakeFiles/mqtt_broker.dir/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o.d"
+  "CMakeFiles/mqtt_broker.dir/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o"
+  "CMakeFiles/mqtt_broker.dir/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o.d"
   "CMakeFiles/mqtt_broker.dir/src/cert_manager.c.o"
   "CMakeFiles/mqtt_broker.dir/src/cert_manager.c.o.d"
   "CMakeFiles/mqtt_broker.dir/src/client_manager.c.o"

@@ -15,6 +15,12 @@ VPNInstanceManager::VPNInstanceManager()
       wireguard_stats_logging_(true),
       config_save_pending_(false) {
 
+    // Initialize cleanup tracking system
+    cleanup_tracker_ = std::make_unique<CleanupTracker>();
+    cleanup_verifier_ = std::make_unique<CleanupVerifier>(config_file_path_, routing_rules_file_path_);
+    cleanup_cron_job_ = std::make_unique<CleanupCronJob>(this, cleanup_tracker_.get(), 
+                                                        config_file_path_, routing_rules_file_path_);
+
     json cleanup_start_log;
     cleanup_start_log["type"] = "startup";
     cleanup_start_log["message"] = "VPNInstanceManager starting - running auto-cleanup";
@@ -39,11 +45,19 @@ VPNInstanceManager::VPNInstanceManager()
         }
     });
     
+    // Start cleanup cron job
+    cleanup_cron_job_->start();
+    
     startRouteMonitoring();
 }
 
 VPNInstanceManager::~VPNInstanceManager() {
     stopAll();
+    
+    // Stop cleanup cron job
+    if (cleanup_cron_job_) {
+        cleanup_cron_job_->stop();
+    }
 
     if (config_save_thread_.joinable()) {
         config_save_thread_.join();

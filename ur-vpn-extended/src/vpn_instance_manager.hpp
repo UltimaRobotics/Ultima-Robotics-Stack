@@ -12,6 +12,9 @@
 #include "vpn_cleanup.hpp"
 #include "internal/vpn_manager_utils.hpp"
 #include "vpn_routing_interface.hpp"
+#include "cleanup_tracker.hpp"
+#include "cleanup_verifier.hpp"
+#include "cleanup_cron_job.hpp"
 
 using json = nlohmann::json;
 
@@ -311,6 +314,12 @@ public:
     bool deleteInstanceRoute(const std::string& instance_name, const std::string& rule_id);
     bool applyInstanceRoutes(const std::string& instance_name);
     int detectInstanceRoutes(const std::string& instance_name);
+    
+    // Cleanup tracking methods
+    CleanupTracker* getCleanupTracker() { return cleanup_tracker_.get(); }
+    CleanupVerifier* getCleanupVerifier() { return cleanup_verifier_.get(); }
+    CleanupCronJob* getCleanupCronJob() { return cleanup_cron_job_.get(); }
+    ThreadMgr::ThreadManager* getThreadManager() { return thread_manager_.get(); }
 
 private:
     std::map<std::string, VPNInstance> instances_;
@@ -323,6 +332,11 @@ private:
     std::atomic<bool> openvpn_stats_logging_;
     std::atomic<bool> wireguard_stats_logging_;
     std::atomic<bool> config_save_pending_;
+    
+    // Cleanup tracking system
+    std::unique_ptr<CleanupTracker> cleanup_tracker_;
+    std::unique_ptr<CleanupVerifier> cleanup_verifier_;
+    std::unique_ptr<CleanupCronJob> cleanup_cron_job_;
     std::thread config_save_thread_;
     std::thread route_monitor_thread_;
     std::string config_file_path_;

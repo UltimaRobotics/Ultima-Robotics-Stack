@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src
+CMAKE_SOURCE_DIR = /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build
+CMAKE_BINARY_DIR = /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -132,9 +132,9 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -252,29 +252,29 @@ clean-all/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/clean-all.dir/build.make CMakeFiles/clean-all.dir/build
 .PHONY : clean-all/fast
 
-home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.o: home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o
-.PHONY : home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.o
+home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.o: home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o
+.PHONY : home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.o
 
 # target to build an object file
-home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o
-.PHONY : home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o
+home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o
+.PHONY : home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o
 
-home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.i: home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.i
-.PHONY : home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.i
+home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.i: home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.i
+.PHONY : home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.i
 
 # target to preprocess a source file
-home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.i
-.PHONY : home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.i
+home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.i
+.PHONY : home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.i
 
-home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.s: home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.s
-.PHONY : home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.s
+home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.s: home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.s
+.PHONY : home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.s
 
 # target to generate assembly for a file
-home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.s
-.PHONY : home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.s
+home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.s
+.PHONY : home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.s
 
 src/cert_manager.o: src/cert_manager.c.o
 .PHONY : src/cert_manager.o
@@ -559,9 +559,9 @@ help:
 	@echo "... download_cjson"
 	@echo "... download_mbedtls"
 	@echo "... mqtt_broker"
-	@echo "... home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.o"
-	@echo "... home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.i"
-	@echo "... home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.s"
+	@echo "... home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.o"
+	@echo "... home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.i"
+	@echo "... home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.s"
 	@echo "... src/cert_manager.o"
 	@echo "... src/cert_manager.i"
 	@echo "... src/cert_manager.s"

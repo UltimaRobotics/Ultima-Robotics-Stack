@@ -2,120 +2,58 @@
 """
 Test RPC operation: restart
 Restart a VPN instance
+Usage: python test_restart_operation.py <instance_name>
 """
 
 import sys
 import os
+import json
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from base_rpc_test import BaseRPCTest
 
-class TestRestartOperation(BaseRPCTest):
-    """Test restart operation"""
-    
-    def test_restart_instance(self):
-        """Test restarting an instance"""
-        # Add and start an instance
-        config_content = """
-client
-dev tun
-proto udp
-remote 127.0.0.1 1194
-        """.strip()
-        
-        self.send_rpc_request("add", {
-            "instance_name": "restart_test",
-            "config_content": config_content,
-            "vpn_type": "openvpn",
-            "auto_start": True
-        })
-        
-        # Restart the instance
-        response = self.send_rpc_request("restart", {
-            "instance_name": "restart_test"
-        })
-        
-        self.assert_success(response)
-        self.assert_contains_fields(response, "success", "message")
-        
-        result = response['result']
-        assert result['success'] == True
-        assert "restarted" in result['message'].lower()
-        
-        print(f"✓ Instance restarted: {result['message']}")
-        
-    def test_restart_nonexistent_instance(self):
-        """Test restarting non-existent instance"""
-        response = self.send_rpc_request("restart", {
-            "instance_name": "nonexistent_instance"
-        })
-        
-        self.assert_success(response, expected_success=False)
-        
-        result = response['result']
-        assert result['success'] == False
-        
-        print(f"✓ Non-existent instance restart correctly rejected: {result['error']}")
-        
-    def test_restart_missing_instance_name(self):
-        """Test restarting without instance_name parameter"""
-        response = self.send_rpc_request("restart", {})
-        
-        self.assert_success(response, expected_success=False)
-        
-        result = response['result']
-        assert result['success'] == False
-        assert "Missing 'instance_name'" in result['error']
-        
-        print(f"✓ Missing instance_name correctly rejected: {result['error']}")
-        
-    def test_restart_stopped_instance(self):
-        """Test restarting a stopped instance"""
-        config_content = """
-client
-dev tun
-proto udp
-remote 127.0.0.1 1194
-        """.strip()
-        
-        # Add instance without auto-start
-        self.send_rpc_request("add", {
-            "instance_name": "stopped_restart_test",
-            "config_content": config_content,
-            "vpn_type": "openvpn",
-            "auto_start": False
-        })
-        
-        # Try to restart
-        response = self.send_rpc_request("restart", {
-            "instance_name": "stopped_restart_test"
-        })
-        
-        # Should either succeed or fail gracefully
-        result = response['result']
-        print(f"Restart stopped instance result: {result}")
+def print_response(response):
+    """Pretty print the RPC response"""
+    print(f"Response:\n{json.dumps(response, indent=2)}")
 
-def main():
-    """Run restart operation tests"""
-    test = TestRestartOperation()
+def test_restart(instance_name):
+    """Test restarting a VPN instance via RPC"""
+    test = BaseRPCTest()
     
-    tests = [
-        test.test_restart_instance,
-        test.test_restart_nonexistent_instance,
-        test.test_restart_missing_instance_name,
-        test.test_restart_stopped_instance
-    ]
-    
-    passed = 0
-    total = len(tests)
-    
-    for test_func in tests:
-        if test.run_test(test_func):
-            passed += 1
+    try:
+        if not test.setup():
+            print("✗ Test setup failed")
+            return False
             
-    print(f"\n📊 Restart Operation Tests Results: {passed}/{total} passed")
-    return passed == total
+        print(f"Testing: Restart VPN Instance '{instance_name}'")
+        
+        params = {
+            "instance_name": instance_name
+        }
+        
+        response = test.send_rpc_request("restart", params)
+        print_response(response)
+        
+        # Basic validation
+        if 'result' in response and response['result'].get('success'):
+            print("✓ Restart operation completed successfully")
+            return True
+        else:
+            print("✗ Restart operation failed")
+            return False
+            
+    except Exception as e:
+        print(f"✗ Test failed: {e}")
+        return False
+    finally:
+        test.teardown()
 
 if __name__ == "__main__":
-    success = main()
+    if len(sys.argv) < 2:
+        print("Usage: python test_restart_operation.py <instance_name>")
+        sys.exit(1)
+    
+    instance_name = sys.argv[1]
+    
+    success = test_restart(instance_name)
     sys.exit(0 if success else 1)

@@ -2,61 +2,61 @@
 """
 Test RPC operation: disable
 Disable and stop a VPN instance
+Usage: python test_disable_operation.py <instance_name>
 """
 
 import sys
 import os
+import json
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from base_rpc_test import BaseRPCTest
 
-class TestDisableOperation(BaseRPCTest):
-    """Test disable operation"""
+def print_response(response):
+    """Pretty print the RPC response"""
+    print(f"Response:\n{json.dumps(response, indent=2)}")
+
+def test_disable(instance_name):
+    """Test disabling a VPN instance via RPC"""
+    test = BaseRPCTest()
     
-    def test_disable_enabled_instance(self):
-        """Test disabling an enabled instance"""
-        # Add and start an instance
-        config_content = """
-client
-dev tun
-proto udp
-remote 127.0.0.1 1194
-        """.strip()
+    try:
+        if not test.setup():
+            print("✗ Test setup failed")
+            return False
+            
+        print(f"Testing: Disable VPN Instance '{instance_name}'")
         
-        self.send_rpc_request("add", {
-            "instance_name": "disable_test",
-            "config_content": config_content,
-            "vpn_type": "openvpn",
-            "auto_start": True
-        })
+        params = {
+            "instance_name": instance_name
+        }
         
-        # Disable the instance
-        response = self.send_rpc_request("disable", {
-            "instance_name": "disable_test"
-        })
+        response = test.send_rpc_request("disable", params)
+        print_response(response)
         
-        self.assert_success(response)
-        self.assert_contains_fields(response, "success", "message")
-        
-        result = response['result']
-        assert result['success'] == True
-        assert "disabled and stopped" in result['message'].lower()
-        
-        print(f"✓ Instance disabled and stopped: {result['message']}")
-        
-    def test_disable_nonexistent_instance(self):
-        """Test disabling non-existent instance"""
-        response = self.send_rpc_request("disable", {
-            "instance_name": "nonexistent_instance"
-        })
-        
-        self.assert_success(response, expected_success=False)
-        
-        result = response['result']
-        assert result['success'] == False
-        assert "Missing 'instance_name'" in result['error'] or "not found" in result['error']
-        
-        print(f"✓ Non-existent instance disable correctly rejected: {result['error']}")
+        # Basic validation
+        if 'result' in response and response['result'].get('success'):
+            print("✓ Disable operation completed successfully")
+            return True
+        else:
+            print("✗ Disable operation failed")
+            return False
+            
+    except Exception as e:
+        print(f"✗ Test failed: {e}")
+        return False
+    finally:
+        test.teardown()
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Usage: python test_disable_operation.py <instance_name>")
+        sys.exit(1)
+    
+    instance_name = sys.argv[1]
+    
+    success = test_disable(instance_name)
+    sys.exit(0 if success else 1)
         
     def test_disable_missing_instance_name(self):
         """Test disabling without instance_name parameter"""

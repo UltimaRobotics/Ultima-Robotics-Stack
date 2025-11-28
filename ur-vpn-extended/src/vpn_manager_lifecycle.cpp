@@ -1044,40 +1044,300 @@ bool VPNInstanceManager::addInstance(const std::string& name, const std::string&
     bool VPNInstanceManager::deleteInstance(const std::string& instance_name) {
     std::lock_guard<std::mutex> lock(instances_mutex_);
 
-    auto it = instances_.find(instance_name);
-    if (it == instances_.end()) {
-        std::cerr << "Instance " << instance_name << " not found" << std::endl;
-        return false;
+    // Start tracking cleanup operation
+    std::string operation_id = cleanup_tracker_->startCleanupOperation(instance_name);
+    
+    try {
+        auto it = instances_.find(instance_name);
+        if (it == instances_.end()) {
+            std::cerr << "Instance " << instance_name << " not found" << std::endl;
+            
+            // Mark all components as failed since instance doesn't exist
+            cleanup_tracker_->setComponentStatus(operation_id, CleanupComponent::THREAD_TERMINATION, 
+                                                CleanupStatus::FAILED, "Instance not found");
+            cleanup_tracker_->setComponentStatus(operation_id, CleanupComponent::ROUTING_RULES_CLEAR, 
+                                                CleanupStatus::FAILED, "Instance not found");
+            cleanup_tracker_->setComponentStatus(operation_id, CleanupComponent::VPN_DISCONNECT, 
+                                                CleanupStatus::FAILED, "Instance not found");
+            cleanup_tracker_->setComponentStatus(operation_id, CleanupComponent::CONFIGURATION_UPDATE, 
+                                                CleanupStatus::FAILED, "Instance not found");
+            
+            return false;
+        }
+
+        if (verbose_) {
+            std::cout << json({
+                {"type", "verbose"},
+                {"message", "VPNInstanceManager::deleteInstance - Starting deletion"},
+                {"instance_name", instance_name},
+                {"operation_id", operation_id}
+            }).dump() << std::endl;
+        }
+
+    // Step 1: Stop the instance thread if running
+    if (verbose_) {
+        std::cout << json({
+            {"type", "verbose"},
+            {"message", "Stopping instance thread"},
+            {"instance_name", instance_name},
+            {"thread_id", it->second.thread_id}
+        }).dump() << std::endl;
     }
 
-    // Stop the instance thread if running
+    // Start thread termination tracking
+    cleanup_tracker_->setComponentStatus(operation_id, CleanupComponent::THREAD_TERMINATION, 
+                                        CleanupStatus::IN_PROGRESS);
+    
     it->second.should_stop = true;
+    
+    // Step 1: Safely stop the instance thread
+    if (verbose_) {
+        std::cout << json({
+            {"type", "verbose"},
+            {"message", "Setting stop flag for instance thread"},
+            {"instance_name", instance_name},
+            {"thread_id", it->second.thread_id}
+        }).dump() << std::endl;
+    }
+    
+    // Give the thread a moment to notice the stop flag
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    
     try {
         if (it->second.thread_id > 0) {
+            // Try to stop gracefully first
+            if (verbose_) {
+                std::cout << json({
+                    {"type", "verbose"},
+                    {"message", "Attempting graceful thread stop"},
+                    {"instance_name", instance_name}
+                }).dump() << std::endl;
+            }
+            
             thread_manager_->stopThreadByAttachment(instance_name);
+            
+            // Wait a bit for graceful shutdown
+            std::this_thread::sleep_for(std::chrono::milliseconds(500));
+            
+            if (verbose_) {
+                std::cout << json({
+                    {"type", "verbose"},
+                    {"message", "Thread stop completed gracefully"},
+                    {"instance_name", instance_name}
+                }).dump() << std::endl;
+            }
+        }
+        
+        // Mark thread termination as completed
+        cleanup_tracker_->setComponentStatus(operation_id, CleanupComponent::THREAD_TERMINATION, 
+                                            CleanupStatus::COMPLETED, "", 
+                                            {{"thread_id", it->second.thread_id}, {"stopped", true}});
+        
+    } catch (const std::exception& e) {
+        std::cerr << "Error during graceful thread stop: " << e.what() << std::endl;
+        
+        // Mark as failed but continue with cleanup
+        cleanup_tracker_->setComponentStatus(operation_id, CleanupComponent::THREAD_TERMINATION, 
+                                            CleanupStatus::FAILED, e.what());
+    }
+
+    // Step 2: Clean up routing rules for the instance
+    if (verbose_) {
+        std::cout << json({
+            {"type", "verbose"},
+            {"message", "Cleaning up routing rules"},
+            {"instance_name", instance_name}
+        }).dump() << std::endl;
+    }
+
+    // Start routing cleanup tracking
+    cleanup_tracker_->setComponentStatus(operation_id, CleanupComponent::ROUTING_RULES_CLEAR, 
+                                        CleanupStatus::IN_PROGRESS);
+
+    try {
+        if (it->second.routing_provider) {
+            // Clear all routes for this instance
+            bool routes_cleared = it->second.routing_provider->clearRoutes();
+            if (!routes_cleared) {
+                std::cerr << "Warning: Failed to clear routes for instance " << instance_name << std::endl;
+            }
+            
+            // Cleanup the routing provider
+            it->second.routing_provider->cleanup();
+            
+            if (verbose_) {
+                std::cout << json({
+                    {"type", "verbose"},
+                    {"message", "Routing rules cleaned up"},
+                    {"instance_name", instance_name},
+                    {"routes_cleared", routes_cleared}
+                }).dump() << std::endl;
+            }
+            
+            // Mark routing cleanup as completed
+            cleanup_tracker_->setComponentStatus(operation_id, CleanupComponent::ROUTING_RULES_CLEAR, 
+                                                CleanupStatus::COMPLETED, "", 
+                                                {{"routes_cleared", routes_cleared}});
         }
     } catch (const std::exception& e) {
-        std::cerr << "Error stopping instance thread: " << e.what() << std::endl;
+        std::cerr << "Error cleaning up routing rules: " << e.what() << std::endl;
+        
+        // Mark as failed but continue with cleanup
+        cleanup_tracker_->setComponentStatus(operation_id, CleanupComponent::ROUTING_RULES_CLEAR, 
+                                            CleanupStatus::FAILED, e.what());
     }
 
-    // Remove from instances map
+    // Step 3: Remove routing rules from configuration file
+    try {
+        removeRoutingRulesForInstance(instance_name);
+        
+        if (verbose_) {
+            std::cout << json({
+                {"type", "verbose"},
+                {"message", "Routing configuration removed"},
+                {"instance_name", instance_name}
+            }).dump() << std::endl;
+        }
+    } catch (const std::exception& e) {
+        std::cerr << "Error removing routing configuration: " << e.what() << std::endl;
+    }
+
+    // Step 4: Disconnect and cleanup the VPN wrapper
+    // Start VPN disconnect tracking
+    cleanup_tracker_->setComponentStatus(operation_id, CleanupComponent::VPN_DISCONNECT, 
+                                        CleanupStatus::IN_PROGRESS);
+
+    try {
+        if (it->second.wrapper_instance) {
+            if (verbose_) {
+                std::cout << json({
+                    {"type", "verbose"},
+                    {"message", "Disconnecting VPN wrapper"},
+                    {"instance_name", instance_name}
+                }).dump() << std::endl;
+            }
+            
+            // Safely disconnect the VPN connection with proper parameters
+            try {
+                disconnectWrapperWithTimeout(it->second.wrapper_instance, it->second.type, instance_name, 5);
+                
+                // Mark VPN disconnect as completed
+                cleanup_tracker_->setComponentStatus(operation_id, CleanupComponent::VPN_DISCONNECT, 
+                                                    CleanupStatus::COMPLETED, "", 
+                                                    {{"vpn_type", it->second.type}, {"disconnected", true}});
+                
+            } catch (const std::exception& disconnect_error) {
+                std::cerr << "Error during VPN disconnect: " << disconnect_error.what() << std::endl;
+                
+                // Mark as failed but continue with cleanup
+                cleanup_tracker_->setComponentStatus(operation_id, CleanupComponent::VPN_DISCONNECT, 
+                                                    CleanupStatus::FAILED, disconnect_error.what());
+            }
+            
+            if (verbose_) {
+                std::cout << json({
+                    {"type", "verbose"},
+                    {"message", "VPN wrapper disconnect completed"},
+                    {"instance_name", instance_name}
+                }).dump() << std::endl;
+            }
+        } else {
+            // No wrapper to disconnect - mark as completed
+            cleanup_tracker_->setComponentStatus(operation_id, CleanupComponent::VPN_DISCONNECT, 
+                                                CleanupStatus::COMPLETED, "", 
+                                                {{"no_wrapper", true}});
+        }
+    } catch (const std::exception& e) {
+        std::cerr << "Error in VPN wrapper cleanup: " << e.what() << std::endl;
+        
+        // Mark as failed but continue with cleanup
+        cleanup_tracker_->setComponentStatus(operation_id, CleanupComponent::VPN_DISCONNECT, 
+                                            CleanupStatus::FAILED, e.what());
+    } catch (...) {
+        std::cerr << "Unknown error in VPN wrapper cleanup for instance: " << instance_name << std::endl;
+        
+        // Mark as failed but continue with cleanup
+        cleanup_tracker_->setComponentStatus(operation_id, CleanupComponent::VPN_DISCONNECT, 
+                                            CleanupStatus::FAILED, "Unknown error");
+    }
+
+    // Step 5: Remove from instances map
     instances_.erase(it);
 
-    // Save updated configuration to disk
-    if (!config_file_path_.empty()) {
-        if (!saveConfiguration(config_file_path_)) {
-            std::cerr << "Failed to save configuration" << std::endl;
-        }
+    // Step 6: Save updated configuration to disk
+    // Start configuration update tracking
+    cleanup_tracker_->setComponentStatus(operation_id, CleanupComponent::CONFIGURATION_UPDATE, 
+                                        CleanupStatus::IN_PROGRESS);
+
+    if (verbose_) {
+        std::cout << json({
+            {"type", "verbose"},
+            {"message", "Saving updated configuration"},
+            {"instance_name", instance_name}
+        }).dump() << std::endl;
     }
 
-    if (!cache_file_path_.empty()) {
-        if (!saveCachedData(cache_file_path_)) {
-            std::cerr << "Failed to save cached data" << std::endl;
+    bool config_saved = false;
+    bool cache_saved = false;
+    
+    try {
+        config_saved = saveConfiguration(config_file_path_);
+        cache_saved = saveCachedData(cache_file_path_);
+        
+        if (config_saved && cache_saved) {
+            // Mark configuration update as completed
+            cleanup_tracker_->setComponentStatus(operation_id, CleanupComponent::CONFIGURATION_UPDATE, 
+                                                CleanupStatus::COMPLETED, "", 
+                                                {{"config_saved", config_saved}, {"cache_saved", cache_saved}});
+        } else {
+            // Mark as failed if either save failed
+            cleanup_tracker_->setComponentStatus(operation_id, CleanupComponent::CONFIGURATION_UPDATE, 
+                                                CleanupStatus::FAILED, 
+                                                "Configuration or cache save failed");
         }
+        
+    } catch (const std::exception& e) {
+        std::cerr << "Error saving configuration: " << e.what() << std::endl;
+        
+        // Mark as failed but continue with cleanup
+        cleanup_tracker_->setComponentStatus(operation_id, CleanupComponent::CONFIGURATION_UPDATE, 
+                                            CleanupStatus::FAILED, e.what());
     }
 
-    emitEvent(instance_name, "deleted", "Instance deleted");
+    emitEvent(instance_name, "deleted", "Instance deleted with full cleanup");
+    
+    if (verbose_) {
+        std::cout << json({
+            {"type", "verbose"},
+            {"message", "VPNInstanceManager::deleteInstance - Completed successfully"},
+            {"instance_name", instance_name},
+            {"operation_id", operation_id}
+        }).dump() << std::endl;
+    }
+    
+    // Schedule verification job to confirm cleanup
+    if (cleanup_cron_job_) {
+        cleanup_cron_job_->scheduleVerification(operation_id, instance_name);
+        
+        if (verbose_) {
+            std::cout << json({
+                {"type", "verbose"},
+                {"message", "Cleanup verification scheduled"},
+                {"instance_name", instance_name},
+                {"operation_id", operation_id}
+            }).dump() << std::endl;
+        }
+    }
+    
     return true;
+    
+    } catch (const std::exception& e) {
+        std::cerr << "Exception during deleteInstance for " << instance_name << ": " << e.what() << std::endl;
+        return false;
+    } catch (...) {
+        std::cerr << "Unknown exception during deleteInstance for " << instance_name << std::endl;
+        return false;
+    }
 }
 
 bool VPNInstanceManager::updateInstance(const std::string& instance_name,

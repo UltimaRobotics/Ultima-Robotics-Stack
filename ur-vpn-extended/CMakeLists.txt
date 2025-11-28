@@ -48,9 +48,9 @@ endif()
 # VPN Manager modules
 set(VPN_MANAGER_MODULES
     src/vpn_instance_manager.cpp
-    src/vpn_manager_utils.cpp
-    src/vpn_manager_config.cpp
     src/vpn_manager_lifecycle.cpp
+    src/vpn_manager_config.cpp
+    src/vpn_manager_utils.cpp
     src/vpn_manager_routing.cpp
     src/vpn_manager_events.cpp
     src/vpn_manager_stats.cpp
@@ -58,6 +58,9 @@ set(VPN_MANAGER_MODULES
     src/openvpn_routing_provider.cpp
     src/vpn_rpc_client.cpp
     src/vpn_rpc_operation_processor.cpp
+    src/cleanup_tracker.cpp
+    src/cleanup_verifier.cpp
+    src/cleanup_cron_job.cpp
 )
 
 # Executable

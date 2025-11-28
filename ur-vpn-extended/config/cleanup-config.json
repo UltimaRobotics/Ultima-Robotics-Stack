@@ -1,0 +1,36 @@
+{
+  "cleanup_interval_seconds": 30,
+  "verification_delay_seconds": 5,
+  "max_retry_attempts": 3,
+  "cleanup_timeout_seconds": 60,
+  "enable_auto_cleanup": true,
+  "log_level": "info",
+  "verification_settings": {
+    "check_thread_processes": true,
+    "check_routing_table": true,
+    "check_vpn_interfaces": true,
+    "check_configuration_files": true,
+    "check_system_processes": true
+  },
+  "thread_settings": {
+    "stop_timeout_seconds": 10,
+    "kill_timeout_seconds": 5,
+    "graceful_shutdown_delay_ms": 500
+  },
+  "routing_settings": {
+    "check_system_routes": true,
+    "check_config_routes": true,
+    "interface_check_pattern": "tun|tap|wg"
+  },
+  "vpn_settings": {
+    "check_openvpn_processes": true,
+    "check_wireguard_processes": true,
+    "check_interface_status": true,
+    "check_connection_state": true
+  },
+  "notification_settings": {
+    "send_verification_response": true,
+    "response_topic": "direct_messaging/ur-vpn-manager/responses",
+    "include_detailed_report": true
+  }
+}

@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src
+CMAKE_SOURCE_DIR = /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build
+CMAKE_BINARY_DIR = /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/mqtt_broker.dir/depend.make
@@ -72,170 +72,170 @@ include CMakeFiles/mqtt_broker.dir/flags.make
 CMakeFiles/mqtt_broker.dir/src/main.c.o: CMakeFiles/mqtt_broker.dir/flags.make
 CMakeFiles/mqtt_broker.dir/src/main.c.o: ../src/main.c
 CMakeFiles/mqtt_broker.dir/src/main.c.o: CMakeFiles/mqtt_broker.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/mqtt_broker.dir/src/main.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mqtt_broker.dir/src/main.c.o -MF CMakeFiles/mqtt_broker.dir/src/main.c.o.d -o CMakeFiles/mqtt_broker.dir/src/main.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/mqtt_broker.dir/src/main.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mqtt_broker.dir/src/main.c.o -MF CMakeFiles/mqtt_broker.dir/src/main.c.o.d -o CMakeFiles/mqtt_broker.dir/src/main.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/main.c
 
 CMakeFiles/mqtt_broker.dir/src/main.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/mqtt_broker.dir/src/main.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/main.c > CMakeFiles/mqtt_broker.dir/src/main.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/main.c > CMakeFiles/mqtt_broker.dir/src/main.c.i
 
 CMakeFiles/mqtt_broker.dir/src/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/mqtt_broker.dir/src/main.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/main.c -o CMakeFiles/mqtt_broker.dir/src/main.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/main.c -o CMakeFiles/mqtt_broker.dir/src/main.c.s
 
 CMakeFiles/mqtt_broker.dir/src/mqtt_broker.c.o: CMakeFiles/mqtt_broker.dir/flags.make
 CMakeFiles/mqtt_broker.dir/src/mqtt_broker.c.o: ../src/mqtt_broker.c
 CMakeFiles/mqtt_broker.dir/src/mqtt_broker.c.o: CMakeFiles/mqtt_broker.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/mqtt_broker.dir/src/mqtt_broker.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mqtt_broker.dir/src/mqtt_broker.c.o -MF CMakeFiles/mqtt_broker.dir/src/mqtt_broker.c.o.d -o CMakeFiles/mqtt_broker.dir/src/mqtt_broker.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/mqtt_broker.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/mqtt_broker.dir/src/mqtt_broker.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mqtt_broker.dir/src/mqtt_broker.c.o -MF CMakeFiles/mqtt_broker.dir/src/mqtt_broker.c.o.d -o CMakeFiles/mqtt_broker.dir/src/mqtt_broker.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/mqtt_broker.c
 
 CMakeFiles/mqtt_broker.dir/src/mqtt_broker.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/mqtt_broker.dir/src/mqtt_broker.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/mqtt_broker.c > CMakeFiles/mqtt_broker.dir/src/mqtt_broker.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/mqtt_broker.c > CMakeFiles/mqtt_broker.dir/src/mqtt_broker.c.i
 
 CMakeFiles/mqtt_broker.dir/src/mqtt_broker.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/mqtt_broker.dir/src/mqtt_broker.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/mqtt_broker.c -o CMakeFiles/mqtt_broker.dir/src/mqtt_broker.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/mqtt_broker.c -o CMakeFiles/mqtt_broker.dir/src/mqtt_broker.c.s
 
 CMakeFiles/mqtt_broker.dir/src/mqtt_protocol.c.o: CMakeFiles/mqtt_broker.dir/flags.make
 CMakeFiles/mqtt_broker.dir/src/mqtt_protocol.c.o: ../src/mqtt_protocol.c
 CMakeFiles/mqtt_broker.dir/src/mqtt_protocol.c.o: CMakeFiles/mqtt_broker.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/mqtt_broker.dir/src/mqtt_protocol.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mqtt_broker.dir/src/mqtt_protocol.c.o -MF CMakeFiles/mqtt_broker.dir/src/mqtt_protocol.c.o.d -o CMakeFiles/mqtt_broker.dir/src/mqtt_protocol.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/mqtt_protocol.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/mqtt_broker.dir/src/mqtt_protocol.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mqtt_broker.dir/src/mqtt_protocol.c.o -MF CMakeFiles/mqtt_broker.dir/src/mqtt_protocol.c.o.d -o CMakeFiles/mqtt_broker.dir/src/mqtt_protocol.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/mqtt_protocol.c
 
 CMakeFiles/mqtt_broker.dir/src/mqtt_protocol.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/mqtt_broker.dir/src/mqtt_protocol.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/mqtt_protocol.c > CMakeFiles/mqtt_broker.dir/src/mqtt_protocol.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/mqtt_protocol.c > CMakeFiles/mqtt_broker.dir/src/mqtt_protocol.c.i
 
 CMakeFiles/mqtt_broker.dir/src/mqtt_protocol.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/mqtt_broker.dir/src/mqtt_protocol.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/mqtt_protocol.c -o CMakeFiles/mqtt_broker.dir/src/mqtt_protocol.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/mqtt_protocol.c -o CMakeFiles/mqtt_broker.dir/src/mqtt_protocol.c.s
 
 CMakeFiles/mqtt_broker.dir/src/client_manager.c.o: CMakeFiles/mqtt_broker.dir/flags.make
 CMakeFiles/mqtt_broker.dir/src/client_manager.c.o: ../src/client_manager.c
 CMakeFiles/mqtt_broker.dir/src/client_manager.c.o: CMakeFiles/mqtt_broker.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/mqtt_broker.dir/src/client_manager.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mqtt_broker.dir/src/client_manager.c.o -MF CMakeFiles/mqtt_broker.dir/src/client_manager.c.o.d -o CMakeFiles/mqtt_broker.dir/src/client_manager.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/client_manager.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/mqtt_broker.dir/src/client_manager.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mqtt_broker.dir/src/client_manager.c.o -MF CMakeFiles/mqtt_broker.dir/src/client_manager.c.o.d -o CMakeFiles/mqtt_broker.dir/src/client_manager.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/client_manager.c
 
 CMakeFiles/mqtt_broker.dir/src/client_manager.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/mqtt_broker.dir/src/client_manager.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/client_manager.c > CMakeFiles/mqtt_broker.dir/src/client_manager.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/client_manager.c > CMakeFiles/mqtt_broker.dir/src/client_manager.c.i
 
 CMakeFiles/mqtt_broker.dir/src/client_manager.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/mqtt_broker.dir/src/client_manager.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/client_manager.c -o CMakeFiles/mqtt_broker.dir/src/client_manager.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/client_manager.c -o CMakeFiles/mqtt_broker.dir/src/client_manager.c.s
 
 CMakeFiles/mqtt_broker.dir/src/message_handler.c.o: CMakeFiles/mqtt_broker.dir/flags.make
 CMakeFiles/mqtt_broker.dir/src/message_handler.c.o: ../src/message_handler.c
 CMakeFiles/mqtt_broker.dir/src/message_handler.c.o: CMakeFiles/mqtt_broker.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/mqtt_broker.dir/src/message_handler.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mqtt_broker.dir/src/message_handler.c.o -MF CMakeFiles/mqtt_broker.dir/src/message_handler.c.o.d -o CMakeFiles/mqtt_broker.dir/src/message_handler.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/message_handler.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/mqtt_broker.dir/src/message_handler.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mqtt_broker.dir/src/message_handler.c.o -MF CMakeFiles/mqtt_broker.dir/src/message_handler.c.o.d -o CMakeFiles/mqtt_broker.dir/src/message_handler.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/message_handler.c
 
 CMakeFiles/mqtt_broker.dir/src/message_handler.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/mqtt_broker.dir/src/message_handler.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/message_handler.c > CMakeFiles/mqtt_broker.dir/src/message_handler.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/message_handler.c > CMakeFiles/mqtt_broker.dir/src/message_handler.c.i
 
 CMakeFiles/mqtt_broker.dir/src/message_handler.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/mqtt_broker.dir/src/message_handler.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/message_handler.c -o CMakeFiles/mqtt_broker.dir/src/message_handler.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/message_handler.c -o CMakeFiles/mqtt_broker.dir/src/message_handler.c.s
 
 CMakeFiles/mqtt_broker.dir/src/network.c.o: CMakeFiles/mqtt_broker.dir/flags.make
 CMakeFiles/mqtt_broker.dir/src/network.c.o: ../src/network.c
 CMakeFiles/mqtt_broker.dir/src/network.c.o: CMakeFiles/mqtt_broker.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/mqtt_broker.dir/src/network.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mqtt_broker.dir/src/network.c.o -MF CMakeFiles/mqtt_broker.dir/src/network.c.o.d -o CMakeFiles/mqtt_broker.dir/src/network.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/network.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/mqtt_broker.dir/src/network.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mqtt_broker.dir/src/network.c.o -MF CMakeFiles/mqtt_broker.dir/src/network.c.o.d -o CMakeFiles/mqtt_broker.dir/src/network.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/network.c
 
 CMakeFiles/mqtt_broker.dir/src/network.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/mqtt_broker.dir/src/network.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/network.c > CMakeFiles/mqtt_broker.dir/src/network.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/network.c > CMakeFiles/mqtt_broker.dir/src/network.c.i
 
 CMakeFiles/mqtt_broker.dir/src/network.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/mqtt_broker.dir/src/network.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/network.c -o CMakeFiles/mqtt_broker.dir/src/network.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/network.c -o CMakeFiles/mqtt_broker.dir/src/network.c.s
 
 CMakeFiles/mqtt_broker.dir/src/config.c.o: CMakeFiles/mqtt_broker.dir/flags.make
 CMakeFiles/mqtt_broker.dir/src/config.c.o: ../src/config.c
 CMakeFiles/mqtt_broker.dir/src/config.c.o: CMakeFiles/mqtt_broker.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/mqtt_broker.dir/src/config.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mqtt_broker.dir/src/config.c.o -MF CMakeFiles/mqtt_broker.dir/src/config.c.o.d -o CMakeFiles/mqtt_broker.dir/src/config.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/config.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/mqtt_broker.dir/src/config.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mqtt_broker.dir/src/config.c.o -MF CMakeFiles/mqtt_broker.dir/src/config.c.o.d -o CMakeFiles/mqtt_broker.dir/src/config.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/config.c
 
 CMakeFiles/mqtt_broker.dir/src/config.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/mqtt_broker.dir/src/config.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/config.c > CMakeFiles/mqtt_broker.dir/src/config.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/config.c > CMakeFiles/mqtt_broker.dir/src/config.c.i
 
 CMakeFiles/mqtt_broker.dir/src/config.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/mqtt_broker.dir/src/config.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/config.c -o CMakeFiles/mqtt_broker.dir/src/config.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/config.c -o CMakeFiles/mqtt_broker.dir/src/config.c.s
 
 CMakeFiles/mqtt_broker.dir/src/ssl_wrapper.c.o: CMakeFiles/mqtt_broker.dir/flags.make
 CMakeFiles/mqtt_broker.dir/src/ssl_wrapper.c.o: ../src/ssl_wrapper.c
 CMakeFiles/mqtt_broker.dir/src/ssl_wrapper.c.o: CMakeFiles/mqtt_broker.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/mqtt_broker.dir/src/ssl_wrapper.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mqtt_broker.dir/src/ssl_wrapper.c.o -MF CMakeFiles/mqtt_broker.dir/src/ssl_wrapper.c.o.d -o CMakeFiles/mqtt_broker.dir/src/ssl_wrapper.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/ssl_wrapper.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/mqtt_broker.dir/src/ssl_wrapper.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mqtt_broker.dir/src/ssl_wrapper.c.o -MF CMakeFiles/mqtt_broker.dir/src/ssl_wrapper.c.o.d -o CMakeFiles/mqtt_broker.dir/src/ssl_wrapper.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/ssl_wrapper.c
 
 CMakeFiles/mqtt_broker.dir/src/ssl_wrapper.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/mqtt_broker.dir/src/ssl_wrapper.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/ssl_wrapper.c > CMakeFiles/mqtt_broker.dir/src/ssl_wrapper.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/ssl_wrapper.c > CMakeFiles/mqtt_broker.dir/src/ssl_wrapper.c.i
 
 CMakeFiles/mqtt_broker.dir/src/ssl_wrapper.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/mqtt_broker.dir/src/ssl_wrapper.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/ssl_wrapper.c -o CMakeFiles/mqtt_broker.dir/src/ssl_wrapper.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/ssl_wrapper.c -o CMakeFiles/mqtt_broker.dir/src/ssl_wrapper.c.s
 
 CMakeFiles/mqtt_broker.dir/src/utils.c.o: CMakeFiles/mqtt_broker.dir/flags.make
 CMakeFiles/mqtt_broker.dir/src/utils.c.o: ../src/utils.c
 CMakeFiles/mqtt_broker.dir/src/utils.c.o: CMakeFiles/mqtt_broker.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/mqtt_broker.dir/src/utils.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mqtt_broker.dir/src/utils.c.o -MF CMakeFiles/mqtt_broker.dir/src/utils.c.o.d -o CMakeFiles/mqtt_broker.dir/src/utils.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/utils.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/mqtt_broker.dir/src/utils.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mqtt_broker.dir/src/utils.c.o -MF CMakeFiles/mqtt_broker.dir/src/utils.c.o.d -o CMakeFiles/mqtt_broker.dir/src/utils.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/utils.c
 
 CMakeFiles/mqtt_broker.dir/src/utils.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/mqtt_broker.dir/src/utils.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/utils.c > CMakeFiles/mqtt_broker.dir/src/utils.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/utils.c > CMakeFiles/mqtt_broker.dir/src/utils.c.i
 
 CMakeFiles/mqtt_broker.dir/src/utils.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/mqtt_broker.dir/src/utils.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/utils.c -o CMakeFiles/mqtt_broker.dir/src/utils.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/utils.c -o CMakeFiles/mqtt_broker.dir/src/utils.c.s
 
 CMakeFiles/mqtt_broker.dir/src/notification_manager.c.o: CMakeFiles/mqtt_broker.dir/flags.make
 CMakeFiles/mqtt_broker.dir/src/notification_manager.c.o: ../src/notification_manager.c
 CMakeFiles/mqtt_broker.dir/src/notification_manager.c.o: CMakeFiles/mqtt_broker.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/mqtt_broker.dir/src/notification_manager.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mqtt_broker.dir/src/notification_manager.c.o -MF CMakeFiles/mqtt_broker.dir/src/notification_manager.c.o.d -o CMakeFiles/mqtt_broker.dir/src/notification_manager.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/notification_manager.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/mqtt_broker.dir/src/notification_manager.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mqtt_broker.dir/src/notification_manager.c.o -MF CMakeFiles/mqtt_broker.dir/src/notification_manager.c.o.d -o CMakeFiles/mqtt_broker.dir/src/notification_manager.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/notification_manager.c
 
 CMakeFiles/mqtt_broker.dir/src/notification_manager.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/mqtt_broker.dir/src/notification_manager.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/notification_manager.c > CMakeFiles/mqtt_broker.dir/src/notification_manager.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/notification_manager.c > CMakeFiles/mqtt_broker.dir/src/notification_manager.c.i
 
 CMakeFiles/mqtt_broker.dir/src/notification_manager.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/mqtt_broker.dir/src/notification_manager.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/notification_manager.c -o CMakeFiles/mqtt_broker.dir/src/notification_manager.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/notification_manager.c -o CMakeFiles/mqtt_broker.dir/src/notification_manager.c.s
 
 CMakeFiles/mqtt_broker.dir/src/cert_manager.c.o: CMakeFiles/mqtt_broker.dir/flags.make
 CMakeFiles/mqtt_broker.dir/src/cert_manager.c.o: ../src/cert_manager.c
 CMakeFiles/mqtt_broker.dir/src/cert_manager.c.o: CMakeFiles/mqtt_broker.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/mqtt_broker.dir/src/cert_manager.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mqtt_broker.dir/src/cert_manager.c.o -MF CMakeFiles/mqtt_broker.dir/src/cert_manager.c.o.d -o CMakeFiles/mqtt_broker.dir/src/cert_manager.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/cert_manager.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/mqtt_broker.dir/src/cert_manager.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mqtt_broker.dir/src/cert_manager.c.o -MF CMakeFiles/mqtt_broker.dir/src/cert_manager.c.o.d -o CMakeFiles/mqtt_broker.dir/src/cert_manager.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/cert_manager.c
 
 CMakeFiles/mqtt_broker.dir/src/cert_manager.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/mqtt_broker.dir/src/cert_manager.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/cert_manager.c > CMakeFiles/mqtt_broker.dir/src/cert_manager.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/cert_manager.c > CMakeFiles/mqtt_broker.dir/src/cert_manager.c.i
 
 CMakeFiles/mqtt_broker.dir/src/cert_manager.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/mqtt_broker.dir/src/cert_manager.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/cert_manager.c -o CMakeFiles/mqtt_broker.dir/src/cert_manager.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/src/cert_manager.c -o CMakeFiles/mqtt_broker.dir/src/cert_manager.c.s
 
-CMakeFiles/mqtt_broker.dir/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o: CMakeFiles/mqtt_broker.dir/flags.make
-CMakeFiles/mqtt_broker.dir/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c
-CMakeFiles/mqtt_broker.dir/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o: CMakeFiles/mqtt_broker.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/mqtt_broker.dir/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mqtt_broker.dir/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o -MF CMakeFiles/mqtt_broker.dir/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o.d -o CMakeFiles/mqtt_broker.dir/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c
+CMakeFiles/mqtt_broker.dir/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o: CMakeFiles/mqtt_broker.dir/flags.make
+CMakeFiles/mqtt_broker.dir/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c
+CMakeFiles/mqtt_broker.dir/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o: CMakeFiles/mqtt_broker.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/mqtt_broker.dir/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/mqtt_broker.dir/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o -MF CMakeFiles/mqtt_broker.dir/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o.d -o CMakeFiles/mqtt_broker.dir/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c
 
-CMakeFiles/mqtt_broker.dir/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/mqtt_broker.dir/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c > CMakeFiles/mqtt_broker.dir/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.i
+CMakeFiles/mqtt_broker.dir/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/mqtt_broker.dir/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c > CMakeFiles/mqtt_broker.dir/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.i
 
-CMakeFiles/mqtt_broker.dir/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/mqtt_broker.dir/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c -o CMakeFiles/mqtt_broker.dir/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.s
+CMakeFiles/mqtt_broker.dir/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/mqtt_broker.dir/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c -o CMakeFiles/mqtt_broker.dir/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.s
 
 # Object files for target mqtt_broker
 mqtt_broker_OBJECTS = \
@@ -250,7 +250,7 @@ mqtt_broker_OBJECTS = \
 "CMakeFiles/mqtt_broker.dir/src/utils.c.o" \
 "CMakeFiles/mqtt_broker.dir/src/notification_manager.c.o" \
 "CMakeFiles/mqtt_broker.dir/src/cert_manager.c.o" \
-"CMakeFiles/mqtt_broker.dir/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o"
+"CMakeFiles/mqtt_broker.dir/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o"
 
 # External object files for target mqtt_broker
 mqtt_broker_EXTERNAL_OBJECTS =
@@ -266,14 +266,14 @@ mqtt_broker: CMakeFiles/mqtt_broker.dir/src/ssl_wrapper.c.o
 mqtt_broker: CMakeFiles/mqtt_broker.dir/src/utils.c.o
 mqtt_broker: CMakeFiles/mqtt_broker.dir/src/notification_manager.c.o
 mqtt_broker: CMakeFiles/mqtt_broker.dir/src/cert_manager.c.o
-mqtt_broker: CMakeFiles/mqtt_broker.dir/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o
+mqtt_broker: CMakeFiles/mqtt_broker.dir/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o
 mqtt_broker: CMakeFiles/mqtt_broker.dir/build.make
 mqtt_broker: ../deps/cjson/libcjson.a
 mqtt_broker: ../deps/mbedtls/library/libmbedtls.a
 mqtt_broker: ../deps/mbedtls/library/libmbedx509.a
 mqtt_broker: ../deps/mbedtls/library/libmbedcrypto.a
 mqtt_broker: CMakeFiles/mqtt_broker.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking C executable mqtt_broker"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking C executable mqtt_broker"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/mqtt_broker.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -285,6 +285,6 @@ CMakeFiles/mqtt_broker.dir/clean:
 .PHONY : CMakeFiles/mqtt_broker.dir/clean
 
 CMakeFiles/mqtt_broker.dir/depend:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles/mqtt_broker.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles/mqtt_broker.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/mqtt_broker.dir/depend
 

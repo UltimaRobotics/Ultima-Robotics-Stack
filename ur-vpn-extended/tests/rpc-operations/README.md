@@ -42,60 +42,66 @@ This test suite validates the functionality of all RPC operations supported by u
 
 1. **Build ur-vpn-manager**:
    ```bash
-   cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-vpn-extended/build
+   cd /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-vpn-extended/build
    make -j4
    ```
 
 2. **Install Python dependencies**:
    ```bash
-   cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-vpn-extended/tests/rpc-operations
+   cd /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-vpn-extended/tests/rpc-operations
    pip install -r requirements.txt
    ```
 
-3. **MQTT Broker** (optional):
-   - Tests will automatically start ur-vpn-manager which includes MQTT broker functionality
-   - Default broker: `127.0.0.1:1899`
+3. **Start ur-vpn-manager**:
+   ```bash
+   cd /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-vpn-extended
+   ./build/ur-vpn-manager -pkg_config config/master-config.json -rpc_config config/ur-rpc-config.json
+   ```
+
+4. **MQTT Broker**:
+   - Tests connect to existing MQTT broker at `127.0.0.1:1899`
+   - Broker is started by ur-vpn-manager when it runs
 
 ### Running Tests
-
-#### Run All Tests
-```bash
-python3 run_all_tests.py
-```
 
 #### Run Individual Test Files
 ```bash
 # Basic operations
-python3 test_parse.py
-python3 test_add.py
-python3 test_delete.py
-python3 test_start_stop_restart.py
-python3 test_enable_disable.py
+python3 test_list_operation.py
+python3 test_add_operation.py my_instance /path/to/config.ovpn
+python3 test_status_operation.py my_instance
 
-# Status and information
-python3 test_status_list_stats.py
-
-# Routing operations
-python3 test_custom_routes.py
-python3 test_instance_routes.py
+# All operations support command-line arguments
+python3 test_start_operation.py my_instance
+python3 test_stop_operation.py my_instance
+python3 test_restart_operation.py my_instance
+python3 test_delete_operation.py my_instance
+python3 test_update_operation.py my_instance /path/to/new_config.ovpn
+python3 test_enable_operation.py my_instance
+python3 test_disable_operation.py my_instance
+python3 test_stats_operation.py
+python3 test_parse_operation.py /path/to/config.ovpn
 ```
 
 ## 📁 Test Structure
 
 ```
 tests/rpc-operations/
-├── base_rpc_test.py              # Base test class with MQTT client
-├── run_all_tests.py              # Test suite runner
+├── base_rpc_test.py              # Base test class with MQTT client only
 ├── requirements.txt              # Python dependencies
 ├── README.md                     # This file
-├── test_parse.py                 # Parse operation tests
-├── test_add.py                   # Add operation tests
-├── test_delete.py                # Delete operation tests
-├── test_start_stop_restart.py    # Lifecycle operation tests
-├── test_enable_disable.py        # Enable/disable operation tests
-├── test_status_list_stats.py     # Status/list/stats operation tests
-├── test_custom_routes.py         # Custom routing operation tests
-└── test_instance_routes.py       # Instance routing operation tests
+├── test_list_operation.py        # List operation test
+├── test_add_operation.py         # Add operation test
+├── test_delete_operation.py      # Delete operation test
+├── test_start_operation.py       # Start operation test
+├── test_stop_operation.py        # Stop operation test
+├── test_restart_operation.py     # Restart operation test
+├── test_update_operation.py      # Update operation test
+├── test_status_operation.py      # Status operation test
+├── test_stats_operation.py       # Stats operation test
+├── test_parse_operation.py       # Parse operation test
+├── test_enable_operation.py      # Enable operation test
+└── test_disable_operation.py     # Disable operation test
 ```
 
 ## 🧪 Test Architecture
@@ -104,46 +110,66 @@ tests/rpc-operations/
 
 The `BaseRPCTest` class provides:
 
-- **MQTT Client Management**: Automatic connection to MQTT broker
-- **Process Management**: Starts/stops ur-vpn-manager binary
+- **MQTT Client Management**: Connection to existing MQTT broker
 - **Request/Response Handling**: JSON-RPC 2.0 request sending and response validation
 - **Assertion Helpers**: Common test assertion methods
-- **Cleanup**: Automatic resource cleanup after each test
+- **Cleanup**: Automatic MQTT disconnection after each test
 
 ### Test Pattern
 
-Each test follows this pattern:
+Each test follows this simple pattern:
 
-1. **Setup**: Start ur-vpn-manager and connect to MQTT
+1. **Setup**: Connect to MQTT broker only
 2. **Execute**: Send RPC request with specific parameters
 3. **Validate**: Check response format and content
-4. **Cleanup**: Stop processes and disconnect
+4. **Cleanup**: Disconnect from MQTT
+
+### Key Changes
+
+- ✅ **No Process Management**: Tests no longer start/stop ur-vpn-manager
+- ✅ **Lightweight**: Only handles MQTT communication
+- ✅ **Independent**: Can run concurrently without interference
+- ✅ **CLI Interface**: All tests accept command-line arguments
+- ✅ **JSON Focus**: Pure JSON-RPC request/response testing
 
 ### Example Test
 
 ```python
-def test_add_openvpn_instance(self):
-    """Test adding an OpenVPN instance"""
-    config_content = """
-client
-dev tun
-proto udp
-remote 10.0.0.1 1194
-    """.strip()
+def test_add_operation():
+    """Test adding a VPN instance"""
+    test = BaseRPCTest()
     
-    response = self.send_rpc_request("add", {
-        "instance_name": "test_ovpn0",
-        "config_content": config_content,
-        "vpn_type": "openvpn",
-        "auto_start": False
-    })
-    
-    self.assert_success(response)
-    self.assert_contains_fields(response, "success", "message")
-    
-    result = response['result']
-    assert result['success'] == True
-    assert "added successfully" in result['message']
+    try:
+        if not test.setup():
+            return False
+            
+        # Read config from file
+        config_content = read_config_file("/path/to/config.ovpn")
+        
+        response = test.send_rpc_request("add", {
+            "instance_name": "test_instance",
+            "config_content": config_content,
+            "vpn_type": "openvpn",
+            "auto_start": False
+        })
+        
+        # Validate response
+        if 'result' in response and response['result'].get('success'):
+            print("✓ Add operation completed successfully")
+            return True
+        else:
+            print("✗ Add operation failed")
+            return False
+            
+    finally:
+        test.teardown()
+```
+
+### Command Line Usage
+
+```bash
+# Usage: python test_add_operation.py <instance_name> <config_file_path> [vpn_type] [auto_start]
+python test_add_operation.py test_vpn /path/to/config.ovpn openvpn false
 ```
 
 ## 📊 Test Coverage
@@ -185,33 +211,34 @@ remote 10.0.0.1 1194
 
 ### Success Output
 ```
-🧪 Running test: test_add_openvpn_instance
+✓ Using MQTT client with API version 2.0
 🔧 Setting up test environment...
 ✓ Connected to MQTT broker at 127.0.0.1:1899
 ✓ Subscribed to response topic: direct_messaging/ur-vpn-manager/responses
-✓ ur-vpn-manager is already running
-📤 Sending RPC request: {"jsonrpc":"2.0","method":"add","params":{...},"id":"test_123"}
+Testing: List All VPN Instances
+📤 Sending RPC request: {"jsonrpc":"2.0","method":"list","params":{},"id":"test_123"}
 📨 Received message on direct_messaging/ur-vpn-manager/responses: {"result":{"success":true,...}}
-✓ OpenVPN instance added: VPN instance added and started successfully
+Response:
+{
+  "id": "test_123",
+  "jsonrpc": "2.0",
+  "result": {
+    "success": true,
+    "instances": [...]
+  }
+}
+✓ List operation completed successfully
 🧹 Cleaning up test environment...
-✅ test_add_openvpn_instance passed
 ```
 
 ### Error Output
 ```
-❌ test_add_missing_instance_name failed: Missing 'instance_name' for add operation
+✗ Test failed: Timeout waiting for RPC response
 ```
 
-### Summary Output
+### Usage Error Output
 ```
-📊 Add Tests Results: 5/6 passed
-📊 TEST SUITE SUMMARY
-==================================================
-Total Tests: 8
-Passed: 7
-Failed: 1
-Duration: 45.23 seconds
-Success Rate: 87.5%
+Usage: python test_add_operation.py <instance_name> <config_file_path> [vpn_type] [auto_start]
 ```
 
 ## 🐛 Troubleshooting
@@ -222,13 +249,16 @@ Success Rate: 87.5%
    ```
    ✗ Failed to connect to MQTT broker: Connection refused
    ```
-   **Solution**: Ensure MQTT broker is running or ur-vpn-manager can start it
+   **Solution**: Ensure ur-vpn-manager is running and MQTT broker is accessible
 
-2. **ur-vpn-manager Not Found**
+2. **Timeout Waiting for Response**
    ```
-   ❌ ur-vpn-manager binary not found
+   ✗ Test failed: Timeout waiting for RPC response
    ```
-   **Solution**: Build the project first with `make -j4`
+   **Solution**: 
+   - Verify ur-vpn-manager is running with RPC enabled
+   - Check network connectivity to MQTT broker
+   - Ensure correct MQTT topics are configured
 
 3. **Permission Denied**
    ```
@@ -242,13 +272,11 @@ Success Rate: 87.5%
    ```
    **Solution**: Install with `pip install -r requirements.txt`
 
-### Debug Mode
-
-Enable verbose output by modifying the test files:
-```python
-# In BaseRPCTest.__init__
-self.verbose = True  # Enable debug output
-```
+5. **File Not Found**
+   ```
+   Error: File '/path/to/config.ovpn' not found
+   ```
+   **Solution**: Provide correct file path for configuration files
 
 ### Manual Testing
 

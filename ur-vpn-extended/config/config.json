@@ -105,8 +105,8 @@
       "data_transfer": {
         "download_bytes": 0,
         "download_formatted": "0.00 B",
-        "upload_bytes": 54,
-        "upload_formatted": "54.00 B"
+        "upload_bytes": 0,
+        "upload_formatted": "0.00 B"
       },
       "encryption": "",
       "id": "ovpn0",
@@ -119,8 +119,160 @@
       "server": "",
       "status": "Disconnected",
       "total_data_transferred": {
-        "current_session_bytes": 54,
-        "current_session_mb": 5.14984130859375e-05,
+        "current_session_bytes": 0,
+        "current_session_mb": 0.0,
+        "total_bytes": 0,
+        "total_mb": 0.0
+      },
+      "username": ""
+    },
+    {
+      "auth_method": "",
+      "auto_connect": true,
+      "config_file": {
+        "content": "client\ndev tun\nproto udp\nremote 10.0.0.1 1194\nnobind\npersist-key\npersist-tun\nca ca.crt\ncert client.crt\nkey client.key\nverb 1"
+      },
+      "connection_stats": null,
+      "connection_time": {
+        "current_session_formatted": "0h 0m 0s",
+        "current_session_seconds": 0,
+        "total_formatted": "0h 0m 0s",
+        "total_seconds": 0
+      },
+      "created_date": "1764278093",
+      "data_transfer": {
+        "download_bytes": 0,
+        "download_formatted": "0.00 B",
+        "upload_bytes": 0,
+        "upload_formatted": "0.00 B"
+      },
+      "encryption": "",
+      "id": "test_crash_fix",
+      "last_used": "",
+      "name": "test_crash_fix",
+      "parsed_config": null,
+      "password": "",
+      "port": 0,
+      "protocol": "openvpn",
+      "server": "",
+      "status": "Ready",
+      "total_data_transferred": {
+        "current_session_bytes": 0,
+        "current_session_mb": 0.0,
+        "total_bytes": 0,
+        "total_mb": 0.0
+      },
+      "username": ""
+    },
+    {
+      "auth_method": "",
+      "auto_connect": true,
+      "config_file": {
+        "content": "client\ndev tun\nproto udp\nremote 10.0.0.1 1194\nresolv-retry infinite\nnobind\npersist-key\npersist-tun\nca ca.crt\ncert client.crt\nkey client.key\nverb 3\nauth SHA256\ncipher AES-256-CBC\nkeepalive 10 120\ncomp-lzo no\n"
+      },
+      "connection_stats": null,
+      "connection_time": {
+        "current_session_formatted": "0h 0m 0s",
+        "current_session_seconds": 0,
+        "total_formatted": "0h 0m 0s",
+        "total_seconds": 0
+      },
+      "created_date": "1764277837",
+      "data_transfer": {
+        "download_bytes": 0,
+        "download_formatted": "0.00 B",
+        "upload_bytes": 0,
+        "upload_formatted": "0.00 B"
+      },
+      "encryption": "",
+      "id": "test_delete_instance",
+      "last_used": "",
+      "name": "test_delete_instance",
+      "parsed_config": null,
+      "password": "",
+      "port": 0,
+      "protocol": "openvpn",
+      "server": "",
+      "status": "Ready",
+      "total_data_transferred": {
+        "current_session_bytes": 0,
+        "current_session_mb": 0.0,
+        "total_bytes": 0,
+        "total_mb": 0.0
+      },
+      "username": ""
+    },
+    {
+      "auth_method": "",
+      "auto_connect": true,
+      "config_file": {
+        "content": "client\ndev tun\nproto udp\nremote 10.0.0.1 1194\nnobind\npersist-key\npersist-tun\nca ca.crt\ncert client.crt\nkey client.key\nverb 1"
+      },
+      "connection_stats": null,
+      "connection_time": {
+        "current_session_formatted": "0h 0m 0s",
+        "current_session_seconds": 0,
+        "total_formatted": "0h 0m 0s",
+        "total_seconds": 0
+      },
+      "created_date": "1764277873",
+      "data_transfer": {
+        "download_bytes": 0,
+        "download_formatted": "0.00 B",
+        "upload_bytes": 0,
+        "upload_formatted": "0.00 B"
+      },
+      "encryption": "",
+      "id": "test_full_delete",
+      "last_used": "",
+      "name": "test_full_delete",
+      "parsed_config": null,
+      "password": "",
+      "port": 0,
+      "protocol": "openvpn",
+      "server": "",
+      "status": "Ready",
+      "total_data_transferred": {
+        "current_session_bytes": 0,
+        "current_session_mb": 0.0,
+        "total_bytes": 0,
+        "total_mb": 0.0
+      },
+      "username": ""
+    },
+    {
+      "auth_method": "",
+      "auto_connect": true,
+      "config_file": {
+        "content": "client\ndev tun\nproto udp\nremote 10.0.0.1 1194\nnobind\npersist-key\npersist-tun\nca ca.crt\ncert client.crt\nkey client.key\nverb 1"
+      },
+      "connection_stats": null,
+      "connection_time": {
+        "current_session_formatted": "0h 0m 0s",
+        "current_session_seconds": 0,
+        "total_formatted": "0h 0m 0s",
+        "total_seconds": 0
+      },
+      "created_date": "1764279075",
+      "data_transfer": {
+        "download_bytes": 0,
+        "download_formatted": "0.00 B",
+        "upload_bytes": 0,
+        "upload_formatted": "0.00 B"
+      },
+      "encryption": "",
+      "id": "tracking_demo_instance",
+      "last_used": "",
+      "name": "tracking_demo_instance",
+      "parsed_config": null,
+      "password": "",
+      "port": 0,
+      "protocol": "openvpn",
+      "server": "",
+      "status": "Ready",
+      "total_data_transferred": {
+        "current_session_bytes": 0,
+        "current_session_mb": 0.0,
         "total_bytes": 0,
         "total_mb": 0.0
       },

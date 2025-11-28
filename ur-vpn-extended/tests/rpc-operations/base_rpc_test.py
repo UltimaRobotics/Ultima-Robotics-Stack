@@ -6,10 +6,6 @@ Provides common functionality for testing RPC operations via MQTT
 
 import json
 import time
-import subprocess
-import signal
-import os
-import sys
 from typing import Dict, Any, Optional
 import paho.mqtt.client as mqtt
 
@@ -22,7 +18,6 @@ class BaseRPCTest:
         self.client_id = f"test_client_{int(time.time())}"
         self.request_topic = "direct_messaging/ur-vpn-manager/requests"
         self.response_topic = "direct_messaging/ur-vpn-manager/responses"
-        self.heartbeat_topic = "clients/ur-vpn-manager/heartbeat"
         
         # MQTT client with compatibility for different API versions
         try:
@@ -50,9 +45,6 @@ class BaseRPCTest:
         self.response_data = None
         self.response_timeout = 10  # seconds
         
-        # ur-vpn-manager process
-        self.manager_process = None
-        
     def _on_connect(self, client, userdata, flags, rc, properties=None):
         """MQTT connection callback (compatible with both API versions)"""
         if rc == 0:
@@ -75,7 +67,7 @@ class BaseRPCTest:
             print(f"✗ Error processing message: {e}")
             
     def setup(self):
-        """Setup test environment"""
+        """Setup test environment - connect to MQTT broker only"""
         print("🔧 Setting up test environment...")
         
         # Connect to MQTT broker
@@ -83,63 +75,19 @@ class BaseRPCTest:
             self.client.connect(self.broker_host, self.broker_port, 60)
             self.client.loop_start()
             time.sleep(1)  # Wait for connection
+            return True
         except Exception as e:
             print(f"✗ Failed to connect to MQTT broker: {e}")
             return False
-            
-        # Start ur-vpn-manager if not already running
-        if not self._is_manager_running():
-            print("🚀 Starting ur-vpn-manager...")
-            try:
-                self.manager_process = subprocess.Popen([
-                    "./build/ur-vpn-manager",
-                    "-pkg_config", "config/master-config.json",
-                    "-rpc_config", "config/ur-rpc-config.json"
-                ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-                
-                # Wait for manager to start
-                time.sleep(3)
-                
-                if not self._is_manager_running():
-                    print("✗ Failed to start ur-vpn-manager")
-                    return False
-                print("✓ ur-vpn-manager started successfully")
-            except Exception as e:
-                print(f"✗ Failed to start ur-vpn-manager: {e}")
-                return False
-        else:
-            print("✓ ur-vpn-manager is already running")
-            
-        return True
         
     def teardown(self):
-        """Cleanup test environment"""
+        """Cleanup test environment - disconnect from MQTT broker only"""
         print("🧹 Cleaning up test environment...")
         
         # Stop MQTT client
         if self.client:
             self.client.loop_stop()
             self.client.disconnect()
-            
-        # Stop ur-vpn-manager if we started it
-        if self.manager_process:
-            print("🛑 Stopping ur-vpn-manager...")
-            self.manager_process.terminate()
-            try:
-                self.manager_process.wait(timeout=5)
-            except subprocess.TimeoutExpired:
-                self.manager_process.kill()
-                self.manager_process.wait()
-            print("✓ ur-vpn-manager stopped")
-            
-    def _is_manager_running(self):
-        """Check if ur-vpn-manager process is running"""
-        try:
-            result = subprocess.run(['pgrep', '-f', 'ur-vpn-manager'], 
-                                  capture_output=True, text=True)
-            return result.returncode == 0
-        except:
-            return False
             
     def send_rpc_request(self, method: str, params: Dict[str, Any], 
                         request_id: Optional[str] = None) -> Dict[str, Any]:
@@ -199,30 +147,6 @@ class BaseRPCTest:
             for field in fields:
                 assert field in result, f"Response missing required field: {field}"
                 
-    def wait_for_heartbeat(self, timeout: int = 35) -> bool:
-        """Wait for heartbeat message to verify manager is alive"""
-        heartbeat_received = False
-        
-        def on_heartbeat(client, userdata, msg):
-            nonlocal heartbeat_received
-            if msg.topic == self.heartbeat_topic:
-                heartbeat_received = True
-                print(f"💓 Heartbeat received: {msg.payload.decode('utf-8')}")
-                
-        # Temporarily subscribe to heartbeat
-        self.client.message_callback_add(self.heartbeat_topic, on_heartbeat)
-        self.client.subscribe(self.heartbeat_topic)
-        
-        start_time = time.time()
-        while not heartbeat_received and (time.time() - start_time) < timeout:
-            time.sleep(0.5)
-            
-        # Unsubscribe from heartbeat
-        self.client.unsubscribe(self.heartbeat_topic)
-        self.client.message_callback_remove(self.heartbeat_topic)
-        
-        return heartbeat_received
-        
     def run_test(self, test_func):
         """Run a test function with setup and teardown"""
         print(f"\n🧪 Running test: {test_func.__name__}")

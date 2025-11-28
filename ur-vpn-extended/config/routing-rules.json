@@ -72,7 +72,7 @@
       "gateway": "VPN Server",
       "id": "auto_wiga0_10.66.66.0_1505223464052628760",
       "is_automatic": true,
-      "last_modified": "1761439144",
+      "last_modified": "1764278372",
       "log_traffic": false,
       "name": "Auto: 10.66.66.0 via wg0",
       "priority": 0,

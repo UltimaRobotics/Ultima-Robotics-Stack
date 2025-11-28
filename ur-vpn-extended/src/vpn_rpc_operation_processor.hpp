@@ -11,6 +11,9 @@
 #include <set>
 #include <future>
 
+// Forward declaration
+class VpnRpcClient;
+
 namespace vpn_manager {
 
 /**
@@ -24,9 +27,10 @@ public:
     /**
      * @brief Constructor
      * @param manager Reference to VPN instance manager
+     * @param rpcClient Reference to RPC client for sending responses
      * @param verbose Enable verbose logging
      */
-    VpnRpcOperationProcessor(VPNInstanceManager& manager, bool verbose = false);
+    VpnRpcOperationProcessor(VPNInstanceManager& manager, VpnRpcClient& rpcClient, bool verbose = false);
     
     /**
      * @brief Destructor
@@ -57,6 +61,9 @@ private:
     VPNInstanceManager& vpnManager_;
     bool verbose_;
     
+    // RPC Client reference for sending responses
+    VpnRpcClient& rpcClient_;
+    
     // Response topic
     std::string responseTopic_;
     
@@ -67,6 +74,7 @@ private:
         std::string responseTopic;
         VPNInstanceManager* vpnManager;
         VpnRpcOperationProcessor* processor;
+        VpnRpcClient* rpcClient;
         bool verbose;
         // Thread synchronization primitives
         std::shared_ptr<std::promise<unsigned int>> threadIdPromise;
@@ -83,6 +91,9 @@ private:
     static void sendResponseStatic(const std::string& transactionId, bool success,
                                    const std::string& result, const std::string& error,
                                    const std::string& responseTopic);
+    static void sendResponseWithClient(const std::string& transactionId, bool success,
+                                       const std::string& result, const std::string& error,
+                                       const std::string& responseTopic, VpnRpcClient* rpcClient);
     
     // Operation handlers
     nlohmann::json handleParse(const nlohmann::json& params);
