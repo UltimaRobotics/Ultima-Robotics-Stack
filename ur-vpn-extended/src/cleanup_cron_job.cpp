@@ -11,9 +11,10 @@ namespace vpn_manager {
 CleanupCronJob::CleanupCronJob(VPNInstanceManager* manager, 
                              CleanupTracker* tracker, 
                              const std::string& config_path,
-                             const std::string& routing_path)
+                             const std::string& routing_path,
+                             const std::string& cleanup_config_path)
     : manager_(manager), tracker_(tracker), verifier_(config_path, routing_path),
-      running_(false), cleanup_interval_seconds_(30) {
+      running_(false), cleanup_interval_seconds_(30), cleanup_config_path_(cleanup_config_path) {
     
     // Get thread manager from VPN instance manager
     thread_manager_ = manager_->getThreadManager();
@@ -38,7 +39,7 @@ void CleanupCronJob::loadConfiguration() {
     };
     
     // Try to load from config file
-    std::string config_file = "/etc/ur-vpn/cleanup-config.json";
+    std::string config_file = cleanup_config_path_.empty() ? "config/cleanup-config.json" : cleanup_config_path_;
     if (std::filesystem::exists(config_file)) {
         try {
             std::ifstream file(config_file);

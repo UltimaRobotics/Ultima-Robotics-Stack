@@ -41,6 +41,7 @@ private:
     unsigned int thread_id_;
     int cleanup_interval_seconds_;
     json config_;
+    std::string cleanup_config_path_;
     
     std::vector<VerificationTask> pending_verifications_;
     std::mutex pending_verifications_mutex_;
@@ -58,7 +59,8 @@ public:
     CleanupCronJob(VPNInstanceManager* manager, 
                    CleanupTracker* tracker,
                    const std::string& config_path,
-                   const std::string& routing_path);
+                   const std::string& routing_path,
+                   const std::string& cleanup_config_path = "");
     ~CleanupCronJob();
     
     void start();

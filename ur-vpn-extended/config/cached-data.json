@@ -2,60 +2,11 @@
   "instances": [
     {
       "auto_connect": true,
-      "enabled": false,
-      "id": "list_openvpn_test",
-      "last_used": "",
-      "status": "Ready"
-    },
-    {
-      "auto_connect": true,
-      "enabled": false,
-      "id": "list_wg_test",
-      "last_used": "",
-      "status": "Ready"
-    },
-    {
-      "auto_connect": true,
       "enabled": true,
-      "id": "ovpn0",
-      "last_used": "",
-      "status": "Disconnected"
-    },
-    {
-      "auto_connect": true,
-      "enabled": false,
-      "id": "test_crash_fix",
-      "last_used": "",
-      "status": "Ready"
-    },
-    {
-      "auto_connect": true,
-      "enabled": false,
-      "id": "test_delete_instance",
-      "last_used": "",
-      "status": "Ready"
-    },
-    {
-      "auto_connect": true,
-      "enabled": false,
-      "id": "test_full_delete",
-      "last_used": "",
-      "status": "Ready"
-    },
-    {
-      "auto_connect": true,
-      "enabled": false,
-      "id": "tracking_demo_instance",
-      "last_used": "",
-      "status": "Ready"
-    },
-    {
-      "auto_connect": true,
-      "enabled": true,
-      "id": "wiga0",
+      "id": "FYU-ovpn0",
       "last_used": "",
       "status": "Disconnected"
     }
   ],
-  "last_saved": 1764279075
+  "last_saved": 1764343321
 }

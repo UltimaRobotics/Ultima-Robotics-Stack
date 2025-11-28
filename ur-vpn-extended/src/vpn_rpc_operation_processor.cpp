@@ -199,6 +199,8 @@ void VpnRpcOperationProcessor::processOperationThreadStatic(std::shared_ptr<Requ
                 result = processor->handleDelete(paramsObj);
             } else if (method == "update") {
                 result = processor->handleUpdate(paramsObj);
+            } else if (method == "set_auto_routing") {
+                result = processor->handleSetAutoRouting(paramsObj);
             } else if (method == "start") {
                 result = processor->handleStart(paramsObj);
             } else if (method == "stop") {
@@ -235,6 +237,8 @@ void VpnRpcOperationProcessor::processOperationThreadStatic(std::shared_ptr<Requ
                 result = processor->handleApplyInstanceRoutes(paramsObj);
             } else if (method == "detect-instance-routes") {
                 result = processor->handleDetectInstanceRoutes(paramsObj);
+            } else if (method == "purge-cleanup") {
+                result = processor->handlePurgeCleanup(paramsObj);
             } else {
                 success = false;
                 errorMessage = "Unknown method: " + method;
@@ -416,17 +420,54 @@ nlohmann::json VpnRpcOperationProcessor::handleAdd(const nlohmann::json& params)
     
     std::string instance_name = params.value("instance_name", "");
     std::string config_content = params.value("config_content", "");
-    std::string vpn_type = params.value("vpn_type", "");
+    std::string vpn_type = params.value("vpn_type", "");  // Will be overridden by parser detection
     bool auto_start = params.value("auto_start", true);
     
     if (instance_name.empty() || config_content.empty()) {
         result["success"] = false;
         result["error"] = "Missing 'instance_name' or 'config_content' for add operation";
-    } else {
-        bool added = vpnManager_.addInstance(instance_name, vpn_type, config_content, auto_start);
+        return result;
+    }
+    
+    try {
+        // Use ur-vpn-parser library to auto-detect protocol and validate config
+        vpn_parser::VPNParser parser;
+        vpn_parser::ParseResult parse_result = parser.parse(config_content);
+        
+        if (!parse_result.success) {
+            result["success"] = false;
+            result["error"] = "Config parsing failed: " + parse_result.error_message;
+            result["protocol_detected"] = parse_result.protocol_detected;
+            return result;
+        }
+        
+        // Use parser-detected protocol instead of user-provided vpn_type
+        std::string detected_protocol = parse_result.protocol_detected;
+        
+        if (verbose_) {
+            std::cout << "[Add] Parser detected protocol: " << detected_protocol 
+                     << " for instance: " << instance_name << std::endl;
+        }
+        
+        // Add instance with parser-detected protocol
+        bool added = vpnManager_.addInstance(instance_name, detected_protocol, config_content, auto_start);
         result["success"] = added;
         result["message"] = added ? "VPN instance added and started successfully" : "Failed to add VPN instance";
+        result["protocol_detected"] = detected_protocol;
+        
+        // Include parsed profile data in response for reference
+        if (added) {
+            result["parsed_profile"] = parser.toJson(parse_result);
+        }
+        
+    } catch (const std::exception& e) {
+        result["success"] = false;
+        result["error"] = std::string("Exception during config parsing: ") + e.what();
+        if (verbose_) {
+            std::cerr << "[Add] Parser exception: " << e.what() << std::endl;
+        }
     }
+    
     return result;
 }
 
@@ -501,11 +542,48 @@ nlohmann::json VpnRpcOperationProcessor::handleUpdate(const nlohmann::json& para
     if (instance_name.empty() || config_content.empty()) {
         result["success"] = false;
         result["error"] = "Missing 'instance_name' or 'config_content' for update operation";
-    } else {
-        bool success = vpnManager_.updateInstance(instance_name, config_content);
+        return result;
+    }
+    
+    try {
+        // Use ur-vpn-parser library to auto-detect protocol and validate config
+        vpn_parser::VPNParser parser;
+        vpn_parser::ParseResult parse_result = parser.parse(config_content);
+        
+        if (!parse_result.success) {
+            result["success"] = false;
+            result["error"] = "Config parsing failed: " + parse_result.error_message;
+            result["protocol_detected"] = parse_result.protocol_detected;
+            return result;
+        }
+        
+        // Use parser-detected protocol for update
+        std::string detected_protocol = parse_result.protocol_detected;
+        
+        if (verbose_) {
+            std::cout << "[Update] Parser detected protocol: " << detected_protocol 
+                     << " for instance: " << instance_name << std::endl;
+        }
+        
+        // Update instance with parser-detected protocol
+        bool success = vpnManager_.updateInstance(instance_name, config_content, detected_protocol);
         result["success"] = success;
         result["message"] = success ? "VPN instance updated and restarted successfully" : "Failed to update VPN instance";
+        result["protocol_detected"] = detected_protocol;
+        
+        // Include parsed profile data in response for reference
+        if (success) {
+            result["parsed_profile"] = parser.toJson(parse_result);
+        }
+        
+    } catch (const std::exception& e) {
+        result["success"] = false;
+        result["error"] = std::string("Exception during config parsing: ") + e.what();
+        if (verbose_) {
+            std::cerr << "[Update] Parser exception: " << e.what() << std::endl;
+        }
     }
+    
     return result;
 }
 
@@ -610,6 +688,29 @@ nlohmann::json VpnRpcOperationProcessor::handleStats(const nlohmann::json& param
     nlohmann::json result;
     result["success"] = true;
     result["stats"] = vpnManager_.getAggregatedStats();
+    return result;
+}
+
+nlohmann::json VpnRpcOperationProcessor::handleSetAutoRouting(const nlohmann::json& params) {
+    nlohmann::json result;
+    
+    std::string instance_name = params.value("instance_name", "");
+    bool enable_auto_routing = params.value("enable_auto_routing", true);
+    
+    if (instance_name.empty()) {
+        result["success"] = false;
+        result["error"] = "Missing 'instance_name' field for set_auto_routing operation";
+        return result;
+    }
+    
+    bool success = vpnManager_.setInstanceAutoRouting(instance_name, enable_auto_routing);
+    result["success"] = success;
+    result["message"] = success ? 
+        (enable_auto_routing ? "Auto routing enabled for VPN instance" : "Auto routing disabled for VPN instance") :
+        "Failed to set auto routing for VPN instance";
+    result["instance_name"] = instance_name;
+    result["enable_auto_routing"] = enable_auto_routing;
+    
     return result;
 }
 
@@ -827,6 +928,26 @@ nlohmann::json VpnRpcOperationProcessor::handleDetectInstanceRoutes(const nlohma
             result["detected_routes"] = detected;
         }
     }
+    return result;
+}
+
+nlohmann::json VpnRpcOperationProcessor::handlePurgeCleanup(const nlohmann::json& params) {
+    nlohmann::json result;
+    
+    // Extract confirmation parameter
+    bool confirm = params.value("confirm", false);
+    
+    if (verbose_) {
+        nlohmann::json verbose_log;
+        verbose_log["type"] = "verbose";
+        verbose_log["message"] = "Processing purge-cleanup request";
+        verbose_log["confirm"] = confirm;
+        std::cout << verbose_log.dump() << std::endl;
+    }
+    
+    // Call VPN manager's purge cleanup method
+    result = vpnManager_.purgeCleanup(confirm);
+    
     return result;
 }
 

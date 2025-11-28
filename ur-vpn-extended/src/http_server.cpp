@@ -326,6 +326,51 @@ std::string HTTPServer::processOperation(const std::string& json_data) {
                 }
             }
         }
+        else if (operation == "set_auto_routing") {
+            if (isVerbose()) {
+                std::cout << json({
+                    {"type", "verbose"},
+                    {"message", "HTTP: Executing set_auto_routing operation"},
+                    {"instance_name", instance_name}
+                }).dump() << std::endl;
+            }
+
+            // Set auto routing for an existing VPN instance
+            bool enable_auto_routing = operation_json.value("enable_auto_routing", true);
+
+            if (instance_name.empty()) {
+                response["success"] = false;
+                response["error"] = "Missing 'instance_name' for set_auto_routing operation";
+            } else {
+                bool success = vpn_manager->setInstanceAutoRouting(instance_name, enable_auto_routing);
+
+                if (success) {
+                    response["success"] = true;
+                    response["message"] = enable_auto_routing ? 
+                        "Auto routing enabled for VPN instance" : 
+                        "Auto routing disabled for VPN instance";
+                    response["enable_auto_routing"] = enable_auto_routing;
+                    if (isVerbose()) {
+                        std::cout << json({
+                            {"type", "verbose"},
+                            {"message", "HTTP: Set auto routing completed successfully"},
+                            {"instance_name", instance_name},
+                            {"enable_auto_routing", enable_auto_routing}
+                        }).dump() << std::endl;
+                    }
+                } else {
+                    response["success"] = false;
+                    response["error"] = "Failed to set auto routing for VPN instance";
+                    if (isVerbose()) {
+                        std::cout << json({
+                            {"type", "verbose"},
+                            {"message", "HTTP: Set auto routing failed"},
+                            {"instance_name", instance_name}
+                        }).dump() << std::endl;
+                    }
+                }
+            }
+        }
         else if (operation == "start") {
             if (isVerbose()) {
                 std::cout << json({

@@ -250,9 +250,13 @@ public:
 
     // Configuration & Lifecycle
     bool loadConfiguration(const std::string& json_config);
-    bool loadConfigurationFromFile(const std::string& config_file, const std::string& cache_file = "");
+    bool loadConfigurationFromFile(const std::string& config_file, const std::string& cache_file = "", const std::string& cleanup_config_file = "");
     bool saveConfiguration(const std::string& filepath);
     bool saveCachedData(const std::string& cache_file);
+    bool saveOriginalConfigToCache(const std::string& cache_file, const std::string& instance_name, const std::string& original_config);
+    std::string loadOriginalConfigFromCache(const std::string& cache_file, const std::string& instance_name);
+    void initializeCleanupSystem();
+    nlohmann::json purgeCleanup(bool confirm = false);
 
     // Instance Control
     bool startInstance(const std::string& instance_name);
@@ -267,7 +271,8 @@ public:
     bool addInstance(const std::string& name, const std::string& vpn_type, 
                      const std::string& config_content, bool auto_start = true);
     bool deleteInstance(const std::string& instance_name);
-    bool updateInstance(const std::string& instance_name, const std::string& config_content);
+    bool updateInstance(const std::string& instance_name, const std::string& config_content, const std::string& protocol = "");
+    bool setInstanceAutoRouting(const std::string& instance_name, bool enable_auto_routing);
 
     // Status & Monitoring
     json getInstanceStatus(const std::string& instance_name);
@@ -342,6 +347,7 @@ private:
     std::string config_file_path_;
     std::string cache_file_path_;
     std::string routing_rules_file_path_;
+    std::string cleanup_config_path_;
     std::string routing_config_dir_;
     std::map<std::string, RoutingRule> routing_rules_;
     std::mutex routing_mutex_;

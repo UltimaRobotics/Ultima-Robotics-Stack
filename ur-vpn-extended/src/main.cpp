@@ -132,7 +132,6 @@ void forceCleanupWireGuardInterfaces() {
 void signalHandler(int signal) {
 
     std::cout << "Performing Graceful Exit on Interrup" << std::endl;
-    exit(0);
     std::cout << json({
         {"type", "signal"},
         {"signal", signal},
@@ -539,6 +538,9 @@ int main(int argc, char* argv[]) {
     // Parse routing rules file path
     std::string routing_rules_file = master_config.value("custom_routing_rules", "");
     
+    // Parse cleanup config file path
+    std::string cleanup_config_file = master_config.value("cleanup_config_path", "config/cleanup-config.json");
+    
     // Parse HTTP server configuration
     bool http_enabled = false;
     std::string http_host = "0.0.0.0";
@@ -689,7 +691,7 @@ int main(int argc, char* argv[]) {
     });
 
     // Load configuration
-    if (!manager.loadConfigurationFromFile(config_file, cache_file)) {
+    if (!manager.loadConfigurationFromFile(config_file, cache_file, cleanup_config_file)) {
         json error = {
             {"type", "error"},
             {"message", "Failed to load configuration"}
@@ -697,6 +699,9 @@ int main(int argc, char* argv[]) {
         std::cout << error.dump() << std::endl;
         return 1;
     }
+    
+    // Initialize cleanup system now that config paths are loaded
+    manager.initializeCleanupSystem();
     
     // Load routing rules if specified
     if (!routing_rules_file.empty()) {

@@ -21,6 +21,15 @@ std::vector<RoutingRule> VPNInstanceManager::parseRouteOutput(const std::string&
     std::istringstream stream(route_output);
     std::string line;
     
+    if (verbose_) {
+        std::cout << json({
+            {"type", "verbose"},
+            {"message", "VPNInstanceManager::parseRouteOutput - Starting route parsing"},
+            {"instance_name", instance_name},
+            {"route_output_length", route_output.length()}
+        }).dump() << std::endl;
+    }
+    
     // Skip header lines
     std::getline(stream, line);
     std::getline(stream, line);
@@ -28,34 +37,175 @@ std::vector<RoutingRule> VPNInstanceManager::parseRouteOutput(const std::string&
     // Get expected interface for this instance
     std::string expected_iface = getInterfaceForInstance(instance_name);
     
+    if (verbose_) {
+        std::cout << json({
+            {"type", "verbose"},
+            {"message", "VPNInstanceManager::parseRouteOutput - Got expected interface"},
+            {"instance_name", instance_name},
+            {"expected_interface", expected_iface}
+        }).dump() << std::endl;
+    }
+    
+    int total_routes = 0;
+    int skipped_routes = 0;
+    int processed_routes = 0;
+    
     while (std::getline(stream, line)) {
         if (line.empty()) continue;
+        total_routes++;
         
         std::istringstream line_stream(line);
         std::string destination, gateway, netmask, flags, metric, ref, use, iface;
         
         line_stream >> destination >> gateway >> netmask >> flags >> metric >> ref >> use >> iface;
         
-        // Only process routes for this VPN interface
-        if (iface != expected_iface) {
+        // Only process routes that use the VPN instance interface or are VPN-related routes
+        // This prevents false assignment of system routes to VPN instances
+        bool is_vpn_route = false;
+        
+        // Check if this route uses the VPN interface
+        if (!expected_iface.empty() && iface == expected_iface) {
+            is_vpn_route = true;
+        }
+        // For WireGuard, also check for VPN-specific network ranges even if interface detection fails
+        else if (!expected_iface.empty() && expected_iface.find("wg") == 0) {
+            // WireGuard VPN networks are typically in private ranges
+            if ((destination.find("10.") == 0 && destination != "10.0.0.0") ||
+                (destination.find("192.168.") == 0 && destination != "192.168.0.0") ||
+                (destination.find("172.") == 0 && destination.length() >= 7)) {
+                // Validate RFC1918 for 172.x.x.x
+                bool is_private = false;
+                if (destination.find("192.168.") == 0) {
+                    is_private = true;
+                } else if (destination.find("10.") == 0 && destination != "10.0.0.0") {
+                    is_private = true;
+                } else if (destination.find("172.") == 0) {
+                    std::istringstream iss(destination);
+                    std::string octet1, octet2;
+                    std::getline(iss, octet1, '.');
+                    std::getline(iss, octet2, '.');
+                    try {
+                        int second_octet = std::stoi(octet2);
+                        is_private = (second_octet >= 16 && second_octet <= 31);
+                    } catch (...) {
+                        is_private = false;
+                    }
+                }
+                is_vpn_route = is_private;
+            }
+        }
+        // For OpenVPN, also check for VPN-specific network ranges and split tunnel routes
+        else if (!expected_iface.empty() && (expected_iface.find("tun") == 0 || expected_iface.find("tap") == 0)) {
+            // OpenVPN split tunnel routes (0.0.0.0/1 and 128.0.0.0/1) and VPN network ranges
+            if ((destination == "0.0.0.0" && netmask == "128.0.0.0") ||  // Split tunnel first half
+                (destination == "128.0.0.0" && netmask == "128.0.0.0") || // Split tunnel second half
+                (destination.find("10.") == 0 && destination != "10.0.0.0") ||
+                (destination.find("192.168.") == 0 && destination != "192.168.0.0") ||
+                (destination.find("172.") == 0 && destination.length() >= 7)) {
+                
+                bool is_vpn_network = false;
+                
+                // Check split tunnel routes
+                if ((destination == "0.0.0.0" && netmask == "128.0.0.0") ||
+                    (destination == "128.0.0.0" && netmask == "128.0.0.0")) {
+                    is_vpn_network = true;
+                }
+                // Check private network ranges
+                else if (destination.find("192.168.") == 0) {
+                    is_vpn_network = true;
+                } else if (destination.find("10.") == 0 && destination != "10.0.0.0") {
+                    is_vpn_network = true;
+                } else if (destination.find("172.") == 0) {
+                    std::istringstream iss(destination);
+                    std::string octet1, octet2;
+                    std::getline(iss, octet1, '.');
+                    std::getline(iss, octet2, '.');
+                    try {
+                        int second_octet = std::stoi(octet2);
+                        is_vpn_network = (second_octet >= 16 && second_octet <= 31);
+                    } catch (...) {
+                        is_vpn_network = false;
+                    }
+                }
+                
+                is_vpn_route = is_vpn_network;
+            }
+        }
+        // Fallback for OpenVPN when interface detection fails - use route pattern matching
+        else if (expected_iface.empty()) {
+            // Try to detect if this could be an OpenVPN route based on patterns
+            auto inst_it = instances_.find(instance_name);
+            if (inst_it != instances_.end() && inst_it->second.type == VPNType::OPENVPN) {
+                // Look for typical OpenVPN routes
+                if ((destination == "0.0.0.0" && netmask == "128.0.0.0") ||  // Split tunnel first half
+                    (destination == "128.0.0.0" && netmask == "128.0.0.0") || // Split tunnel second half
+                    (destination.find("10.") == 0 && destination != "10.0.0.0") ||
+                    (destination.find("192.168.") == 0 && destination != "192.168.0.0") ||
+                    (destination.find("172.") == 0 && destination.length() >= 7)) {
+                    
+                    bool is_vpn_network = false;
+                    
+                    // Check split tunnel routes
+                    if ((destination == "0.0.0.0" && netmask == "128.0.0.0") ||
+                        (destination == "128.0.0.0" && netmask == "128.0.0.0")) {
+                        is_vpn_network = true;
+                    }
+                    // Check private network ranges
+                    else if (destination.find("192.168.") == 0) {
+                        is_vpn_network = true;
+                    } else if (destination.find("10.") == 0 && destination != "10.0.0.0") {
+                        is_vpn_network = true;
+                    } else if (destination.find("172.") == 0) {
+                        std::istringstream iss(destination);
+                        std::string octet1, octet2;
+                        std::getline(iss, octet1, '.');
+                        std::getline(iss, octet2, '.');
+                        try {
+                            int second_octet = std::stoi(octet2);
+                            is_vpn_network = (second_octet >= 16 && second_octet <= 31);
+                        } catch (...) {
+                            is_vpn_network = false;
+                        }
+                    }
+                    
+                    is_vpn_route = is_vpn_network;
+                    
+                    if (is_vpn_route && verbose_) {
+                        std::cout << json({
+                            {"type", "verbose"},
+                            {"message", "Fallback route detection - matched OpenVPN route pattern"},
+                            {"instance", instance_name},
+                            {"interface", iface},
+                            {"destination", destination},
+                            {"netmask", netmask}
+                        }).dump() << std::endl;
+                    }
+                }
+            }
+        }
+        
+        // Skip routes that don't belong to this VPN instance
+        if (!is_vpn_route) {
+            skipped_routes++;
             if (verbose_) {
                 std::cout << json({
                     {"type", "verbose"},
-                    {"message", "Skipping route - interface mismatch"},
+                    {"message", "Skipping route - not using VPN interface"},
                     {"instance", instance_name},
-                    {"expected_iface", expected_iface},
-                    {"actual_iface", iface},
-                    {"destination", destination},
-                    {"gateway", gateway}
+                    {"interface", iface},
+                    {"expected_interface", expected_iface},
+                    {"destination", destination}
                 }).dump() << std::endl;
             }
             continue;
         }
         
+        processed_routes++;
+        
         if (verbose_) {
             std::cout << json({
                 {"type", "verbose"},
-                {"message", "Processing route for instance"},
+                {"message", "Processing VPN route for instance"},
                 {"instance", instance_name},
                 {"interface", iface},
                 {"destination", destination},
@@ -83,20 +233,68 @@ std::vector<RoutingRule> VPNInstanceManager::parseRouteOutput(const std::string&
         rule.gateway = (gateway == "0.0.0.0") ? "VPN Server" : gateway;
         rule.protocol = "both";
         
-        // Determine rule type based on destination
+        // Determine rule type based on destination and interface
         if (destination == "0.0.0.0" && netmask == "128.0.0.0") {
-            // Split default route (0.0.0.0/1)
+            // Split default route (0.0.0.0/1) - common in OpenVPN split tunneling
             rule.type = "tunnel_all";
             rule.description = "Automatically detected default route split (first half) for " + instance_name;
         } else if (destination == "128.0.0.0" && netmask == "128.0.0.0") {
-            // Split default route (128.0.0.0/1)
+            // Split default route (128.0.0.0/1) - common in OpenVPN split tunneling
             rule.type = "tunnel_all";
             rule.description = "Automatically detected default route split (second half) for " + instance_name;
         } else if (destination == "0.0.0.0" && netmask == "0.0.0.0") {
-            // Full default route (skip, usually not VPN-specific)
-            continue;
+            // Full default route - could be VPN default or system default
+            if (iface == expected_iface || iface.find("tun") == 0 || iface.find("wg") == 0 || iface.find("wiga") == 0) {
+                rule.type = "tunnel_all";
+                rule.description = "Automatically detected VPN default route for " + instance_name;
+            } else {
+                // System default route, still collect for comprehensive routing
+                rule.type = "system_default";
+                rule.description = "System default route detected for " + instance_name;
+            }
+        } else if (destination.find("192.168.") == 0 || destination.find("10.") == 0 || 
+                  (destination.find("172.") == 0 && destination.length() >= 7)) {
+            // Private network route - validate RFC1918 compliance for 172.x.x.x
+            bool is_private = false;
+            if (destination.find("192.168.") == 0) {
+                is_private = true;
+            } else if (destination.find("10.") == 0) {
+                is_private = true;
+            } else if (destination.find("172.") == 0) {
+                // Check if second octet is 16-31 for RFC1918 compliance
+                std::istringstream iss(destination);
+                std::string octet1, octet2;
+                std::getline(iss, octet1, '.');
+                std::getline(iss, octet2, '.');
+                try {
+                    int second_octet = std::stoi(octet2);
+                    is_private = (second_octet >= 16 && second_octet <= 31);
+                } catch (...) {
+                    is_private = false;
+                }
+            }
+            
+            if (is_private) {
+                rule.type = "tunnel_specific";
+                rule.description = "Automatically detected private network route for " + instance_name;
+            } else {
+                rule.type = "tunnel_all";
+                rule.description = "Automatically detected network route for " + instance_name;
+            }
+        } else if (destination.find("224.") == 0 || destination.find("239.") == 0) {
+            // Multicast route
+            rule.type = "multicast";
+            rule.description = "Automatically detected multicast route for " + instance_name;
+        } else if (destination.find("169.254.") == 0) {
+            // Link-local route (APIPA)
+            rule.type = "link_local";
+            rule.description = "Automatically detected link-local route for " + instance_name;
+        } else if (netmask == "255.255.255.255") {
+            // Host route (/32) - classify as tunnel_all (original behavior)
+            rule.type = "tunnel_all";
+            rule.description = "Automatically detected route for " + instance_name;
         } else {
-            // Regular network route
+            // Regular network route - classify as tunnel_all (original behavior)
             rule.type = "tunnel_all";
             rule.description = "Automatically detected route for " + instance_name;
         }
@@ -114,6 +312,18 @@ std::vector<RoutingRule> VPNInstanceManager::parseRouteOutput(const std::string&
         rule.is_applied = true; // Already applied by the system
         
         rules.push_back(rule);
+    }
+    
+    if (verbose_) {
+        std::cout << json({
+            {"type", "verbose"},
+            {"message", "VPNInstanceManager::parseRouteOutput - Route parsing completed"},
+            {"instance_name", instance_name},
+            {"total_routes", total_routes},
+            {"processed_routes", processed_routes},
+            {"skipped_routes", skipped_routes},
+            {"final_rules_count", rules.size()}
+        }).dump() << std::endl;
     }
     
     return rules;
@@ -228,10 +438,26 @@ void VPNInstanceManager::detectAndSaveAutomaticRoutes(const std::string& instanc
     }
     
     // Wait for routes to stabilize (especially for OpenVPN)
-    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    // OpenVPN may take longer to establish routes
+    auto inst_it = instances_.find(instance_name);
+    if (inst_it != instances_.end() && inst_it->second.type == VPNType::OPENVPN) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(3000)); // Longer wait for OpenVPN
+    } else {
+        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    }
     
     // Execute route -n command
     std::string route_output = executeCommand("route -n");
+    
+    if (verbose_) {
+        std::cout << json({
+            {"type", "verbose"},
+            {"message", "Route command output"},
+            {"instance", instance_name},
+            {"route_output_length", route_output.length()},
+            {"has_output", !route_output.empty()}
+        }).dump() << std::endl;
+    }
     
     if (route_output.empty()) {
         if (verbose_) {
@@ -263,7 +489,8 @@ void VPNInstanceManager::detectAndSaveAutomaticRoutes(const std::string& instanc
                 {"instance", instance_name},
                 {"destination", rule.destination},
                 {"gateway", rule.gateway},
-                {"rule_name", rule.name}
+                {"rule_name", rule.name},
+                {"rule_type", rule.type}
             }).dump() << std::endl;
         }
     }
@@ -719,31 +946,60 @@ std::string VPNInstanceManager::getInterfaceForInstance(const std::string& insta
         // Find all WireGuard interfaces
         detect_cmd = "ip link show type wireguard 2>/dev/null | grep -o '^[0-9]*: [^:@]*' | awk '{print $2}' | tr -d ':'";
     } else if (it->second.type == VPNType::OPENVPN) {
-        // Find all tun/tap interfaces
-        detect_cmd = "ip link show 2>/dev/null | grep -E '^[0-9]+: (tun|tap)[0-9]*' | grep -o '^[0-9]*: [^:@]*' | awk '{print $2}' | tr -d ':'";
+        // Find all tun/tap interfaces - improved detection
+        detect_cmd = "ip link show 2>/dev/null | grep -E '^[0-9]+: (tun|tap)[0-9]*:' | grep -o '^[0-9]*: [^:@]*' | awk '{print $2}' | tr -d ':'";
     }
     
     if (!detect_cmd.empty()) {
         std::string detected = executeCommand(detect_cmd);
         if (!detected.empty()) {
-            // Remove whitespace
-            detected.erase(std::remove(detected.begin(), detected.end(), '\n'), detected.end());
-            detected.erase(std::remove(detected.begin(), detected.end(), '\r'), detected.end());
-            detected.erase(std::remove(detected.begin(), detected.end(), ' '), detected.end());
+            // Remove whitespace and newlines properly
+            std::istringstream iss(detected);
+            std::string first_interface;
+            iss >> first_interface;  // Get only the first interface
             
-            if (!detected.empty()) {
+            if (!first_interface.empty()) {
                 // Cache the detected interface
-                it->second.interface_name = detected;
+                it->second.interface_name = first_interface;
                 
                 if (verbose_) {
                     std::cout << json({
                         {"type", "verbose"},
                         {"message", "Detected and cached interface for instance"},
                         {"instance", instance_name},
-                        {"interface", detected}
+                        {"interface", first_interface},
+                        {"vpn_type", vpnTypeToString(it->second.type)}
                     }).dump() << std::endl;
                 }
-                return detected;
+                return first_interface;
+            }
+        }
+    }
+    
+    // Additional fallback: try to detect any tun/tap interface with a different approach
+    if (it->second.type == VPNType::OPENVPN) {
+        std::string fallback_cmd = "ip tuntap show 2>/dev/null | grep -E '(tun|tap):' | awk -F: '{print $1}' | head -n1";
+        std::string fallback_detected = executeCommand(fallback_cmd);
+        
+        if (!fallback_detected.empty()) {
+            // Remove whitespace
+            fallback_detected.erase(std::remove(fallback_detected.begin(), fallback_detected.end(), '\n'), fallback_detected.end());
+            fallback_detected.erase(std::remove(fallback_detected.begin(), fallback_detected.end(), '\r'), fallback_detected.end());
+            fallback_detected.erase(std::remove(fallback_detected.begin(), fallback_detected.end(), ' '), fallback_detected.end());
+            
+            if (!fallback_detected.empty()) {
+                it->second.interface_name = fallback_detected;
+                
+                if (verbose_) {
+                    std::cout << json({
+                        {"type", "verbose"},
+                        {"message", "Fallback detection succeeded - cached interface for instance"},
+                        {"instance", instance_name},
+                        {"interface", fallback_detected},
+                        {"vpn_type", "OpenVPN"}
+                    }).dump() << std::endl;
+                }
+                return fallback_detected;
             }
         }
     }

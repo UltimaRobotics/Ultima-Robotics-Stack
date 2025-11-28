@@ -100,6 +100,7 @@ private:
     nlohmann::json handleAdd(const nlohmann::json& params);
     nlohmann::json handleDelete(const nlohmann::json& params);
     nlohmann::json handleUpdate(const nlohmann::json& params);
+    nlohmann::json handleSetAutoRouting(const nlohmann::json& params);
     nlohmann::json handleStart(const nlohmann::json& params);
     nlohmann::json handleStop(const nlohmann::json& params);
     nlohmann::json handleRestart(const nlohmann::json& params);
@@ -118,6 +119,7 @@ private:
     nlohmann::json handleDeleteInstanceRoute(const nlohmann::json& params);
     nlohmann::json handleApplyInstanceRoutes(const nlohmann::json& params);
     nlohmann::json handleDetectInstanceRoutes(const nlohmann::json& params);
+    nlohmann::json handlePurgeCleanup(const nlohmann::json& params);
     
     // Utility methods
     std::string extractTransactionId(const nlohmann::json& request);

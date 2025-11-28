@@ -2,6 +2,7 @@
 #include "internal/vpn_manager_utils.hpp"
 #include "../ur-openvpn-library/src/openvpn_wrapper.hpp"
 #include "../ur-wg_library/wireguard-wrapper/include/wireguard_wrapper.hpp"
+#include "../ur-vpn-parser/vpn_parser.hpp"
 #include <fstream>
 #include <iostream>
 #include <thread>
@@ -299,6 +300,71 @@ void VPNInstanceManager::launchInstanceThread(VPNInstance& instance) {
 
     // Register thread with attachment
     thread_manager_->registerThread(instance.thread_id, instance.name);
+}
+
+bool VPNInstanceManager::updateInstance(const std::string& instance_name,
+                                         const std::string& config_content, const std::string& protocol) {
+    std::lock_guard<std::mutex> lock(instances_mutex_);
+
+    auto it = instances_.find(instance_name);
+    if (it == instances_.end()) {
+        std::cerr << "Instance " << instance_name << " not found" << std::endl;
+        return false;
+    }
+
+    bool was_enabled = it->second.enabled;
+    
+    // Update instance configuration
+    it->second.config_content = config_content;
+    
+    // Update protocol if provided, otherwise keep existing protocol
+    if (!protocol.empty()) {
+        it->second.type = parseVPNType(protocol);
+        it->second.protocol = protocol;
+    }
+    
+    // Reset connection stats and data
+    it->second.connection_stats = nullptr;
+    it->second.connection_time.current_session_seconds = 0;
+    it->second.data_transfer.upload_bytes = 0;
+    it->second.data_transfer.download_bytes = 0;
+    it->second.total_data_transferred.current_session_bytes = 0;
+
+    // Restart the instance if it was previously enabled
+    if (was_enabled) {
+        launchInstanceThread(it->second);
+        emitEvent(instance_name, "updated", "Instance updated and restarted");
+    } else {
+        emitEvent(instance_name, "updated", "Instance configuration updated");
+    }
+
+    return true;
+}
+
+bool VPNInstanceManager::setInstanceAutoRouting(const std::string& instance_name, bool enable_auto_routing) {
+    std::lock_guard<std::mutex> lock(instances_mutex_);
+    
+    auto it = instances_.find(instance_name);
+    if (it == instances_.end()) {
+        std::cerr << "Instance " << instance_name << " not found" << std::endl;
+        return false;
+    }
+    
+    // In the original implementation, this method just re-applies routing rules
+    // The enable_auto_routing parameter is stored but doesn't prevent route detection
+    if (verbose_) {
+        std::cout << json({
+            {"type", "verbose"},
+            {"message", "VPNInstanceManager::setInstanceAutoRouting - Reapplying routing rules"},
+            {"instance", instance_name},
+            {"enable_auto_routing", enable_auto_routing}
+        }).dump() << std::endl;
+    }
+    
+    // Re-apply routing rules for this instance
+    applyRoutingRulesForInstance(instance_name);
+    
+    return true;
 }
 
 bool VPNInstanceManager::startInstance(const std::string& instance_id) {
@@ -923,6 +989,21 @@ bool VPNInstanceManager::stopAll() {
             it->second.current_state = ConnectionState::DISCONNECTED;
         }
 
+        // Unregister thread attachment from ThreadManager to prevent conflicts
+        try {
+            thread_manager_->unregisterThread(data.name);
+            if (verbose_) {
+                std::cout << json({
+                    {"type", "verbose"},
+                    {"message", "Thread attachment unregistered successfully"},
+                    {"instance", data.name}
+                }).dump() << std::endl;
+            }
+        } catch (const std::exception& e) {
+            std::cerr << "Failed to unregister thread attachment for " << data.name 
+                     << ": " << e.what() << std::endl;
+        }
+
         std::cout << json({
             {"type", "shutdown_verbose"},
             {"step", "DIRECT_SHUTDOWN_COMPLETE"},
@@ -955,6 +1036,39 @@ bool VPNInstanceManager::addInstance(const std::string& name, const std::string&
         }).dump() << std::endl;
     }
 
+    // Always parse and detect full-tunnel to save original config and create modified version
+    std::string modified_config_content = config_content;
+    bool is_full_tunnel = false;
+    std::string original_config_for_cache = config_content;
+    
+    vpn_parser::VPNParser parser;
+    vpn_parser::ProfileData profile;
+    
+    // Always detect full-tunnel to determine if we need to save original config
+    if (parser.detectFullTunnel(config_content, profile)) {
+        is_full_tunnel = true;
+        modified_config_content = parser.generateSplitTunnelConfig(config_content, profile);
+        
+        if (verbose_) {
+            std::cout << json({
+                {"type", "verbose"},
+                {"message", "VPNInstanceManager::addInstance - Full-tunnel detected and modified config created"},
+                {"instance_name", name},
+                {"full_tunnel_type", profile.full_tunnel_type},
+                {"has_ipv4_full_tunnel", profile.has_ipv4_full_tunnel},
+                {"has_ipv6_full_tunnel", profile.has_ipv6_full_tunnel}
+            }).dump() << std::endl;
+        }
+    } else {
+        if (verbose_) {
+            std::cout << json({
+                {"type", "verbose"},
+                {"message", "VPNInstanceManager::addInstance - No full-tunnel detected, using original config"},
+                {"instance_name", name}
+            }).dump() << std::endl;
+        }
+    }
+
     {
         std::lock_guard<std::mutex> lock(instances_mutex_);
 
@@ -969,7 +1083,14 @@ bool VPNInstanceManager::addInstance(const std::string& name, const std::string&
         instance.name = name;
         instance.protocol = vpn_type.empty() ? "OpenVPN" : vpn_type;
         instance.type = parseVPNType(instance.protocol);
-        instance.config_content = config_content;
+        
+        // Use modified config (without forward all rules) for full-tunnel connections
+        if (is_full_tunnel) {
+            instance.config_content = modified_config_content;
+        } else {
+            instance.config_content = original_config_for_cache;
+        }
+        
         instance.enabled = auto_start;
         instance.auto_connect = true;
         instance.status = "Ready";
@@ -991,7 +1112,8 @@ bool VPNInstanceManager::addInstance(const std::string& name, const std::string&
             std::cout << json({
                 {"type", "verbose"},
                 {"message", "VPNInstanceManager::addInstance - Instance added to map"},
-                {"instance_name", name}
+                {"instance_name", name},
+                {"config_modified", is_full_tunnel}
             }).dump() << std::endl;
         }
     } // Release mutex here before saving and launching thread
@@ -1001,6 +1123,21 @@ bool VPNInstanceManager::addInstance(const std::string& name, const std::string&
     if (!config_file_path_.empty()) {
         if (!saveConfiguration(config_file_path_)) {
             std::cerr << "Failed to save configuration" << std::endl;
+        }
+    }
+
+    // Save original config to cache if full-tunnel was detected (always save for future switching)
+    if (is_full_tunnel && !cache_file_path_.empty()) {
+        if (!saveOriginalConfigToCache(cache_file_path_, name, original_config_for_cache)) {
+            std::cerr << "Failed to save original configuration to cache" << std::endl;
+        } else if (verbose_) {
+            std::cout << json({
+                {"type", "verbose"},
+                {"message", "VPNInstanceManager::addInstance - Original config saved to cache for future switching"},
+                {"instance_name", name},
+                {"current_config_type", "modified (full-tunnel detected)"},
+                {"cached_original_config", true}
+            }).dump() << std::endl;
         }
     }
 
@@ -1035,7 +1172,8 @@ bool VPNInstanceManager::addInstance(const std::string& name, const std::string&
         std::cout << json({
             {"type", "verbose"},
             {"message", "VPNInstanceManager::addInstance - Completed"},
-            {"instance_name", name}
+            {"instance_name", name},
+            {"full_tunnel_detected", is_full_tunnel}
         }).dump() << std::endl;
     }
 
@@ -1338,58 +1476,6 @@ bool VPNInstanceManager::addInstance(const std::string& name, const std::string&
         std::cerr << "Unknown exception during deleteInstance for " << instance_name << std::endl;
         return false;
     }
-}
-
-bool VPNInstanceManager::updateInstance(const std::string& instance_name,
-                                         const std::string& config_content) {
-    std::lock_guard<std::mutex> lock(instances_mutex_);
-
-    auto it = instances_.find(instance_name);
-    if (it == instances_.end()) {
-        std::cerr << "Instance " << instance_name << " not found" << std::endl;
-        return false;
-    }
-
-    bool was_enabled = it->second.enabled;
-
-    // Stop the instance thread if running
-    it->second.should_stop = true;
-    try {
-        if (it->second.thread_id > 0) {
-            thread_manager_->stopThreadByAttachment(instance_name);
-        }
-    } catch (const std::exception& e) {
-        std::cerr << "Error stopping instance thread: " << e.what() << std::endl;
-    }
-
-    // Update configuration
-    it->second.config_content = config_content;
-    it->second.last_used = std::to_string(time(nullptr));
-    it->second.should_stop = false;
-    it->second.thread_id = 0;
-
-    // Save updated configuration to disk
-    if (!config_file_path_.empty()) {
-        if (!saveConfiguration(config_file_path_)) {
-            std::cerr << "Failed to save configuration" << std::endl;
-        }
-    }
-
-    if (!cache_file_path_.empty()) {
-        if (!saveCachedData(cache_file_path_)) {
-            std::cerr << "Failed to save cached data" << std::endl;
-        }
-    }
-
-    // Restart the instance if it was previously enabled
-    if (was_enabled) {
-        launchInstanceThread(it->second);
-        emitEvent(instance_name, "updated", "Instance updated and restarted");
-    } else {
-        emitEvent(instance_name, "updated", "Instance configuration updated");
-    }
-
-    return true;
 }
 
 } // namespace vpn_manager

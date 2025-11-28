@@ -1,5 +1,6 @@
 #include "vpn_instance_manager.hpp"
 #include "internal/vpn_manager_utils.hpp"
+#include "../ur-vpn-parser/vpn_parser.hpp"
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -50,6 +51,38 @@ bool VPNInstanceManager::loadConfiguration(const std::string& json_config) {
 
                 if (profile.contains("config_file") && profile["config_file"].contains("content")) {
                     instance.config_content = profile["config_file"]["content"].get<std::string>();
+                    
+                    // Validate config format using VPNParser during startup
+                    if (!instance.config_content.empty()) {
+                        try {
+                            vpn_parser::VPNParser parser;
+                            vpn_parser::ParseResult parse_result = parser.parse(instance.config_content);
+                            
+                            if (!parse_result.success) {
+                                std::cerr << "Config validation failed for instance '" << instance.name 
+                                         << "': " << parse_result.error_message << std::endl;
+                                std::cerr << "Skipping this instance due to invalid config format" << std::endl;
+                                continue;
+                            }
+                            
+                            // Use parser-detected protocol instead of stored protocol if they differ
+                            if (!parse_result.protocol_detected.empty() && 
+                                parse_result.protocol_detected != instance.protocol) {
+                                std::cout << "Protocol mismatch detected for instance '" << instance.name 
+                                         << "': stored='" << instance.protocol 
+                                         << "', detected='" << parse_result.protocol_detected << "'"
+                                         << " - using detected protocol" << std::endl;
+                                instance.protocol = parse_result.protocol_detected;
+                                instance.type = VPNManagerUtils::parseVPNType(instance.protocol);
+                            }
+                            
+                        } catch (const std::exception& e) {
+                            std::cerr << "Parser exception for instance '" << instance.name 
+                                     << "': " << e.what() << std::endl;
+                            std::cerr << "Skipping this instance due to parser error" << std::endl;
+                            continue;
+                        }
+                    }
                 }
 
                 instance.enabled = profile.value("auto_connect", false);
@@ -79,7 +112,7 @@ bool VPNInstanceManager::loadConfiguration(const std::string& json_config) {
     }
 }
 
-bool VPNInstanceManager::loadConfigurationFromFile(const std::string& config_file, const std::string& cache_file) {
+bool VPNInstanceManager::loadConfigurationFromFile(const std::string& config_file, const std::string& cache_file, const std::string& cleanup_config_file) {
     try {
         if (verbose_) {
             json verbose_log;
@@ -87,11 +120,13 @@ bool VPNInstanceManager::loadConfigurationFromFile(const std::string& config_fil
             verbose_log["message"] = "VPNInstanceManager::loadConfigurationFromFile - starting";
             verbose_log["config_file"] = config_file;
             verbose_log["cache_file"] = cache_file;
+            verbose_log["cleanup_config_file"] = cleanup_config_file;
             std::cout << verbose_log.dump() << std::endl;
         }
 
         config_file_path_ = config_file;
         cache_file_path_ = cache_file;
+        cleanup_config_path_ = cleanup_config_file;
 
         std::ifstream file(config_file);
         if (!file.good()) {
@@ -180,6 +215,125 @@ bool VPNInstanceManager::loadConfigurationFromFile(const std::string& config_fil
     }
 }
 
+void VPNInstanceManager::initializeCleanupSystem() {
+    // Initialize CleanupCronJob now that config paths are set
+    if (!cleanup_cron_job_) {
+        cleanup_cron_job_ = std::make_unique<CleanupCronJob>(this, cleanup_tracker_.get(), 
+                                                            config_file_path_, routing_rules_file_path_,
+                                                            cleanup_config_path_);
+        cleanup_cron_job_->start();
+        
+        if (verbose_) {
+            json verbose_log;
+            verbose_log["type"] = "verbose";
+            verbose_log["message"] = "VPNInstanceManager::initializeCleanupSystem - cleanup cron job initialized";
+            verbose_log["cleanup_config_path"] = cleanup_config_path_;
+            std::cout << verbose_log.dump() << std::endl;
+        }
+    }
+}
+
+json VPNInstanceManager::purgeCleanup(bool confirm) {
+    json result;
+    result["type"] = "purge-cleanup";
+    
+    if (!confirm) {
+        result["success"] = false;
+        result["error"] = "Confirmation required. Set 'confirm': true to proceed with destructive purge cleanup.";
+        return result;
+    }
+    
+    json cleanup_log;
+    cleanup_log["type"] = "purge-cleanup";
+    cleanup_log["message"] = "Starting comprehensive purge cleanup - this will remove all VPN data";
+    std::cout << cleanup_log.dump() << std::endl;
+    
+    try {
+        // Step 1: Stop cleanup cron job temporarily to avoid interference
+        bool cron_job_stopped = false;
+        if (cleanup_cron_job_) {
+            cleanup_cron_job_->stop();
+            cron_job_stopped = true;
+        }
+        
+        // Step 2: Stop all running VPN instances
+        bool stop_success = stopAll();
+        result["instances_stopped"] = stop_success;
+        
+        // Step 3: Clear all instances from memory
+        {
+            std::lock_guard<std::mutex> lock(instances_mutex_);
+            int instance_count = instances_.size();
+            instances_.clear();
+            result["instances_cleared"] = instance_count;
+        }
+        
+        // Step 4: Clear all routing rules
+        {
+            std::lock_guard<std::mutex> lock(routing_mutex_);
+            int route_count = routing_rules_.size();
+            routing_rules_.clear();
+            result["routing_rules_cleared"] = route_count;
+        }
+        
+        // Step 5: Save empty configuration and cache files
+        bool config_saved = saveConfiguration(config_file_path_);
+        bool cache_saved = saveCachedData(cache_file_path_);
+        result["config_saved"] = config_saved;
+        result["cache_saved"] = cache_saved;
+        
+        // Step 6: Clear custom routing rules file if it exists
+        bool routing_rules_cleared = true;
+        if (!routing_rules_file_path_.empty() && std::filesystem::exists(routing_rules_file_path_)) {
+            try {
+                std::ofstream file(routing_rules_file_path_);
+                file << "{}";  // Write empty JSON object
+                routing_rules_cleared = file.good();
+            } catch (const std::exception& e) {
+                routing_rules_cleared = false;
+                std::cerr << "Failed to clear routing rules file: " << e.what() << std::endl;
+            }
+        }
+        result["routing_rules_file_cleared"] = routing_rules_cleared;
+        
+        // Step 7: Perform aggressive interface cleanup using VPNCleanup
+        bool interface_cleanup = VPNCleanup::cleanupAll(true);  // verbose = true
+        result["interface_cleanup"] = interface_cleanup;
+        
+        // Step 8: Restart cleanup cron job if it was running
+        if (cron_job_stopped && cleanup_cron_job_) {
+            cleanup_cron_job_->start();
+        }
+        
+        // Determine overall success
+        bool overall_success = stop_success && config_saved && cache_saved && 
+                              routing_rules_cleared && interface_cleanup;
+        
+        result["success"] = overall_success;
+        result["message"] = overall_success ? "Purge cleanup completed successfully" : "Purge cleanup completed with some errors";
+        
+        json complete_log;
+        complete_log["type"] = "purge-cleanup";
+        complete_log["message"] = result["message"];
+        complete_log["success"] = overall_success;
+        std::cout << complete_log.dump() << std::endl;
+        
+        return result;
+        
+    } catch (const std::exception& e) {
+        result["success"] = false;
+        result["error"] = std::string("Purge cleanup failed: ") + e.what();
+        
+        json error_log;
+        error_log["type"] = "purge-cleanup";
+        error_log["message"] = "Purge cleanup failed with exception";
+        error_log["error"] = e.what();
+        std::cerr << error_log.dump() << std::endl;
+        
+        return result;
+    }
+}
+
 bool VPNInstanceManager::saveCachedData(const std::string& cache_file) {
     try {
         json cached_data;
@@ -210,6 +364,116 @@ bool VPNInstanceManager::saveCachedData(const std::string& cache_file) {
     } catch (const std::exception& e) {
         std::cerr << "Failed to save cached data: " << e.what() << std::endl;
         return false;
+    }
+}
+
+bool VPNInstanceManager::saveOriginalConfigToCache(const std::string& cache_file, const std::string& instance_name, const std::string& original_config) {
+    try {
+        json cached_data;
+        
+        // Try to load existing cache data
+        std::ifstream file(cache_file);
+        if (file.good()) {
+            try {
+                file >> cached_data;
+            } catch (...) {
+                // If file is corrupted or empty, start fresh
+                cached_data = json::object();
+            }
+        }
+        file.close();
+        
+        // Initialize original_configs array if it doesn't exist
+        if (!cached_data.contains("original_configs")) {
+            cached_data["original_configs"] = json::object();
+        }
+        
+        // Save the original config for this instance
+        cached_data["original_configs"][instance_name] = original_config;
+        cached_data["last_saved"] = time(nullptr);
+        
+        // Write back to file
+        std::ofstream out_file(cache_file);
+        out_file << cached_data.dump(2);
+        out_file.close();
+        
+        if (verbose_) {
+            std::cout << json({
+                {"type", "verbose"},
+                {"message", "VPNInstanceManager::saveOriginalConfigToCache - Original config cached"},
+                {"instance_name", instance_name}
+            }).dump() << std::endl;
+        }
+        
+        return true;
+    } catch (const std::exception& e) {
+        std::cerr << "Failed to save original config to cache: " << e.what() << std::endl;
+        return false;
+    }
+}
+
+std::string VPNInstanceManager::loadOriginalConfigFromCache(const std::string& cache_file, const std::string& instance_name) {
+    try {
+        json cached_data;
+        
+        // Load existing cache data
+        std::ifstream file(cache_file);
+        if (!file.good()) {
+            if (verbose_) {
+                std::cout << json({
+                    {"type", "verbose"},
+                    {"message", "VPNInstanceManager::loadOriginalConfigFromCache - Cache file not found"},
+                    {"cache_file", cache_file},
+                    {"instance_name", instance_name}
+                }).dump() << std::endl;
+            }
+            return "";
+        }
+        
+        try {
+            file >> cached_data;
+        } catch (const std::exception& e) {
+            if (verbose_) {
+                std::cout << json({
+                    {"type", "verbose"},
+                    {"message", "VPNInstanceManager::loadOriginalConfigFromCache - Failed to parse cache file"},
+                    {"cache_file", cache_file},
+                    {"instance_name", instance_name},
+                    {"error", e.what()}
+                }).dump() << std::endl;
+            }
+            return "";
+        }
+        file.close();
+        
+        // Check if original_configs exists and contains the instance
+        if (!cached_data.contains("original_configs") || !cached_data["original_configs"].contains(instance_name)) {
+            if (verbose_) {
+                std::cout << json({
+                    {"type", "verbose"},
+                    {"message", "VPNInstanceManager::loadOriginalConfigFromCache - No original config found for instance"},
+                    {"cache_file", cache_file},
+                    {"instance_name", instance_name}
+                }).dump() << std::endl;
+            }
+            return "";
+        }
+        
+        std::string original_config = cached_data["original_configs"][instance_name].get<std::string>();
+        
+        if (verbose_) {
+            std::cout << json({
+                {"type", "verbose"},
+                {"message", "VPNInstanceManager::loadOriginalConfigFromCache - Original config loaded successfully"},
+                {"instance_name", instance_name},
+                {"config_length", original_config.length()}
+            }).dump() << std::endl;
+        }
+        
+        return original_config;
+    } catch (const std::exception& e) {
+        std::cerr << "Failed to load original config from cache: " << e.what() << std::endl;
+        return "";
     }
 }
 

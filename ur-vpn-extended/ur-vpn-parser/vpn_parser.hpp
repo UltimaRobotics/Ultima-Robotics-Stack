@@ -59,6 +59,12 @@ struct ProfileData {
     std::string peer_public_key;
     std::string preshared_key;
     std::string persistent_keepalive;
+    
+    // Full-tunnel detection fields
+    bool is_full_tunnel = false;
+    bool has_ipv4_full_tunnel = false;
+    bool has_ipv6_full_tunnel = false;
+    std::string full_tunnel_type; // "wireguard_allowed_ips", "openvpn_redirect_gateway", etc.
 };
 
 struct ParseResult {
@@ -78,12 +84,22 @@ public:
     ParseResult parse(const std::string& config_content);
     json toJson(const ParseResult& result);
     
+    // Full-tunnel detection methods
+    bool detectFullTunnel(const std::string& config_content, ProfileData& profile);
+    std::string generateSplitTunnelConfig(const std::string& original_config, const ProfileData& profile);
+    
 private:
     ProtocolType detectProtocol(const std::string& content);
     
     bool parseOpenVPN(const std::string& content, ProfileData& profile);
     bool parseIKEv2(const std::string& content, ProfileData& profile);
     bool parseWireGuard(const std::string& content, ProfileData& profile);
+    
+    // Full-tunnel detection private methods
+    bool detectWireGuardFullTunnel(const std::string& config_content, ProfileData& profile);
+    bool detectOpenVPNFullTunnel(const std::string& config_content, ProfileData& profile);
+    std::string generateWireGuardSplitTunnelConfig(const std::string& original_config);
+    std::string generateOpenVPNSplitTunnelConfig(const std::string& original_config);
     
     std::string trim(const std::string& str);
     std::vector<std::string> split(const std::string& str, char delimiter);

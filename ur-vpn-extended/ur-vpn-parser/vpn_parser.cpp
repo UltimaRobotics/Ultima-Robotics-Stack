@@ -373,4 +373,229 @@ json VPNParser::toJson(const ParseResult& result) {
     return j;
 }
 
+bool VPNParser::detectFullTunnel(const std::string& config_content, ProfileData& profile) {
+    ProtocolType protocol = detectProtocol(config_content);
+    
+    switch (protocol) {
+        case ProtocolType::WIREGUARD:
+            return detectWireGuardFullTunnel(config_content, profile);
+        case ProtocolType::OPENVPN:
+            return detectOpenVPNFullTunnel(config_content, profile);
+        default:
+            return false;
+    }
+}
+
+bool VPNParser::detectWireGuardFullTunnel(const std::string& config_content, ProfileData& profile) {
+    std::istringstream stream(config_content);
+    std::string line;
+    std::string current_section;
+    
+    while (std::getline(stream, line)) {
+        line = trim(line);
+        if (line.empty() || line[0] == '#') continue;
+        
+        if (line[0] == '[' && line[line.length()-1] == ']') {
+            current_section = line.substr(1, line.length()-2);
+            std::transform(current_section.begin(), current_section.end(), 
+                         current_section.begin(), ::tolower);
+            continue;
+        }
+        
+        if (current_section == "peer" && line.find('=') != std::string::npos) {
+            auto kv = parseKeyValue(line);
+            for (const auto& pair : kv) {
+                std::string key_lower = pair.first;
+                std::transform(key_lower.begin(), key_lower.end(), 
+                             key_lower.begin(), ::tolower);
+                
+                if (key_lower == "allowedips") {
+                    std::string allowed_ips = pair.second;
+                    std::transform(allowed_ips.begin(), allowed_ips.end(), 
+                                 allowed_ips.begin(), ::tolower);
+                    
+                    std::vector<std::string> ip_list = split(allowed_ips, ',');
+                    
+                    for (const std::string& ip : ip_list) {
+                        std::string trimmed_ip = trim(ip);
+                        
+                        if (trimmed_ip == "0.0.0.0/0") {
+                            profile.has_ipv4_full_tunnel = true;
+                            profile.is_full_tunnel = true;
+                            profile.full_tunnel_type = "wireguard_allowed_ips";
+                        }
+                        if (trimmed_ip == "::/0") {
+                            profile.has_ipv6_full_tunnel = true;
+                            profile.is_full_tunnel = true;
+                            profile.full_tunnel_type = "wireguard_allowed_ips";
+                        }
+                    }
+                    
+                    if (profile.is_full_tunnel) {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    
+    return false;
+}
+
+bool VPNParser::detectOpenVPNFullTunnel(const std::string& config_content, ProfileData& profile) {
+    std::istringstream stream(config_content);
+    std::string line;
+    
+    while (std::getline(stream, line)) {
+        line = trim(line);
+        if (line.empty() || line[0] == '#' || line[0] == ';') continue;
+        
+        std::vector<std::string> parts = split(line, ' ');
+        if (parts.empty()) continue;
+        
+        std::string directive = parts[0];
+        std::transform(directive.begin(), directive.end(), directive.begin(), ::tolower);
+        
+        if (directive == "redirect-gateway") {
+            profile.is_full_tunnel = true;
+            profile.full_tunnel_type = "openvpn_redirect_gateway";
+            
+            if (parts.size() >= 2) {
+                std::string param = parts[1];
+                std::transform(param.begin(), param.end(), param.begin(), ::tolower);
+                if (param == "def1") {
+                    profile.full_tunnel_type = "openvpn_redirect_gateway_def1";
+                }
+            }
+            
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+std::string VPNParser::generateSplitTunnelConfig(const std::string& original_config, const ProfileData& profile) {
+    if (!profile.is_full_tunnel) {
+        return original_config;
+    }
+    
+    if (profile.protocol == "WireGuard") {
+        return generateWireGuardSplitTunnelConfig(original_config);
+    } else if (profile.protocol == "OpenVPN") {
+        return generateOpenVPNSplitTunnelConfig(original_config);
+    }
+    
+    return original_config;
+}
+
+std::string VPNParser::generateWireGuardSplitTunnelConfig(const std::string& original_config) {
+    std::istringstream stream(original_config);
+    std::string line;
+    std::string result;
+    std::string current_section;
+    
+    while (std::getline(stream, line)) {
+        std::string trimmed_line = trim(line);
+        
+        if (trimmed_line.empty() || trimmed_line[0] == '#') {
+            result += line + "\n";
+            continue;
+        }
+        
+        if (trimmed_line[0] == '[' && trimmed_line[trimmed_line.length()-1] == ']') {
+            current_section = trimmed_line.substr(1, trimmed_line.length()-2);
+            std::transform(current_section.begin(), current_section.end(), 
+                         current_section.begin(), ::tolower);
+            result += line + "\n";
+            continue;
+        }
+        
+        if (current_section == "peer" && trimmed_line.find('=') != std::string::npos) {
+            auto kv = parseKeyValue(trimmed_line);
+            bool processed = false;
+            for (const auto& pair : kv) {
+                std::string key_lower = pair.first;
+                std::transform(key_lower.begin(), key_lower.end(), 
+                             key_lower.begin(), ::tolower);
+                
+                if (key_lower == "allowedips") {
+                    std::string allowed_ips = pair.second;
+                    std::vector<std::string> ip_list = split(allowed_ips, ',');
+                    std::vector<std::string> filtered_ips;
+                    
+                    for (const std::string& ip : ip_list) {
+                        std::string trimmed_ip = trim(ip);
+                        if (trimmed_ip != "0.0.0.0/0" && trimmed_ip != "::/0") {
+                            filtered_ips.push_back(trimmed_ip);
+                        }
+                    }
+                    
+                    if (filtered_ips.empty()) {
+                        result += "# AllowedIPs modified by auto-rules: original was full-tunnel\n";
+                        result += "AllowedIPs = 192.168.0.0/16, 10.0.0.0/8, 172.16.0.0/12\n";
+                    } else {
+                        result += "# AllowedIPs modified by auto-rules: removed full-tunnel routes\n";
+                        result += "AllowedIPs = ";
+                        for (size_t i = 0; i < filtered_ips.size(); ++i) {
+                            result += filtered_ips[i];
+                            if (i < filtered_ips.size() - 1) {
+                                result += ", ";
+                            }
+                        }
+                        result += "\n";
+                    }
+                    processed = true;
+                    break;
+                }
+            }
+            if (!processed) {
+                result += line + "\n";
+            }
+        } else {
+            result += line + "\n";
+        }
+    }
+    
+    return result;
+}
+
+std::string VPNParser::generateOpenVPNSplitTunnelConfig(const std::string& original_config) {
+    std::istringstream stream(original_config);
+    std::string line;
+    std::string result;
+    
+    while (std::getline(stream, line)) {
+        std::string trimmed_line = trim(line);
+        
+        if (trimmed_line.empty() || trimmed_line[0] == '#' || trimmed_line[0] == ';') {
+            result += line + "\n";
+            continue;
+        }
+        
+        std::vector<std::string> parts = split(trimmed_line, ' ');
+        if (parts.empty()) {
+            result += line + "\n";
+            continue;
+        }
+        
+        std::string directive = parts[0];
+        std::transform(directive.begin(), directive.end(), directive.begin(), ::tolower);
+        
+        if (directive == "redirect-gateway") {
+            result += "# redirect-gateway disabled by auto-rules to prevent full-tunnel\n";
+            result += "# " + line + "\n";
+            result += "pull-filter ignore redirect-gateway\n";
+        } else {
+            result += line + "\n";
+        }
+    }
+    
+    if (result.find("pull-filter ignore redirect-gateway") == std::string::npos) {
+        result += "\n# Added by auto-rules to prevent full-tunnel\npull-filter ignore redirect-gateway\n";
+    }
+    
+    return result;
+}
+
 } // namespace vpn_parser
