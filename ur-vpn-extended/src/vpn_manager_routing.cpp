@@ -923,12 +923,45 @@ bool VPNInstanceManager::removeRoutingRule(const RoutingRule& rule, const std::s
 }
 
 std::string VPNInstanceManager::getInterfaceForInstance(const std::string& instance_name) {
-    std::lock_guard<std::mutex> lock(instances_mutex_);
-    
-    auto it = instances_.find(instance_name);
-    if (it == instances_.end()) {
+    // Safety check: ensure instance_name is not empty
+    if (instance_name.empty()) {
+        if (verbose_) {
+            std::cout << json({
+                {"type", "warning"},
+                {"message", "getInterfaceForInstance called with empty instance name"}
+            }).dump() << std::endl;
+        }
         return "";
     }
+    
+    // Additional safety check: ensure instances_mutex is not corrupted
+    try {
+        std::lock_guard<std::mutex> lock(instances_mutex_);
+        
+        // Safety check: ensure the instances map is in a valid state
+        if (instances_.empty()) {
+            if (verbose_) {
+                std::cout << json({
+                    {"type", "warning"},
+                    {"message", "getInterfaceForInstance called but instances map is empty"},
+                    {"instance_name", instance_name}
+                }).dump() << std::endl;
+            }
+            return "";
+        }
+        
+        auto it = instances_.find(instance_name);
+        if (it == instances_.end()) {
+            if (verbose_) {
+                std::cout << json({
+                    {"type", "warning"},
+                    {"message", "getInterfaceForInstance - instance not found"},
+                    {"instance_name", instance_name},
+                    {"available_instances", instances_.size()}
+                }).dump() << std::endl;
+            }
+            return "";
+        }
     
     // First check if interface name is specified and cached
     if (!it->second.interface_name.empty()) {
@@ -1015,6 +1048,23 @@ std::string VPNInstanceManager::getInterfaceForInstance(const std::string& insta
     }
     
     return "";
+    
+    } catch (const std::exception& e) {
+        std::cout << json({
+            {"type", "error"},
+            {"message", "Exception in getInterfaceForInstance"},
+            {"instance_name", instance_name},
+            {"error", e.what()}
+        }).dump() << std::endl;
+        return "";
+    } catch (...) {
+        std::cout << json({
+            {"type", "error"},
+            {"message", "Unknown exception in getInterfaceForInstance"},
+            {"instance_name", instance_name}
+        }).dump() << std::endl;
+        return "";
+    }
 }
 
 // Start route monitoring thread

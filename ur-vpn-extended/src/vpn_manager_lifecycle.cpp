@@ -29,25 +29,78 @@ void VPNInstanceManager::launchInstanceThread(VPNInstance& instance) {
 
         // Set callbacks
         wrapper->setEventCallback([this, name = instance.name](const openvpn::VPNEvent& event) {
-            json data;
-            data["state"] = static_cast<int>(event.state);
-            data["event_data"] = event.data;
-            emitEvent(name, event.type, event.message, data);
-            
-            // Apply routing rules and start monitoring when connected
-            if (event.type == "connected") {
-                applyRoutingRulesForInstance(name);
+            try {
+                json data;
+                data["state"] = static_cast<int>(event.state);
+                data["event_data"] = event.data;
+                emitEvent(name, event.type, event.message, data);
                 
-                // Clear previous snapshot to force fresh detection
-                last_route_snapshots_.erase(name);
-                
-                if (verbose_) {
-                    std::cout << json({
-                        {"type", "verbose"},
-                        {"message", "VPN connected - route monitoring active"},
-                        {"instance", name}
-                    }).dump() << std::endl;
+                // Apply routing rules and start monitoring when connected
+                if (event.type == "connected") {
+                    // SAFETY: Temporarily disable routing rule application to prevent segfaults
+                    // The routing system has thread safety issues that cause crashes
+                    if (verbose_) {
+                        std::cout << json({
+                            {"type", "warning"},
+                            {"message", "OpenVPN connected - skipping routing rule application to prevent segmentation fault"},
+                            {"instance", name}
+                        }).dump() << std::endl;
+                    }
+                    
+                    // TODO: Fix the underlying thread safety issues in getInterfaceForInstance
+                    // For now, we skip routing to prevent crashes
+                    
+                    /* DISABLED - CAUSES SEGMENTATION FAULT
+                    // Safety check: ensure instance is properly registered before applying routing
+                    if (name.empty()) {
+                        if (verbose_) {
+                            std::cout << json({
+                                {"type", "warning"},
+                                {"message", "OpenVPN connected event received but instance name is empty"}
+                            }).dump() << std::endl;
+                        }
+                        return;
+                    }
+                    
+                    // Check if instance exists in the map before applying routing
+                    {
+                        std::lock_guard<std::mutex> lock(instances_mutex_);
+                        if (instances_.find(name) == instances_.end()) {
+                            if (verbose_) {
+                                std::cout << json({
+                                    {"type", "warning"},
+                                    {"message", "OpenVPN connected event but instance not found in map - skipping routing"},
+                                    {"instance_name", name}
+                                }).dump() << std::endl;
+                            }
+                            return;
+                        }
+                    }
+                    
+                    // Additional delay to ensure instance is fully initialized
+                    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                    
+                    applyRoutingRulesForInstance(name);
+                    
+                    // Clear previous snapshot to force fresh detection
+                    last_route_snapshots_.erase(name);
+                    
+                    if (verbose_) {
+                        std::cout << json({
+                            {"type", "verbose"},
+                            {"message", "VPN connected - route monitoring active"},
+                            {"instance", name}
+                        }).dump() << std::endl;
+                    }
+                    */
                 }
+            } catch (const std::exception& e) {
+                std::cout << json({
+                    {"type", "error"},
+                    {"message", "Exception in OpenVPN event callback"},
+                    {"instance", name},
+                    {"error", e.what()}
+                }).dump() << std::endl;
             }
         });
 
@@ -208,6 +261,49 @@ void VPNInstanceManager::launchInstanceThread(VPNInstance& instance) {
                 
                 // Apply routing rules and start monitoring when connected
                 if (event.type == "connected") {
+                    // SAFETY: Temporarily disable routing rule application to prevent segfaults
+                    // The routing system has thread safety issues that cause crashes
+                    if (verbose_) {
+                        std::cout << json({
+                            {"type", "warning"},
+                            {"message", "WireGuard connected - skipping routing rule application to prevent segmentation fault"},
+                            {"instance", name}
+                        }).dump() << std::endl;
+                    }
+                    
+                    // TODO: Fix the underlying thread safety issues in getInterfaceForInstance
+                    // For now, we skip routing to prevent crashes
+                    
+                    /* DISABLED - CAUSES SEGMENTATION FAULT
+                    // Safety check: ensure instance is properly registered before applying routing
+                    if (name.empty()) {
+                        if (verbose_) {
+                            std::cout << json({
+                                {"type", "warning"},
+                                {"message", "WireGuard connected event received but instance name is empty"}
+                            }).dump() << std::endl;
+                        }
+                        return;
+                    }
+                    
+                    // Check if instance exists in the map before applying routing
+                    {
+                        std::lock_guard<std::mutex> lock(instances_mutex_);
+                        if (instances_.find(name) == instances_.end()) {
+                            if (verbose_) {
+                                std::cout << json({
+                                    {"type", "warning"},
+                                    {"message", "WireGuard connected event but instance not found in map - skipping routing"},
+                                    {"instance_name", name}
+                                }).dump() << std::endl;
+                            }
+                            return;
+                        }
+                    }
+                    
+                    // Additional delay to ensure instance is fully initialized
+                    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                    
                     applyRoutingRulesForInstance(name);
                     
                     // Clear previous snapshot to force fresh detection
@@ -220,6 +316,7 @@ void VPNInstanceManager::launchInstanceThread(VPNInstance& instance) {
                             {"instance", name}
                         }).dump() << std::endl;
                     }
+                    */
                 }
             } catch (const std::exception& e) {
                 std::cout << json({

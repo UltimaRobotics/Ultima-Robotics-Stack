@@ -4,6 +4,8 @@
 #include <string>
 #include <chrono>
 #include <memory>
+#include <map>
+#include <mutex>
 
 // Forward declarations
 class VpnRpcClient;
@@ -11,7 +13,11 @@ namespace ThreadMgr { class ThreadManager; } // Forward declare ThreadManager to
 class VPNInstanceManager;
 
 // Include VPN types for enum access
+#include "vpn_rpc_client.hpp"
 #include "vpn_instance_manager.hpp"
+#include "openvpn_wrapper.hpp"
+#include "wireguard_wrapper.hpp"
+#include "ThreadManager.hpp"
 
 namespace vpn_manager {
 
@@ -217,6 +223,10 @@ private:
     // Sequence numbering for published data
     std::atomic<uint64_t> sequenceCounter_{0};
     
+    // Cached connection data for event-driven updates
+    std::map<std::string, VpnLiveData> cachedLiveData_;
+    std::mutex cachedDataMutex_;
+    
     /**
      * @brief Main collection thread function
      */
@@ -236,6 +246,36 @@ private:
      * @brief Collect OpenVPN instance data
      */
     VpnLiveData collectOpenVpnData(const class VPNInstance& instance);
+    
+    /**
+     * @brief Register event callbacks for OpenVPN instances
+     */
+    void registerOpenVPNEventCallbacks();
+    
+    /**
+     * @brief Handle OpenVPN event for live data updates
+     */
+    void onOpenVPNEvent(const std::string& instance_name, const openvpn::VPNEvent& event);
+    
+    /**
+     * @brief Update cached OpenVPN connection data from events
+     */
+    void updateOpenVPNConnectionData(const std::string& instance_name, const openvpn::VPNEvent& event);
+    
+    /**
+     * @brief Register event callbacks for WireGuard instances
+     */
+    void registerWireGuardEventCallbacks();
+    
+    /**
+     * @brief Handle WireGuard event for live data updates
+     */
+    void onWireGuardEvent(const std::string& instance_name, const wireguard::VPNEvent& event);
+    
+    /**
+     * @brief Update cached WireGuard connection data from events
+     */
+    void updateWireGuardConnectionData(const std::string& instance_name, const wireguard::VPNEvent& event);
     
     /**
      * @brief Publish live data to MQTT topic
