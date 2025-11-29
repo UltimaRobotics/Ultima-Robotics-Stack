@@ -332,197 +332,152 @@ std::vector<VpnLiveData> VpnLiveDataCollector::collectLiveData() {
         std::vector<VpnLiveData> data;
         
     try {
-        if (verbose_) {
-            std::cout << json({
-                {"type", "verbose"},
-                {"message", "collectLiveData - starting"}
-            }).dump() << std::endl;
-        }
-        
-        // Re-register event callbacks for any new instances
-        // Add safety check to prevent crashes during registration
-        std::cout << json({
-            {"type", "debug"},
-            {"message", "About to register event callbacks"}
-        }).dump() << std::endl;
-        
-        try {
-            // Only register events if system is stable (no ongoing connection issues)
-            static int failed_registrations = 0;
-            const int max_failures = 3;
-            
-            if (failed_registrations < max_failures) {
-                std::cout << json({
-                    {"type", "debug"},
-                    {"message", "Registering OpenVPN and WireGuard callbacks"}
-                }).dump() << std::endl;
-                
-                registerOpenVPNEventCallbacks();
-                registerWireGuardEventCallbacks();
-                failed_registrations = 0; // Reset on success
-                
-                std::cout << json({
-                    {"type", "debug"},
-                    {"message", "Event callbacks registered successfully"}
-                }).dump() << std::endl;
-            } else {
-                if (verbose_) {
-                    std::cout << json({
-                        {"type", "warning"},
-                        {"message", "Skipping event registration due to previous failures"},
-                        {"failed_count", failed_registrations}
-                    }).dump() << std::endl;
-                }
-            }
-        } catch (const std::exception& e) {
-            static int registration_failures = 0;
-            registration_failures++;
-            
-            std::cout << json({
-                {"type", "warning"},
-                {"message", "Failed to register event callbacks - continuing with cached data"},
-                {"error", e.what()},
-                {"failure_count", registration_failures}
-            }).dump() << std::endl;
-            
-            // Don't try to register events again if we keep failing
-            if (registration_failures > 3) {
-                std::cout << json({
-                    {"type", "warning"},
-                    {"message", "Too many registration failures - disabling event registration temporarily"}
-                }).dump() << std::endl;
-            }
-        }
-        
-        // Get instances from the instance manager using a public method
-        std::cout << json({
-            {"type", "debug"},
-            {"message", "About to get instances from manager"}
-        }).dump() << std::endl;
-        
-        std::vector<const VPNInstance*> instances;
-        try {
-            instances = instanceManager_.getAllInstancesForLiveData(); // Returns pointers
-            
-            std::cout << json({
-                {"type", "debug"},
-                {"message", "Got instances from manager"},
-                {"count", instances.size()}
-            }).dump() << std::endl;
-            
-        } catch (const std::exception& e) {
-            std::cout << json({
-                {"type", "error"},
-                {"message", "Failed to get instances from manager - using cached data only"},
-                {"error", e.what()}
-            }).dump() << std::endl;
-            
-            // Publish only cached data if available
-            std::vector<VpnLiveData> live_data;
-            std::lock_guard<std::mutex> lock(cachedDataMutex_);
-            for (const auto& [name, data] : cachedLiveData_) {
-                live_data.push_back(data);
-            }
-            
-            if (!live_data.empty()) {
-                publishLiveData(live_data);
-            }
-            return {};
-        }
+        // Get instances without holding locks for extended periods
+        auto instances = getInstanceManager().getAllInstancesForLiveData();
         
         if (verbose_) {
             std::cout << json({
                 {"type", "verbose"},
-                {"message", "Live data collection - got instances"},
+                {"message", "collectLiveData - got instances"},
                 {"instance_count", instances.size()}
             }).dump() << std::endl;
         }
         
-        if (verbose_) {
-            std::cout << json({
-                {"type", "verbose"},
-                {"message", "About to start processing instances loop"},
-                {"instances_size", instances.size()}
-            }).dump() << std::endl;
-        }
-        
+        // Process each instance
         for (const auto* instance : instances) {
-            std::cout << json({
-                {"type", "debug"},
-                {"message", "Processing instance"},
-                {"instance_name", instance ? instance->name : "null"}
-            }).dump() << std::endl;
-            
             if (!instance) {
-                continue; // Skip null instances
+                if (verbose_) {
+                    std::cout << json({
+                        {"type", "warning"},
+                        {"message", "Skipping null instance"}
+                    }).dump() << std::endl;
+                }
+                continue;
             }
             
-            try {
-                VpnLiveData instanceData;
-                
-                // Basic information
-                try {
-                    instanceData.instance_id = instance->id;
-                    instanceData.instance_name = instance->name;
-                    instanceData.vpn_type = (instance->type == VPNType::WIREGUARD) ? "wireguard" : "openvpn";
-                    instanceData.status = instance->status;
-                } catch (const std::exception& e) {
-                    if (verbose_) {
-                        std::cout << json({
-                            {"type", "error"},
-                            {"message", "Failed to set basic info for instance"},
-                            {"error", e.what()}
-                        }).dump() << std::endl;
-                    }
-                    continue;
-                }
+            VpnLiveData instanceData;
             
-            // Collect protocol-specific data using event-driven approach
+            // Set basic info with proper error handling
+            try {
+                instanceData.instance_id = !instance->id.empty() ? instance->id : "unknown";
+                instanceData.instance_name = !instance->name.empty() ? instance->name : "unknown";
+                instanceData.vpn_type = (instance->type == VPNType::OPENVPN) ? "openvpn" : 
+                                       (instance->type == VPNType::WIREGUARD) ? "wireguard" : "unknown";
+                instanceData.status = !instance->status.empty() ? instance->status : "unknown";
+                
+                if (verbose_) {
+                    std::cout << json({
+                        {"instance_name", instance->name},
+                        {"message", "Processing instance"},
+                        {"type", "debug"}
+                    }).dump() << std::endl;
+                }
+                
+            } catch (const std::exception& e) {
+                if (verbose_) {
+                    std::cout << json({
+                        {"type", "error"},
+                        {"message", "Failed to set basic info for instance"},
+                        {"error", e.what()}
+                    }).dump() << std::endl;
+                }
+                continue;
+            }
+            
+            // Collect protocol-specific data - prioritize real-time collection
             if (instance->type == VPNType::WIREGUARD) {
                 try {
-                    // Use cached event-driven data for WireGuard instances
-                    std::lock_guard<std::mutex> lock(cachedDataMutex_);
-                    auto it = cachedLiveData_.find(instance->name);
-                    if (it != cachedLiveData_.end()) {
-                        instanceData = it->second;
-                    } else {
-                        // Fallback to traditional collection if no cached data
-                        instanceData = collectWireGuardData(*instance);
-                        // Cache the fallback data
+                    // Always try real-time collection first
+                    instanceData = collectWireGuardData(*instance);
+                    
+                    // Cache the collected data for event-driven updates (with minimal lock time)
+                    {
+                        std::lock_guard<std::mutex> lock(cachedDataMutex_);
                         cachedLiveData_[instance->name] = instanceData;
                     }
+                    
                 } catch (const std::exception& e) {
                     if (verbose_) {
                         std::cout << json({
-                            {"type", "error"},
-                            {"message", "Failed to collect WireGuard data"},
+                            {"type", "warning"},
+                            {"message", "Real-time WireGuard collection failed, trying cached data"},
+                            {"instance", instance->name},
                             {"error", e.what()}
                         }).dump() << std::endl;
                     }
-                    continue;
+                    
+                    // Fallback to cached data if real-time collection fails
+                    try {
+                        std::lock_guard<std::mutex> lock(cachedDataMutex_);
+                        auto it = cachedLiveData_.find(instance->name);
+                        if (it != cachedLiveData_.end()) {
+                            instanceData = it->second;
+                        } else {
+                            // Create empty data if no cached data available
+                            instanceData = VpnLiveData();
+                            instanceData.instance_id = instance->id;
+                            instanceData.instance_name = instance->name;
+                            instanceData.vpn_type = "wireguard";
+                            instanceData.status = "Error";
+                        }
+                    } catch (const std::exception& cache_e) {
+                        if (verbose_) {
+                            std::cout << json({
+                                {"type", "error"},
+                                {"message", "Failed to get cached WireGuard data"},
+                                {"instance", instance->name},
+                                {"error", cache_e.what()}
+                            }).dump() << std::endl;
+                        }
+                        continue;
+                    }
                 }
             } else if (instance->type == VPNType::OPENVPN) {
                 try {
-                    // Use cached event-driven data for OpenVPN instances
-                    std::lock_guard<std::mutex> lock(cachedDataMutex_);
-                    auto it = cachedLiveData_.find(instance->name);
-                    if (it != cachedLiveData_.end()) {
-                        instanceData = it->second;
-                    } else {
-                        // Fallback to traditional collection if no cached data
-                        instanceData = collectOpenVpnData(*instance);
-                        // Cache the fallback data
+                    // Always try real-time collection first
+                    instanceData = collectOpenVpnData(*instance);
+                    
+                    // Cache the collected data for event-driven updates (with minimal lock time)
+                    {
+                        std::lock_guard<std::mutex> lock(cachedDataMutex_);
                         cachedLiveData_[instance->name] = instanceData;
                     }
+                    
                 } catch (const std::exception& e) {
                     if (verbose_) {
                         std::cout << json({
-                            {"type", "error"},
-                            {"message", "Failed to collect OpenVPN data"},
+                            {"type", "warning"},
+                            {"message", "Real-time OpenVPN collection failed, trying cached data"},
+                            {"instance", instance->name},
                             {"error", e.what()}
                         }).dump() << std::endl;
                     }
-                    continue;
+                    
+                    // Fallback to cached data if real-time collection fails
+                    try {
+                        std::lock_guard<std::mutex> lock(cachedDataMutex_);
+                        auto it = cachedLiveData_.find(instance->name);
+                        if (it != cachedLiveData_.end()) {
+                            instanceData = it->second;
+                        } else {
+                            // Create empty data if no cached data available
+                            instanceData = VpnLiveData();
+                            instanceData.instance_id = instance->id;
+                            instanceData.instance_name = instance->name;
+                            instanceData.vpn_type = "openvpn";
+                            instanceData.status = "Error";
+                        }
+                    } catch (const std::exception& cache_e) {
+                        if (verbose_) {
+                            std::cout << json({
+                                {"type", "error"},
+                                {"message", "Failed to get cached OpenVPN data"},
+                                {"instance", instance->name},
+                                {"error", cache_e.what()}
+                            }).dump() << std::endl;
+                        }
+                        continue;
+                    }
                 }
             }
             
@@ -530,24 +485,6 @@ std::vector<VpnLiveData> VpnLiveDataCollector::collectLiveData() {
             instanceData.updateTimestamp();
             
             data.push_back(instanceData);
-            } catch (const std::exception& e) {
-                if (verbose_) {
-                    std::cout << json({
-                        {"type", "error"},
-                        {"message", "Failed to process instance"},
-                        {"error", e.what()}
-                    }).dump() << std::endl;
-                }
-                continue;
-            }
-        }
-        
-        if (verbose_) {
-            std::cout << json({
-                {"type", "verbose"},
-                {"message", "Live data collection - completed"},
-                {"collected_instances", data.size()}
-            }).dump() << std::endl;
         }
         
     } catch (const std::exception& e) {
@@ -562,60 +499,197 @@ std::vector<VpnLiveData> VpnLiveDataCollector::collectLiveData() {
 }
 
 VpnLiveData VpnLiveDataCollector::collectWireGuardData(const VPNInstance& instance) {
+    if (verbose_) {
+        std::cout << json({
+            {"type", "verbose"},
+            {"message", "collectWireGuardData - starting"},
+            {"instance_name", instance.name},
+            {"instance_status", instance.status}
+        }).dump() << std::endl;
+    }
+    
     VpnLiveData data;
     
     // Basic info - with null checks
     data.instance_id = !instance.id.empty() ? instance.id : "unknown";
     data.instance_name = !instance.name.empty() ? instance.name : "unknown";
     data.vpn_type = "wireguard";
+    
+    // Start with instance status but will be overridden by wrapper state if available
     data.status = !instance.status.empty() ? instance.status : "unknown";
     
-    // Connection metrics
+    // Validate instance state before collecting data
+    if (instance.name.empty()) {
+        data.status = "Error";
+        if (verbose_) {
+            std::cout << json({
+                {"type", "warning"},
+                {"message", "WireGuard instance has empty name"},
+                {"instance_id", data.instance_id}
+            }).dump() << std::endl;
+        }
+        return data;
+    }
+    
+    // Connection metrics from instance data
     data.connection.session_duration_seconds = instance.connection_time.current_session_seconds;
     data.connection.session_duration_formatted = VpnLiveData::formatDuration(data.connection.session_duration_seconds);
     data.connection.total_connection_time = instance.connection_time.total_seconds;
-    data.connection.local_ip = ""; // Get from WireGuard wrapper if available
-    data.connection.remote_endpoint = ""; // Get from WireGuard wrapper if available
+    data.connection.local_ip = "";
+    data.connection.remote_endpoint = "";
+    data.connection.last_handshake_time = "";
+    data.connection.latency_ms = 0;
     
-    // Data transfer metrics
+    // Data transfer metrics from instance data (fallback)
     data.data_transfer.upload_bytes = instance.data_transfer.upload_bytes;
     data.data_transfer.download_bytes = instance.data_transfer.download_bytes;
     data.data_transfer.upload_formatted = VpnLiveData::formatBytes(data.data_transfer.upload_bytes);
     data.data_transfer.download_formatted = VpnLiveData::formatBytes(data.data_transfer.download_bytes);
+    data.data_transfer.upload_rate_bps = 0;
+    data.data_transfer.download_rate_bps = 0;
+    data.data_transfer.upload_rate_formatted = "0.00 B/s";
+    data.data_transfer.download_rate_formatted = "0.00 B/s";
     data.data_transfer.total_session_bytes = instance.total_data_transferred.current_session_bytes;
     data.data_transfer.total_session_mb = data.data_transfer.total_session_bytes / (1024.0 * 1024.0);
     
-    // Get real-time stats from WireGuard wrapper if available
+    if (verbose_) {
+        std::cout << json({
+            {"type", "verbose"},
+            {"message", "collectWireGuardData - checking wrapper instance"},
+            {"instance", instance.name},
+            {"has_wrapper", instance.wrapper_instance != nullptr}
+        }).dump() << std::endl;
+    }
+    
+    // Get real-time stats from WireGuard wrapper if available and valid
     if (instance.wrapper_instance) {
         try {
+            // Validate wrapper instance before casting
+            if (!instance.wrapper_instance) {
+                if (verbose_) {
+                    std::cout << json({
+                        {"type", "warning"},
+                        {"message", "WireGuard wrapper instance is null"},
+                        {"instance", instance.name}
+                    }).dump() << std::endl;
+                }
+                return data;
+            }
+            
             // Cast to WireGuard wrapper and get current stats
             auto wg_wrapper = std::static_pointer_cast<wireguard::WireGuardWrapper>(instance.wrapper_instance);
+            
+            // Validate wrapper after casting
+            if (!wg_wrapper) {
+                if (verbose_) {
+                    std::cout << json({
+                        {"type", "warning"},
+                        {"message", "Failed to cast WireGuard wrapper"},
+                        {"instance", instance.name}
+                    }).dump() << std::endl;
+                }
+                return data;
+            }
+            
+            if (verbose_) {
+                std::cout << json({
+                    {"type", "verbose"},
+                    {"message", "collectWireGuardData - getting stats from wrapper"},
+                    {"instance", instance.name},
+                    {"wrapper_connected", wg_wrapper->isConnected()},
+                    {"wrapper_state", static_cast<int>(wg_wrapper->getState())}
+                }).dump() << std::endl;
+            }
+            
             auto wgStats = wg_wrapper->getStats();
+            
+            if (verbose_) {
+                std::cout << json({
+                    {"type", "verbose"},
+                    {"message", "collectWireGuardData - got stats from wrapper"},
+                    {"instance", instance.name},
+                    {"stats_bytes_sent", wgStats.bytes_sent},
+                    {"stats_bytes_received", wgStats.bytes_received},
+                    {"stats_last_handshake", wgStats.last_handshake},
+                    {"stats_interface_name", wgStats.interface_name},
+                    {"stats_endpoint", wgStats.endpoint}
+                }).dump() << std::endl;
+            }
+            
+            // Validate stats before using them
+            if (wgStats.bytes_sent == 0 && wgStats.bytes_received == 0 && 
+                data.status != "Disconnected" && data.status != "Error") {
+                if (verbose_) {
+                    std::cout << json({
+                        {"type", "warning"},
+                        {"message", "WireGuard stats are zero but instance is not disconnected"},
+                        {"instance", instance.name},
+                        {"status", data.status},
+                        {"bytes_sent", wgStats.bytes_sent},
+                        {"bytes_received", wgStats.bytes_received}
+                    }).dump() << std::endl;
+                }
+                // Still use the stats (they might be legitimately zero during handshaking)
+            }
             
             // Update data transfer metrics with real-time values
             data.data_transfer.upload_bytes = wgStats.bytes_sent;
             data.data_transfer.download_bytes = wgStats.bytes_received;
-            data.data_transfer.upload_formatted = VpnLiveData::formatBytes(data.data_transfer.upload_bytes);
-            data.data_transfer.download_formatted = VpnLiveData::formatBytes(data.data_transfer.download_bytes);
+            data.data_transfer.upload_formatted = VpnLiveData::formatBytes(wgStats.bytes_sent);
+            data.data_transfer.download_formatted = VpnLiveData::formatBytes(wgStats.bytes_received);
             data.data_transfer.upload_rate_bps = wgStats.upload_rate_bps;
             data.data_transfer.download_rate_bps = wgStats.download_rate_bps;
-            data.data_transfer.upload_rate_formatted = VpnLiveData::formatBytes(data.data_transfer.upload_rate_bps) + "/s";
-            data.data_transfer.download_rate_formatted = VpnLiveData::formatBytes(data.data_transfer.download_rate_bps) + "/s";
+            data.data_transfer.upload_rate_formatted = VpnLiveData::formatBytes(wgStats.upload_rate_bps) + "/s";
+            data.data_transfer.download_rate_formatted = VpnLiveData::formatBytes(wgStats.download_rate_bps) + "/s";
             
-            // Update connection metrics
+            // Update connection metrics with real data
             data.connection.latency_ms = wgStats.latency_ms;
-            data.connection.local_ip = wgStats.local_ip;
-            data.connection.remote_endpoint = wgStats.endpoint;
+            data.connection.local_ip = !wgStats.local_ip.empty() ? wgStats.local_ip : "";
+            data.connection.remote_endpoint = !wgStats.endpoint.empty() ? wgStats.endpoint : "";
             data.connection.last_handshake_time = (wgStats.last_handshake > 0) ? 
                 std::to_string(wgStats.last_handshake) : "";
             
             // Update protocol-specific metrics
-            data.protocol.peer_public_key = wgStats.peer_public_key;
-            data.protocol.allowed_ips = wgStats.allowed_ips;
-            data.protocol.interface_name = wgStats.interface_name;
-            data.protocol.routes_json = wgStats.routes;
+            data.protocol.peer_public_key = !wgStats.peer_public_key.empty() ? wgStats.peer_public_key : "";
+            data.protocol.allowed_ips = !wgStats.allowed_ips.empty() ? wgStats.allowed_ips : "";
+            data.protocol.interface_name = !wgStats.interface_name.empty() ? wgStats.interface_name : "";
+            data.protocol.routes_json = !wgStats.routes.empty() ? wgStats.routes : "";
             data.protocol.tx_packets = wgStats.tx_packets;
             data.protocol.rx_packets = wgStats.rx_packets;
+            
+            // Update status based on actual connection state
+            if (!wgStats.interface_name.empty() && wgStats.last_handshake > 0) {
+                data.status = "Connected";
+            } else if (wg_wrapper->isConnected()) {
+                data.status = "Connected";
+            } else if (wg_wrapper->getState() == wireguard::ConnectionState::HANDSHAKING) {
+                data.status = "Handshaking";
+            } else if (wg_wrapper->getState() == wireguard::ConnectionState::ERROR_STATE) {
+                data.status = "Error";
+            } else if (wg_wrapper->getState() == wireguard::ConnectionState::RECONNECTING) {
+                data.status = "Connecting";
+            } else if (wg_wrapper->getState() == wireguard::ConnectionState::DISCONNECTED) {
+                data.status = "Disconnected";
+            } else if (data.status == "unknown" || data.status == "Disconnected") {
+                // Check if the instance status indicates an error
+                if (instance.status == "error" || instance.status == "Error") {
+                    data.status = "Error";
+                } else {
+                    data.status = "Disconnected";
+                }
+            }
+            
+            // Always output debug info for WireGuard status
+            std::cout << json({
+                {"type", "debug"},
+                {"message", "WireGuard status detection"},
+                {"instance", instance.name},
+                {"wrapper_state", static_cast<int>(wg_wrapper->getState())},
+                {"instance_status", instance.status},
+                {"final_status", data.status},
+                {"interface_name", wgStats.interface_name},
+                {"last_handshake", wgStats.last_handshake}
+            }).dump() << std::endl;
             
             if (verbose_) {
                 std::cout << json({
@@ -623,7 +697,11 @@ VpnLiveData VpnLiveDataCollector::collectWireGuardData(const VPNInstance& instan
                     {"message", "Updated WireGuard data with real-time stats"},
                     {"instance", instance.name},
                     {"upload_bytes", data.data_transfer.upload_bytes},
-                    {"download_bytes", data.data_transfer.download_bytes}
+                    {"download_bytes", data.data_transfer.download_bytes},
+                    {"local_ip", data.connection.local_ip},
+                    {"remote_endpoint", data.connection.remote_endpoint},
+                    {"last_handshake", data.connection.last_handshake_time},
+                    {"final_status", data.status}
                 }).dump() << std::endl;
             }
             
@@ -636,6 +714,27 @@ VpnLiveData VpnLiveDataCollector::collectWireGuardData(const VPNInstance& instan
                     {"error", e.what()}
                 }).dump() << std::endl;
             }
+            // Keep the fallback data from instance metrics
+            data.status = "Error";
+        }
+    } else {
+        if (verbose_) {
+            std::cout << json({
+                {"type", "warning"},
+                {"message", "WireGuard wrapper instance not available"},
+                {"instance", instance.name},
+                {"instance_status", instance.status}
+            }).dump() << std::endl;
+        }
+        // Set status based on instance status when wrapper is not available
+        if (instance.status == "error" || instance.status == "Error") {
+            data.status = "Error";
+        } else if (instance.status == "handshaking" || instance.status == "Handshaking") {
+            data.status = "Handshaking";
+        } else if (instance.status == "connecting" || instance.status == "Connecting") {
+            data.status = "Connecting";
+        } else if (data.status == "unknown") {
+            data.status = "Disconnected";
         }
     }
     
@@ -659,6 +758,19 @@ VpnLiveData VpnLiveDataCollector::collectOpenVpnData(const VPNInstance& instance
     data.vpn_type = "openvpn";
     data.status = !instance.status.empty() ? instance.status : "unknown";
     
+    // Validate instance state before collecting data
+    if (instance.name.empty()) {
+        data.status = "Error";
+        if (verbose_) {
+            std::cout << json({
+                {"type", "warning"},
+                {"message", "OpenVPN instance has empty name"},
+                {"instance_id", data.instance_id}
+            }).dump() << std::endl;
+        }
+        return data;
+    }
+    
     if (verbose_) {
         std::cout << json({
             {"type", "verbose"},
@@ -668,10 +780,14 @@ VpnLiveData VpnLiveDataCollector::collectOpenVpnData(const VPNInstance& instance
         }).dump() << std::endl;
     }
     
-    // Connection metrics
+    // Connection metrics from instance data
     data.connection.session_duration_seconds = instance.connection_time.current_session_seconds;
     data.connection.session_duration_formatted = VpnLiveData::formatDuration(data.connection.session_duration_seconds);
     data.connection.total_connection_time = instance.connection_time.total_seconds;
+    data.connection.local_ip = "";
+    data.connection.remote_endpoint = "";
+    data.connection.last_handshake_time = "";
+    data.connection.latency_ms = 0;
     
     if (verbose_) {
         std::cout << json({
@@ -680,11 +796,15 @@ VpnLiveData VpnLiveDataCollector::collectOpenVpnData(const VPNInstance& instance
         }).dump() << std::endl;
     }
     
-    // Data transfer metrics
+    // Data transfer metrics from instance data (fallback)
     data.data_transfer.upload_bytes = instance.data_transfer.upload_bytes;
     data.data_transfer.download_bytes = instance.data_transfer.download_bytes;
     data.data_transfer.upload_formatted = VpnLiveData::formatBytes(data.data_transfer.upload_bytes);
     data.data_transfer.download_formatted = VpnLiveData::formatBytes(data.data_transfer.download_bytes);
+    data.data_transfer.upload_rate_bps = 0;
+    data.data_transfer.download_rate_bps = 0;
+    data.data_transfer.upload_rate_formatted = "0.00 B/s";
+    data.data_transfer.download_rate_formatted = "0.00 B/s";
     data.data_transfer.total_session_bytes = instance.total_data_transferred.current_session_bytes;
     data.data_transfer.total_session_mb = data.data_transfer.total_session_bytes / (1024.0 * 1024.0);
     
@@ -695,16 +815,103 @@ VpnLiveData VpnLiveDataCollector::collectOpenVpnData(const VPNInstance& instance
         }).dump() << std::endl;
     }
     
-    // Get real-time stats from OpenVPN wrapper if connected
-    if (instance.wrapper_instance && instance.status == "connected") {
+    // Get real-time stats from OpenVPN wrapper if available
+    if (instance.wrapper_instance) {
         try {
-            // This would need to be implemented in OpenVPNWrapper
-            // to get current stats including rates
-            // auto stats = instance.wrapper_instance->getCurrentStats();
-            // data.data_transfer.upload_rate_bps = stats.upload_rate_bps;
-            // data.data_transfer.download_rate_bps = stats.download_rate_bps;
-            // data.protocol.cipher = stats.cipher;
-            // etc.
+            // Validate wrapper instance before casting
+            if (!instance.wrapper_instance) {
+                if (verbose_) {
+                    std::cout << json({
+                        {"type", "warning"},
+                        {"message", "OpenVPN wrapper instance is null"},
+                        {"instance", instance.name}
+                    }).dump() << std::endl;
+                }
+                return data;
+            }
+            
+            // Cast to OpenVPN wrapper and get current stats
+            auto ovpn_wrapper = std::static_pointer_cast<openvpn::OpenVPNWrapper>(instance.wrapper_instance);
+            
+            // Validate wrapper after casting
+            if (!ovpn_wrapper) {
+                if (verbose_) {
+                    std::cout << json({
+                        {"type", "warning"},
+                        {"message", "Failed to cast OpenVPN wrapper"},
+                        {"instance", instance.name}
+                    }).dump() << std::endl;
+                }
+                return data;
+            }
+            
+            auto stats = ovpn_wrapper->getStats();
+            
+            // Validate stats before using them
+            if (stats.bytes_sent == 0 && stats.bytes_received == 0 && 
+                data.status != "Disconnected" && data.status != "Error" && data.status != "Authenticating") {
+                if (verbose_) {
+                    std::cout << json({
+                        {"type", "warning"},
+                        {"message", "OpenVPN stats are zero but instance is not in a state that expects zeros"},
+                        {"instance", instance.name},
+                        {"status", data.status}
+                    }).dump() << std::endl;
+                }
+                // Still use the stats (they might be legitimately zero during authentication)
+            }
+            
+            // Update connection metrics with real data
+            data.connection.local_ip = !stats.local_ip.empty() ? stats.local_ip : "";
+            data.connection.remote_endpoint = !stats.server_ip.empty() ? stats.server_ip : "";
+            data.connection.latency_ms = stats.ping_ms;
+            
+            // Calculate session duration from connection time
+            if (stats.connected_since > 0) {
+                auto now = std::chrono::system_clock::now();
+                auto connection_time = std::chrono::system_clock::from_time_t(stats.connected_since);
+                auto duration = std::chrono::duration_cast<std::chrono::seconds>(now - connection_time);
+                data.connection.session_duration_seconds = duration.count();
+                data.connection.session_duration_formatted = VpnLiveData::formatDuration(duration.count());
+                data.connection.last_handshake_time = std::to_string(stats.connected_since);
+            }
+            
+            // Update data transfer metrics with real data
+            data.data_transfer.upload_bytes = stats.bytes_sent;
+            data.data_transfer.download_bytes = stats.bytes_received;
+            data.data_transfer.upload_formatted = VpnLiveData::formatBytes(stats.bytes_sent);
+            data.data_transfer.download_formatted = VpnLiveData::formatBytes(stats.bytes_received);
+            data.data_transfer.upload_rate_bps = stats.upload_rate_bps;
+            data.data_transfer.download_rate_bps = stats.download_rate_bps;
+            data.data_transfer.upload_rate_formatted = VpnLiveData::formatBytes(stats.upload_rate_bps) + "/s";
+            data.data_transfer.download_rate_formatted = VpnLiveData::formatBytes(stats.download_rate_bps) + "/s";
+            data.data_transfer.total_session_bytes = stats.bytes_sent + stats.bytes_received;
+            data.data_transfer.total_session_mb = data.data_transfer.total_session_bytes / (1024.0 * 1024.0);
+            
+            // Update protocol-specific metrics
+            data.protocol.interface_name = !stats.interface_name.empty() ? stats.interface_name : "";
+            data.protocol.routes_json = !stats.routes.empty() ? stats.routes : "";
+            
+            // Update status based on actual connection state
+            if (!stats.local_ip.empty() && stats.connected_since > 0) {
+                data.status = "Connected";
+            } else if (data.status == "unknown") {
+                data.status = "Disconnected";
+            }
+            
+            if (verbose_) {
+                std::cout << json({
+                    {"type", "verbose"},
+                    {"message", "Updated OpenVPN data with real-time stats"},
+                    {"instance", instance.name},
+                    {"upload_bytes", data.data_transfer.upload_bytes},
+                    {"download_bytes", data.data_transfer.download_bytes},
+                    {"local_ip", data.connection.local_ip},
+                    {"remote_endpoint", data.connection.remote_endpoint},
+                    {"connected_since", stats.connected_since}
+                }).dump() << std::endl;
+            }
+            
         } catch (const std::exception& e) {
             if (verbose_) {
                 std::cout << json({
@@ -714,6 +921,24 @@ VpnLiveData VpnLiveDataCollector::collectOpenVpnData(const VPNInstance& instance
                     {"error", e.what()}
                 }).dump() << std::endl;
             }
+            // Fall back to instance data if wrapper stats fail
+            data.connection.local_ip = "";
+            data.connection.remote_endpoint = "";
+            data.connection.latency_ms = 0;
+            data.connection.last_handshake_time = "";
+            data.status = "Error";
+        }
+    } else {
+        if (verbose_) {
+            std::cout << json({
+                {"type", "warning"},
+                {"message", "OpenVPN wrapper instance not available"},
+                {"instance", instance.name}
+            }).dump() << std::endl;
+        }
+        // Set status to indicate wrapper not available
+        if (data.status == "unknown") {
+            data.status = "Disconnected";
         }
     }
     
@@ -967,19 +1192,56 @@ void VpnLiveDataCollector::onOpenVPNEvent(const std::string& instance_name, cons
             }).dump() << std::endl;
         }
         
-        // Update cached connection data based on event
-        updateOpenVPNConnectionData(instance_name, event);
+        // Update cached connection data using non-blocking lock to prevent deadlocks
+        if (cachedDataMutex_.try_lock()) {
+            try {
+                updateOpenVPNConnectionData(instance_name, event);
+                cachedDataMutex_.unlock();
+            } catch (...) {
+                cachedDataMutex_.unlock();
+                throw;
+            }
+        } else {
+            // Lock is held by another thread, skip this update but log it
+            if (verbose_) {
+                std::cout << json({
+                    {"type", "warning"},
+                    {"message", "Skipping OpenVPN event update due to lock contention"},
+                    {"instance", instance_name},
+                    {"event_type", event.type}
+                }).dump() << std::endl;
+            }
+            return;
+        }
         
-        // Trigger immediate live data publish for important events
+        // Trigger immediate live data publish for important events (non-blocking)
         if (event.type == "connected" || event.type == "disconnected" || 
             event.type == "state_change" || event.type == "error") {
             
-            // Create live data vector with cached data
+            // Create live data vector with cached data (using try_lock)
             std::vector<VpnLiveData> live_data;
             
-            std::lock_guard<std::mutex> lock(cachedDataMutex_);
-            for (const auto& [name, data] : cachedLiveData_) {
-                live_data.push_back(data);
+            if (cachedDataMutex_.try_lock()) {
+                try {
+                    for (const auto& [name, data] : cachedLiveData_) {
+                        live_data.push_back(data);
+                    }
+                    cachedDataMutex_.unlock();
+                } catch (...) {
+                    cachedDataMutex_.unlock();
+                    throw;
+                }
+            } else {
+                // Can't get lock, skip immediate publish
+                if (verbose_) {
+                    std::cout << json({
+                        {"type", "warning"},
+                        {"message", "Skipping immediate publish due to lock contention"},
+                        {"instance", instance_name},
+                        {"event_type", event.type}
+                    }).dump() << std::endl;
+                }
+                return;
             }
             
             // Publish immediately
@@ -1225,6 +1487,17 @@ void VpnLiveDataCollector::registerWireGuardEventCallbacks() {
 
 void VpnLiveDataCollector::onWireGuardEvent(const std::string& instance_name, const wireguard::VPNEvent& event) {
     try {
+        // Safety checks
+        if (instance_name.empty()) {
+            if (verbose_) {
+                std::cout << json({
+                    {"type", "warning"},
+                    {"message", "Received WireGuard event with empty instance name"}
+                }).dump() << std::endl;
+            }
+            return;
+        }
+        
         if (verbose_) {
             std::cout << json({
                 {"type", "verbose"},
@@ -1235,19 +1508,56 @@ void VpnLiveDataCollector::onWireGuardEvent(const std::string& instance_name, co
             }).dump() << std::endl;
         }
         
-        // Update cached connection data based on event
-        updateWireGuardConnectionData(instance_name, event);
+        // Update cached connection data using non-blocking lock to prevent deadlocks
+        if (cachedDataMutex_.try_lock()) {
+            try {
+                updateWireGuardConnectionData(instance_name, event);
+                cachedDataMutex_.unlock();
+            } catch (...) {
+                cachedDataMutex_.unlock();
+                throw;
+            }
+        } else {
+            // Lock is held by another thread, skip this update but log it
+            if (verbose_) {
+                std::cout << json({
+                    {"type", "warning"},
+                    {"message", "Skipping WireGuard event update due to lock contention"},
+                    {"instance", instance_name},
+                    {"event_type", event.type}
+                }).dump() << std::endl;
+            }
+            return;
+        }
         
-        // Trigger immediate live data publish for important events
+        // Trigger immediate live data publish for important events (non-blocking)
         if (event.type == "connected" || event.type == "disconnected" || 
             event.type == "handshaking" || event.type == "error" || event.type == "status") {
             
-            // Create live data vector with cached data
+            // Create live data vector with cached data (using try_lock)
             std::vector<VpnLiveData> live_data;
             
-            std::lock_guard<std::mutex> lock(cachedDataMutex_);
-            for (const auto& [name, data] : cachedLiveData_) {
-                live_data.push_back(data);
+            if (cachedDataMutex_.try_lock()) {
+                try {
+                    for (const auto& [name, data] : cachedLiveData_) {
+                        live_data.push_back(data);
+                    }
+                    cachedDataMutex_.unlock();
+                } catch (...) {
+                    cachedDataMutex_.unlock();
+                    throw;
+                }
+            } else {
+                // Can't get lock, skip immediate publish
+                if (verbose_) {
+                    std::cout << json({
+                        {"type", "warning"},
+                        {"message", "Skipping immediate publish due to lock contention"},
+                        {"instance", instance_name},
+                        {"event_type", event.type}
+                    }).dump() << std::endl;
+                }
+                return;
             }
             
             // Publish immediately
@@ -1261,12 +1571,16 @@ void VpnLiveDataCollector::onWireGuardEvent(const std::string& instance_name, co
             {"instance", instance_name},
             {"error", e.what()}
         }).dump() << std::endl;
+    } catch (...) {
+        std::cout << json({
+            {"type", "error"},
+            {"message", "Unknown exception in WireGuard event handler"},
+            {"instance", instance_name}
+        }).dump() << std::endl;
     }
 }
 
 void VpnLiveDataCollector::updateWireGuardConnectionData(const std::string& instance_name, const wireguard::VPNEvent& event) {
-    std::lock_guard<std::mutex> lock(cachedDataMutex_);
-    
     // Get or create cached data for this instance
     VpnLiveData& data = cachedLiveData_[instance_name];
     data.instance_id = instance_name;

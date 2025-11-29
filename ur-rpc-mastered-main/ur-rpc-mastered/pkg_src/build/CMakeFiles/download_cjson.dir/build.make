@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src
+CMAKE_SOURCE_DIR = /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build
+CMAKE_BINARY_DIR = /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build
 
 # Utility rule file for download_cjson.
 
@@ -67,13 +67,13 @@ include CMakeFiles/download_cjson.dir/compiler_depend.make
 include CMakeFiles/download_cjson.dir/progress.make
 
 CMakeFiles/download_cjson:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Cleaning and downloading cJSON..."
-	/usr/bin/cmake -E remove_directory /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson
-	/usr/bin/cmake -E make_directory /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps
-	/usr/bin/cmake -E make_directory /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson
-	/usr/bin/cmake -E chdir /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps curl -L https://github.com/DaveGamble/cJSON/archive/refs/tags/v1.7.16.tar.gz -o cjson.tar.gz
-	/usr/bin/cmake -E chdir /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps tar -xzf cjson.tar.gz -C cjson --strip-components=1
-	/usr/bin/cmake -E remove /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson.tar.gz
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Cleaning and downloading cJSON..."
+	/usr/bin/cmake -E remove_directory /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson
+	/usr/bin/cmake -E make_directory /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps
+	/usr/bin/cmake -E make_directory /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson
+	/usr/bin/cmake -E chdir /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps curl -L https://github.com/DaveGamble/cJSON/archive/refs/tags/v1.7.16.tar.gz -o cjson.tar.gz
+	/usr/bin/cmake -E chdir /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps tar -xzf cjson.tar.gz -C cjson --strip-components=1
+	/usr/bin/cmake -E remove /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson.tar.gz
 
 download_cjson: CMakeFiles/download_cjson
 download_cjson: CMakeFiles/download_cjson.dir/build.make
@@ -88,6 +88,6 @@ CMakeFiles/download_cjson.dir/clean:
 .PHONY : CMakeFiles/download_cjson.dir/clean
 
 CMakeFiles/download_cjson.dir/depend:
-	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles/download_cjson.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles/download_cjson.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/download_cjson.dir/depend
 
