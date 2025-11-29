@@ -24,6 +24,9 @@ public:
 
     // Send response back to requester
     void sendResponse(const std::string& topic, const std::string& response);
+    
+    // Get direct access to publish function for live data
+    void publishMessage(const std::string& topic, const std::string& message);
 
 private:
     std::string configPath_;

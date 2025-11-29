@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(mqtt_broker_isolated C)
+project(ur-rpc-core_isolated C)
 
 # if(DEFINED ENV{STAGING_DIR})
 #     # OpenWRT toolchain detection
@@ -68,8 +68,8 @@ include(${CMAKE_SOURCE_DIR}/cmake/cjson.cmake)
 include(${CMAKE_SOURCE_DIR}/cmake/mbed-tls.cmake)
 
 # Create MQTT broker executable with SSL support
-add_executable(mqtt_broker ${BROKER_SOURCES})
-add_dependencies(mqtt_broker build_cjson build_mbedtls)
+add_executable(ur-rpc-core ${BROKER_SOURCES})
+add_dependencies(ur-rpc-core build_cjson build_mbedtls)
 
 # Library paths
 set(CJSON_LIB ${DEPS_DIR}/cjson/libcjson.a)
@@ -80,7 +80,7 @@ set(MBEDTLS_LIBS
 )
 
 # Link libraries (static linking)
-target_link_libraries(mqtt_broker 
+target_link_libraries(ur-rpc-core 
     ${CJSON_LIB} 
     ${MBEDTLS_LIBS} 
     pthread 
@@ -88,7 +88,7 @@ target_link_libraries(mqtt_broker
 )
 
 # Set static build properties
-set_target_properties(mqtt_broker PROPERTIES
+set_target_properties(ur-rpc-core PROPERTIES
     LINK_FLAGS "-static-libgcc -Wl,--gc-sections"
     COMPILE_DEFINITIONS "STATIC_BUILD=1"
 )
@@ -106,7 +106,7 @@ add_custom_target(clean-all
 )
 
 # Installation
-install(TARGETS mqtt_broker
+install(TARGETS ur-rpc-core
     RUNTIME DESTINATION bin
 )
 
@@ -120,5 +120,5 @@ message(STATUS "Linker flags: ${CMAKE_EXE_LINKER_FLAGS}")
 message(STATUS "Static linking: Fully static executable")
 message(STATUS "SSL/TLS Support: Enabled via mbedTLS")
 message(STATUS "Configuration: JSON support via cJSON")
-message(STATUS "Target: mqtt_broker (SSL-enabled)")
+message(STATUS "Target: ur-rpc-core (SSL-enabled)")
 message(STATUS "=========================================================")

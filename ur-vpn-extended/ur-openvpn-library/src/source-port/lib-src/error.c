@@ -633,8 +633,10 @@ x_check_status(int status, const char *description, struct link_socket *sock, st
     bool crt_error = false;
     int my_errno = openvpn_errno_maybe_crt(&crt_error);
 
+#ifdef OPENVPN_DEBUG_LOGGING_ENABLED
     msg(x_cs_verbose_level, "%s %s returned %d",
         sock ? proto2ascii(sock->info.proto, sock->info.af, true) : "", description, status);
+#endif
 
     if (status < 0)
     {

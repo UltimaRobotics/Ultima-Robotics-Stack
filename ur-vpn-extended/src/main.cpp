@@ -1,6 +1,7 @@
 #include "vpn_instance_manager.hpp"
 #include "vpn_rpc_client.hpp"
 #include "vpn_rpc_operation_processor.hpp"
+#include "vpn_live_data.hpp"
 #ifdef HTTP_ENABLED
 #include "http_server.hpp"
 #endif
@@ -31,6 +32,7 @@ std::string g_cache_file_path;
 // RPC client global pointers
 std::unique_ptr<VpnRpcClient> g_rpcClient = nullptr;
 std::unique_ptr<vpn_manager::VpnRpcOperationProcessor> g_rpcProcessor = nullptr;
+std::unique_ptr<vpn_manager::VpnLiveDataCollector> g_liveDataCollector = nullptr;
 
 // Force cleanup WireGuard interfaces without relying on threads
 void forceCleanupWireGuardInterfaces() {
@@ -153,7 +155,24 @@ void signalHandler(int signal) {
     // Force cleanup WireGuard interfaces first (independent of thread management)
     forceCleanupWireGuardInterfaces();
 
-    // Step 2: Stop RPC client first (prevents new operations)
+    // Step 2: Stop live data collector first
+    if (g_liveDataCollector) {
+        std::cout << json({
+            {"type", "shutdown_verbose"},
+            {"step", "LIVE_DATA_COLLECTOR_STOP_START"},
+            {"message", "Stopping live data collector"}
+        }).dump() << std::endl;
+
+        g_liveDataCollector->stop();
+
+        std::cout << json({
+            {"type", "shutdown_verbose"},
+            {"step", "LIVE_DATA_COLLECTOR_STOP_COMPLETE"},
+            {"message", "Live data collector stopped"}
+        }).dump() << std::endl;
+    }
+
+    // Step 3: Stop RPC client first (prevents new operations)
     if (g_rpcClient) {
         std::cout << json({
             {"type", "shutdown_verbose"},
@@ -207,7 +226,7 @@ void signalHandler(int signal) {
             {"message", "Stopping all VPN instances with comprehensive cleanup (same as HTTP stop)"}
         }).dump() << std::endl;
 
-
+        exit(0);
         g_manager->stopAll();
 
         std::cout << json({
@@ -295,6 +314,23 @@ void signalHandler(int signal) {
             {"type", "shutdown_verbose"},
             {"step", "RPC_PROCESSOR_DELETE_COMPLETE"},
             {"message", "RPC operation processor cleaned up"}
+        }).dump() << std::endl;
+    }
+
+    // Step 9.5: Cleanup live data collector
+    if (g_liveDataCollector) {
+        std::cout << json({
+            {"type", "shutdown_verbose"},
+            {"step", "LIVE_DATA_COLLECTOR_DELETE_START"},
+            {"message", "Cleaning up live data collector"}
+        }).dump() << std::endl;
+
+        g_liveDataCollector.reset();
+
+        std::cout << json({
+            {"type", "shutdown_verbose"},
+            {"step", "LIVE_DATA_COLLECTOR_DELETE_COMPLETE"},
+            {"message", "Live data collector cleaned up"}
         }).dump() << std::endl;
     }
 
@@ -806,6 +842,35 @@ int main(int argc, char* argv[]) {
             std::cout << "[Main] Listening on: direct_messaging/ur-vpn-manager/requests" << std::endl;
             std::cout << "[Main] Responding on: direct_messaging/ur-vpn-manager/responses" << std::endl;
             std::cout << "[Main] Press Ctrl+C to stop..." << std::endl;
+            
+            // Initialize live data collector after RPC client is ready
+            try {
+                std::cout << "[Main] Initializing live data collector..." << std::endl;
+                g_liveDataCollector = std::make_unique<vpn_manager::VpnLiveDataCollector>(
+                    *g_rpcClient, 
+                    *manager.getThreadManager(), // Dereference pointer to get reference
+                    manager,
+                    1000 // 1 second interval
+                );
+                
+                g_liveDataCollector->setVerbose(verbose_mode);
+                
+                if (g_liveDataCollector->start()) {
+                    std::cout << "[Main] Live data collector started successfully" << std::endl;
+                    std::cout << "[Main] Publishing live data to: ur-shared-bus/ur-mavlink-stack/ur-vpn-manager/live-data" << std::endl;
+                } else {
+                    std::cout << "[Main] Failed to start live data collector" << std::endl;
+                    g_liveDataCollector.reset();
+                }
+            } catch (const std::exception& e) {
+                json error = {
+                    {"type", "error"},
+                    {"message", "Failed to initialize live data collector"},
+                    {"error", e.what()}
+                };
+                std::cout << error.dump() << std::endl;
+                g_liveDataCollector.reset();
+            }
 
         } catch (const std::exception& e) {
             json error = {

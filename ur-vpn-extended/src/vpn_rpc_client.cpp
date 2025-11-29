@@ -184,3 +184,20 @@ void VpnRpcClient::sendResponse(const std::string& topic,
         std::cerr << "[RPC] Failed to send response: " << e.what() << std::endl;
     }
 }
+
+void VpnRpcClient::publishMessage(const std::string& topic,
+                                 const std::string& message) {
+    if (!running_.load()) {
+        std::cerr << "[RPC] Cannot publish message - client not running" << std::endl;
+        return;
+    }
+
+    try {
+        if (direct_client_publish_raw_message(topic.c_str(), message.c_str(),
+                                              message.size()) != 0) {
+            std::cerr << "[RPC] Failed to publish live data message" << std::endl;
+        }
+    } catch (const std::exception& e) {
+        std::cerr << "[RPC] Failed to publish live data message: " << e.what() << std::endl;
+    }
+}

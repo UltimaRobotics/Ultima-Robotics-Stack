@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src
+CMAKE_SOURCE_DIR = /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build
+CMAKE_BINARY_DIR = /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -132,9 +132,9 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -214,17 +214,17 @@ build_mbedtls/fast:
 .PHONY : build_mbedtls/fast
 
 #=============================================================================
-# Target rules for targets named mqtt_broker
+# Target rules for targets named ur-rpc-core
 
 # Build rule for target.
-mqtt_broker: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 mqtt_broker
-.PHONY : mqtt_broker
+ur-rpc-core: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ur-rpc-core
+.PHONY : ur-rpc-core
 
 # fast build rule for target.
-mqtt_broker/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/build
-.PHONY : mqtt_broker/fast
+ur-rpc-core/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/build
+.PHONY : ur-rpc-core/fast
 
 #=============================================================================
 # Target rules for targets named clean-deps
@@ -252,36 +252,36 @@ clean-all/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/clean-all.dir/build.make CMakeFiles/clean-all.dir/build
 .PHONY : clean-all/fast
 
-home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.o: home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o
-.PHONY : home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.o
+home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.o: home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o
+.PHONY : home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.o
 
 # target to build an object file
-home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o
-.PHONY : home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o
+home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o
+.PHONY : home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.o
 
-home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.i: home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.i
-.PHONY : home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.i
+home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.i: home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.i
+.PHONY : home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.i
 
 # target to preprocess a source file
-home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.i
-.PHONY : home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.i
+home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.i
+.PHONY : home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.i
 
-home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.s: home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.s
-.PHONY : home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.s
+home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.s: home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.s
+.PHONY : home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.s
 
 # target to generate assembly for a file
-home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.s
-.PHONY : home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.s
+home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.s
+.PHONY : home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.c.s
 
 src/cert_manager.o: src/cert_manager.c.o
 .PHONY : src/cert_manager.o
 
 # target to build an object file
 src/cert_manager.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/cert_manager.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/cert_manager.c.o
 .PHONY : src/cert_manager.c.o
 
 src/cert_manager.i: src/cert_manager.c.i
@@ -289,7 +289,7 @@ src/cert_manager.i: src/cert_manager.c.i
 
 # target to preprocess a source file
 src/cert_manager.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/cert_manager.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/cert_manager.c.i
 .PHONY : src/cert_manager.c.i
 
 src/cert_manager.s: src/cert_manager.c.s
@@ -297,7 +297,7 @@ src/cert_manager.s: src/cert_manager.c.s
 
 # target to generate assembly for a file
 src/cert_manager.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/cert_manager.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/cert_manager.c.s
 .PHONY : src/cert_manager.c.s
 
 src/client_manager.o: src/client_manager.c.o
@@ -305,7 +305,7 @@ src/client_manager.o: src/client_manager.c.o
 
 # target to build an object file
 src/client_manager.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/client_manager.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/client_manager.c.o
 .PHONY : src/client_manager.c.o
 
 src/client_manager.i: src/client_manager.c.i
@@ -313,7 +313,7 @@ src/client_manager.i: src/client_manager.c.i
 
 # target to preprocess a source file
 src/client_manager.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/client_manager.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/client_manager.c.i
 .PHONY : src/client_manager.c.i
 
 src/client_manager.s: src/client_manager.c.s
@@ -321,7 +321,7 @@ src/client_manager.s: src/client_manager.c.s
 
 # target to generate assembly for a file
 src/client_manager.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/client_manager.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/client_manager.c.s
 .PHONY : src/client_manager.c.s
 
 src/config.o: src/config.c.o
@@ -329,7 +329,7 @@ src/config.o: src/config.c.o
 
 # target to build an object file
 src/config.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/config.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/config.c.o
 .PHONY : src/config.c.o
 
 src/config.i: src/config.c.i
@@ -337,7 +337,7 @@ src/config.i: src/config.c.i
 
 # target to preprocess a source file
 src/config.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/config.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/config.c.i
 .PHONY : src/config.c.i
 
 src/config.s: src/config.c.s
@@ -345,7 +345,7 @@ src/config.s: src/config.c.s
 
 # target to generate assembly for a file
 src/config.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/config.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/config.c.s
 .PHONY : src/config.c.s
 
 src/main.o: src/main.c.o
@@ -353,7 +353,7 @@ src/main.o: src/main.c.o
 
 # target to build an object file
 src/main.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/main.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/main.c.o
 .PHONY : src/main.c.o
 
 src/main.i: src/main.c.i
@@ -361,7 +361,7 @@ src/main.i: src/main.c.i
 
 # target to preprocess a source file
 src/main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/main.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/main.c.i
 .PHONY : src/main.c.i
 
 src/main.s: src/main.c.s
@@ -369,7 +369,7 @@ src/main.s: src/main.c.s
 
 # target to generate assembly for a file
 src/main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/main.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/main.c.s
 .PHONY : src/main.c.s
 
 src/message_handler.o: src/message_handler.c.o
@@ -377,7 +377,7 @@ src/message_handler.o: src/message_handler.c.o
 
 # target to build an object file
 src/message_handler.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/message_handler.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/message_handler.c.o
 .PHONY : src/message_handler.c.o
 
 src/message_handler.i: src/message_handler.c.i
@@ -385,7 +385,7 @@ src/message_handler.i: src/message_handler.c.i
 
 # target to preprocess a source file
 src/message_handler.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/message_handler.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/message_handler.c.i
 .PHONY : src/message_handler.c.i
 
 src/message_handler.s: src/message_handler.c.s
@@ -393,7 +393,7 @@ src/message_handler.s: src/message_handler.c.s
 
 # target to generate assembly for a file
 src/message_handler.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/message_handler.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/message_handler.c.s
 .PHONY : src/message_handler.c.s
 
 src/mqtt_broker.o: src/mqtt_broker.c.o
@@ -401,7 +401,7 @@ src/mqtt_broker.o: src/mqtt_broker.c.o
 
 # target to build an object file
 src/mqtt_broker.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/mqtt_broker.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/mqtt_broker.c.o
 .PHONY : src/mqtt_broker.c.o
 
 src/mqtt_broker.i: src/mqtt_broker.c.i
@@ -409,7 +409,7 @@ src/mqtt_broker.i: src/mqtt_broker.c.i
 
 # target to preprocess a source file
 src/mqtt_broker.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/mqtt_broker.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/mqtt_broker.c.i
 .PHONY : src/mqtt_broker.c.i
 
 src/mqtt_broker.s: src/mqtt_broker.c.s
@@ -417,7 +417,7 @@ src/mqtt_broker.s: src/mqtt_broker.c.s
 
 # target to generate assembly for a file
 src/mqtt_broker.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/mqtt_broker.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/mqtt_broker.c.s
 .PHONY : src/mqtt_broker.c.s
 
 src/mqtt_protocol.o: src/mqtt_protocol.c.o
@@ -425,7 +425,7 @@ src/mqtt_protocol.o: src/mqtt_protocol.c.o
 
 # target to build an object file
 src/mqtt_protocol.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/mqtt_protocol.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/mqtt_protocol.c.o
 .PHONY : src/mqtt_protocol.c.o
 
 src/mqtt_protocol.i: src/mqtt_protocol.c.i
@@ -433,7 +433,7 @@ src/mqtt_protocol.i: src/mqtt_protocol.c.i
 
 # target to preprocess a source file
 src/mqtt_protocol.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/mqtt_protocol.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/mqtt_protocol.c.i
 .PHONY : src/mqtt_protocol.c.i
 
 src/mqtt_protocol.s: src/mqtt_protocol.c.s
@@ -441,7 +441,7 @@ src/mqtt_protocol.s: src/mqtt_protocol.c.s
 
 # target to generate assembly for a file
 src/mqtt_protocol.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/mqtt_protocol.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/mqtt_protocol.c.s
 .PHONY : src/mqtt_protocol.c.s
 
 src/network.o: src/network.c.o
@@ -449,7 +449,7 @@ src/network.o: src/network.c.o
 
 # target to build an object file
 src/network.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/network.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/network.c.o
 .PHONY : src/network.c.o
 
 src/network.i: src/network.c.i
@@ -457,7 +457,7 @@ src/network.i: src/network.c.i
 
 # target to preprocess a source file
 src/network.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/network.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/network.c.i
 .PHONY : src/network.c.i
 
 src/network.s: src/network.c.s
@@ -465,7 +465,7 @@ src/network.s: src/network.c.s
 
 # target to generate assembly for a file
 src/network.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/network.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/network.c.s
 .PHONY : src/network.c.s
 
 src/notification_manager.o: src/notification_manager.c.o
@@ -473,7 +473,7 @@ src/notification_manager.o: src/notification_manager.c.o
 
 # target to build an object file
 src/notification_manager.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/notification_manager.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/notification_manager.c.o
 .PHONY : src/notification_manager.c.o
 
 src/notification_manager.i: src/notification_manager.c.i
@@ -481,7 +481,7 @@ src/notification_manager.i: src/notification_manager.c.i
 
 # target to preprocess a source file
 src/notification_manager.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/notification_manager.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/notification_manager.c.i
 .PHONY : src/notification_manager.c.i
 
 src/notification_manager.s: src/notification_manager.c.s
@@ -489,7 +489,7 @@ src/notification_manager.s: src/notification_manager.c.s
 
 # target to generate assembly for a file
 src/notification_manager.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/notification_manager.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/notification_manager.c.s
 .PHONY : src/notification_manager.c.s
 
 src/ssl_wrapper.o: src/ssl_wrapper.c.o
@@ -497,7 +497,7 @@ src/ssl_wrapper.o: src/ssl_wrapper.c.o
 
 # target to build an object file
 src/ssl_wrapper.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/ssl_wrapper.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/ssl_wrapper.c.o
 .PHONY : src/ssl_wrapper.c.o
 
 src/ssl_wrapper.i: src/ssl_wrapper.c.i
@@ -505,7 +505,7 @@ src/ssl_wrapper.i: src/ssl_wrapper.c.i
 
 # target to preprocess a source file
 src/ssl_wrapper.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/ssl_wrapper.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/ssl_wrapper.c.i
 .PHONY : src/ssl_wrapper.c.i
 
 src/ssl_wrapper.s: src/ssl_wrapper.c.s
@@ -513,7 +513,7 @@ src/ssl_wrapper.s: src/ssl_wrapper.c.s
 
 # target to generate assembly for a file
 src/ssl_wrapper.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/ssl_wrapper.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/ssl_wrapper.c.s
 .PHONY : src/ssl_wrapper.c.s
 
 src/utils.o: src/utils.c.o
@@ -521,7 +521,7 @@ src/utils.o: src/utils.c.o
 
 # target to build an object file
 src/utils.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/utils.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/utils.c.o
 .PHONY : src/utils.c.o
 
 src/utils.i: src/utils.c.i
@@ -529,7 +529,7 @@ src/utils.i: src/utils.c.i
 
 # target to preprocess a source file
 src/utils.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/utils.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/utils.c.i
 .PHONY : src/utils.c.i
 
 src/utils.s: src/utils.c.s
@@ -537,7 +537,7 @@ src/utils.s: src/utils.c.s
 
 # target to generate assembly for a file
 src/utils.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mqtt_broker.dir/build.make CMakeFiles/mqtt_broker.dir/src/utils.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ur-rpc-core.dir/build.make CMakeFiles/ur-rpc-core.dir/src/utils.c.s
 .PHONY : src/utils.c.s
 
 # Help Target
@@ -558,10 +558,10 @@ help:
 	@echo "... clean-deps"
 	@echo "... download_cjson"
 	@echo "... download_mbedtls"
-	@echo "... mqtt_broker"
-	@echo "... home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.o"
-	@echo "... home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.i"
-	@echo "... home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.s"
+	@echo "... ur-rpc-core"
+	@echo "... home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.o"
+	@echo "... home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.i"
+	@echo "... home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-logger-api/logger.s"
 	@echo "... src/cert_manager.o"
 	@echo "... src/cert_manager.i"
 	@echo "... src/cert_manager.s"

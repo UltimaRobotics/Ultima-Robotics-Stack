@@ -311,10 +311,17 @@ void x_check_status(int status, const char *description, struct link_socket *soc
 static inline void
 check_status(int status, const char *description, struct link_socket *sock, struct tuntap *tt)
 {
+#ifdef OPENVPN_DEBUG_LOGGING_ENABLED
     if (status < 0 || check_debug_level(x_cs_verbose_level))
     {
         x_check_status(status, description, sock, tt);
     }
+#else
+    if (status < 0)
+    {
+        x_check_status(status, description, sock, tt);
+    }
+#endif
 }
 
 static inline void

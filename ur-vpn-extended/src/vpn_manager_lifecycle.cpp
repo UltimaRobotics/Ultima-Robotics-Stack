@@ -156,8 +156,24 @@ void VPNInstanceManager::launchInstanceThread(VPNInstance& instance) {
         instance.start_time = time(nullptr);
 
     } else if (instance.type == VPNType::WIREGUARD) {
+        if (verbose_) {
+            json verbose_log;
+            verbose_log["type"] = "verbose";
+            verbose_log["message"] = "Creating WireGuard wrapper instance";
+            verbose_log["instance_name"] = instance.name;
+            std::cout << verbose_log.dump() << std::endl;
+        }
+        
         auto wrapper = std::make_shared<wireguard::WireGuardWrapper>();
         instance.wrapper_instance = wrapper;
+
+        if (verbose_) {
+            json verbose_log;
+            verbose_log["type"] = "verbose";
+            verbose_log["message"] = "WireGuard wrapper created, writing config file";
+            verbose_log["instance_name"] = instance.name;
+            std::cout << verbose_log.dump() << std::endl;
+        }
 
         // Write config to temp file
         std::string config_file = "/tmp/vpn_" + instance.name + ".conf";
@@ -165,108 +181,183 @@ void VPNInstanceManager::launchInstanceThread(VPNInstance& instance) {
         file << instance.config_content;
         file.close();
 
+        if (verbose_) {
+            json verbose_log;
+            verbose_log["type"] = "verbose";
+            verbose_log["message"] = "Config file written, setting up callbacks";
+            verbose_log["instance_name"] = instance.name;
+            verbose_log["config_file"] = config_file;
+            std::cout << verbose_log.dump() << std::endl;
+        }
+
         // Set callbacks
+        if (verbose_) {
+            json verbose_log;
+            verbose_log["type"] = "verbose";
+            verbose_log["message"] = "Setting up event callback";
+            verbose_log["instance_name"] = instance.name;
+            std::cout << verbose_log.dump() << std::endl;
+        }
+
         wrapper->setEventCallback([this, name = instance.name](const wireguard::VPNEvent& event) {
-            json data;
-            data["state"] = static_cast<int>(event.state);
-            data["event_data"] = event.data;
-            emitEvent(name, event.type, event.message, data);
-            
-            // Apply routing rules and start monitoring when connected
-            if (event.type == "connected") {
-                applyRoutingRulesForInstance(name);
+            try {
+                json data;
+                data["state"] = static_cast<int>(event.state);
+                data["event_data"] = event.data;
+                emitEvent(name, event.type, event.message, data);
                 
-                // Clear previous snapshot to force fresh detection
-                last_route_snapshots_.erase(name);
-                
-                if (verbose_) {
-                    std::cout << json({
-                        {"type", "verbose"},
-                        {"message", "VPN connected - route monitoring active"},
-                        {"instance", name}
-                    }).dump() << std::endl;
+                // Apply routing rules and start monitoring when connected
+                if (event.type == "connected") {
+                    applyRoutingRulesForInstance(name);
+                    
+                    // Clear previous snapshot to force fresh detection
+                    last_route_snapshots_.erase(name);
+                    
+                    if (verbose_) {
+                        std::cout << json({
+                            {"type", "verbose"},
+                            {"message", "VPN connected - route monitoring active"},
+                            {"instance", name}
+                        }).dump() << std::endl;
+                    }
                 }
+            } catch (const std::exception& e) {
+                std::cout << json({
+                    {"type", "error"},
+                    {"message", "Exception in event callback"},
+                    {"instance", name},
+                    {"error", e.what()}
+                }).dump() << std::endl;
             }
         });
+
+        if (verbose_) {
+            json verbose_log;
+            verbose_log["type"] = "verbose";
+            verbose_log["message"] = "Event callback setup completed, setting up stats callback";
+            verbose_log["instance_name"] = instance.name;
+            std::cout << verbose_log.dump() << std::endl;
+        }
+
+        // Simplified stats callback to avoid deadlock
+        if (verbose_) {
+            json verbose_log;
+            verbose_log["type"] = "verbose";
+            verbose_log["message"] = "Setting up simplified stats callback";
+            verbose_log["instance_name"] = instance.name;
+            std::cout << verbose_log.dump() << std::endl;
+        }
 
         wrapper->setStatsCallback([this, name = instance.name](const wireguard::VPNStats& stats) {
-            // Check if stats logging is enabled for WireGuard
-            if (!isStatsLoggingEnabled() || !isWireGuardStatsLoggingEnabled()) {
-                return; // Skip stats logging if disabled
-            }
-            
-            // Capture by value to avoid holding mutex during callback
-            uint64_t session_start = 0;
-            uint64_t session_seconds = 0;
-
-            {
-                std::lock_guard<std::mutex> lock(instances_mutex_);
-                auto it = instances_.find(name);
-                if (it != instances_.end()) {
-                    // Store cumulative byte totals (not rates!)
-                    it->second.data_transfer.upload_bytes = stats.bytes_sent;
-                    it->second.data_transfer.download_bytes = stats.bytes_received;
-
-                    // Update session totals (cumulative bytes)
-                    it->second.total_data_transferred.current_session_bytes = stats.bytes_sent + stats.bytes_received;
-
-                    // Update connection time
-                    if (it->second.connection_time.current_session_start > 0) {
-                        it->second.connection_time.current_session_seconds = time(nullptr) - it->second.connection_time.current_session_start;
-                    }
-
-                    // Status is updated via event callbacks, not from stats
-                    // Keep current status as-is during stats updates
-
-                    session_start = it->second.connection_time.current_session_start;
-                    session_seconds = it->second.connection_time.current_session_seconds;
+            try {
+                // Minimal stats callback to avoid deadlock
+                if (!isStatsLoggingEnabled() || !isWireGuardStatsLoggingEnabled()) {
+                    return;
                 }
-            } // Release mutex before emitting event
-
-            // Format data for display (outside mutex) matching target JSON structure
-            json data;
-            data["upload_bytes"] = stats.bytes_sent;
-            data["download_bytes"] = stats.bytes_received;
-            data["upload_rate_bps"] = stats.upload_rate_bps;
-            data["download_rate_bps"] = stats.download_rate_bps;
-            data["upload_rate_formatted"] = formatBytes(stats.upload_rate_bps) + "/s";
-            data["download_rate_formatted"] = formatBytes(stats.download_rate_bps) + "/s";
-            data["upload_formatted"] = formatBytes(stats.bytes_sent);
-            data["download_formatted"] = formatBytes(stats.bytes_received);
-            data["total_session_mb"] = (stats.bytes_sent + stats.bytes_received) / (1024.0 * 1024.0);
-            data["connection_time"] = formatTime(session_seconds);
-            data["latency_ms"] = stats.latency_ms;
-
-            emitEvent(name, "stats", "Statistics update", data);
-
-            // Update connection_stats with current statistics
-            {
-                std::lock_guard<std::mutex> lock(instances_mutex_);
-                auto it = instances_.find(name);
-                if (it != instances_.end()) {
-                    it->second.connection_stats = data;
-                }
+                
+                // Only emit basic stats event without complex processing
+                json data;
+                data["bytes_sent"] = stats.bytes_sent;
+                data["bytes_received"] = stats.bytes_received;
+                emitEvent(name, "stats", "Statistics update", data);
+                
+            } catch (const std::exception& e) {
+                std::cout << json({
+                    {"type", "error"},
+                    {"message", "Exception in simplified stats callback"},
+                    {"instance", name},
+                    {"error", e.what()}
+                }).dump() << std::endl;
             }
-
-            // Trigger config save
-            config_save_pending_.store(true);
         });
 
-        // Create thread function
-        auto thread_func = [wrapper, config_file, &instance, this]() {
+        if (verbose_) {
+            json verbose_log;
+            verbose_log["type"] = "verbose";
+            verbose_log["message"] = "Stats callback setup completed";
+            verbose_log["instance_name"] = instance.name;
+            std::cout << verbose_log.dump() << std::endl;
+        }
+
+        if (verbose_) {
+            json verbose_log;
+            verbose_log["type"] = "verbose";
+            verbose_log["message"] = "Callbacks setup completed, creating thread function";
+            verbose_log["instance_name"] = instance.name;
+            std::cout << verbose_log.dump() << std::endl;
+        }
+
+        try {
+            if (verbose_) {
+                json verbose_log;
+                verbose_log["type"] = "verbose";
+                verbose_log["message"] = "Starting thread function creation";
+                verbose_log["instance_name"] = instance.name;
+                std::cout << verbose_log.dump() << std::endl;
+            }
+
+            // Create thread function
+            auto thread_func = [wrapper, config_file, &instance, this]() {
+            if (verbose_) {
+                json verbose_log;
+                verbose_log["type"] = "verbose";
+                verbose_log["message"] = "WireGuard thread function started";
+                verbose_log["instance_name"] = instance.name;
+                verbose_log["config_file"] = config_file;
+                std::cout << verbose_log.dump() << std::endl;
+            }
+            
             // Block signals in this thread - let main thread handle them
             sigset_t signal_mask;
             sigfillset(&signal_mask);
             pthread_sigmask(SIG_BLOCK, &signal_mask, nullptr);
 
+            if (verbose_) {
+                json verbose_log;
+                verbose_log["type"] = "verbose";
+                verbose_log["message"] = "Signals blocked, calling initializeFromFile";
+                verbose_log["instance_name"] = instance.name;
+                std::cout << verbose_log.dump() << std::endl;
+            }
+
             if (!wrapper->initializeFromFile(config_file)) {
                 emitEvent(instance.name, "error", "Failed to initialize WireGuard");
+                if (verbose_) {
+                    json verbose_log;
+                    verbose_log["type"] = "verbose";
+                    verbose_log["message"] = "WireGuard initialization failed";
+                    verbose_log["instance_name"] = instance.name;
+                    std::cout << verbose_log.dump() << std::endl;
+                }
                 return;
+            }
+
+            if (verbose_) {
+                json verbose_log;
+                verbose_log["type"] = "verbose";
+                verbose_log["message"] = "WireGuard initialized successfully, calling connect";
+                verbose_log["instance_name"] = instance.name;
+                std::cout << verbose_log.dump() << std::endl;
             }
 
             if (!wrapper->connect()) {
                 emitEvent(instance.name, "error", "Failed to connect WireGuard");
+                if (verbose_) {
+                    json verbose_log;
+                    verbose_log["type"] = "verbose";
+                    verbose_log["message"] = "WireGuard connection failed";
+                    verbose_log["instance_name"] = instance.name;
+                    std::cout << verbose_log.dump() << std::endl;
+                }
                 return;
+            }
+
+            if (verbose_) {
+                json verbose_log;
+                verbose_log["type"] = "verbose";
+                verbose_log["message"] = "WireGuard connected successfully, entering monitoring loop";
+                verbose_log["instance_name"] = instance.name;
+                std::cout << verbose_log.dump() << std::endl;
             }
 
             while (!instance.should_stop && running_) {
@@ -287,6 +378,16 @@ void VPNInstanceManager::launchInstanceThread(VPNInstance& instance) {
                 std::this_thread::sleep_for(std::chrono::seconds(5));
             }
 
+            if (verbose_) {
+                json verbose_log;
+                verbose_log["type"] = "verbose";
+                verbose_log["message"] = "WireGuard monitoring loop exited";
+                verbose_log["instance_name"] = instance.name;
+                verbose_log["should_stop"] = instance.should_stop.load();
+                verbose_log["running"] = running_.load();
+                std::cout << verbose_log.dump() << std::endl;
+            }
+
             // Disconnect is now called from stopInstance() to ensure it completes before thread termination
             // Only disconnect here if thread exits naturally (not from stopInstance)
             if (!instance.should_stop) {
@@ -294,12 +395,73 @@ void VPNInstanceManager::launchInstanceThread(VPNInstance& instance) {
             }
         };
 
+        if (verbose_) {
+            json verbose_log;
+            verbose_log["type"] = "verbose";
+            verbose_log["message"] = "Creating WireGuard thread with ThreadManager";
+            verbose_log["instance_name"] = instance.name;
+            std::cout << verbose_log.dump() << std::endl;
+        }
+
         instance.thread_id = thread_manager_->createThread(thread_func);
+        
+        if (verbose_) {
+            json verbose_log;
+            verbose_log["type"] = "verbose";
+            verbose_log["message"] = "WireGuard thread created successfully";
+            verbose_log["instance_name"] = instance.name;
+            verbose_log["thread_id"] = instance.thread_id;
+            std::cout << verbose_log.dump() << std::endl;
+        }
+        
         instance.start_time = time(nullptr);
+        
+        if (verbose_) {
+            json verbose_log;
+            verbose_log["type"] = "verbose";
+            verbose_log["message"] = "WireGuard instance launch completed";
+            verbose_log["instance_name"] = instance.name;
+            verbose_log["start_time"] = instance.start_time;
+            std::cout << verbose_log.dump() << std::endl;
+        }
+        
+        if (verbose_) {
+            json verbose_log;
+            verbose_log["type"] = "verbose";
+            verbose_log["message"] = "WireGuard thread creation try-catch completed successfully";
+            verbose_log["instance_name"] = instance.name;
+            std::cout << verbose_log.dump() << std::endl;
+        }
+
+        } catch (const std::exception& e) {
+            json error_log;
+            error_log["type"] = "error";
+            error_log["message"] = "Exception during WireGuard thread creation";
+            error_log["instance_name"] = instance.name;
+            error_log["error"] = e.what();
+            std::cout << error_log.dump() << std::endl;
+            return;
+        } catch (...) {
+            json error_log;
+            error_log["type"] = "error";
+            error_log["message"] = "Unknown exception during WireGuard thread creation";
+            error_log["instance_name"] = instance.name;
+            std::cout << error_log.dump() << std::endl;
+            return;
+        }
     }
 
     // Register thread with attachment
     thread_manager_->registerThread(instance.thread_id, instance.name);
+    
+    if (verbose_) {
+        json verbose_log;
+        verbose_log["type"] = "verbose";
+        verbose_log["message"] = "launchInstanceThread function completed successfully";
+        verbose_log["instance_name"] = instance.name;
+        verbose_log["thread_id"] = instance.thread_id;
+        std::cout << verbose_log.dump() << std::endl;
+    }
 }
 
 bool VPNInstanceManager::updateInstance(const std::string& instance_name,
@@ -1019,9 +1181,43 @@ bool VPNInstanceManager::stopAll() {
         {"step", "STOP_ALL_COMPLETE"},
         {"message", "All instances stopped via direct shutdown (no mutex blocking)"}
     }).dump() << std::endl;
-    std::cout.flush();
-
     return true;
+}
+
+std::vector<const VPNInstance*> VPNInstanceManager::getAllInstancesForLiveData() {
+    std::vector<const VPNInstance*> instances;
+    
+    std::lock_guard<std::mutex> lock(instances_mutex_);
+    
+    if (verbose_) {
+        std::cout << json({
+            {"type", "verbose"},
+            {"message", "getAllInstancesForLiveData - checking instances map"},
+            {"map_size", instances_.size()}
+        }).dump() << std::endl;
+    }
+    
+    for (const auto& pair : instances_) {
+        if (verbose_) {
+            std::cout << json({
+                {"type", "verbose"},
+                {"message", "getAllInstancesForLiveData - found instance"},
+                {"instance_name", !pair.first.empty() ? pair.first : "EMPTY_NAME"},
+                {"instance_enabled", pair.second.enabled}
+            }).dump() << std::endl;
+        }
+        instances.push_back(&pair.second);
+    }
+    
+    if (verbose_) {
+        std::cout << json({
+            {"type", "verbose"},
+            {"message", "getAllInstancesForLiveData - returning instances"},
+            {"return_count", instances.size()}
+        }).dump() << std::endl;
+    }
+    
+    return instances;
 }
 
 bool VPNInstanceManager::addInstance(const std::string& name, const std::string& vpn_type,

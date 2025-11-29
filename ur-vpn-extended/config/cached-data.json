@@ -1,4 +1,19 @@
 {
-  "instances": [],
-  "last_saved": 1764346210
+  "instances": [
+    {
+      "auto_connect": true,
+      "enabled": true,
+      "id": "FYU_openvpn0",
+      "last_used": "",
+      "status": "Disconnected"
+    },
+    {
+      "auto_connect": true,
+      "enabled": true,
+      "id": "FYU_wg0",
+      "last_used": "",
+      "status": "Disconnected"
+    }
+  ],
+  "last_saved": 1764423258
 }

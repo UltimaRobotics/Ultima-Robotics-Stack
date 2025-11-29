@@ -1,4 +1,4 @@
-# Install script for directory: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson
+# Install script for directory: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -51,7 +51,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-  file(INSTALL DESTINATION "/usr/local/include/cjson" TYPE FILE FILES "/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/cJSON.h")
+  file(INSTALL DESTINATION "/usr/local/include/cjson" TYPE FILE FILES "/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/cJSON.h")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
@@ -63,7 +63,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-  file(INSTALL DESTINATION "/usr/local/lib/pkgconfig" TYPE FILE FILES "/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/libcjson.pc")
+  file(INSTALL DESTINATION "/usr/local/lib/pkgconfig" TYPE FILE FILES "/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/libcjson.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
@@ -75,14 +75,14 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-  file(INSTALL DESTINATION "/usr/local/lib" TYPE STATIC_LIBRARY FILES "/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/libcjson.a")
+  file(INSTALL DESTINATION "/usr/local/lib" TYPE STATIC_LIBRARY FILES "/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/libcjson.a")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   if(EXISTS "$ENV{DESTDIR}/usr/local/lib/cmake/cJSON/cjson.cmake")
     file(DIFFERENT EXPORT_FILE_CHANGED FILES
          "$ENV{DESTDIR}/usr/local/lib/cmake/cJSON/cjson.cmake"
-         "/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/Export/_usr/local/lib/cmake/cJSON/cjson.cmake")
+         "/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/Export/_usr/local/lib/cmake/cJSON/cjson.cmake")
     if(EXPORT_FILE_CHANGED)
       file(GLOB OLD_CONFIG_FILES "$ENV{DESTDIR}/usr/local/lib/cmake/cJSON/cjson-*.cmake")
       if(OLD_CONFIG_FILES)
@@ -99,7 +99,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-  file(INSTALL DESTINATION "/usr/local/lib/cmake/cJSON" TYPE FILE FILES "/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/Export/_usr/local/lib/cmake/cJSON/cjson.cmake")
+  file(INSTALL DESTINATION "/usr/local/lib/cmake/cJSON" TYPE FILE FILES "/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/Export/_usr/local/lib/cmake/cJSON/cjson.cmake")
   if("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
      "/usr/local/lib/cmake/cJSON/cjson-release.cmake")
@@ -109,7 +109,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "/usr/local/lib/cmake/cJSON" TYPE FILE FILES "/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/Export/_usr/local/lib/cmake/cJSON/cjson-release.cmake")
+    file(INSTALL DESTINATION "/usr/local/lib/cmake/cJSON" TYPE FILE FILES "/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/Export/_usr/local/lib/cmake/cJSON/cjson-release.cmake")
   endif()
 endif()
 
@@ -123,15 +123,15 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   file(INSTALL DESTINATION "/usr/local/lib/cmake/cJSON" TYPE FILE FILES
-    "/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/cJSONConfig.cmake"
-    "/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/cJSONConfigVersion.cmake"
+    "/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/cJSONConfig.cmake"
+    "/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/cJSONConfigVersion.cmake"
     )
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/tests/cmake_install.cmake")
-  include("/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/fuzzing/cmake_install.cmake")
+  include("/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/tests/cmake_install.cmake")
+  include("/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/fuzzing/cmake_install.cmake")
 
 endif()
 
@@ -143,5 +143,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

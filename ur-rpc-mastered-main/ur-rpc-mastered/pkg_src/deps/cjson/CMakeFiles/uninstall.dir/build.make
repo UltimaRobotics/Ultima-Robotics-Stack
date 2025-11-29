@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson
+CMAKE_SOURCE_DIR = /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson
+CMAKE_BINARY_DIR = /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson
 
 # Utility rule file for uninstall.
 
@@ -67,7 +67,7 @@ include CMakeFiles/uninstall.dir/compiler_depend.make
 include CMakeFiles/uninstall.dir/progress.make
 
 CMakeFiles/uninstall:
-	/usr/bin/cmake -P /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/library_config/uninstall.cmake
+	/usr/bin/cmake -P /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/library_config/uninstall.cmake
 
 uninstall: CMakeFiles/uninstall
 uninstall: CMakeFiles/uninstall.dir/build.make
@@ -82,6 +82,6 @@ CMakeFiles/uninstall.dir/clean:
 .PHONY : CMakeFiles/uninstall.dir/clean
 
 CMakeFiles/uninstall.dir/depend:
-	cd /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/uninstall.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/uninstall.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/uninstall.dir/depend
 

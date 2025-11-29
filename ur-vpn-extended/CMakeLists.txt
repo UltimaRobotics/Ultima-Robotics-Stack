@@ -7,6 +7,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # HTTP Server option
 option(HTTP_ENABLED "Enable HTTP server support" ON)
 
+# OpenVPN Debug Logging option
+option(OPENVPN_DEBUG_LOGGING "Enable OpenVPN UDP/TUN/TAP debug logging" OFF)
+
 # Include directories
 include_directories(
     ${CMAKE_SOURCE_DIR}/src
@@ -58,6 +61,7 @@ set(VPN_MANAGER_MODULES
     src/openvpn_routing_provider.cpp
     src/vpn_rpc_client.cpp
     src/vpn_rpc_operation_processor.cpp
+    src/vpn_live_data.cpp
     src/cleanup_tracker.cpp
     src/cleanup_verifier.cpp
     src/cleanup_cron_job.cpp
@@ -93,6 +97,14 @@ target_link_libraries(ur-vpn-manager
 # Link HTTP library if enabled
 if(HTTP_ENABLED)
     target_link_libraries(ur-vpn-manager ${MICROHTTPD_LIBRARIES})
+endif()
+
+# OpenVPN Debug Logging configuration
+if(OPENVPN_DEBUG_LOGGING)
+    target_compile_definitions(ur-vpn-manager PRIVATE OPENVPN_DEBUG_LOGGING_ENABLED)
+    message(STATUS "OpenVPN debug logging: ENABLED")
+else()
+    message(STATUS "OpenVPN debug logging: DISABLED")
 endif()
 
 # Installation

@@ -8,14 +8,14 @@
     "host": "0.0.0.0",
     "port": 5000
   },
-  "verbose": true,
+  "verbose": false,
   "stats_logging": {
     "enabled": false,
     "openvpn": false,
     "wireguard": false
   },
   "logging": {
-    "enabled": false,
+    "enabled": true,
     "sources": {
       "vpn_manager": false,
       "openvpn_library": false,

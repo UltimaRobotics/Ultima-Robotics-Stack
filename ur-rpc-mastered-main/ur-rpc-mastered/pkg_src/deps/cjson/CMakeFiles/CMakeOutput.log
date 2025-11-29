@@ -10,16 +10,16 @@ The output was:
 
 Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
 
-The C compiler identification is GNU, found in "/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/3.22.1/CompilerIdC/a.out"
+The C compiler identification is GNU, found in "/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/3.22.1/CompilerIdC/a.out"
 
 Detecting C compiler ABI info compiled with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_5dd96/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_5dd96.dir/build.make CMakeFiles/cmTC_5dd96.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_5dd96.dir/CMakeCCompilerABI.c.o
-/usr/bin/cc   -fPIC    -v -o CMakeFiles/cmTC_5dd96.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.22/Modules/CMakeCCompilerABI.c
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_091d7/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_091d7.dir/build.make CMakeFiles/cmTC_091d7.dir/build
+gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_091d7.dir/CMakeCCompilerABI.c.o
+/usr/bin/cc   -fPIC    -v -o CMakeFiles/cmTC_091d7.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.22/Modules/CMakeCCompilerABI.c
 Using built-in specs.
 COLLECT_GCC=/usr/bin/cc
 OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
@@ -29,8 +29,8 @@ Configured with: ../src/configure -v --with-pkgversion='Ubuntu 11.4.0-1ubuntu1~2
 Thread model: posix
 Supported LTO compression algorithms: zlib zstd
 gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) 
-COLLECT_GCC_OPTIONS='-fPIC' '-v' '-o' 'CMakeFiles/cmTC_5dd96.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_5dd96.dir/'
- /usr/lib/gcc/x86_64-linux-gnu/11/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/share/cmake-3.22/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_5dd96.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fPIC -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/cccKTeZV.s
+COLLECT_GCC_OPTIONS='-fPIC' '-v' '-o' 'CMakeFiles/cmTC_091d7.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_091d7.dir/'
+ /usr/lib/gcc/x86_64-linux-gnu/11/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/share/cmake-3.22/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_091d7.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fPIC -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/cc2MlVqj.s
 GNU C17 (Ubuntu 11.4.0-1ubuntu1~22.04.2) version 11.4.0 (x86_64-linux-gnu)
 	compiled by GNU C version 11.4.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
 
@@ -50,15 +50,15 @@ GNU C17 (Ubuntu 11.4.0-1ubuntu1~22.04.2) version 11.4.0 (x86_64-linux-gnu)
 
 GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
 Compiler executable checksum: 4011c2103cba78949d7e02d0f0047a3d
-COLLECT_GCC_OPTIONS='-fPIC' '-v' '-o' 'CMakeFiles/cmTC_5dd96.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_5dd96.dir/'
- as -v --64 -o CMakeFiles/cmTC_5dd96.dir/CMakeCCompilerABI.c.o /tmp/cccKTeZV.s
+COLLECT_GCC_OPTIONS='-fPIC' '-v' '-o' 'CMakeFiles/cmTC_091d7.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_091d7.dir/'
+ as -v --64 -o CMakeFiles/cmTC_091d7.dir/CMakeCCompilerABI.c.o /tmp/cc2MlVqj.s
 GNU assembler version 2.38 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.38
 COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-fPIC' '-v' '-o' 'CMakeFiles/cmTC_5dd96.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_5dd96.dir/CMakeCCompilerABI.c.'
-Linking C executable cmTC_5dd96
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5dd96.dir/link.txt --verbose=1
-/usr/bin/cc -fPIC   -v -rdynamic CMakeFiles/cmTC_5dd96.dir/CMakeCCompilerABI.c.o -o cmTC_5dd96 
+COLLECT_GCC_OPTIONS='-fPIC' '-v' '-o' 'CMakeFiles/cmTC_091d7.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_091d7.dir/CMakeCCompilerABI.c.'
+Linking C executable cmTC_091d7
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_091d7.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC   -v -rdynamic CMakeFiles/cmTC_091d7.dir/CMakeCCompilerABI.c.o -o cmTC_091d7 
 Using built-in specs.
 COLLECT_GCC=/usr/bin/cc
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper
@@ -71,11 +71,11 @@ Supported LTO compression algorithms: zlib zstd
 gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) 
 COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-fPIC' '-v' '-rdynamic' '-o' 'cmTC_5dd96' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_5dd96.'
- /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccvCaFJj.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_5dd96 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. CMakeFiles/cmTC_5dd96.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
-COLLECT_GCC_OPTIONS='-fPIC' '-v' '-rdynamic' '-o' 'cmTC_5dd96' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_5dd96.'
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+COLLECT_GCC_OPTIONS='-fPIC' '-v' '-rdynamic' '-o' 'cmTC_091d7' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_091d7.'
+ /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccGR54y9.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_091d7 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. CMakeFiles/cmTC_091d7.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
+COLLECT_GCC_OPTIONS='-fPIC' '-v' '-rdynamic' '-o' 'cmTC_091d7' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_091d7.'
+gmake[5]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 
@@ -96,13 +96,13 @@ Parsed C implicit include dir info from above output: rv=done
 
 Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp]
+  ignore line: [Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_5dd96/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp']
-  ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_5dd96.dir/build.make CMakeFiles/cmTC_5dd96.dir/build]
-  ignore line: [gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp']
-  ignore line: [Building C object CMakeFiles/cmTC_5dd96.dir/CMakeCCompilerABI.c.o]
-  ignore line: [/usr/bin/cc   -fPIC    -v -o CMakeFiles/cmTC_5dd96.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.22/Modules/CMakeCCompilerABI.c]
+  ignore line: [Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_091d7/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp']
+  ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_091d7.dir/build.make CMakeFiles/cmTC_091d7.dir/build]
+  ignore line: [gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp']
+  ignore line: [Building C object CMakeFiles/cmTC_091d7.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/cc   -fPIC    -v -o CMakeFiles/cmTC_091d7.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.22/Modules/CMakeCCompilerABI.c]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/cc]
   ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
@@ -112,8 +112,8 @@ Parsed C implicit link information from above output:
   ignore line: [Thread model: posix]
   ignore line: [Supported LTO compression algorithms: zlib zstd]
   ignore line: [gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) ]
-  ignore line: [COLLECT_GCC_OPTIONS='-fPIC' '-v' '-o' 'CMakeFiles/cmTC_5dd96.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_5dd96.dir/']
-  ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/11/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/share/cmake-3.22/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_5dd96.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fPIC -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/cccKTeZV.s]
+  ignore line: [COLLECT_GCC_OPTIONS='-fPIC' '-v' '-o' 'CMakeFiles/cmTC_091d7.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_091d7.dir/']
+  ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/11/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/share/cmake-3.22/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_091d7.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fPIC -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/cc2MlVqj.s]
   ignore line: [GNU C17 (Ubuntu 11.4.0-1ubuntu1~22.04.2) version 11.4.0 (x86_64-linux-gnu)]
   ignore line: [	compiled by GNU C version 11.4.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.24-GMP]
   ignore line: []
@@ -133,15 +133,15 @@ Parsed C implicit link information from above output:
   ignore line: []
   ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
   ignore line: [Compiler executable checksum: 4011c2103cba78949d7e02d0f0047a3d]
-  ignore line: [COLLECT_GCC_OPTIONS='-fPIC' '-v' '-o' 'CMakeFiles/cmTC_5dd96.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_5dd96.dir/']
-  ignore line: [ as -v --64 -o CMakeFiles/cmTC_5dd96.dir/CMakeCCompilerABI.c.o /tmp/cccKTeZV.s]
+  ignore line: [COLLECT_GCC_OPTIONS='-fPIC' '-v' '-o' 'CMakeFiles/cmTC_091d7.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_091d7.dir/']
+  ignore line: [ as -v --64 -o CMakeFiles/cmTC_091d7.dir/CMakeCCompilerABI.c.o /tmp/cc2MlVqj.s]
   ignore line: [GNU assembler version 2.38 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.38]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-fPIC' '-v' '-o' 'CMakeFiles/cmTC_5dd96.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_5dd96.dir/CMakeCCompilerABI.c.']
-  ignore line: [Linking C executable cmTC_5dd96]
-  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5dd96.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/cc -fPIC   -v -rdynamic CMakeFiles/cmTC_5dd96.dir/CMakeCCompilerABI.c.o -o cmTC_5dd96 ]
+  ignore line: [COLLECT_GCC_OPTIONS='-fPIC' '-v' '-o' 'CMakeFiles/cmTC_091d7.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_091d7.dir/CMakeCCompilerABI.c.']
+  ignore line: [Linking C executable cmTC_091d7]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_091d7.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/cc -fPIC   -v -rdynamic CMakeFiles/cmTC_091d7.dir/CMakeCCompilerABI.c.o -o cmTC_091d7 ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/cc]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper]
@@ -154,13 +154,13 @@ Parsed C implicit link information from above output:
   ignore line: [gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-fPIC' '-v' '-rdynamic' '-o' 'cmTC_5dd96' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_5dd96.']
-  link line: [ /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccvCaFJj.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_5dd96 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. CMakeFiles/cmTC_5dd96.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-fPIC' '-v' '-rdynamic' '-o' 'cmTC_091d7' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_091d7.']
+  link line: [ /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccGR54y9.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_091d7 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. CMakeFiles/cmTC_091d7.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
     arg [/usr/lib/gcc/x86_64-linux-gnu/11/collect2] ==> ignore
     arg [-plugin] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so] ==> ignore
     arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccvCaFJj.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/ccGR54y9.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -179,7 +179,7 @@ Parsed C implicit link information from above output:
     arg [-znow] ==> ignore
     arg [-zrelro] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_5dd96] ==> ignore
+    arg [cmTC_091d7] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o]
     arg [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o]
     arg [/usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o]
@@ -191,7 +191,7 @@ Parsed C implicit link information from above output:
     arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
     arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
     arg [-L/usr/lib/gcc/x86_64-linux-gnu/11/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/11/../../..]
-    arg [CMakeFiles/cmTC_5dd96.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [CMakeFiles/cmTC_091d7.dir/CMakeCCompilerABI.c.o] ==> ignore
     arg [-lgcc] ==> lib [gcc]
     arg [--push-state] ==> ignore
     arg [--as-needed] ==> ignore
@@ -223,426 +223,426 @@ Parsed C implicit link information from above output:
 
 
 Performing C SOURCE FILE Test FLAG_SUPPORTED_stdc89 succeeded with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_6a505/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_6a505.dir/build.make CMakeFiles/cmTC_6a505.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_6a505.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_stdc89  -fPIC    -std=c89 -o CMakeFiles/cmTC_6a505.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_6a505
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6a505.dir/link.txt --verbose=1
-/usr/bin/cc -fPIC  -rdynamic CMakeFiles/cmTC_6a505.dir/src.c.o -o cmTC_6a505 
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_6a1d7/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_6a1d7.dir/build.make CMakeFiles/cmTC_6a1d7.dir/build
+gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_6a1d7.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_stdc89  -fPIC    -std=c89 -o CMakeFiles/cmTC_6a1d7.dir/src.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_6a1d7
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6a1d7.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC  -rdynamic CMakeFiles/cmTC_6a1d7.dir/src.c.o -o cmTC_6a1d7 
+gmake[5]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
 int main(void) { return 0; }
 Performing C SOURCE FILE Test FLAG_SUPPORTED_pedantic succeeded with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_9ee50/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_9ee50.dir/build.make CMakeFiles/cmTC_9ee50.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_9ee50.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_pedantic  -fPIC -std=c89    -pedantic -o CMakeFiles/cmTC_9ee50.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_9ee50
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9ee50.dir/link.txt --verbose=1
-/usr/bin/cc -fPIC -std=c89  -rdynamic CMakeFiles/cmTC_9ee50.dir/src.c.o -o cmTC_9ee50 
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_4e841/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_4e841.dir/build.make CMakeFiles/cmTC_4e841.dir/build
+gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_4e841.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_pedantic  -fPIC -std=c89    -pedantic -o CMakeFiles/cmTC_4e841.dir/src.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_4e841
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4e841.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -std=c89  -rdynamic CMakeFiles/cmTC_4e841.dir/src.c.o -o cmTC_4e841 
+gmake[5]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
 int main(void) { return 0; }
 Performing C SOURCE FILE Test FLAG_SUPPORTED_Wall succeeded with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_3036e/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_3036e.dir/build.make CMakeFiles/cmTC_3036e.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_3036e.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_Wall  -fPIC -std=c89 -pedantic    -Wall -o CMakeFiles/cmTC_3036e.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_3036e
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3036e.dir/link.txt --verbose=1
-/usr/bin/cc -fPIC -std=c89 -pedantic  -rdynamic CMakeFiles/cmTC_3036e.dir/src.c.o -o cmTC_3036e 
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_d822c/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_d822c.dir/build.make CMakeFiles/cmTC_d822c.dir/build
+gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_d822c.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_Wall  -fPIC -std=c89 -pedantic    -Wall -o CMakeFiles/cmTC_d822c.dir/src.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_d822c
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d822c.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -std=c89 -pedantic  -rdynamic CMakeFiles/cmTC_d822c.dir/src.c.o -o cmTC_d822c 
+gmake[5]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
 int main(void) { return 0; }
 Performing C SOURCE FILE Test FLAG_SUPPORTED_Wextra succeeded with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_d71c2/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_d71c2.dir/build.make CMakeFiles/cmTC_d71c2.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_d71c2.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_Wextra  -fPIC -std=c89 -pedantic -Wall    -Wextra -o CMakeFiles/cmTC_d71c2.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_d71c2
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d71c2.dir/link.txt --verbose=1
-/usr/bin/cc -fPIC -std=c89 -pedantic -Wall  -rdynamic CMakeFiles/cmTC_d71c2.dir/src.c.o -o cmTC_d71c2 
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_3d05e/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_3d05e.dir/build.make CMakeFiles/cmTC_3d05e.dir/build
+gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_3d05e.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_Wextra  -fPIC -std=c89 -pedantic -Wall    -Wextra -o CMakeFiles/cmTC_3d05e.dir/src.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_3d05e
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3d05e.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -std=c89 -pedantic -Wall  -rdynamic CMakeFiles/cmTC_3d05e.dir/src.c.o -o cmTC_3d05e 
+gmake[5]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
 int main(void) { return 0; }
 Performing C SOURCE FILE Test FLAG_SUPPORTED_Werror succeeded with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_e6a27/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_e6a27.dir/build.make CMakeFiles/cmTC_e6a27.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_e6a27.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_Werror  -fPIC -std=c89 -pedantic -Wall -Wextra    -Werror -o CMakeFiles/cmTC_e6a27.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_e6a27
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e6a27.dir/link.txt --verbose=1
-/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra  -rdynamic CMakeFiles/cmTC_e6a27.dir/src.c.o -o cmTC_e6a27 
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_b244c/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_b244c.dir/build.make CMakeFiles/cmTC_b244c.dir/build
+gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_b244c.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_Werror  -fPIC -std=c89 -pedantic -Wall -Wextra    -Werror -o CMakeFiles/cmTC_b244c.dir/src.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_b244c
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b244c.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra  -rdynamic CMakeFiles/cmTC_b244c.dir/src.c.o -o cmTC_b244c 
+gmake[5]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
 int main(void) { return 0; }
 Performing C SOURCE FILE Test FLAG_SUPPORTED_Wstrictprototypes succeeded with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_7b7ae/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_7b7ae.dir/build.make CMakeFiles/cmTC_7b7ae.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_7b7ae.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_Wstrictprototypes  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror    -Wstrict-prototypes -o CMakeFiles/cmTC_7b7ae.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_7b7ae
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7b7ae.dir/link.txt --verbose=1
-/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror  -rdynamic CMakeFiles/cmTC_7b7ae.dir/src.c.o -o cmTC_7b7ae 
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_d2a1a/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_d2a1a.dir/build.make CMakeFiles/cmTC_d2a1a.dir/build
+gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_d2a1a.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_Wstrictprototypes  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror    -Wstrict-prototypes -o CMakeFiles/cmTC_d2a1a.dir/src.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_d2a1a
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d2a1a.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror  -rdynamic CMakeFiles/cmTC_d2a1a.dir/src.c.o -o cmTC_d2a1a 
+gmake[5]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
 int main(void) { return 0; }
 Performing C SOURCE FILE Test FLAG_SUPPORTED_Wwritestrings succeeded with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_cba74/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_cba74.dir/build.make CMakeFiles/cmTC_cba74.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_cba74.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_Wwritestrings  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes    -Wwrite-strings -o CMakeFiles/cmTC_cba74.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_cba74
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_cba74.dir/link.txt --verbose=1
-/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes  -rdynamic CMakeFiles/cmTC_cba74.dir/src.c.o -o cmTC_cba74 
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_fcb82/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_fcb82.dir/build.make CMakeFiles/cmTC_fcb82.dir/build
+gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_fcb82.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_Wwritestrings  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes    -Wwrite-strings -o CMakeFiles/cmTC_fcb82.dir/src.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_fcb82
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fcb82.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes  -rdynamic CMakeFiles/cmTC_fcb82.dir/src.c.o -o cmTC_fcb82 
+gmake[5]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
 int main(void) { return 0; }
 Performing C SOURCE FILE Test FLAG_SUPPORTED_Wshadow succeeded with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_0d548/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_0d548.dir/build.make CMakeFiles/cmTC_0d548.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_0d548.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_Wshadow  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings    -Wshadow -o CMakeFiles/cmTC_0d548.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_0d548
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0d548.dir/link.txt --verbose=1
-/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings  -rdynamic CMakeFiles/cmTC_0d548.dir/src.c.o -o cmTC_0d548 
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_b249b/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_b249b.dir/build.make CMakeFiles/cmTC_b249b.dir/build
+gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_b249b.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_Wshadow  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings    -Wshadow -o CMakeFiles/cmTC_b249b.dir/src.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_b249b
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b249b.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings  -rdynamic CMakeFiles/cmTC_b249b.dir/src.c.o -o cmTC_b249b 
+gmake[5]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
 int main(void) { return 0; }
 Performing C SOURCE FILE Test FLAG_SUPPORTED_Winitself succeeded with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_dec5a/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_dec5a.dir/build.make CMakeFiles/cmTC_dec5a.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_dec5a.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_Winitself  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow    -Winit-self -o CMakeFiles/cmTC_dec5a.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_dec5a
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_dec5a.dir/link.txt --verbose=1
-/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow  -rdynamic CMakeFiles/cmTC_dec5a.dir/src.c.o -o cmTC_dec5a 
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_9f127/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_9f127.dir/build.make CMakeFiles/cmTC_9f127.dir/build
+gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_9f127.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_Winitself  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow    -Winit-self -o CMakeFiles/cmTC_9f127.dir/src.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_9f127
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9f127.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow  -rdynamic CMakeFiles/cmTC_9f127.dir/src.c.o -o cmTC_9f127 
+gmake[5]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
 int main(void) { return 0; }
 Performing C SOURCE FILE Test FLAG_SUPPORTED_Wcastalign succeeded with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_8982d/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_8982d.dir/build.make CMakeFiles/cmTC_8982d.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_8982d.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_Wcastalign  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self    -Wcast-align -o CMakeFiles/cmTC_8982d.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_8982d
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8982d.dir/link.txt --verbose=1
-/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self  -rdynamic CMakeFiles/cmTC_8982d.dir/src.c.o -o cmTC_8982d 
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_d8a12/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_d8a12.dir/build.make CMakeFiles/cmTC_d8a12.dir/build
+gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_d8a12.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_Wcastalign  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self    -Wcast-align -o CMakeFiles/cmTC_d8a12.dir/src.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_d8a12
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d8a12.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self  -rdynamic CMakeFiles/cmTC_d8a12.dir/src.c.o -o cmTC_d8a12 
+gmake[5]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
 int main(void) { return 0; }
 Performing C SOURCE FILE Test FLAG_SUPPORTED_Wformat2 succeeded with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_0a9bc/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_0a9bc.dir/build.make CMakeFiles/cmTC_0a9bc.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_0a9bc.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_Wformat2  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align    -Wformat=2 -o CMakeFiles/cmTC_0a9bc.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_0a9bc
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0a9bc.dir/link.txt --verbose=1
-/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align  -rdynamic CMakeFiles/cmTC_0a9bc.dir/src.c.o -o cmTC_0a9bc 
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_9c778/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_9c778.dir/build.make CMakeFiles/cmTC_9c778.dir/build
+gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_9c778.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_Wformat2  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align    -Wformat=2 -o CMakeFiles/cmTC_9c778.dir/src.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_9c778
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9c778.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align  -rdynamic CMakeFiles/cmTC_9c778.dir/src.c.o -o cmTC_9c778 
+gmake[5]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
 int main(void) { return 0; }
 Performing C SOURCE FILE Test FLAG_SUPPORTED_Wmissingprototypes succeeded with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_32f83/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_32f83.dir/build.make CMakeFiles/cmTC_32f83.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_32f83.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_Wmissingprototypes  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2    -Wmissing-prototypes -o CMakeFiles/cmTC_32f83.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_32f83
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_32f83.dir/link.txt --verbose=1
-/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2  -rdynamic CMakeFiles/cmTC_32f83.dir/src.c.o -o cmTC_32f83 
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_48f95/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_48f95.dir/build.make CMakeFiles/cmTC_48f95.dir/build
+gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_48f95.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_Wmissingprototypes  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2    -Wmissing-prototypes -o CMakeFiles/cmTC_48f95.dir/src.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_48f95
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_48f95.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2  -rdynamic CMakeFiles/cmTC_48f95.dir/src.c.o -o cmTC_48f95 
+gmake[5]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
 int main(void) { return 0; }
 Performing C SOURCE FILE Test FLAG_SUPPORTED_Wstrictoverflow2 succeeded with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_78e5f/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_78e5f.dir/build.make CMakeFiles/cmTC_78e5f.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_78e5f.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_Wstrictoverflow2  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes    -Wstrict-overflow=2 -o CMakeFiles/cmTC_78e5f.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_78e5f
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_78e5f.dir/link.txt --verbose=1
-/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes  -rdynamic CMakeFiles/cmTC_78e5f.dir/src.c.o -o cmTC_78e5f 
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_5f86b/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_5f86b.dir/build.make CMakeFiles/cmTC_5f86b.dir/build
+gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_5f86b.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_Wstrictoverflow2  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes    -Wstrict-overflow=2 -o CMakeFiles/cmTC_5f86b.dir/src.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_5f86b
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5f86b.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes  -rdynamic CMakeFiles/cmTC_5f86b.dir/src.c.o -o cmTC_5f86b 
+gmake[5]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
 int main(void) { return 0; }
 Performing C SOURCE FILE Test FLAG_SUPPORTED_Wcastqual succeeded with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_9c31c/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_9c31c.dir/build.make CMakeFiles/cmTC_9c31c.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_9c31c.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_Wcastqual  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2    -Wcast-qual -o CMakeFiles/cmTC_9c31c.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_9c31c
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9c31c.dir/link.txt --verbose=1
-/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2  -rdynamic CMakeFiles/cmTC_9c31c.dir/src.c.o -o cmTC_9c31c 
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_36421/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_36421.dir/build.make CMakeFiles/cmTC_36421.dir/build
+gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_36421.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_Wcastqual  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2    -Wcast-qual -o CMakeFiles/cmTC_36421.dir/src.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_36421
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_36421.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2  -rdynamic CMakeFiles/cmTC_36421.dir/src.c.o -o cmTC_36421 
+gmake[5]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
 int main(void) { return 0; }
 Performing C SOURCE FILE Test FLAG_SUPPORTED_Wundef succeeded with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_1b757/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_1b757.dir/build.make CMakeFiles/cmTC_1b757.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_1b757.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_Wundef  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual    -Wundef -o CMakeFiles/cmTC_1b757.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_1b757
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1b757.dir/link.txt --verbose=1
-/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual  -rdynamic CMakeFiles/cmTC_1b757.dir/src.c.o -o cmTC_1b757 
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_28ce9/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_28ce9.dir/build.make CMakeFiles/cmTC_28ce9.dir/build
+gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_28ce9.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_Wundef  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual    -Wundef -o CMakeFiles/cmTC_28ce9.dir/src.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_28ce9
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_28ce9.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual  -rdynamic CMakeFiles/cmTC_28ce9.dir/src.c.o -o cmTC_28ce9 
+gmake[5]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
 int main(void) { return 0; }
 Performing C SOURCE FILE Test FLAG_SUPPORTED_Wswitchdefault succeeded with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_85481/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_85481.dir/build.make CMakeFiles/cmTC_85481.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_85481.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_Wswitchdefault  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef    -Wswitch-default -o CMakeFiles/cmTC_85481.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_85481
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_85481.dir/link.txt --verbose=1
-/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef  -rdynamic CMakeFiles/cmTC_85481.dir/src.c.o -o cmTC_85481 
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_7988d/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_7988d.dir/build.make CMakeFiles/cmTC_7988d.dir/build
+gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_7988d.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_Wswitchdefault  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef    -Wswitch-default -o CMakeFiles/cmTC_7988d.dir/src.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_7988d
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7988d.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef  -rdynamic CMakeFiles/cmTC_7988d.dir/src.c.o -o cmTC_7988d 
+gmake[5]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
 int main(void) { return 0; }
 Performing C SOURCE FILE Test FLAG_SUPPORTED_Wconversion succeeded with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_e6336/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_e6336.dir/build.make CMakeFiles/cmTC_e6336.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_e6336.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_Wconversion  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default    -Wconversion -o CMakeFiles/cmTC_e6336.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_e6336
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e6336.dir/link.txt --verbose=1
-/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default  -rdynamic CMakeFiles/cmTC_e6336.dir/src.c.o -o cmTC_e6336 
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_96c99/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_96c99.dir/build.make CMakeFiles/cmTC_96c99.dir/build
+gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_96c99.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_Wconversion  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default    -Wconversion -o CMakeFiles/cmTC_96c99.dir/src.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_96c99
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_96c99.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default  -rdynamic CMakeFiles/cmTC_96c99.dir/src.c.o -o cmTC_96c99 
+gmake[5]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
 int main(void) { return 0; }
 Performing C SOURCE FILE Test FLAG_SUPPORTED_Wccompat succeeded with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_2cd90/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_2cd90.dir/build.make CMakeFiles/cmTC_2cd90.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_2cd90.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_Wccompat  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion    -Wc++-compat -o CMakeFiles/cmTC_2cd90.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_2cd90
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2cd90.dir/link.txt --verbose=1
-/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion  -rdynamic CMakeFiles/cmTC_2cd90.dir/src.c.o -o cmTC_2cd90 
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_9fda2/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_9fda2.dir/build.make CMakeFiles/cmTC_9fda2.dir/build
+gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_9fda2.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_Wccompat  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion    -Wc++-compat -o CMakeFiles/cmTC_9fda2.dir/src.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_9fda2
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9fda2.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion  -rdynamic CMakeFiles/cmTC_9fda2.dir/src.c.o -o cmTC_9fda2 
+gmake[5]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
 int main(void) { return 0; }
 Performing C SOURCE FILE Test FLAG_SUPPORTED_fstackprotectorstrong succeeded with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_e4e23/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_e4e23.dir/build.make CMakeFiles/cmTC_e4e23.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_e4e23.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_fstackprotectorstrong  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat    -fstack-protector-strong -o CMakeFiles/cmTC_e4e23.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_e4e23
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e4e23.dir/link.txt --verbose=1
-/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat  -rdynamic CMakeFiles/cmTC_e4e23.dir/src.c.o -o cmTC_e4e23 
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_9baf3/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_9baf3.dir/build.make CMakeFiles/cmTC_9baf3.dir/build
+gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_9baf3.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_fstackprotectorstrong  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat    -fstack-protector-strong -o CMakeFiles/cmTC_9baf3.dir/src.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_9baf3
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9baf3.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat  -rdynamic CMakeFiles/cmTC_9baf3.dir/src.c.o -o cmTC_9baf3 
+gmake[5]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
 int main(void) { return 0; }
 Performing C SOURCE FILE Test FLAG_SUPPORTED_Wdoublepromotion succeeded with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_29c95/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_29c95.dir/build.make CMakeFiles/cmTC_29c95.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_29c95.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_Wdoublepromotion  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong    -Wdouble-promotion -o CMakeFiles/cmTC_29c95.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_29c95
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_29c95.dir/link.txt --verbose=1
-/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong  -rdynamic CMakeFiles/cmTC_29c95.dir/src.c.o -o cmTC_29c95 
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_a314b/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_a314b.dir/build.make CMakeFiles/cmTC_a314b.dir/build
+gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_a314b.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_Wdoublepromotion  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong    -Wdouble-promotion -o CMakeFiles/cmTC_a314b.dir/src.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_a314b
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a314b.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong  -rdynamic CMakeFiles/cmTC_a314b.dir/src.c.o -o cmTC_a314b 
+gmake[5]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
 int main(void) { return 0; }
 Performing C SOURCE FILE Test FLAG_SUPPORTED_Wparentheses succeeded with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_ab591/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_ab591.dir/build.make CMakeFiles/cmTC_ab591.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_ab591.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_Wparentheses  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong -Wdouble-promotion    -Wparentheses -o CMakeFiles/cmTC_ab591.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_ab591
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ab591.dir/link.txt --verbose=1
-/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong -Wdouble-promotion  -rdynamic CMakeFiles/cmTC_ab591.dir/src.c.o -o cmTC_ab591 
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_6112c/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_6112c.dir/build.make CMakeFiles/cmTC_6112c.dir/build
+gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_6112c.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_Wparentheses  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong -Wdouble-promotion    -Wparentheses -o CMakeFiles/cmTC_6112c.dir/src.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_6112c
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6112c.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong -Wdouble-promotion  -rdynamic CMakeFiles/cmTC_6112c.dir/src.c.o -o cmTC_6112c 
+gmake[5]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
 int main(void) { return 0; }
 Performing C SOURCE FILE Test FLAG_SUPPORTED_Wformatoverflow succeeded with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_80203/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_80203.dir/build.make CMakeFiles/cmTC_80203.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_80203.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_Wformatoverflow  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong -Wdouble-promotion -Wparentheses    -Wformat-overflow -o CMakeFiles/cmTC_80203.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_80203
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_80203.dir/link.txt --verbose=1
-/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong -Wdouble-promotion -Wparentheses  -rdynamic CMakeFiles/cmTC_80203.dir/src.c.o -o cmTC_80203 
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_3e41b/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_3e41b.dir/build.make CMakeFiles/cmTC_3e41b.dir/build
+gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_3e41b.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_Wformatoverflow  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong -Wdouble-promotion -Wparentheses    -Wformat-overflow -o CMakeFiles/cmTC_3e41b.dir/src.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_3e41b
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3e41b.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong -Wdouble-promotion -Wparentheses  -rdynamic CMakeFiles/cmTC_3e41b.dir/src.c.o -o cmTC_3e41b 
+gmake[5]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
 int main(void) { return 0; }
 Performing C SOURCE FILE Test FLAG_SUPPORTED_Wunusedmacros succeeded with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_404d1/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_404d1.dir/build.make CMakeFiles/cmTC_404d1.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_404d1.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_Wunusedmacros  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong -Wdouble-promotion -Wparentheses -Wformat-overflow    -Wunused-macros -o CMakeFiles/cmTC_404d1.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_404d1
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_404d1.dir/link.txt --verbose=1
-/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong -Wdouble-promotion -Wparentheses -Wformat-overflow  -rdynamic CMakeFiles/cmTC_404d1.dir/src.c.o -o cmTC_404d1 
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_3b843/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_3b843.dir/build.make CMakeFiles/cmTC_3b843.dir/build
+gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_3b843.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_Wunusedmacros  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong -Wdouble-promotion -Wparentheses -Wformat-overflow    -Wunused-macros -o CMakeFiles/cmTC_3b843.dir/src.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_3b843
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3b843.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong -Wdouble-promotion -Wparentheses -Wformat-overflow  -rdynamic CMakeFiles/cmTC_3b843.dir/src.c.o -o cmTC_3b843 
+gmake[5]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
 int main(void) { return 0; }
 Performing C SOURCE FILE Test FLAG_SUPPORTED_Wswitchenum succeeded with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_40b53/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_40b53.dir/build.make CMakeFiles/cmTC_40b53.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_40b53.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_Wswitchenum  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong -Wdouble-promotion -Wparentheses -Wformat-overflow -Wunused-macros    -Wswitch-enum -o CMakeFiles/cmTC_40b53.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_40b53
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_40b53.dir/link.txt --verbose=1
-/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong -Wdouble-promotion -Wparentheses -Wformat-overflow -Wunused-macros  -rdynamic CMakeFiles/cmTC_40b53.dir/src.c.o -o cmTC_40b53 
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_871a6/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_871a6.dir/build.make CMakeFiles/cmTC_871a6.dir/build
+gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_871a6.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_Wswitchenum  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong -Wdouble-promotion -Wparentheses -Wformat-overflow -Wunused-macros    -Wswitch-enum -o CMakeFiles/cmTC_871a6.dir/src.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_871a6
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_871a6.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong -Wdouble-promotion -Wparentheses -Wformat-overflow -Wunused-macros  -rdynamic CMakeFiles/cmTC_871a6.dir/src.c.o -o cmTC_871a6 
+gmake[5]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
 int main(void) { return 0; }
 Performing C SOURCE FILE Test FLAG_SUPPORTED_fvisibilityhidden succeeded with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_0228d/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_0228d.dir/build.make CMakeFiles/cmTC_0228d.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_0228d.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_fvisibilityhidden  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong -Wdouble-promotion -Wparentheses -Wformat-overflow -Wunused-macros -Wswitch-enum    -fvisibility=hidden -o CMakeFiles/cmTC_0228d.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_0228d
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0228d.dir/link.txt --verbose=1
-/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong -Wdouble-promotion -Wparentheses -Wformat-overflow -Wunused-macros -Wswitch-enum  -rdynamic CMakeFiles/cmTC_0228d.dir/src.c.o -o cmTC_0228d 
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_9db9f/fast && gmake[4]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_9db9f.dir/build.make CMakeFiles/cmTC_9db9f.dir/build
+gmake[5]: Entering directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_9db9f.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_fvisibilityhidden  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong -Wdouble-promotion -Wparentheses -Wformat-overflow -Wunused-macros -Wswitch-enum    -fvisibility=hidden -o CMakeFiles/cmTC_9db9f.dir/src.c.o -c /home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_9db9f
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9db9f.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong -Wdouble-promotion -Wparentheses -Wformat-overflow -Wunused-macros -Wswitch-enum  -rdynamic CMakeFiles/cmTC_9db9f.dir/src.c.o -o cmTC_9db9f 
+gmake[5]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: Leaving directory '/home/fyou/Desktop/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:

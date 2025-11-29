@@ -116,6 +116,8 @@ struct VPNInstance {
         enabled(false),
         auto_connect(false),
         interface_name(""),
+        status(""),
+        last_used(""),
         thread_id(0),
         current_state(ConnectionState::INITIAL),
         start_time(0),
@@ -325,6 +327,9 @@ public:
     CleanupVerifier* getCleanupVerifier() { return cleanup_verifier_.get(); }
     CleanupCronJob* getCleanupCronJob() { return cleanup_cron_job_.get(); }
     ThreadMgr::ThreadManager* getThreadManager() { return thread_manager_.get(); }
+    
+    // Live data collection
+    std::vector<const VPNInstance*> getAllInstancesForLiveData();
 
 private:
     std::map<std::string, VPNInstance> instances_;
