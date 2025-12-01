@@ -1,11 +1,12 @@
 #include "qmi_scanner.h"
+#include "rpc_client.hpp"
+#include "rpc_operation_processor.hpp"
 #include <iostream>
 #include <signal.h>
 #include <chrono>
 #include <thread>
 #include <string>
-#include <gateway.hpp>
-#include <user-level.h>
+#include <atomic>
 
 #include <vector>
 #include <nlohmann/json.hpp>
@@ -13,58 +14,50 @@
 
 
 static QMIScanner* g_scanner = nullptr;
-static bool running = true;
+static std::atomic<bool> g_running(true);
 
-using namespace DirectTemplate;
+// Global RPC client and operation processor for signal handling
+std::shared_ptr<RpcClient> g_rpcClient;
+std::unique_ptr<RpcOperationProcessor> g_operationProcessor;
+
 
 static std::atomic<int> message_counter(0);
 
-using namespace ThreadMgr;
-ThreadManager manager(5);
 
 void signalHandler(int signal) {
     std::cout << "Shutting down system..." << std::endl;
     g_running = false;
+    
+    // Stop RPC client first
+    if (g_rpcClient) {
+        g_rpcClient->stop();
+    }
+    
     if (g_scanner) {
         g_scanner->stopMonitoring();
     }
     exit(-1);
 }
 
-void threads_monitor_lookfor(){
-    #ifdef __THREAD_MON
-    std::cout << "\nMonitoring thread states..." << std::endl;
-    auto threadIds = manager.getAllThreadIds();
-    for (auto id : threadIds) {
-        auto info = manager.getThreadInfo(id);
-        std::cout << "Thread " << id << " state: ";
-        switch (info.state) {
-            case ThreadState::Created: std::cout << "Created"; break;
-            case ThreadState::Running: std::cout << "Running"; break;
-            case ThreadState::Paused: std::cout << "Paused"; break;
-            case ThreadState::Stopped: std::cout << "Stopped"; break;
-            case ThreadState::Error: std::cout << "Error"; break;
-        }
-        std::cout << std::endl;
-    }
-    #endif
-}
 
 void printUsage(const char* programName) {
-    std::cout << "Usage: " << programName << " [OPTIONS] <file_path>\n"
+    std::cout << "Usage: " << programName << " [OPTIONS]\n"
               << "Options:\n"
               << "  -basic          Run in basic mode (default)\n"
               << "  -advanced       Run in advanced mode\n"
               << "  -manager        Run in manager mode\n"
-              << "  -rpc_config <file>  Specify RPC configuration file (required)\n"
+              << "  --rpc-config    Enable RPC mode with specified config file\n"
               << "  -h, --help      Show this help message\n"
               << "\n"
               << "Example:\n"
-              << "  " << programName << " -manager -rpc_config config.json data_file.txt\n"
-              << "  " << programName << " -advanced -rpc_config /path/to/config.json /path/to/data_file\n";
+              << "  " << programName << " -manager\n"
+              << "  " << programName << " -advanced\n"
+              << "  " << programName << " -basic\n"
+              << "  " << programName << " --rpc-config ur-rpc-config.json\n"
+              << "  " << programName << " -manager --rpc-config ur-rpc-config.json\n";
 }
 
-void ScannerThread(ProfileMode* mode) {
+void ScannerThread(ProfileMode* mode, std::shared_ptr<RpcClient> rpcClient) {
     std::cout << "Starting QMI Device Scanner in " 
               << (*mode == ProfileMode::BASIC ? "BASIC" : 
                   *mode == ProfileMode::ADVANCED ? "ADVANCED" : "MANAGER") 
@@ -72,6 +65,9 @@ void ScannerThread(ProfileMode* mode) {
 
     QMIScanner scanner;
     g_scanner = &scanner;
+    
+    // Set RPC client for publishing device discovery events
+    scanner.setRpcClient(rpcClient);
 
     if (*mode == ProfileMode::BASIC) {
         scanner.setProfileCallback([](const DeviceProfile& profile, bool added) {
@@ -116,29 +112,12 @@ void ScannerThread(ProfileMode* mode) {
     std::cout << "Scanner thread finished." << std::endl;
 }
 
-void TargetedRPCResponder::handleRequestMessage(const std::string& topic, const std::string& payload) {
-    Utils::logInfo("Responder Handling Process...");
-    TargetedRequestData request = TargetedRequestParser::parseTargetedRequest(payload);
-    if (request.method.find("qmi-stack-module-startup")!=s td::string::npos){
-        if (g_responder) {
-            auto now = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
-            Utils::logInfo("Response Process ...");            
-            g_responder->sendResponse(request.response_topic,request.transaction_id,request.method,true,g_scanner->getRegistryJson() ,now);
-        }
-    }
-    return ;
-}
-
-void handleIncomingMessage(const std::string& topic, const std::string& payload){
-    Utils::logInfo("Handling Cureent message... ");
-    handleTargetedMessage(topic, payload, g_requester.get(), g_responder.get());
-}
 
 int main(int argc, char* argv[]) {
-    std::string rpcConfigPath;
     ProfileMode mode = ProfileMode::BASIC; 
-    bool hasRpcConfig = false;
     bool modeSpecified = false;
+    std::string rpc_config_path;
+    bool rpc_mode = false;
 
     for (int i = 1; i < argc; i++) {
         std::string arg = argv[i];
@@ -170,21 +149,15 @@ int main(int argc, char* argv[]) {
             mode = ProfileMode::MANAGER;
             modeSpecified = true;
         } 
-        else if (arg == "-rpc_config") {
-            if (hasRpcConfig) {
-                std::cerr << "Error: Multiple -rpc_config options specified" << std::endl;
+        else if (arg == "--rpc-config") {
+            if (i + 1 >= argc) {
+                std::cerr << "Error: --rpc-config requires a configuration file path" << std::endl;
                 printUsage(argv[0]);
                 return 1;
             }
-            if (i + 1 < argc) {
-                rpcConfigPath = argv[++i];
-                hasRpcConfig = true;
-            } else {
-                std::cerr << "Error: -rpc_config requires a file path argument" << std::endl;
-                printUsage(argv[0]);
-                return 1;
-            }
-        } 
+            rpc_config_path = argv[++i];
+            rpc_mode = true;
+        }
         else if (arg == "-h" || arg == "--help") {
             printUsage(argv[0]);
             return 0;
@@ -200,32 +173,99 @@ int main(int argc, char* argv[]) {
             return 1;
         }
     }
-    if (!hasRpcConfig) {
-        std::cerr << "Error: -rpc_config is required" << std::endl;
-        printUsage(argv[0]);
-        return 1;
-    }
-    if (!modeSpecified) {
+    
+    if (!modeSpecified && !rpc_mode) {
         std::cout << "Warning: No mode specified, using default: BASIC" << std::endl;
     }
+    
     signal(SIGINT, signalHandler);
     signal(SIGTERM, signalHandler);
+    
     try {
-        ThreadManager::setLogLevel(LogLevel::Info);        
-        std::cout << "\n1. Creating identification thread ..." << std::endl;
-        auto qmi_lookfor_rpc = manager.createThread(RpcClientThread, rpcConfigPath);
-        auto qmi_lookfor_id = manager.createThread<void(*)(ProfileMode*), ProfileMode*>(ScannerThread, &mode);
-        while (g_running.load()) {
-            std::this_thread::sleep_for(std::chrono::seconds(1));
-            threads_monitor_lookfor();
+        // Initialize RPC client if RPC mode is enabled
+        if (rpc_mode) {
+            std::cout << "\n[Main] Starting RPC mode..." << std::endl;
+            std::cout << "[Main] RPC config: " << rpc_config_path << std::endl;
+            
+            // Initialize RPC client
+            g_rpcClient = std::make_shared<RpcClient>(rpc_config_path, "ur-qmi-ident");
+            
+            // Initialize operation processor
+            g_operationProcessor = std::make_unique<RpcOperationProcessor>(true);
+            
+            // CRITICAL: Set message handler BEFORE starting the client
+            std::cout << "[Main] Setting up message handler..." << std::endl;
+            g_rpcClient->setMessageHandler(
+                [&](const std::string &topic, const std::string &payload) {
+                    // Only process messages on the request topic
+                    if (topic.find("direct_messaging/ur-qmi-ident/requests") == std::string::npos) return;
+                    g_operationProcessor->processRequest(payload.c_str(), payload.size());
+                });
+
+            std::cout << "[Main] Starting RPC client..." << std::endl;
+            bool rpcStarted = g_rpcClient->start();
+            if (!rpcStarted) {
+                std::cerr << "[Main] Failed to start RPC client, continuing with scanner only..." << std::endl;
+                // Don't return error, continue with scanner but without RPC publishing
+            } else {
+                std::cout << "[Main] RPC client started successfully" << std::endl;
+                std::cout << "[Main] Responding on: direct_messaging/ur-qmi-ident/responses"
+                  << std::endl;
+            }
+            std::cout
+                << "[Main] Listening on: direct_messaging/ur-qmi-ident/requests"
+                << std::endl;
+            std::cout
+                << "[Main] Responding on: direct_messaging/ur-qmi-ident/responses"
+                << std::endl;
         }
+        
+        // Start scanner in parallel with RPC or standalone
+        if (rpc_mode || modeSpecified) {
+            std::cout << "\n[Main] Starting QMI device identification..." << std::endl;
+            
+            // Create scanner thread
+            std::thread scanner_thread(ScannerThread, &mode, g_rpcClient);
+            
+            // Set scanner reference for RPC operations
+            if (rpc_mode && g_operationProcessor) {
+                // Wait a moment for scanner to initialize
+                std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                g_operationProcessor->setScanner(g_scanner);
+            }
+            
+            // Main loop - keep running until signal received
+            while (g_running.load()) {
+                std::this_thread::sleep_for(std::chrono::seconds(1));
+            }
+            
+            scanner_thread.join();
+        } else {
+            // Default behavior - just run scanner
+            std::cout << "\n[Main] Starting QMI device identification in BASIC mode..." << std::endl;
+            
+            // Create scanner thread (no RPC client for standalone mode)
+            std::thread scanner_thread(ScannerThread, &mode, nullptr);
+            
+            while (g_running.load()) {
+                std::this_thread::sleep_for(std::chrono::seconds(1));
+            }
+            
+            scanner_thread.join();
+        }
+        
+        // Graceful shutdown for RPC mode
+        if (rpc_mode && g_rpcClient) {
+            std::cout << "[Main] Shutting down RPC client..." << std::endl;
+            g_rpcClient->stop();
+        }
+        
     }
-    catch (const ThreadManagerException& e) {
-        std::cerr << "ThreadManager error: " << e.what() << std::endl;
-        return 1;
-    } catch (const std::exception& e) {
+    catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
         return 1;
     }
+    
+    std::cout << "[Main] Application stopped" << std::endl;
     return 0;
 }

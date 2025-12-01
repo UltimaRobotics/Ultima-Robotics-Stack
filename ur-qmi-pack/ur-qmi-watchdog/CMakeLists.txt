@@ -20,18 +20,12 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 if(JSONCPP_FOUND)
     include_directories(${JSONCPP_INCLUDE_DIRS})
 endif()
-# Add subdirectories directly (no custom target needed)
-add_subdirectory(thirdparty/ur-rpc-template)
-add_subdirectory(thirdparty/ur-threadder-api)
 
-message(STATUS "LIBS = ${THREADDER_LIBS} ${RPC_TEMPLATE_LIBS}")
-message(STATUS "INCLUDE_DIRS = ${THREADDER_INCLUDE_DIRS} ${RPC_TEMPLATE_INCLUDE_DIRS}")
 
 # Add executable
 add_executable(ur-qmi-watchdog
     ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/qmi_watchdog.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/shared/user-level.cpp
 )
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
@@ -45,17 +39,12 @@ target_link_libraries(ur-qmi-watchdog
 target_include_directories(ur-qmi-watchdog PRIVATE 
     ${UDEV_INCLUDE_DIRS}
     ${JSONCPP_INCLUDE_DIRS}
-    ${THREADDER_INCLUDE_DIRS}
-    ${RPC_TEMPLATE_INCLUDE_DIRS}
     src
-    shared
 )
 
 target_link_libraries(ur-qmi-watchdog 
     ${UDEV_LIBRARIES}
     ${JSONCPP_LIBRARIES}
-    ${THREADDER_LIBS}
-    ${RPC_TEMPLATE_LIBS}
     pthread
 )
 

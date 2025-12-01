@@ -1,21 +1,21 @@
 #include "qmi_scanner.h"
 #include "qmi_dev_scan_agent.h"
-#include <iostream>
-#include <sstream>
+#include "qmi_device_registry.h"
+#include "rpc_client.hpp"
+#include <cstring>
 #include <fstream>
-#include <regex>
-#include <cstdlib>
-#include <unistd.h>
-#include <sys/select.h>
-#include <libudev.h>
-#include <mutex>
-#include <json/json.h>
+#include <sstream>
+#include <iomanip>
+#include <algorithm>
+#include <random>
+#include <chrono>
+#include <iostream>
+#include <nlohmann/json.hpp>
 #include <filesystem>
 #include <qmi_device_registry.h>
-
-#include <gateway.hpp>
-
-using namespace DirectTemplate;
+#include <regex>
+#include <libudev.h>
+#include <unistd.h>
 
 QMIScanner::QMIScanner()
     : m_profile_mode(ProfileMode::BASIC), m_monitoring(false), m_udev(nullptr), m_monitor(nullptr), m_monitor_fd(-1) {
@@ -90,6 +90,8 @@ bool QMIScanner::initialize(ProfileMode mode) {
         // Report advanced profiles
         for (const auto& profile : m_current_advanced_profiles) {
             reportAdvancedProfile(profile, true);
+            // Publish device discovery event to watchdog
+            publishDeviceDiscovery(profile, true);
         }
         
     } else if (mode == ProfileMode::MANAGER) {
@@ -100,6 +102,16 @@ bool QMIScanner::initialize(ProfileMode mode) {
         // Report devices
         for (const auto& device : m_current_devices) {
             reportDevice(device, true);
+            // Convert to AdvancedDeviceProfile for publishing
+            AdvancedDeviceProfile advancedProfile;
+            advancedProfile.basic.path = device.device_path;
+            advancedProfile.basic.imei = device.imei;
+            advancedProfile.basic.model = device.model;
+            advancedProfile.basic.firmware = device.firmware_version;
+            advancedProfile.manufacturer = device.manufacturer;
+            // Note: In MANAGER mode, we could enhance this to collect more advanced data
+            // For now, we'll publish what we have
+            publishDeviceDiscovery(advancedProfile, true);
         }
     }
 
@@ -358,19 +370,21 @@ void QMIScanner::parseAdvancedDeviceProfile(const std::string& device_path, Adva
     // Try factory SKU (usually works)
     profile.factory_sku = parseFactorySKU(executeCommandSafe("qmicli -d " + device_path + " --dms-get-factory-sku"));
     
+    // Try user lock state (may work with sudo)
+    profile.user_lock_state = parseUserLockState(executeCommandSafe("qmicli -d " + device_path + " --dms-get-user-lock-state"));
+    
     // Network interface MAC addresses (alternative approach)
     profile.mac_address_wlan = getMACAddress("wlan0");
     profile.mac_address_bt = getMACAddress("hci0");
     
-    // Set defaults for removed/failing commands
-    profile.prl_version = "";  // Removed: NotSupported
-    profile.activation_state = "";  // Removed: DeviceUnsupported
-    profile.user_lock_state = "";  // Removed: NotSupported
-    profile.firmware_preference = "";  // Removed: WmsInvalidMessageId
-    profile.boot_image_download_mode = "";  // Removed: WmsInvalidMessageId
-    profile.usb_composition = "";  // Removed: WmsInvalidMessageId
-    profile.stored_images.clear();  // Removed: WmsInvalidMessageId
-    profile.imsi = "";  // Removed: Unknown option
+    // Set defaults for commands that don't work on this device
+    profile.prl_version = "";  // DeviceUnsupported
+    profile.activation_state = "";  // DeviceUnsupported
+    profile.firmware_preference = "";  // WmsInvalidMessageId
+    profile.boot_image_download_mode = "";  // WmsInvalidMessageId
+    profile.usb_composition = "";  // Unknown option
+    profile.stored_images.clear();  // WmsInvalidMessageId
+    profile.imsi = "";  // Unknown option
     
     // Set reasonable defaults for empty values
     if (profile.manufacturer.empty()) profile.manufacturer = "Unknown";
@@ -431,6 +445,7 @@ std::string QMIScanner::parseMSISDN(const std::string& output) {
 std::string QMIScanner::parsePowerState(const std::string& output) {
     if (output.empty()) return "Online";
     
+    // Handle the actual output format: "Power state: 'external-source'"
     std::regex power_regex(R"(Power state:\s*'([^']+)')");
     std::smatch match;
     if (std::regex_search(output, match, power_regex)) {
@@ -439,7 +454,9 @@ std::string QMIScanner::parsePowerState(const std::string& output) {
     
     // Handle case where power state is shown differently
     if (output.find("external-source") != std::string::npos) return "External Source";
-    if (output.find("battery") != std::string::npos) return "Battery";
+    if (output.find("full-power") != std::string::npos) return "Full Power";
+    if (output.find("low-power") != std::string::npos) return "Low Power";
+    if (output.find("battery-charging") != std::string::npos) return "Battery Charging";
     
     return "Online";
 }
@@ -447,6 +464,7 @@ std::string QMIScanner::parsePowerState(const std::string& output) {
 std::string QMIScanner::parseHardwareRevision(const std::string& output) {
     if (output.empty()) return "";
     
+    // Handle the actual output format: "Revision: 'V1.0.1'"
     std::regex hw_regex(R"(Revision:\s*'([^']+)')");
     std::smatch match;
     if (std::regex_search(output, match, hw_regex)) {
@@ -465,6 +483,7 @@ std::string QMIScanner::parseHardwareRevision(const std::string& output) {
 std::string QMIScanner::parseOperatingMode(const std::string& output) {
     if (output.empty()) return "Online";
     
+    // Handle the actual output format: "Mode: 'online'"
     std::regex mode_regex(R"(Mode:\s*'([^']+)')");
     std::smatch match;
     if (std::regex_search(output, match, mode_regex)) {
@@ -474,6 +493,9 @@ std::string QMIScanner::parseOperatingMode(const std::string& output) {
     // Check for mode in different format
     if (output.find("online") != std::string::npos) return "Online";
     if (output.find("offline") != std::string::npos) return "Offline";
+    if (output.find("factory-test") != std::string::npos) return "Factory Test";
+    if (output.find("reset") != std::string::npos) return "Reset";
+    if (output.find("shipping-mode") != std::string::npos) return "Shipping Mode";
     if (output.find("low-power") != std::string::npos) return "Low Power";
     
     return "Online";
@@ -548,6 +570,24 @@ std::string QMIScanner::parsePINStatus(const std::string& output) {
     }
     
     return "Unknown";
+}
+
+std::string QMIScanner::parseUserLockState(const std::string& output) {
+    if (output.empty()) return "";
+    
+    // Handle the actual output format: "Enabled: 'no'"
+    std::regex lock_regex(R"(Enabled:\s*'([^']+)')");
+    std::smatch match;
+    if (std::regex_search(output, match, lock_regex)) {
+        std::string enabled = match[1].str();
+        return (enabled == "yes") ? "Enabled" : "Disabled";
+    }
+    
+    // Alternative format
+    if (output.find("Enabled: 'yes'") != std::string::npos) return "Enabled";
+    if (output.find("Enabled: 'no'") != std::string::npos) return "Disabled";
+    
+    return "";
 }
 
 std::string QMIScanner::parseTime(const std::string& output) {
@@ -664,10 +704,39 @@ std::string QMIScanner::getMACAddress(const std::string& interface) {
 }
 
 SIMStatus QMIScanner::collectSIMStatus(const std::string& device_path) {
+    SIMStatus sim_status;
+    
+    // Primary SIM status command
     std::string sim_cmd = "qmicli -d " + device_path + " --uim-get-card-status";
     std::string sim_output = executeCommandSafe(sim_cmd);
     
-    return parseSIMCardStatus(sim_output);
+    if (!sim_output.empty()) {
+        sim_status = parseSIMCardStatus(sim_output);
+    }
+    
+    // Additional PIN status verification for more detailed info
+    std::string pin_cmd = "qmicli -d " + device_path + " --uim-get-pin-status";
+    std::string pin_output = executeCommandSafe(pin_cmd);
+    
+    if (!pin_output.empty()) {
+        // Enhance PIN status with additional verification data
+        enhancePINStatus(pin_output, sim_status);
+    }
+    
+    // If basic parsing failed, try alternative approaches
+    if (sim_status.card_state.empty()) {
+        sim_status.card_state = "Unknown";
+        sim_status.application_state = "Unknown";
+        
+        // Try to detect at least if card is present
+        if (sim_output.find("Card state: 'present'") != std::string::npos) {
+            sim_status.card_state = "Present";
+        } else if (sim_output.find("Card state: 'absent'") != std::string::npos) {
+            sim_status.card_state = "Absent";
+        }
+    }
+    
+    return sim_status;
 }
 
 SIMStatus QMIScanner::parseSIMCardStatus(const std::string& output) {
@@ -822,41 +891,100 @@ SIMStatus QMIScanner::parseSIMCardStatus(const std::string& output) {
     return sim_status;
 }
 
-std::string sendDeviceDataTargeted(const Json::Value& device_json, const std::string& target_client = "ur-dumped-messages") {
-    try {
-        while (!GlobalClientThraedRef || !GlobalClientThraedRef->isConnected()) {
-            std::cerr << "Target Thread process Warning: Client Thread not connected, cannot send device data" << std::endl;
-            std::this_thread::sleep_for(std::chrono::milliseconds(500));
-            if (!g_running.load()) return "stopped";
+void QMIScanner::enhancePINStatus(const std::string& pin_output, SIMStatus& sim_status) {
+    if (pin_output.empty()) return;
+    
+    std::istringstream iss(pin_output);
+    std::string line;
+    
+    while (std::getline(iss, line)) {
+        // Trim whitespace
+        line.erase(0, line.find_first_not_of(" \t"));
+        line.erase(line.find_last_not_of(" \t") + 1);
+        
+        // Parse PIN1 verification status
+        if (line.find("PIN1 verify enabled:") != std::string::npos) {
+            if (line.find("'yes'") != std::string::npos) {
+                sim_status.pin1_state = "enabled-verified";
+            } else {
+                sim_status.pin1_state = "disabled";
+            }
         }
         
-        if (!g_requester) {
-            std::cerr << "Error: Targeted RPC Requester not initialized" << std::endl;
-            return "error";
+        // Parse PIN1 remaining retries
+        if (line.find("PIN1 remaining retries:") != std::string::npos) {
+            std::regex retries_regex(R"(PIN1 remaining retries:\s*'(\d+)')");
+            std::smatch match;
+            if (std::regex_search(line, match, retries_regex)) {
+                sim_status.pin1_retries = std::stoi(match[1].str());
+            }
         }
         
-        std::cout << "Target Thread process: Client Thread state is connected" << std::endl;
+        // Parse PUK1 remaining retries
+        if (line.find("PUK1 remaining retries:") != std::string::npos) {
+            std::regex retries_regex(R"(PUK1 remaining retries:\s*'(\d+)')");
+            std::smatch match;
+            if (std::regex_search(line, match, retries_regex)) {
+                sim_status.puk1_retries = std::stoi(match[1].str());
+            }
+        }
         
-        Json::StreamWriterBuilder writer;
-        std::string device_data = Json::writeString(writer, device_json);
+        // Parse PIN2 status if available
+        if (line.find("PIN2 verify enabled:") != std::string::npos) {
+            if (line.find("'yes'") != std::string::npos) {
+                sim_status.pin2_state = "enabled-verified";
+            } else {
+                sim_status.pin2_state = "disabled";
+            }
+        }
         
-        g_requester->sendTargetedRequest(target_client, "qmi-stack-notification", device_data, 
-            [](bool success, const std::string& result, const std::string& error_message, int error_code) {
-                if (success) {
-                    Utils::logInfo("Device data processed successfully: " + result);
-                } else {
-                    Utils::logError("Failed to process device data: " + error_message);
-                }
-            });
-            
-        Utils::logInfo("Targeted device data request sent to " + target_client);
-        return "sent";
+        // Parse PIN2 remaining retries
+        if (line.find("PIN2 remaining retries:") != std::string::npos) {
+            std::regex retries_regex(R"(PIN2 remaining retries:\s*'(\d+)')");
+            std::smatch match;
+            if (std::regex_search(line, match, retries_regex)) {
+                sim_status.pin2_retries = std::stoi(match[1].str());
+            }
+        }
         
-    } catch (const DirectTemplateException& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-        return "error";
+        // Parse PUK2 remaining retries
+        if (line.find("PUK2 remaining retries:") != std::string::npos) {
+            std::regex retries_regex(R"(PUK2 remaining retries:\s*'(\d+)')");
+            std::smatch match;
+            if (std::regex_search(line, match, retries_regex)) {
+                sim_status.puk2_retries = std::stoi(match[1].str());
+            }
+        }
+        
+        // Parse universal PIN status
+        if (line.find("Universal PIN verify enabled:") != std::string::npos) {
+            if (line.find("'yes'") != std::string::npos) {
+                sim_status.upin_state = "enabled-verified";
+            } else {
+                sim_status.upin_state = "disabled";
+            }
+        }
+        
+        // Parse universal PIN remaining retries
+        if (line.find("Universal PIN remaining retries:") != std::string::npos) {
+            std::regex retries_regex(R"(Universal PIN remaining retries:\s*'(\d+)')");
+            std::smatch match;
+            if (std::regex_search(line, match, retries_regex)) {
+                sim_status.upin_retries = std::stoi(match[1].str());
+            }
+        }
+        
+        // Parse universal PUK remaining retries
+        if (line.find("Universal PUK remaining retries:") != std::string::npos) {
+            std::regex retries_regex(R"(Universal PUK remaining retries:\s*'(\d+)')");
+            std::smatch match;
+            if (std::regex_search(line, match, retries_regex)) {
+                sim_status.upuk_retries = std::stoi(match[1].str());
+            }
+        }
     }
 }
+
 
 std::string QMIScanner::generateDeviceWithSimStatusJson(const QMIDevice& device, bool pretty) {
     Json::Value device_json;
@@ -899,13 +1027,6 @@ std::string QMIScanner::generateDeviceWithSimStatusJson(const QMIDevice& device,
     
     device_json["sim-status"] = sim_status_json;
 
-    try {
-        sendDeviceDataTargeted(device_json, "ur-qmi-watchdog");
-    } catch (const DirectTemplateException& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-        return "";
-    }
-    
     return pretty ? m_json_agent->formatJsonPretty(device_json) : m_json_agent->formatJsonCompact(device_json);
 }
 
@@ -1262,6 +1383,8 @@ void QMIScanner::monitorLoop() {
                                 std::lock_guard<std::mutex> lock(m_devices_mutex);
                                 m_current_advanced_profiles.push_back(profile);
                                 reportAdvancedProfile(profile, true);
+                                // Publish device discovery event to watchdog
+                                publishDeviceDiscovery(profile, true);
                             }
                         } else if (m_profile_mode == ProfileMode::MANAGER) {
                             // Already handled above for legacy device list with SIM status
@@ -1293,6 +1416,8 @@ void QMIScanner::monitorLoop() {
                             for (auto it = m_current_advanced_profiles.begin(); it != m_current_advanced_profiles.end(); ++it) {
                                 if (it->basic.path == devnode) {
                                     reportAdvancedProfile(*it, false);
+                                    // Publish device discovery event to watchdog
+                                    publishDeviceDiscovery(*it, false);
                                     m_current_advanced_profiles.erase(it);
                                     break;
                                 }
@@ -1388,4 +1513,80 @@ int QMIScanner::getRegistryDeviceCount() {
 
 bool QMIScanner::hasRegistryDevice(const std::string& device_path) {
     return QMIDeviceRegistry::getInstance().hasDevice(device_path);
+}
+
+void QMIScanner::setRpcClient(std::shared_ptr<RpcClient> rpcClient) {
+    m_rpc_client = rpcClient;
+}
+
+void QMIScanner::publishDeviceDiscovery(const AdvancedDeviceProfile& profile, bool added) {
+    if (!m_rpc_client) {
+        return; // No RPC client available
+    }
+    
+    try {
+        // Create JSON-RPC 2.0 request for device discovery
+        nlohmann::json request;
+        request["jsonrpc"] = "2.0";
+        request["method"] = "device_discovery_event";
+        request["id"] = "qmi_discovery_" + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::system_clock::now().time_since_epoch()).count());
+        
+        // Create parameters with device data and event type
+        nlohmann::json params;
+        params["event_type"] = added ? "device_added" : "device_removed";
+        params["timestamp"] = std::to_string(std::chrono::duration_cast<std::chrono::seconds>(
+            std::chrono::system_clock::now().time_since_epoch()).count());
+        
+        // Convert AdvancedDeviceProfile to JSON
+        nlohmann::json deviceData;
+        
+        // Basic profile data
+        deviceData["path"] = profile.basic.path;
+        deviceData["imei"] = profile.basic.imei;
+        deviceData["model"] = profile.basic.model;
+        deviceData["firmware"] = profile.basic.firmware;
+        deviceData["bands"] = profile.basic.bands;
+        deviceData["sim_present"] = profile.basic.sim_present;
+        deviceData["pin_locked"] = profile.basic.pin_locked;
+        deviceData["gps_supported"] = profile.basic.gps_supported;
+        deviceData["max_carriers"] = profile.basic.max_carriers;
+        
+        // Advanced profile data
+        deviceData["manufacturer"] = profile.manufacturer;
+        deviceData["msisdn"] = profile.msisdn;
+        deviceData["power_state"] = profile.power_state;
+        deviceData["hardware_revision"] = profile.hardware_revision;
+        deviceData["operating_mode"] = profile.operating_mode;
+        deviceData["prl_version"] = profile.prl_version;
+        deviceData["activation_state"] = profile.activation_state;
+        deviceData["user_lock_state"] = profile.user_lock_state;
+        deviceData["band_capabilities"] = profile.band_capabilities;
+        deviceData["factory_sku"] = profile.factory_sku;
+        deviceData["software_version"] = profile.software_version;
+        deviceData["iccid"] = profile.iccid;
+        deviceData["imsi"] = profile.imsi;
+        deviceData["uim_state"] = profile.uim_state;
+        deviceData["pin_status"] = profile.pin_status;
+        deviceData["time"] = profile.time;
+        deviceData["stored_images"] = profile.stored_images;
+        deviceData["firmware_preference"] = profile.firmware_preference;
+        deviceData["boot_image_download_mode"] = profile.boot_image_download_mode;
+        deviceData["usb_composition"] = profile.usb_composition;
+        deviceData["mac_address_wlan"] = profile.mac_address_wlan;
+        deviceData["mac_address_bt"] = profile.mac_address_bt;
+        
+        params["device_data"] = deviceData;
+        request["params"] = params;
+        
+        // Convert to string and publish
+        std::string requestJson = request.dump();
+        m_rpc_client->publishMessage("direct_messaging/ur-qmi-qmi-watchdog/requests", requestJson);
+        
+        std::cout << "[QMI Scanner] Published device discovery event for " 
+                  << profile.basic.path << " (" << (added ? "added" : "removed") << ")" << std::endl;
+        
+    } catch (const std::exception& e) {
+        std::cerr << "[QMI Scanner] Failed to publish device discovery event: " << e.what() << std::endl;
+    }
 }

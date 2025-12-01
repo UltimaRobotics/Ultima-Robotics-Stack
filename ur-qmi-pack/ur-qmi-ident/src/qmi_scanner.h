@@ -10,11 +10,9 @@
 #include <atomic>
 #include <mutex>
 
-#include <gateway.hpp>
-#include <ThreadManager.hpp>
-
 class QMIDevScanAgent;
 class QMIDeviceRegistry;
+class RpcClient;
 
 struct SIMStatus {
     std::string card_state;
@@ -142,6 +140,10 @@ public:
     
     // Get JSON agent for direct access
     QMIDevScanAgent* getJsonAgent();
+    
+    // RPC client integration for publishing device discovery events
+    void setRpcClient(std::shared_ptr<RpcClient> rpcClient);
+    void publishDeviceDiscovery(const AdvancedDeviceProfile& profile, bool added);
         
     // Registry access methods
     std::string getRegistryJson(bool pretty = true);
@@ -176,6 +178,7 @@ private:
     std::string parseIMSI(const std::string& output);
     std::string parseUIMState(const std::string& output);
     std::string parsePINStatus(const std::string& output);
+    std::string parseUserLockState(const std::string& output);
     std::string parseTime(const std::string& output);
     std::string parseBandCapabilities(const std::string& output);
     std::vector<std::string> parseStoredImages(const std::string& output);
@@ -187,6 +190,7 @@ private:
     // SIM status collection and parsing
     SIMStatus collectSIMStatus(const std::string& device_path);
     SIMStatus parseSIMCardStatus(const std::string& output);
+    void enhancePINStatus(const std::string& pin_output, SIMStatus& sim_status);
     
     ProfileMode m_profile_mode;
     DeviceCallback m_callback;
@@ -206,6 +210,9 @@ private:
     
     // JSON processing agent
     std::unique_ptr<QMIDevScanAgent> m_json_agent;
+    
+    // RPC client for publishing device discovery events
+    std::shared_ptr<RpcClient> m_rpc_client;
 };
 
 #endif // QMI_SCANNER_H
