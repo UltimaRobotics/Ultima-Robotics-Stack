@@ -20,12 +20,15 @@
   "json_added_pubs": {
     "topics": [
       "clients/ur-qmi-watchdog/heartbeat",
-      "ur-shared-bus/qmi-data"
+      "ur-shared-bus/qmi-data/watchdog-live-data",
+      "direct_messaging/ur-qmi-watchdog/responses",
+      "direct_messaging/ur-qmi-ident/requests"
     ]
   },
   "json_added_subs": {
     "topics": [
-      "clients/ur-qmi-ident/heartbeat"
+      "clients/ur-qmi-ident/heartbeat",
+      "direct_messaging/ur-qmi-ident/responses"
     ]
   },
   "relay": {

@@ -96,22 +96,39 @@ bool QMIScanner::initialize(ProfileMode mode) {
         
     } else if (mode == ProfileMode::MANAGER) {
         // Scan full devices with complete information including SIM status
-        m_current_devices = scanDevices();
-        discovered_devices = m_current_devices;
+        // Use advanced profiles to get complete data for RPC publishing
+        m_current_advanced_profiles = scanAdvancedDeviceProfiles();
         
-        // Report devices
-        for (const auto& device : m_current_devices) {
+        // Convert advanced profiles to QMI devices for registry compatibility
+        for (const auto& profile : m_current_advanced_profiles) {
+            QMIDevice device;
+            device.device_path = profile.basic.path;
+            device.imei = profile.basic.imei;
+            device.model = profile.basic.model;
+            device.manufacturer = profile.manufacturer;
+            device.firmware_version = profile.basic.firmware;
+            device.is_available = true;
+            device.action = "added";
+            device.sim_status = collectSIMStatus(profile.basic.path);
+            discovered_devices.push_back(device);
+        }
+        
+        // Report devices with complete advanced data
+        for (const auto& profile : m_current_advanced_profiles) {
+            // Convert to QMIDevice for reporting (legacy compatibility)
+            QMIDevice device;
+            device.device_path = profile.basic.path;
+            device.imei = profile.basic.imei;
+            device.model = profile.basic.model;
+            device.manufacturer = profile.manufacturer;
+            device.firmware_version = profile.basic.firmware;
+            device.is_available = true;
+            device.action = "added";
+            device.sim_status = collectSIMStatus(profile.basic.path);
             reportDevice(device, true);
-            // Convert to AdvancedDeviceProfile for publishing
-            AdvancedDeviceProfile advancedProfile;
-            advancedProfile.basic.path = device.device_path;
-            advancedProfile.basic.imei = device.imei;
-            advancedProfile.basic.model = device.model;
-            advancedProfile.basic.firmware = device.firmware_version;
-            advancedProfile.manufacturer = device.manufacturer;
-            // Note: In MANAGER mode, we could enhance this to collect more advanced data
-            // For now, we'll publish what we have
-            publishDeviceDiscovery(advancedProfile, true);
+            
+            // Publish complete advanced device discovery event to watchdog
+            publishDeviceDiscovery(profile, true);
         }
     }
 
@@ -370,6 +387,10 @@ void QMIScanner::parseAdvancedDeviceProfile(const std::string& device_path, Adva
     // Try factory SKU (usually works)
     profile.factory_sku = parseFactorySKU(executeCommandSafe("qmicli -d " + device_path + " --dms-get-factory-sku"));
     
+    // Try additional available commands
+    profile.prl_version = parsePRLVersion(executeCommandSafe("qmicli -d " + device_path + " --dms-get-prl-version"));
+    profile.activation_state = parseActivationState(executeCommandSafe("qmicli -d " + device_path + " --dms-get-activation-state"));
+    
     // Try user lock state (may work with sudo)
     profile.user_lock_state = parseUserLockState(executeCommandSafe("qmicli -d " + device_path + " --dms-get-user-lock-state"));
     
@@ -377,14 +398,28 @@ void QMIScanner::parseAdvancedDeviceProfile(const std::string& device_path, Adva
     profile.mac_address_wlan = getMACAddress("wlan0");
     profile.mac_address_bt = getMACAddress("hci0");
     
-    // Set defaults for commands that don't work on this device
-    profile.prl_version = "";  // DeviceUnsupported
-    profile.activation_state = "";  // DeviceUnsupported
-    profile.firmware_preference = "";  // WmsInvalidMessageId
-    profile.boot_image_download_mode = "";  // WmsInvalidMessageId
-    profile.usb_composition = "";  // Unknown option
-    profile.stored_images.clear();  // WmsInvalidMessageId
-    profile.imsi = "";  // Unknown option
+    // Try to get IMSI from UIM service (alternative method)
+    std::string imsi_output = executeCommandSafe("qmicli -d " + device_path + " --uim-get-imsi");
+    profile.imsi = parseIMSI(imsi_output);
+    
+    // Try alternative IMSI method if UIM doesn't work
+    if (profile.imsi.empty()) {
+        std::string nas_imsi_output = executeCommandSafe("qmicli -d " + device_path + " --nas-get-imsi");
+        if (!nas_imsi_output.empty() && nas_imsi_output.find("error:") == std::string::npos) {
+            profile.imsi = parseIMSI(nas_imsi_output);
+        }
+    }
+    
+    // Set meaningful defaults for unsupported/unknown operations instead of empty strings
+    profile.firmware_preference = "NotSupported";  // WmsInvalidMessageId
+    profile.boot_image_download_mode = "NotSupported";  // WmsInvalidMessageId
+    profile.usb_composition = "NotSupported";  // Unknown option
+    profile.stored_images.clear();  // WmsInvalidMessageId - keep empty but documented
+    
+    // If IMSI still empty, set a meaningful default
+    if (profile.imsi.empty()) {
+        profile.imsi = "NotAvailable";
+    }
     
     // Set reasonable defaults for empty values
     if (profile.manufacturer.empty()) profile.manufacturer = "Unknown";
@@ -432,14 +467,22 @@ std::string QMIScanner::parseManufacturer(const std::string& output) {
 }
 
 std::string QMIScanner::parseMSISDN(const std::string& output) {
-    if (output.empty()) return "";
+    if (output.empty()) return "NotAvailable";
+    
+    // Check for specific error conditions
+    if (output.find("NotProvisioned") != std::string::npos) {
+        return "NotProvisioned";
+    }
+    if (output.find("error:") != std::string::npos) {
+        return "NotAvailable";
+    }
     
     std::regex msisdn_regex(R"(MSISDN:\s*'([^']+)')");
     std::smatch match;
     if (std::regex_search(output, match, msisdn_regex)) {
         return match[1].str();
     }
-    return "";
+    return "NotAvailable";
 }
 
 std::string QMIScanner::parsePowerState(const std::string& output) {
@@ -462,7 +505,12 @@ std::string QMIScanner::parsePowerState(const std::string& output) {
 }
 
 std::string QMIScanner::parseHardwareRevision(const std::string& output) {
-    if (output.empty()) return "";
+    if (output.empty()) return "NotAvailable";
+    
+    // Check for error conditions
+    if (output.find("error:") != std::string::npos) {
+        return "NotAvailable";
+    }
     
     // Handle the actual output format: "Revision: 'V1.0.1'"
     std::regex hw_regex(R"(Revision:\s*'([^']+)')");
@@ -477,7 +525,7 @@ std::string QMIScanner::parseHardwareRevision(const std::string& output) {
         return match[1].str();
     }
     
-    return "";
+    return "NotAvailable";
 }
 
 std::string QMIScanner::parseOperatingMode(const std::string& output) {
@@ -502,7 +550,12 @@ std::string QMIScanner::parseOperatingMode(const std::string& output) {
 }
 
 std::string QMIScanner::parseICCID(const std::string& output) {
-    if (output.empty()) return "";
+    if (output.empty()) return "NotAvailable";
+    
+    // Check for error conditions
+    if (output.find("error:") != std::string::npos) {
+        return "NotAvailable";
+    }
     
     // Look for Application ID which contains ICCID-like information
     std::regex app_id_regex(R"(Application ID:\s*\n\s*([A-F0-9:]+))");
@@ -516,11 +569,55 @@ std::string QMIScanner::parseICCID(const std::string& output) {
         }
     }
     
-    return "";
+    return "NotAvailable";
+}
+
+std::string QMIScanner::parsePRLVersion(const std::string& output) {
+    if (output.empty()) return "NotAvailable";
+    
+    // Check for error conditions
+    if (output.find("error:") != std::string::npos) {
+        return "NotAvailable";
+    }
+    
+    // Handle PRL version format: "PRL version: '1'"
+    std::regex prl_regex(R"(PRL version:\s*'([^']+)')");
+    std::smatch match;
+    if (std::regex_search(output, match, prl_regex)) {
+        return match[1].str();
+    }
+    
+    return "NotAvailable";
+}
+
+std::string QMIScanner::parseActivationState(const std::string& output) {
+    if (output.empty()) return "NotAvailable";
+    
+    // Check for specific error conditions
+    if (output.find("DeviceUnsupported") != std::string::npos) {
+        return "NotSupported";
+    }
+    if (output.find("error:") != std::string::npos) {
+        return "NotAvailable";
+    }
+    
+    // Handle activation state format: "Activation state: 'activated'"
+    std::regex activation_regex(R"(Activation state:\s*'([^']+)')");
+    std::smatch match;
+    if (std::regex_search(output, match, activation_regex)) {
+        return match[1].str();
+    }
+    
+    return "NotAvailable";
 }
 
 std::string QMIScanner::parseIMSI(const std::string& output) {
-    if (output.empty()) return "";
+    if (output.empty()) return "NotAvailable";
+    
+    // Check for error conditions
+    if (output.find("error:") != std::string::npos) {
+        return "NotAvailable";
+    }
     
     std::regex imsi_regex(R"(IMSI:\s*'([^']+)')");
     std::smatch match;
@@ -534,7 +631,7 @@ std::string QMIScanner::parseIMSI(const std::string& output) {
         return match[1].str();
     }
     
-    return "";
+    return "NotAvailable";
 }
 
 std::string QMIScanner::parseUIMState(const std::string& output) {
@@ -573,7 +670,12 @@ std::string QMIScanner::parsePINStatus(const std::string& output) {
 }
 
 std::string QMIScanner::parseUserLockState(const std::string& output) {
-    if (output.empty()) return "";
+    if (output.empty()) return "NotAvailable";
+    
+    // Check for error conditions
+    if (output.find("error:") != std::string::npos) {
+        return "NotAvailable";
+    }
     
     // Handle the actual output format: "Enabled: 'no'"
     std::regex lock_regex(R"(Enabled:\s*'([^']+)')");
@@ -587,11 +689,16 @@ std::string QMIScanner::parseUserLockState(const std::string& output) {
     if (output.find("Enabled: 'yes'") != std::string::npos) return "Enabled";
     if (output.find("Enabled: 'no'") != std::string::npos) return "Disabled";
     
-    return "";
+    return "NotAvailable";
 }
 
 std::string QMIScanner::parseTime(const std::string& output) {
-    if (output.empty()) return "";
+    if (output.empty()) return "NotAvailable";
+    
+    // Check for error conditions
+    if (output.find("error:") != std::string::npos) {
+        return "NotAvailable";
+    }
     
     // Parse system time from the output
     std::regex system_time_regex(R"(System time:\s*'([^']+)')");
@@ -606,11 +713,16 @@ std::string QMIScanner::parseTime(const std::string& output) {
         return match[1].str();
     }
     
-    return "";
+    return "NotAvailable";
 }
 
 std::string QMIScanner::parseBandCapabilities(const std::string& output) {
-    if (output.empty()) return "";
+    if (output.empty()) return "NotAvailable";
+    
+    // Check for error conditions
+    if (output.find("error:") != std::string::npos) {
+        return "NotAvailable";
+    }
     
     std::string capabilities;
     std::istringstream iss(output);
@@ -638,7 +750,7 @@ std::string QMIScanner::parseBandCapabilities(const std::string& output) {
         capabilities = capabilities.substr(start, end - start + 1);
     }
     
-    return capabilities;
+    return capabilities.empty() ? "NotAvailable" : capabilities;
 }
 
 std::vector<std::string> QMIScanner::parseStoredImages(const std::string& output) {
@@ -656,7 +768,12 @@ std::vector<std::string> QMIScanner::parseStoredImages(const std::string& output
 }
 
 std::string QMIScanner::parseSoftwareVersion(const std::string& output) {
-    if (output.empty()) return "";
+    if (output.empty()) return "NotAvailable";
+    
+    // Check for error conditions
+    if (output.find("error:") != std::string::npos) {
+        return "NotAvailable";
+    }
     
     std::regex sw_regex(R"(Software version:\s*'([^']+)')");
     std::smatch match;
@@ -664,7 +781,7 @@ std::string QMIScanner::parseSoftwareVersion(const std::string& output) {
         return match[1].str();
     }
     
-    return "";
+    return "NotAvailable";
 }
 
 std::string QMIScanner::parseUSBComposition(const std::string& output) {
@@ -680,7 +797,12 @@ std::string QMIScanner::parseUSBComposition(const std::string& output) {
 }
 
 std::string QMIScanner::parseFactorySKU(const std::string& output) {
-    if (output.empty()) return "";
+    if (output.empty()) return "NotAvailable";
+    
+    // Check for error conditions
+    if (output.find("error:") != std::string::npos) {
+        return "NotAvailable";
+    }
     
     std::regex sku_regex(R"(SKU:\s*'([^']+)')");
     std::smatch match;
@@ -688,7 +810,7 @@ std::string QMIScanner::parseFactorySKU(const std::string& output) {
         return match[1].str();
     }
     
-    return "";
+    return "NotAvailable";
 }
 
 std::string QMIScanner::getMACAddress(const std::string& interface) {
@@ -700,7 +822,8 @@ std::string QMIScanner::getMACAddress(const std::string& interface) {
         result.pop_back();
     }
     
-    return result;
+    // Return meaningful default if MAC address not found
+    return result.empty() ? "NotAvailable" : result;
 }
 
 SIMStatus QMIScanner::collectSIMStatus(const std::string& device_path) {
@@ -1387,7 +1510,15 @@ void QMIScanner::monitorLoop() {
                                 publishDeviceDiscovery(profile, true);
                             }
                         } else if (m_profile_mode == ProfileMode::MANAGER) {
-                            // Already handled above for legacy device list with SIM status
+                            // Use advanced profiles for complete data in MANAGER mode
+                            AdvancedDeviceProfile profile = queryAdvancedDeviceProfile(devnode);
+                            if (!profile.basic.path.empty()) {
+                                std::lock_guard<std::mutex> lock(m_devices_mutex);
+                                m_current_advanced_profiles.push_back(profile);
+                                reportAdvancedProfile(profile, true);
+                                // Publish device discovery event to watchdog
+                                publishDeviceDiscovery(profile, true);
+                            }
                         }
                     } else if (strcmp(action, "remove") == 0) {
                         // Device removed
@@ -1423,7 +1554,15 @@ void QMIScanner::monitorLoop() {
                                 }
                             }
                         } else if (m_profile_mode == ProfileMode::MANAGER) {
-                            // Already handled above for devices list
+                            for (auto it = m_current_advanced_profiles.begin(); it != m_current_advanced_profiles.end(); ++it) {
+                                if (it->basic.path == devnode) {
+                                    reportAdvancedProfile(*it, false);
+                                    // Publish device discovery event to watchdog
+                                    publishDeviceDiscovery(*it, false);
+                                    m_current_advanced_profiles.erase(it);
+                                    break;
+                                }
+                            }
                         }
                     }
                 }
@@ -1529,7 +1668,7 @@ void QMIScanner::publishDeviceDiscovery(const AdvancedDeviceProfile& profile, bo
         nlohmann::json request;
         request["jsonrpc"] = "2.0";
         request["method"] = "device_discovery_event";
-        request["id"] = "qmi_discovery_" + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(
+        request["id"] = std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::system_clock::now().time_since_epoch()).count());
         
         // Create parameters with device data and event type

@@ -8,9 +8,11 @@
 #include <memory>
 #include <atomic>
 #include <mutex>
-#include <thread>
 #include <functional>
 #include <json/json.h>
+
+// Forward declaration
+class RpcClient;
 
 // Data collection status
 enum class CollectionStatus {
@@ -118,6 +120,16 @@ struct DeviceConfig {
     int timeout_ms = 10000;                // 10 seconds timeout
     bool enable_health_scoring = true;
     HealthWeights weights;
+    
+    // Health weights (for direct configuration)
+    double signal_weight = 0.5;
+    double network_weight = 0.35;
+    double rf_weight = 0.15;
+    
+    // Failure detection thresholds
+    int critical_rssi_threshold = -105;
+    int warning_rssi_threshold = -90;
+    int max_consecutive_failures = 5;
 };
 
 // Failure detection configuration
@@ -160,16 +172,18 @@ public:
     QMIWatchdog();
     ~QMIWatchdog();
     
-    // Configuration
+    // Public interface
     bool loadDeviceConfig(const std::string& config_json);
     bool loadDeviceConfigFromFile(const std::string& config_file_path);
-    void setFailureDetectionConfig(const FailureDetectionConfig& config);
-    void setHealthWeights(const HealthWeights& weights);
-    
-    // Monitoring control
+    bool setDeviceConfig(const DeviceConfig& config);
     bool startMonitoring();
     void stopMonitoring();
     bool isMonitoring() const;
+    void monitoringLoop(); // Made public for ThreadManager usage
+    
+    // Configuration setters
+    void setFailureDetectionConfig(const FailureDetectionConfig& config);
+    void setHealthWeights(const HealthWeights& weights);
     
     // Data collection (single shot)
     SignalMetrics collectSignalMetrics();
@@ -184,6 +198,13 @@ public:
     // Callbacks
     void setDataCollectionCallback(DataCollectionCallback callback);
     void setFailureDetectionCallback(FailureDetectionCallback callback);
+    
+    // RPC client for publishing data
+    void setRpcClient(std::shared_ptr<RpcClient> rpc_client);
+    void publishToTopic(const std::string& topic, const std::string& json_data);
+    
+    // Verbose mode control
+    void setVerbose(bool verbose);
     
     // Statistics and status
     struct WatchdogStats {
@@ -207,7 +228,6 @@ private:
     
     // Monitoring state
     std::atomic<bool> m_monitoring;
-    std::unique_ptr<std::thread> m_monitor_thread;
     mutable std::mutex m_stats_mutex;
     WatchdogStats m_stats;
     
@@ -215,12 +235,17 @@ private:
     DataCollectionCallback m_data_callback;
     FailureDetectionCallback m_failure_callback;
     
+    // RPC client for publishing data
+    std::shared_ptr<RpcClient> m_rpc_client;
+    
+    // Verbose mode flag
+    bool m_verbose = false;
+    
     // Failure tracking
     std::vector<CollectionStatus> m_recent_collection_status;
     mutable std::mutex m_failure_tracking_mutex;
     
     // Core monitoring loop
-    void monitoringLoop();
     
     // QMI command execution
     std::string executeQMICommand(const std::string& command, int timeout_ms = 10000);

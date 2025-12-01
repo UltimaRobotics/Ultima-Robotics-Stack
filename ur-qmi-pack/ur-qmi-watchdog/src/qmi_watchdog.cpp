@@ -1,5 +1,6 @@
 
 #include "qmi_watchdog.h"
+#include "rpc_client.hpp"
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -7,6 +8,7 @@
 #include <cstdlib>
 #include <iomanip>
 #include <algorithm>
+#include <thread>
 
 Json::Value loadMonitoringConfig(const std::string& filePath) {
     std::ifstream configFile(filePath);
@@ -252,10 +254,12 @@ bool QMIWatchdog::loadDeviceConfigFromFile(const std::string& config_file_path) 
 
 bool QMIWatchdog::parseDeviceConfigJson(const std::string& json) {
     Json::Value root;
-    Json::Reader reader;
+    Json::CharReaderBuilder reader;
+    std::string errs;
     
-    if (!reader.parse(json, root)) {
-        std::cerr << "Failed to parse JSON configuration" << std::endl;
+    std::istringstream json_stream(json);
+    if (!Json::parseFromStream(reader, json_stream, &root, &errs)) {
+        std::cerr << "Failed to parse JSON configuration: " << errs << std::endl;
         return false;
     }
     
@@ -278,6 +282,10 @@ bool QMIWatchdog::parseDeviceConfigJson(const std::string& json) {
             m_device_config.model = basic.get("model", "").asString();
             m_device_config.manufacturer = basic.get("manufacturer", "").asString();
             m_device_config.is_available = true;
+            std::cout << "Loaded device from profile: " << m_device_config.device_path << std::endl;
+        } else {
+            std::cerr << "Profile found but missing 'basic' section" << std::endl;
+            return false;
         }
     } else if (root.isMember("device_path")) {
         // Simple format: direct device configuration
@@ -310,6 +318,12 @@ bool QMIWatchdog::parseDeviceConfigJson(const std::string& json) {
     return true;
 }
 
+bool QMIWatchdog::setDeviceConfig(const DeviceConfig& config) {
+    m_device_config = config;
+    std::cout << "Device configuration set for: " << config.device_path << std::endl;
+    return true;
+}
+
 void QMIWatchdog::setFailureDetectionConfig(const FailureDetectionConfig& config) {
     m_failure_config = config;
 }
@@ -332,7 +346,6 @@ bool QMIWatchdog::startMonitoring() {
     std::cout << "Starting QMI watchdog monitoring for device: " << m_device_config.device_path << std::endl;
     
     m_monitoring.store(true);
-    m_monitor_thread = std::make_unique<std::thread>(&QMIWatchdog::monitoringLoop, this);
     
     return true;
 }
@@ -345,10 +358,6 @@ void QMIWatchdog::stopMonitoring() {
     std::cout << "Stopping QMI watchdog monitoring..." << std::endl;
     
     m_monitoring.store(false);
-    
-    if (m_monitor_thread && m_monitor_thread->joinable()) {
-        m_monitor_thread->join();
-    }
     
     std::cout << "QMI watchdog monitoring stopped" << std::endl;
 }
@@ -385,8 +394,15 @@ void QMIWatchdog::monitoringLoop() {
             }
         }
         
-        // Print JSON data to terminal
-        printJsonToTerminal(snapshot.toJson(), "MONITORING_SNAPSHOT");
+        // Print JSON data to terminal and publish to MQTT
+        std::string snapshot_json = snapshot.toJson();
+        printJsonToTerminal(snapshot_json, "MONITORING_SNAPSHOT");
+        publishToTopic("ur-shared-bus/ur-qmi-watchdog/live-data", snapshot_json);
+        
+        // Print statistics JSON to terminal and publish to MQTT
+        std::string stats_json = getStatistics().toJson();
+        printJsonToTerminal(stats_json, "WATCHDOG_STATS");
+        publishToTopic("ur-shared-bus/ur-qmi-watchdog/whatchdog-stats", stats_json);
         
         // Check for failures
         std::vector<std::string> failures = detectFailures(snapshot);
@@ -414,7 +430,11 @@ void QMIWatchdog::monitoringLoop() {
             failure_json["detected_failures"] = failures_array;
             
             Json::StreamWriterBuilder builder;
-            printJsonToTerminal(Json::writeString(builder, failure_json), "FAILURE_DETECTION");
+            std::string failure_json_str = Json::writeString(builder, failure_json);
+            printJsonToTerminal(failure_json_str, "FAILURE_DETECTION");
+            
+            // Publish failure detection to warnings topic
+            publishToTopic("ur-shared-bus/ur-qmi-watchdog/warnings", failure_json_str);
         }
         
         // Execute data collection callback if set
@@ -941,6 +961,11 @@ std::string QMIWatchdog::getStatus() const {
 }
 
 void QMIWatchdog::printJsonToTerminal(const std::string& json_data, const std::string& data_type) {
+    // Only print if verbose mode is enabled
+    if (!m_verbose) {
+        return;
+    }
+    
     // Print with timestamp and data type header
     auto now = std::chrono::system_clock::now();
     auto time_t = std::chrono::system_clock::to_time_t(now);
@@ -961,4 +986,24 @@ std::string QMIWatchdog::getCurrentTimestamp() const {
     std::stringstream ss;
     ss << std::put_time(std::localtime(&time_t), "%Y-%m-%d %H:%M:%S");
     return ss.str();
+}
+
+void QMIWatchdog::setRpcClient(std::shared_ptr<RpcClient> rpc_client) {
+    m_rpc_client = rpc_client;
+}
+
+void QMIWatchdog::setVerbose(bool verbose) {
+    m_verbose = verbose;
+}
+
+void QMIWatchdog::publishToTopic(const std::string& topic, const std::string& json_data) {
+    if (m_rpc_client) {
+        try {
+            m_rpc_client->sendResponse(topic, json_data);
+        } catch (const std::exception& e) {
+            std::cerr << "[QMIWatchdog] Failed to publish to topic " << topic << ": " << e.what() << std::endl;
+        }
+    } else {
+        std::cerr << "[QMIWatchdog] RPC client not available, cannot publish to topic: " << topic << std::endl;
+    }
 }

@@ -1,7 +1,7 @@
 {
   "monitoring_config": {
-    "collection_interval_ms": 3000,
-    "timeout_ms": 15000,
+    "collection_interval_ms": 2000,
+    "timeout_ms": 3000,
     "enable_health_scoring": true,
     "health_weights": {
       "signal_weight": 0.5,

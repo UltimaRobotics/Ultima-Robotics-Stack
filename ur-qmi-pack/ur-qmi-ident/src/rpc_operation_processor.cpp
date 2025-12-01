@@ -19,65 +19,21 @@ RpcOperationProcessor::RpcOperationProcessor(bool verbose)
     , responseTopic_("direct_messaging/ur-qmi-ident/responses")
     , threadManagerInitialized_(false) {
     
-    // Initialize thread manager using C API
-    if (thread_manager_init(&threadManager_, 100) != 0) {
-        throw std::runtime_error("Failed to initialize thread manager");
-    }
-    threadManagerInitialized_ = true;
-    
     if (verbose_) {
-        std::cout << "[RPC Processor] Initialized with thread pool size: 100" << std::endl;
+        std::cout << "[RPC Processor] Initialized with synchronous processing" << std::endl;
     }
 }
 
 RpcOperationProcessor::~RpcOperationProcessor() {
-    std::cout << "[RPC Processor] Destructor called - setting shutdown flag" << std::endl;
+    if (verbose_) {
+        std::cout << "[RPC Processor] Destructor called - shutting down" << std::endl;
+    }
     
-    // Set shutdown flag to prevent new thread creation
+    // Set shutdown flag
     isShuttingDown_.store(true);
     
     if (verbose_) {
-        std::cout << "[RPC Processor] Shutting down, waiting for active threads..." << std::endl;
-    }
-    
-    // Join all active threads before cleanup
-    std::vector<unsigned int> threadsToJoin;
-    {
-        std::lock_guard<std::mutex> lock(threadsMutex_);
-        threadsToJoin.assign(activeThreads_.begin(), activeThreads_.end());
-        if (verbose_ && !threadsToJoin.empty()) {
-            std::cout << "[RPC Processor] Waiting for " << threadsToJoin.size() << " active threads to complete" << std::endl;
-        }
-    }
-    
-    // Join threads outside the lock to avoid deadlock
-    for (unsigned int threadId : threadsToJoin) {
-        try {
-            if (thread_is_alive(&threadManager_, threadId)) {
-                if (verbose_) {
-                    std::cout << "[RPC Processor] Waiting for thread " << threadId << " to complete..." << std::endl;
-                }
-                
-                void* result = nullptr;
-                thread_join(&threadManager_, threadId, &result);
-                
-                if (verbose_) {
-                    std::cout << "[RPC Processor] Thread " << threadId << " completed successfully" << std::endl;
-                }
-            }
-        } catch (const std::exception& e) {
-            if (verbose_) {
-                std::cerr << "[RPC Processor] Error joining thread " << threadId << ": " << e.what() << std::endl;
-            }
-        }
-    }
-    
-    if (threadManagerInitialized_) {
-        thread_manager_destroy(&threadManager_);
-    }
-    
-    if (verbose_) {
-        std::cout << "[RPC Processor] All threads joined, cleanup complete" << std::endl;
+        std::cout << "[RPC Processor] Cleanup complete" << std::endl;
     }
 }
 
@@ -173,13 +129,14 @@ void RpcOperationProcessor::processRequest(const char* payload, size_t payload_l
         // Check if we're shutting down
         bool shuttingDown = isShuttingDown_.load();
         if (shuttingDown) {
-            std::cerr << "[RPC Processor] Cannot create thread - processor is shutting down" << std::endl;
+            std::cerr << "[RPC Processor] Cannot process request - processor is shutting down" << std::endl;
             sendResponse(transactionId, false, "", "Server is shutting down");
             return;
         }
         
         try {
-            // Create context with shared_ptr
+            // Process request directly without thread creation to avoid segfault
+            // The segmentation fault is caused by thread manager issues and unsafe shared_ptr copying
             auto context = std::make_shared<RequestContext>(
                 requestJson,
                 transactionId,
@@ -191,45 +148,11 @@ void RpcOperationProcessor::processRequest(const char* payload, size_t payload_l
                 scanner_
             );
             
-            // Create thread with context using C API
-            unsigned int threadId = 0;
-            auto threadFunc = [](void* arg) -> void* {
-                auto ctx = static_cast<std::shared_ptr<RequestContext>*>(arg);
-                RpcOperationProcessor::processOperationThreadStatic(*ctx);
-                delete ctx;
-                return nullptr;
-            };
-            
-            // Create a copy of context on heap for thread
-            auto* contextPtr = new std::shared_ptr<RequestContext>(context);
-            
-            if (thread_create(&threadManager_, threadFunc, contextPtr, &threadId) != 0) {
-                delete contextPtr;
-                throw std::runtime_error("Failed to create thread");
-            }
-            
-            // Register thread in activeThreads_
-            {
-                std::lock_guard<std::mutex> lock(threadsMutex_);
-                activeThreads_.insert(threadId);
-            }
-            
-            // Set thread ID in atomic field
-            context->threadId.store(threadId);
-            context->threadIdPromise->set_value(threadId);
-
-            if (verbose_) {
-                std::cout << "[RPC Processor] Thread " << threadId << " created for transaction: " << transactionId << std::endl;
-            }
-            
-            // Periodically cleanup completed threads (every 10th request)
-            static std::atomic<int> requestCount{0};
-            if (++requestCount % 10 == 0) {
-                cleanupCompletedThreads();
-            }
+            // Process synchronously to avoid thread creation issues
+            processOperationThreadStatic(context);
             
         } catch (const std::exception& e) {
-            std::cerr << "[RPC Processor] Failed to create thread for transaction " << transactionId 
+            std::cerr << "[RPC Processor] Failed to process transaction " << transactionId 
                       << ": " << e.what() << std::endl;
             sendResponse(transactionId, false, "", std::string("Processing failed: ") + e.what());
             return;
@@ -247,15 +170,8 @@ void RpcOperationProcessor::processOperationThreadStatic(std::shared_ptr<Request
     bool verbose = context->verbose;
     QMIScanner* scanner = context->scanner;
     
-    // Wait for threadId to be published
-    unsigned int threadId = context->threadIdFuture.get();
-    
-    // Extract cleanup info
-    std::set<unsigned int>* activeThreads = context->activeThreads;
-    std::mutex* threadsMutex = context->threadsMutex;
-    
     if (verbose) {
-        std::cerr << "[RPC Thread " << threadId << "/" << transactionId << "] Thread started, processing request" << std::endl;
+        std::cerr << "[RPC Processor] Processing transaction: " << transactionId << std::endl;
     }
 
     try {
@@ -454,40 +370,147 @@ void RpcOperationProcessor::processOperationThreadStatic(std::shared_ptr<Request
         } else if (method == "get_device_details") {
             if (scanner && paramsObj.contains("device_path")) {
                 std::string devicePath = paramsObj["device_path"];
-                std::vector<QMIDevice> devices = scanner->getCurrentDevices();
-                for (const auto& device : devices) {
-                    if (device.device_path == devicePath) {
-                        json deviceJson;
-                        deviceJson["device_path"] = device.device_path;
-                        deviceJson["imei"] = device.imei;
-                        deviceJson["model"] = device.model;
-                        deviceJson["manufacturer"] = device.manufacturer;
-                        deviceJson["firmware_version"] = device.firmware_version;
-                        deviceJson["is_available"] = device.is_available;
-                        deviceJson["action"] = device.action;
-                        
-                        // Convert SIMStatus to JSON
-                        json simStatusJson;
-                        simStatusJson["card_state"] = device.sim_status.card_state;
-                        simStatusJson["upin_state"] = device.sim_status.upin_state;
-                        simStatusJson["upin_retries"] = device.sim_status.upin_retries;
-                        simStatusJson["upuk_retries"] = device.sim_status.upuk_retries;
-                        simStatusJson["application_type"] = device.sim_status.application_type;
-                        simStatusJson["application_state"] = device.sim_status.application_state;
-                        simStatusJson["application_id"] = device.sim_status.application_id;
-                        simStatusJson["pin1_state"] = device.sim_status.pin1_state;
-                        simStatusJson["pin1_retries"] = device.sim_status.pin1_retries;
-                        simStatusJson["puk1_retries"] = device.sim_status.puk1_retries;
-                        simStatusJson["pin2_state"] = device.sim_status.pin2_state;
-                        simStatusJson["pin2_retries"] = device.sim_status.puk2_retries;
-                        simStatusJson["puk2_retries"] = device.sim_status.puk2_retries;
-                        deviceJson["sim_status"] = simStatusJson;
-                        
-                        result = deviceJson.dump();
-                        break;
+                bool deviceFound = false;
+                
+                // Try to get device details using the appropriate method for current scanner mode
+                try {
+                    // First try advanced profiles (most comprehensive)
+                    std::vector<AdvancedDeviceProfile> advancedProfiles = scanner->getCurrentAdvancedProfiles();
+                    for (const auto& profile : advancedProfiles) {
+                        if (profile.basic.path == devicePath) {
+                            json deviceJson;
+                            
+                            // Basic profile data
+                            deviceJson["device_path"] = profile.basic.path.empty() ? "unknown" : profile.basic.path;
+                            deviceJson["imei"] = profile.basic.imei.empty() ? "unknown" : profile.basic.imei;
+                            deviceJson["model"] = profile.basic.model.empty() ? "unknown" : profile.basic.model;
+                            deviceJson["firmware_version"] = profile.basic.firmware.empty() ? "unknown" : profile.basic.firmware;
+                            deviceJson["is_available"] = true;
+                            deviceJson["action"] = "found";
+                            
+                            // Advanced profile data
+                            deviceJson["manufacturer"] = profile.manufacturer.empty() ? "unknown" : profile.manufacturer;
+                            deviceJson["msisdn"] = profile.msisdn.empty() ? "unknown" : profile.msisdn;
+                            deviceJson["power_state"] = profile.power_state.empty() ? "unknown" : profile.power_state;
+                            deviceJson["hardware_revision"] = profile.hardware_revision.empty() ? "unknown" : profile.hardware_revision;
+                            deviceJson["operating_mode"] = profile.operating_mode.empty() ? "unknown" : profile.operating_mode;
+                            deviceJson["prl_version"] = profile.prl_version.empty() ? "unknown" : profile.prl_version;
+                            deviceJson["activation_state"] = profile.activation_state.empty() ? "unknown" : profile.activation_state;
+                            deviceJson["user_lock_state"] = profile.user_lock_state.empty() ? "unknown" : profile.user_lock_state;
+                            deviceJson["band_capabilities"] = profile.band_capabilities.empty() ? "unknown" : profile.band_capabilities;
+                            deviceJson["factory_sku"] = profile.factory_sku.empty() ? "unknown" : profile.factory_sku;
+                            deviceJson["software_version"] = profile.software_version.empty() ? "unknown" : profile.software_version;
+                            deviceJson["iccid"] = profile.iccid.empty() ? "unknown" : profile.iccid;
+                            deviceJson["imsi"] = profile.imsi.empty() ? "unknown" : profile.imsi;
+                            deviceJson["uim_state"] = profile.uim_state.empty() ? "unknown" : profile.uim_state;
+                            deviceJson["pin_status"] = profile.pin_status.empty() ? "unknown" : profile.pin_status;
+                            deviceJson["time"] = profile.time.empty() ? "unknown" : profile.time;
+                            deviceJson["stored_images"] = profile.stored_images;
+                            deviceJson["firmware_preference"] = profile.firmware_preference.empty() ? "unknown" : profile.firmware_preference;
+                            deviceJson["boot_image_download_mode"] = profile.boot_image_download_mode.empty() ? "unknown" : profile.boot_image_download_mode;
+                            deviceJson["usb_composition"] = profile.usb_composition.empty() ? "unknown" : profile.usb_composition;
+                            deviceJson["mac_address_wlan"] = profile.mac_address_wlan.empty() ? "unknown" : profile.mac_address_wlan;
+                            deviceJson["mac_address_bt"] = profile.mac_address_bt.empty() ? "unknown" : profile.mac_address_bt;
+                            
+                            // Basic SIM status for advanced profile
+                            json simStatusJson;
+                            simStatusJson["card_state"] = profile.basic.sim_present ? "present" : "absent";
+                            simStatusJson["pin1_state"] = profile.basic.pin_locked ? "locked" : "unlocked";
+                            simStatusJson["application_type"] = "unknown";
+                            simStatusJson["application_state"] = "unknown";
+                            simStatusJson["pin1_retries"] = "unknown";
+                            simStatusJson["puk1_retries"] = "unknown";
+                            deviceJson["sim_status"] = simStatusJson;
+                            
+                            result = deviceJson.dump();
+                            deviceFound = true;
+                            break;
+                        }
+                    }
+                } catch (const std::exception&) {
+                    // Advanced profiles failed, continue to basic profiles
+                }
+                
+                if (!deviceFound) {
+                    try {
+                        // Try basic profiles
+                        std::vector<DeviceProfile> basicProfiles = scanner->getCurrentProfiles();
+                        for (const auto& profile : basicProfiles) {
+                            if (profile.path == devicePath) {
+                                json deviceJson;
+                                deviceJson["device_path"] = profile.path.empty() ? "unknown" : profile.path;
+                                deviceJson["imei"] = profile.imei.empty() ? "unknown" : profile.imei;
+                                deviceJson["model"] = profile.model.empty() ? "unknown" : profile.model;
+                                deviceJson["firmware_version"] = profile.firmware.empty() ? "unknown" : profile.firmware;
+                                deviceJson["is_available"] = true;
+                                deviceJson["action"] = "found";
+                                deviceJson["manufacturer"] = "unknown";
+                                
+                                // Basic SIM status
+                                json simStatusJson;
+                                simStatusJson["card_state"] = profile.sim_present ? "present" : "absent";
+                                simStatusJson["pin1_state"] = profile.pin_locked ? "locked" : "unlocked";
+                                simStatusJson["application_type"] = "unknown";
+                                simStatusJson["application_state"] = "unknown";
+                                simStatusJson["pin1_retries"] = "unknown";
+                                simStatusJson["puk1_retries"] = "unknown";
+                                deviceJson["sim_status"] = simStatusJson;
+                                
+                                result = deviceJson.dump();
+                                deviceFound = true;
+                                break;
+                            }
+                        }
+                    } catch (const std::exception&) {
+                        // Basic profiles failed, continue to QMIDevices if in manager mode
                     }
                 }
-                if (result.empty()) {
+                
+                if (!deviceFound) {
+                    try {
+                        // Finally try QMIDevices (manager mode)
+                        std::vector<QMIDevice> devices = scanner->getCurrentDevices();
+                        for (const auto& device : devices) {
+                            if (device.device_path == devicePath) {
+                                json deviceJson;
+                                deviceJson["device_path"] = device.device_path;
+                                deviceJson["imei"] = device.imei;
+                                deviceJson["model"] = device.model;
+                                deviceJson["manufacturer"] = device.manufacturer;
+                                deviceJson["firmware_version"] = device.firmware_version;
+                                deviceJson["is_available"] = device.is_available;
+                                deviceJson["action"] = device.action;
+                                
+                                // Convert SIMStatus to JSON
+                                json simStatusJson;
+                                simStatusJson["card_state"] = device.sim_status.card_state;
+                                simStatusJson["upin_state"] = device.sim_status.upin_state;
+                                simStatusJson["upin_retries"] = device.sim_status.upin_retries;
+                                simStatusJson["upuk_retries"] = device.sim_status.upuk_retries;
+                                simStatusJson["application_type"] = device.sim_status.application_type;
+                                simStatusJson["application_state"] = device.sim_status.application_state;
+                                simStatusJson["application_id"] = device.sim_status.application_id;
+                                simStatusJson["personalization_state"] = device.sim_status.personalization_state;
+                                simStatusJson["upin_replaces_pin1"] = device.sim_status.upin_replaces_pin1;
+                                simStatusJson["pin1_state"] = device.sim_status.pin1_state;
+                                simStatusJson["pin1_retries"] = device.sim_status.pin1_retries;
+                                simStatusJson["puk1_retries"] = device.sim_status.puk1_retries;
+                                simStatusJson["pin2_state"] = device.sim_status.pin2_state;
+                                simStatusJson["pin2_retries"] = device.sim_status.pin2_retries;
+                                simStatusJson["puk2_retries"] = device.sim_status.puk2_retries;
+                                deviceJson["sim_status"] = simStatusJson;
+                                
+                                result = deviceJson.dump();
+                                deviceFound = true;
+                                break;
+                            }
+                        }
+                    } catch (const std::exception&) {
+                        // QMIDevices failed too
+                    }
+                }
+                
+                if (!deviceFound) {
                     success = false;
                     result = "Device not found: " + devicePath;
                 }
@@ -504,25 +527,18 @@ void RpcOperationProcessor::processOperationThreadStatic(std::shared_ptr<Request
         sendResponseStatic(transactionId, success, result, "", responseTopic);
         
         if (verbose) {
-            std::cerr << "[RPC Thread " << transactionId << "] Operation completed, response sent" << std::endl;
+            std::cerr << "[RPC Processor] Transaction " << transactionId << " completed, response sent" << std::endl;
         }
 
     } catch (const std::exception& e) {
-        std::cerr << "[RPC Thread " << transactionId << "] Exception in thread: " << e.what() << std::endl;
+        std::cerr << "[RPC Processor] Exception in transaction " << transactionId << ": " << e.what() << std::endl;
         sendResponseStatic(transactionId, false, "", std::string("Exception: ") + e.what(), responseTopic);
     }
 
     // Clean up this thread from tracking before exiting
-    if (activeThreads && threadsMutex) {
-        std::lock_guard<std::mutex> lock(*threadsMutex);
-        activeThreads->erase(threadId);
-        if (verbose) {
-            std::cerr << "[RPC Thread " << threadId << "/" << transactionId << "] Removed from active threads, remaining: " << activeThreads->size() << std::endl;
-        }
-    }
-    
+    // No longer needed since we process synchronously
     if (verbose) {
-        std::cerr << "[RPC Thread " << threadId << "/" << transactionId << "] Thread execution completed" << std::endl;
+        std::cerr << "[RPC Processor] Transaction " << transactionId << " completed" << std::endl;
     }
 }
 
@@ -574,31 +590,4 @@ void RpcOperationProcessor::sendResponse(const std::string& transactionId, bool 
                   << transactionId << std::endl;
     }
     sendResponseStatic(transactionId, success, result, error, responseTopic_);
-}
-
-void RpcOperationProcessor::cleanupCompletedThreads() {
-    if (!threadManagerInitialized_) {
-        return;
-    }
-    
-    std::vector<unsigned int> threadsToClean;
-    {
-        std::lock_guard<std::mutex> lock(threadsMutex_);
-        // Find completed threads
-        for (unsigned int threadId : activeThreads_) {
-            if (!thread_is_alive(&threadManager_, threadId)) {
-                threadsToClean.push_back(threadId);
-            }
-        }
-        
-        // Remove completed threads from tracking
-        for (unsigned int threadId : threadsToClean) {
-            activeThreads_.erase(threadId);
-        }
-        
-        if (verbose_ && !threadsToClean.empty()) {
-            std::cout << "[RPC Processor] Cleaned up " << threadsToClean.size() 
-                      << " completed threads, remaining active: " << activeThreads_.size() << std::endl;
-        }
-    }
 }

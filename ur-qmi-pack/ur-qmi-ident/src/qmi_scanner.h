@@ -179,6 +179,8 @@ private:
     std::string parseUIMState(const std::string& output);
     std::string parsePINStatus(const std::string& output);
     std::string parseUserLockState(const std::string& output);
+    std::string parsePRLVersion(const std::string& output);
+    std::string parseActivationState(const std::string& output);
     std::string parseTime(const std::string& output);
     std::string parseBandCapabilities(const std::string& output);
     std::vector<std::string> parseStoredImages(const std::string& output);
