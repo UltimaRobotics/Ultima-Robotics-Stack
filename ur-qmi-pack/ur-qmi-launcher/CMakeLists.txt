@@ -3,12 +3,16 @@ project(QMIConnectionManager)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_VERBOSE_MAKEFILE OFF)
 
 # Compiler flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -O2")
 
 # Find required packages
 find_package(PkgConfig REQUIRED)
+find_package(Threads REQUIRED)
+
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wno-incomplete-type -Wno-incomplete-declared -D_DEBUG_LOG")
 
 # Try to find jsoncpp
 pkg_check_modules(JSONCPP jsoncpp)
@@ -27,6 +31,9 @@ endif()
 if(JSONCPP_INCLUDE_DIRS)
     include_directories(${JSONCPP_INCLUDE_DIRS})
 endif()
+
+# Add dependency subdirectories to build them automatically
+add_subdirectory(../ur-threadder-api threadder-api-build)
 
 # Source files
 set(SOURCES
@@ -63,28 +70,30 @@ set(HEADERS
 )
 
 # Create main executable
-add_executable(qmi_connection_manager ${SOURCES} ${HEADERS})
+add_executable(ur-qmi-launcher ${SOURCES} ${HEADERS})
 
-# Create mutex test executable
-add_executable(test_mutex_implementation
-    test_mutex_implementation.cpp
+target_include_directories(ur-qmi-launcher PRIVATE 
+    ${JSONCPP_INCLUDE_DIRS}
+    ../ur-threadder-api/include
+    ../ur-threadder-api/cpp/include
+    threadder-api-build/include
+    threadder-api-build/cpp/include
 )
 
 # Link libraries
-target_link_libraries(qmi_connection_manager 
+target_link_libraries(ur-qmi-launcher 
     ${JSONCPP_LIBRARIES}
     pthread
-)
-
-# Link libraries for test
-target_link_libraries(test_mutex_implementation
-    pthread
+    threadmanager
+    threadmanager_cpp
+    Threads::Threads
+    m
 )
 
 # Set compiler flags
 if(JSONCPP_CFLAGS_OTHER)
-    target_compile_options(qmi_connection_manager PRIVATE ${JSONCPP_CFLAGS_OTHER})
+    target_compile_options(ur-qmi-launcher PRIVATE ${JSONCPP_CFLAGS_OTHER})
 endif()
 
 # Install target
-install(TARGETS qmi_connection_manager DESTINATION bin)
+install(TARGETS ur-qmi-launcher DESTINATION bin)

@@ -24,21 +24,17 @@ RpcOperationProcessor::~RpcOperationProcessor() {
     // Set shutdown flag to prevent new thread creation
     isShuttingDown_.store(true);
     
-    // Collect all active threads for joining
-    std::vector<unsigned int> threadsToJoin;
+    // Collect all active threads for stopping
+    std::vector<unsigned int> threadsToStop;
     {
         std::lock_guard<std::mutex> lock(threadsMutex_);
-        threadsToJoin.assign(activeThreads_.begin(), activeThreads_.end());
+        threadsToStop.assign(activeThreads_.begin(), activeThreads_.end());
     }
     
-    // Join all threads with timeout
-    for (unsigned int threadId : threadsToJoin) {
+    // Stop all threads
+    for (unsigned int threadId : threadsToStop) {
         if (threadManager_->isThreadAlive(threadId)) {
-            bool completed = threadManager_->joinThread(threadId, std::chrono::minutes(5));
-            if (!completed) {
-                std::cerr << "[RPC] WARNING: Thread " << threadId 
-                         << " did not complete after 5 minutes" << std::endl;
-            }
+            threadManager_->stopThread(threadId);
         }
     }
 }

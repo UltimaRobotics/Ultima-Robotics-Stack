@@ -221,6 +221,9 @@ public:
     WatchdogStats getStatistics() const;
     std::string getStatus() const;
     
+    // Device availability check (public for DeviceWatchdogManager)
+    bool isDeviceAvailable() const;
+    
 private:
     // Configuration
     DeviceConfig m_device_config;

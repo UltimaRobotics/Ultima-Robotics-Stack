@@ -47,6 +47,15 @@ public:
     // Set verbose mode for all watchdog instances
     void setVerbose(bool verbose);
     
+    // Check and cleanup devices that have stopped monitoring
+    void cleanupStoppedDevices();
+    
+    // Force cleanup of unavailable devices
+    void cleanupUnavailableDevices();
+    
+    // Force remove device from monitoring ( immediate cleanup )
+    bool forceRemoveDevice(const std::string& device_path);
+    
 private:
     mutable std::mutex devices_mutex_;
     std::unordered_map<std::string, std::unique_ptr<DeviceWatchdogInfo>> monitored_devices_;

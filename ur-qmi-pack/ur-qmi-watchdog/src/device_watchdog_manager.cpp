@@ -121,7 +121,6 @@ bool DeviceWatchdogManager::stopDeviceMonitoring(const std::string& device_path)
     // Stop the thread
     if (device_info->thread_id != 0) {
         thread_manager_->stopThread(device_info->thread_id);
-        thread_manager_->joinThread(device_info->thread_id);
     }
     
     device_info->is_running = false;
@@ -157,7 +156,6 @@ void DeviceWatchdogManager::stopAllMonitoring() {
         // Stop the thread
         if (device_info->thread_id != 0) {
             thread_manager_->stopThread(device_info->thread_id);
-            thread_manager_->joinThread(device_info->thread_id);
         }
         
         device_info->is_running = false;
@@ -230,6 +228,114 @@ void DeviceWatchdogManager::setVerbose(bool verbose) {
     for (auto& pair : monitored_devices_) {
         if (pair.second->watchdog) {
             pair.second->watchdog->setVerbose(verbose);
+        }
+    }
+}
+
+bool DeviceWatchdogManager::forceRemoveDevice(const std::string& device_path) {
+    std::lock_guard<std::mutex> lock(devices_mutex_);
+    
+    auto it = monitored_devices_.find(device_path);
+    if (it == monitored_devices_.end()) {
+        std::cout << "[DeviceManager] Device " << device_path << " not found in monitored list" << std::endl;
+        return true; // Already removed
+    }
+    
+    auto& device_info = it->second;
+    
+    std::cout << "[DeviceManager] Force removing device: " << device_path << std::endl;
+    
+    // Stop the watchdog immediately
+    if (device_info->watchdog) {
+        device_info->watchdog->stopMonitoring();
+    }
+    
+    // Stop the thread immediately
+    if (device_info->thread_id != 0) {
+        thread_manager_->stopThread(device_info->thread_id);
+    }
+    
+    device_info->is_running = false;
+    
+    // Remove from monitored devices immediately
+    monitored_devices_.erase(it);
+    
+    std::cout << "[DeviceManager] Force removed device: " << device_path << std::endl;
+    return true;
+}
+
+void DeviceWatchdogManager::cleanupUnavailableDevices() {
+    std::lock_guard<std::mutex> lock(devices_mutex_);
+    
+    std::vector<std::string> devices_to_remove;
+    
+    for (const auto& pair : monitored_devices_) {
+        const auto& device_info = pair.second;
+        
+        // Check if device is physically unavailable
+        if (device_info->watchdog && !device_info->watchdog->isDeviceAvailable()) {
+            std::cout << "[DeviceManager] Device " << pair.first 
+                      << " is physically unavailable, forcing cleanup" << std::endl;
+            devices_to_remove.push_back(pair.first);
+        }
+    }
+    
+    // Remove unavailable devices
+    for (const auto& device_path : devices_to_remove) {
+        auto it = monitored_devices_.find(device_path);
+        if (it != monitored_devices_.end()) {
+            auto& device_info = it->second;
+            
+            // Stop the watchdog first
+            if (device_info->watchdog) {
+                device_info->watchdog->stopMonitoring();
+            }
+            
+            // Ensure the thread is stopped
+            if (device_info->thread_id != 0) {
+                thread_manager_->stopThread(device_info->thread_id);
+            }
+            
+            device_info->is_running = false;
+            monitored_devices_.erase(it);
+            
+            std::cout << "[DeviceManager] Force cleaned up unavailable device: " << device_path << std::endl;
+        }
+    }
+}
+
+void DeviceWatchdogManager::cleanupStoppedDevices() {
+    std::lock_guard<std::mutex> lock(devices_mutex_);
+    
+    std::vector<std::string> devices_to_remove;
+    
+    for (const auto& pair : monitored_devices_) {
+        const auto& device_info = pair.second;
+        
+        // Check if the watchdog is still monitoring or if device is physically unavailable
+        if (device_info->watchdog && 
+            (!device_info->watchdog->isMonitoring() || !device_info->watchdog->isDeviceAvailable())) {
+            std::cout << "[DeviceManager] Device " << pair.first 
+                      << " has stopped monitoring or is unavailable, scheduling cleanup" << std::endl;
+            devices_to_remove.push_back(pair.first);
+        }
+    }
+    
+    // Remove stopped devices
+    for (const auto& device_path : devices_to_remove) {
+        auto it = monitored_devices_.find(device_path);
+        if (it != monitored_devices_.end()) {
+            auto& device_info = it->second;
+            
+            // Ensure the thread is stopped
+            if (device_info->thread_id != 0) {
+                thread_manager_->stopThread(device_info->thread_id);
+            }
+            
+            device_info->is_running = false;
+            monitored_devices_.erase(it);
+            
+            std::cout << "[DeviceManager] Cleaned up stopped device: " << device_path << std::endl;
         }
     }
 }

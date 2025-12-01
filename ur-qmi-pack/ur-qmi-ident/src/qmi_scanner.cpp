@@ -1720,7 +1720,7 @@ void QMIScanner::publishDeviceDiscovery(const AdvancedDeviceProfile& profile, bo
         
         // Convert to string and publish
         std::string requestJson = request.dump();
-        m_rpc_client->publishMessage("direct_messaging/ur-qmi-qmi-watchdog/requests", requestJson);
+        m_rpc_client->publishMessage("direct_messaging/ur-qmi-watchdog/requests", requestJson);
         
         std::cout << "[QMI Scanner] Published device discovery event for " 
                   << profile.basic.path << " (" << (added ? "added" : "removed") << ")" << std::endl;

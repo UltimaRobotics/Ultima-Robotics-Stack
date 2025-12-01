@@ -28,7 +28,8 @@
   "json_added_subs": {
     "topics": [
       "clients/ur-qmi-ident/heartbeat",
-      "direct_messaging/ur-qmi-ident/responses"
+      "direct_messaging/ur-qmi-ident/responses",
+      "direct_messaging/ur-qmi-watchdog/requests"
     ]
   },
   "relay": {

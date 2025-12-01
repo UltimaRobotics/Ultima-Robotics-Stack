@@ -42,10 +42,10 @@ Json::Value failureDetectionConfig;
 
 bool ValidatedStartupInstance_0 = false;
 
-void signalHandler(int signal) {
+void signalHandler(int /* signal */) {
     std::cout << "Shutting down system..." << std::endl;
     g_running = false;
-    
+    exit(0);
     // Stop device manager first
     if (g_device_manager) {
         std::cout << "Stopping device manager..." << std::endl;
@@ -61,9 +61,8 @@ void signalHandler(int signal) {
     if (g_thread_manager && g_watchdog_thread_id != 0) {
         std::cout << "Stopping watchdog thread..." << std::endl;
         g_thread_manager->stopThread(g_watchdog_thread_id);
-        g_thread_manager->joinThread(g_watchdog_thread_id);
     }
-    exit(0);
+    
 }
 
 void threads_monitor_lookfor(){
@@ -162,15 +161,29 @@ void handleDeviceDiscoveryEvent(const std::string& payload) {
         if (event_type == "device_added") {
             // Start monitoring for the new device
             if (g_device_manager) {
-                if (!g_device_manager->isDeviceMonitored(device_path)) {
-                    std::cout << "[Discovery] Starting monitoring for new device: " << device_path << std::endl;
-                    if (g_device_manager->startDeviceMonitoring(device_path, monitoringConfig, failureDetectionConfig)) {
-                        std::cout << "[Discovery] Successfully started monitoring for: " << device_path << std::endl;
-                    } else {
-                        std::cerr << "[Discovery] Failed to start monitoring for: " << device_path << std::endl;
-                    }
+                std::cout << "[Discovery] Device add event received for: " << device_path << std::endl;
+                
+                // Force cleanup of any stale device entries before checking
+                g_device_manager->cleanupUnavailableDevices();
+                g_device_manager->cleanupStoppedDevices();
+                
+                // Always attempt to start monitoring for added devices
+                // even if they appear to be monitored, to handle reconnection cases
+                bool was_already_monitored = g_device_manager->isDeviceMonitored(device_path);
+                
+                if (was_already_monitored) {
+                    std::cout << "[Discovery] Device " << device_path 
+                              << " appears to be monitored, but this is a reconnection - forcing restart" << std::endl;
+                    
+                    // Force remove the existing monitoring immediately
+                    g_device_manager->forceRemoveDevice(device_path);
+                }
+                
+                std::cout << "[Discovery] Starting fresh monitoring for device: " << device_path << std::endl;
+                if (g_device_manager->startDeviceMonitoring(device_path, monitoringConfig, failureDetectionConfig)) {
+                    std::cout << "[Discovery] Successfully started monitoring for: " << device_path << std::endl;
                 } else {
-                    std::cout << "[Discovery] Device " << device_path << " is already being monitored" << std::endl;
+                    std::cerr << "[Discovery] Failed to start monitoring for: " << device_path << std::endl;
                 }
             }
         } else if (event_type == "device_removed") {
@@ -273,7 +286,7 @@ void handleDeviceListResponse(const std::string& payload) {
     }
 }
 
-void handleHeartbeat(const std::string& payload) {
+void handleHeartbeat(const std::string& /* payload */) {
     std::cout << "[Heartbeat] Received heartbeat from ur-qmi-ident" << std::endl;
     
     // Trigger startup device list request on first heartbeat (one-time cron job)
@@ -401,6 +414,9 @@ int main(int argc, char* argv[]) {
                 
                 // Handle device discovery events (for dynamic device addition/removal)
                 if (topic.find("direct_messaging/ur-qmi-watchdog/requests") != std::string::npos) {
+                    std::cout << "[RPC] Received message on device discovery topic: " << topic << std::endl;
+                    std::cout << "[RPC] Message payload: " << payload << std::endl;
+                    
                     // Check if this is a device discovery event
                     Json::Value root;
                     Json::Reader reader;
@@ -409,7 +425,12 @@ int main(int argc, char* argv[]) {
                             std::cout << "[RPC] Handling device discovery event" << std::endl;
                             handleDeviceDiscoveryEvent(payload);
                             return;
+                        } else {
+                            std::cout << "[RPC] Message is not a device discovery event, method: " 
+                                      << (root.isMember("method") ? root["method"].asString() : "none") << std::endl;
                         }
+                    } else {
+                        std::cout << "[RPC] Failed to parse JSON message" << std::endl;
                     }
                     
                     // Delegate to operation processor for other RPC requests
@@ -450,6 +471,7 @@ int main(int argc, char* argv[]) {
             
             // Show monitored devices status periodically
             static int status_counter = 0;
+            static int device_check_counter = 0;
             if (++status_counter >= 30) { // Every 30 seconds
                 status_counter = 0;
                 
@@ -468,6 +490,10 @@ int main(int argc, char* argv[]) {
                 
                 // Show monitored devices
                 if (g_device_manager) {
+                    // Cleanup devices that have stopped monitoring (e.g., due to device removal)
+                    g_device_manager->cleanupStoppedDevices();
+                    g_device_manager->cleanupUnavailableDevices();
+                    
                     auto devices = g_device_manager->getMonitoredDevices();
                     if (!devices.empty()) {
                         std::cout << "[Status] Currently monitoring " << devices.size() << " devices: ";
@@ -476,7 +502,27 @@ int main(int argc, char* argv[]) {
                         }
                         std::cout << std::endl;
                     } else if (g_device_list_received.load()) {
-                        std::cout << "[Status] No devices currently being monitored" << std::endl;
+                        std::cout << "[Status] No devices currently being monitored (ready for device connections)" << std::endl;
+                    }
+                }
+                
+                // Periodic device availability check (every 60 seconds)
+                if (++device_check_counter >= 60) {
+                    device_check_counter = 0;
+                    
+                    if (g_device_manager && hasRpcConfig && g_device_list_received.load()) {
+                        // Check if we should request a fresh device list
+                        auto devices = g_device_manager->getMonitoredDevices();
+                        if (devices.empty()) {
+                            std::cout << "[DeviceCheck] No devices monitored, requesting fresh device list..." << std::endl;
+                            
+                            // Reset device list received flag to trigger a new request
+                            g_device_list_received.store(false);
+                            g_startup_request_sent.store(false);
+                            
+                            // Trigger immediate device list request on next heartbeat
+                            std::cout << "[DeviceCheck] Will request device list on next heartbeat" << std::endl;
+                        }
                     }
                 }
             }

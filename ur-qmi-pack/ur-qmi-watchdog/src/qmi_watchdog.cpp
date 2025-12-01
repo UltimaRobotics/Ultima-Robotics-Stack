@@ -372,6 +372,28 @@ void QMIWatchdog::monitoringLoop() {
     while (m_monitoring.load()) {
         auto start_time = std::chrono::steady_clock::now();
         
+        // Check if device is still available before attempting collection
+        if (!isDeviceAvailable()) {
+            std::cout << "[DeviceRemoved] Device " << m_device_config.device_path 
+                      << " is no longer available. Stopping monitoring." << std::endl;
+            
+            // Publish device removed event
+            Json::Value device_removed_event;
+            device_removed_event["type"] = "device_removed";
+            device_removed_event["timestamp"] = std::chrono::duration_cast<std::chrono::milliseconds>(
+                std::chrono::system_clock::now().time_since_epoch()).count();
+            device_removed_event["device_path"] = m_device_config.device_path;
+            device_removed_event["reason"] = "device_unavailable";
+            
+            Json::StreamWriterBuilder builder;
+            std::string event_json = Json::writeString(builder, device_removed_event);
+            publishToTopic("ur-shared-bus/ur-qmi-watchdog/device-events", event_json);
+            
+            // Stop monitoring
+            m_monitoring.store(false);
+            break;
+        }
+        
         // Collect full monitoring snapshot
         MonitoringSnapshot snapshot = collectFullSnapshot();
         
@@ -895,7 +917,7 @@ std::vector<std::string> QMIWatchdog::checkCollectionFailures() {
     
     std::lock_guard<std::mutex> lock(m_failure_tracking_mutex);
     
-    if (m_recent_collection_status.size() < m_failure_config.max_consecutive_failures) {
+    if (m_recent_collection_status.size() < static_cast<size_t>(m_failure_config.max_consecutive_failures)) {
         return failures; // Not enough data yet
     }
     
@@ -961,15 +983,18 @@ std::string QMIWatchdog::getStatus() const {
 }
 
 void QMIWatchdog::printJsonToTerminal(const std::string& json_data, const std::string& data_type) {
-    // Only print if verbose mode is enabled
     if (!m_verbose) {
-        return;
+        return; // Don't print anything if verbose is disabled
     }
     
-    // Print with timestamp and data type header
+    // Simple verbose output
+    std::cout << "[" << data_type << "] " << json_data << std::endl;
+    
+    // Get current time with milliseconds
     auto now = std::chrono::system_clock::now();
     auto time_t = std::chrono::system_clock::to_time_t(now);
-    auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
+    auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+        now.time_since_epoch()) % 1000;
     
     std::cout << "\n========== " << data_type << " [" 
               << std::put_time(std::localtime(&time_t), "%Y-%m-%d %H:%M:%S")
@@ -986,6 +1011,23 @@ std::string QMIWatchdog::getCurrentTimestamp() const {
     std::stringstream ss;
     ss << std::put_time(std::localtime(&time_t), "%Y-%m-%d %H:%M:%S");
     return ss.str();
+}
+
+bool QMIWatchdog::isDeviceAvailable() const {
+    // Check if the device file exists and is accessible
+    std::string device_path = m_device_config.device_path;
+    if (device_path.empty()) {
+        return false;
+    }
+    
+    // Try to access the device file
+    FILE* test_file = fopen(device_path.c_str(), "r");
+    if (test_file == nullptr) {
+        return false;
+    }
+    
+    fclose(test_file);
+    return true;
 }
 
 void QMIWatchdog::setRpcClient(std::shared_ptr<RpcClient> rpc_client) {

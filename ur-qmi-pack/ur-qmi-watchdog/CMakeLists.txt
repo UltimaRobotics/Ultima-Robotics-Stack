@@ -53,20 +53,10 @@ target_link_libraries(ur-qmi-watchdog
 )
 
 target_include_directories(ur-qmi-watchdog PRIVATE 
-    ${UDEV_INCLUDE_DIRS}
     ${JSONCPP_INCLUDE_DIRS}
     ${CMAKE_CURRENT_SOURCE_DIR}/../ur-threadder-api/include
     ${CMAKE_CURRENT_SOURCE_DIR}/../ur-threadder-api/cpp/include
     src
-)
-
-target_link_libraries(ur-qmi-watchdog 
-    ${UDEV_LIBRARIES}
-    ${JSONCPP_LIBRARIES}
-    Threads::Threads
-    threadmanager
-    ThreadManager::ThreadManager
-    ur-rpc-template
 )
 
 # Add compiler flags for jsoncpp
