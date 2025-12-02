@@ -1,0 +1,458 @@
+#include <iostream>
+#include <string>
+#include <csignal>
+#include <thread>
+#include <chrono>
+#include <atomic>
+#include <getopt.h>
+#include <iomanip>
+
+#include "MAVLinkUdpConnection.h"
+#include "Vehicle.h"
+#include "FactGroup.h"
+#include "ParameterManager.h"
+
+static std::atomic<bool> g_running{true};
+static std::shared_ptr<Vehicle> g_vehicle = nullptr;
+static std::shared_ptr<MAVLinkUdpConnection> g_connection = nullptr;
+
+void signalHandler(int signal)
+{
+    std::cout << "\nReceived signal " << signal << ", shutting down..." << std::endl;
+    exit(0);
+    g_running = false;
+    if (g_connection) {
+        g_connection->disconnect();
+    }
+}
+
+void printUsage(const char* programName)
+{
+    std::cout << "Usage: " << programName << " [options]" << std::endl;
+    std::cout << "Options:" << std::endl;
+    std::cout << "  -h, --help              Show this help message" << std::endl;
+    std::cout << "  -a, --address <addr>    UDP target address (default: 127.0.0.1)" << std::endl;
+    std::cout << "  -p, --port <port>       UDP target port (default: 14550)" << std::endl;
+    std::cout << "  -l, --local-port <port> Local UDP port to bind (default: 0/auto)" << std::endl;
+    std::cout << "  -v, --verbose           Enable verbose output" << std::endl;
+    std::cout << "  -s, --stats             Show connection statistics" << std::endl;
+    std::cout << std::endl;
+    std::cout << "Examples:" << std::endl;
+    std::cout << "  " << programName << " -a 192.168.1.100 -p 14550" << std::endl;
+    std::cout << "  " << programName << " --address 127.0.0.1 --port 14550 --verbose" << std::endl;
+}
+
+void printVehicleInfo(const Vehicle* vehicle)
+{
+    if (!vehicle) return;
+
+    std::cout << "\n=== Vehicle Information ===" << std::endl;
+    std::cout << "System ID: " << static_cast<int>(vehicle->systemId()) << std::endl;
+    std::cout << "Component ID: " << static_cast<int>(vehicle->componentId()) << std::endl;
+    std::cout << "Vehicle Type: " << vehicle->vehicleTypeString() << std::endl;
+    std::cout << "Autopilot Type: " << vehicle->autopilotTypeString() << std::endl;
+    std::cout << "Flight Mode: " << vehicle->flightMode() << std::endl;
+    std::cout << "System Status: " << vehicle->systemStatusString() << std::endl;
+    std::cout << "Armed: " << (vehicle->armed() ? "Yes" : "No") << std::endl;
+    std::cout << "Flying: " << (vehicle->flying() ? "Yes" : "No") << std::endl;
+}
+
+void printTelemetryData(Vehicle* vehicle)
+{
+    if (!vehicle) return;
+
+    std::cout << "\n=== Telemetry Data ===" << std::endl;
+    
+    // Main vehicle facts
+    auto roll = vehicle->roll();
+    auto pitch = vehicle->pitch();
+    auto heading = vehicle->heading();
+    auto groundSpeed = vehicle->groundSpeed();
+    auto altitudeAMSL = vehicle->altitudeAMSL();
+    auto altitudeRelative = vehicle->altitudeRelative();
+    auto climbRate = vehicle->climbRate();
+    auto throttlePct = vehicle->throttlePct();
+
+    std::cout << std::fixed << std::setprecision(2);
+    if (roll) std::cout << "Roll: " << std::get<double>(roll->cookedValue()) << "°" << std::endl;
+    if (pitch) std::cout << "Pitch: " << std::get<double>(pitch->cookedValue()) << "°" << std::endl;
+    if (heading) std::cout << "Heading: " << std::get<double>(heading->cookedValue()) << "°" << std::endl;
+    if (groundSpeed) std::cout << "Ground Speed: " << std::get<double>(groundSpeed->cookedValue()) << " m/s" << std::endl;
+    if (altitudeAMSL) std::cout << "Altitude (AMSL): " << std::get<double>(altitudeAMSL->cookedValue()) << " m" << std::endl;
+    if (altitudeRelative) std::cout << "Altitude (Relative): " << std::get<double>(altitudeRelative->cookedValue()) << " m" << std::endl;
+    if (climbRate) std::cout << "Climb Rate: " << std::get<double>(climbRate->cookedValue()) << " m/s" << std::endl;
+    if (throttlePct) std::cout << "Throttle: " << std::get<uint16_t>(throttlePct->cookedValue()) << "%" << std::endl;
+
+    // GPS data
+    auto gpsGroup = vehicle->gpsFactGroup();
+    if (gpsGroup) {
+        auto lat = gpsGroup->getFact("lat");
+        auto lon = gpsGroup->getFact("lon");
+        auto satellites = gpsGroup->getFact("satellitesVisible");
+        auto fixType = gpsGroup->getFact("fixType");
+        auto hdop = gpsGroup->getFact("hdop");
+        auto vdop = gpsGroup->getFact("vdop");
+        auto alt = gpsGroup->getFact("alt");
+        auto eph = gpsGroup->getFact("eph");
+        auto epv = gpsGroup->getFact("epv");
+        
+        if (lat && lon) {
+            std::cout << "GPS: " << std::get<int32_t>(lat->cookedValue()) / 1e7 << "°, " 
+                      << std::get<int32_t>(lon->cookedValue()) / 1e7 << "°" << std::endl;
+        }
+        if (alt) std::cout << "GPS Altitude: " << std::get<double>(alt->cookedValue()) << " m" << std::endl;
+        if (satellites) std::cout << "GPS Satellites: " << std::get<uint8_t>(satellites->cookedValue()) << std::endl;
+        if (fixType) std::cout << "GPS Fix Type: " << static_cast<int>(std::get<uint8_t>(fixType->cookedValue())) << std::endl;
+        if (hdop) std::cout << "GPS HDOP: " << std::get<double>(hdop->cookedValue()) << std::endl;
+        if (vdop) std::cout << "GPS VDOP: " << std::get<double>(vdop->cookedValue()) << std::endl;
+        if (eph) std::cout << "GPS EPH: " << std::get<double>(eph->cookedValue()) << std::endl;
+        if (epv) std::cout << "GPS EPV: " << std::get<double>(epv->cookedValue()) << std::endl;
+    }
+
+    // GPS2 data (secondary GPS)
+    auto gps2Group = vehicle->gps2FactGroup();
+    if (gps2Group) {
+        auto lat2 = gps2Group->getFact("lat");
+        auto lon2 = gps2Group->getFact("lon");
+        auto satellites2 = gps2Group->getFact("satellitesVisible");
+        auto fixType2 = gps2Group->getFact("fixType");
+        
+        if (lat2 && lon2) {
+            std::cout << "GPS2: " << std::get<int32_t>(lat2->cookedValue()) / 1e7 << "°, " 
+                      << std::get<int32_t>(lon2->cookedValue()) / 1e7 << "°" << std::endl;
+        }
+        if (satellites2) std::cout << "GPS2 Satellites: " << std::get<uint8_t>(satellites2->cookedValue()) << std::endl;
+        if (fixType2) std::cout << "GPS2 Fix Type: " << static_cast<int>(std::get<uint8_t>(fixType2->cookedValue())) << std::endl;
+    }
+
+    // Battery data
+    auto batteryGroup = vehicle->batteryFactGroup();
+    if (batteryGroup) {
+        auto voltage = batteryGroup->getFact("voltage");
+        auto current = batteryGroup->getFact("current");
+        auto percent = batteryGroup->getFact("percent");
+        auto consumed = batteryGroup->getFact("consumed");
+        auto remaining = batteryGroup->getFact("remaining");
+        auto temperature = batteryGroup->getFact("temperature");
+        
+        if (voltage) std::cout << "Battery Voltage: " << std::get<float>(voltage->cookedValue()) << " V" << std::endl;
+        if (current) std::cout << "Battery Current: " << std::get<float>(current->cookedValue()) << " A" << std::endl;
+        if (percent) std::cout << "Battery Remaining: " << std::get<uint8_t>(percent->cookedValue()) << "%" << std::endl;
+        if (consumed) std::cout << "Battery Consumed: " << std::get<float>(consumed->cookedValue()) << " mAh" << std::endl;
+        if (remaining) std::cout << "Battery Remaining Capacity: " << std::get<float>(remaining->cookedValue()) << " mAh" << std::endl;
+        if (temperature) std::cout << "Battery Temperature: " << std::get<float>(temperature->cookedValue()) << "°C" << std::endl;
+    }
+
+    // System Status data
+    auto systemStatusGroup = vehicle->systemStatusFactGroup();
+    if (systemStatusGroup) {
+        auto sensorPresent = systemStatusGroup->getFact("sensorPresent");
+        auto sensorHealth = systemStatusGroup->getFact("sensorHealth");
+        auto sensorErrors = systemStatusGroup->getFact("sensorErrors");
+        auto onboardControlSensorsPresent = systemStatusGroup->getFact("onboardControlSensorsPresent");
+        auto onboardControlSensorsHealth = systemStatusGroup->getFact("onboardControlSensorsHealth");
+        auto onboardControlSensorsErrors = systemStatusGroup->getFact("onboardControlSensorsErrors");
+        
+        if (sensorPresent) std::cout << "Sensor Present: 0x" << std::hex << std::get<uint32_t>(sensorPresent->cookedValue()) << std::dec << std::endl;
+        if (sensorHealth) std::cout << "Sensor Health: 0x" << std::hex << std::get<uint32_t>(sensorHealth->cookedValue()) << std::dec << std::endl;
+        if (sensorErrors) std::cout << "Sensor Errors: 0x" << std::hex << std::get<uint32_t>(sensorErrors->cookedValue()) << std::dec << std::endl;
+        if (onboardControlSensorsPresent) std::cout << "Control Sensors Present: 0x" << std::hex << std::get<uint32_t>(onboardControlSensorsPresent->cookedValue()) << std::dec << std::endl;
+        if (onboardControlSensorsHealth) std::cout << "Control Sensors Health: 0x" << std::hex << std::get<uint32_t>(onboardControlSensorsHealth->cookedValue()) << std::dec << std::endl;
+        if (onboardControlSensorsErrors) std::cout << "Control Sensors Errors: 0x" << std::hex << std::get<uint32_t>(onboardControlSensorsErrors->cookedValue()) << std::dec << std::endl;
+    }
+
+    // RC data
+    auto rcGroup = vehicle->rcFactGroup();
+    if (rcGroup) {
+        auto rcRSSI = rcGroup->getFact("rssi");
+        auto rcChannelCount = rcGroup->getFact("channelCount");
+        auto rcRSSI_DBM = rcGroup->getFact("rssiDbm");
+        auto rcRSSIPercent = rcGroup->getFact("rssiPercent");
+        
+        if (rcRSSI) std::cout << "RC RSSI: " << std::get<uint8_t>(rcRSSI->cookedValue()) << std::endl;
+        if (rcRSSI_DBM) std::cout << "RC RSSI (dBm): " << std::get<int8_t>(rcRSSI_DBM->cookedValue()) << " dBm" << std::endl;
+        if (rcRSSIPercent) std::cout << "RC RSSI (%): " << std::get<uint8_t>(rcRSSIPercent->cookedValue()) << "%" << std::endl;
+        if (rcChannelCount) std::cout << "RC Channels: " << std::get<uint8_t>(rcChannelCount->cookedValue()) << std::endl;
+    }
+
+    // Vibration data
+    auto vibrationGroup = vehicle->vibrationFactGroup();
+    if (vibrationGroup) {
+        auto vibrationX = vibrationGroup->getFact("vibrationX");
+        auto vibrationY = vibrationGroup->getFact("vibrationY");
+        auto vibrationZ = vibrationGroup->getFact("vibrationZ");
+        auto clippingX = vibrationGroup->getFact("clippingX");
+        auto clippingY = vibrationGroup->getFact("clippingY");
+        auto clippingZ = vibrationGroup->getFact("clippingZ");
+        
+        if (vibrationX) std::cout << "Vibration X: " << std::get<float>(vibrationX->cookedValue()) << std::endl;
+        if (vibrationY) std::cout << "Vibration Y: " << std::get<float>(vibrationY->cookedValue()) << std::endl;
+        if (vibrationZ) std::cout << "Vibration Z: " << std::get<float>(vibrationZ->cookedValue()) << std::endl;
+        if (clippingX) std::cout << "Vibration Clipping X: " << std::get<uint8_t>(clippingX->cookedValue()) << std::endl;
+        if (clippingY) std::cout << "Vibration Clipping Y: " << std::get<uint8_t>(clippingY->cookedValue()) << std::endl;
+        if (clippingZ) std::cout << "Vibration Clipping Z: " << std::get<uint8_t>(clippingZ->cookedValue()) << std::endl;
+    }
+
+    // Temperature data
+    auto temperatureGroup = vehicle->temperatureFactGroup();
+    if (temperatureGroup) {
+        auto temperature1 = temperatureGroup->getFact("temperature1");
+        auto temperature2 = temperatureGroup->getFact("temperature2");
+        auto temperature3 = temperatureGroup->getFact("temperature3");
+        
+        if (temperature1) std::cout << "Temperature 1: " << std::get<float>(temperature1->cookedValue()) << "°C" << std::endl;
+        if (temperature2) std::cout << "Temperature 2: " << std::get<float>(temperature2->cookedValue()) << "°C" << std::endl;
+        if (temperature3) std::cout << "Temperature 3: " << std::get<float>(temperature3->cookedValue()) << "°C" << std::endl;
+    }
+
+    // Estimator Status data
+    auto estimatorStatusGroup = vehicle->estimatorStatusFactGroup();
+    if (estimatorStatusGroup) {
+        auto estimatorFlags = estimatorStatusGroup->getFact("flags");
+        auto innovationPosHoriz = estimatorStatusGroup->getFact("innovationPosHoriz");
+        auto innovationPosVert = estimatorStatusGroup->getFact("innovationPosVert");
+        auto innovationVelHoriz = estimatorStatusGroup->getFact("innovationVelHoriz");
+        auto innovationVelVert = estimatorStatusGroup->getFact("innovationVelVert");
+        auto innovationMag = estimatorStatusGroup->getFact("innovationMag");
+        auto innovationYaw = estimatorStatusGroup->getFact("innovationYaw");
+        
+        if (estimatorFlags) std::cout << "Estimator Flags: 0x" << std::hex << std::get<uint32_t>(estimatorFlags->cookedValue()) << std::dec << std::endl;
+        if (innovationPosHoriz) std::cout << "Innovation Pos Horiz: " << std::get<float>(innovationPosHoriz->cookedValue()) << std::endl;
+        if (innovationPosVert) std::cout << "Innovation Pos Vert: " << std::get<float>(innovationPosVert->cookedValue()) << std::endl;
+        if (innovationVelHoriz) std::cout << "Innovation Vel Horiz: " << std::get<float>(innovationVelHoriz->cookedValue()) << std::endl;
+        if (innovationVelVert) std::cout << "Innovation Vel Vert: " << std::get<float>(innovationVelVert->cookedValue()) << std::endl;
+        if (innovationMag) std::cout << "Innovation Mag: " << std::get<float>(innovationMag->cookedValue()) << std::endl;
+        if (innovationYaw) std::cout << "Innovation Yaw: " << std::get<float>(innovationYaw->cookedValue()) << std::endl;
+    }
+
+    // Wind data
+    auto windGroup = vehicle->windFactGroup();
+    if (windGroup) {
+        auto windDirection = windGroup->getFact("direction");
+        auto windSpeed = windGroup->getFact("speed");
+        auto windClimb = windGroup->getFact("climb");
+        
+        if (windDirection) std::cout << "Wind Direction: " << std::get<float>(windDirection->cookedValue()) << "°" << std::endl;
+        if (windSpeed) std::cout << "Wind Speed: " << std::get<float>(windSpeed->cookedValue()) << " m/s" << std::endl;
+        if (windClimb) std::cout << "Wind Climb: " << std::get<float>(windClimb->cookedValue()) << " m/s" << std::endl;
+    }
+
+    std::cout << std::dec; // Reset to decimal format
+}
+
+void printConnectionStats(const MAVLinkUdpConnection* connection)
+{
+    if (!connection) return;
+
+    std::cout << "\n=== Connection Statistics ===" << std::endl;
+    std::cout << "Bytes Received: " << connection->getBytesReceived() << std::endl;
+    std::cout << "Bytes Sent: " << connection->getBytesSent() << std::endl;
+    std::cout << "Packets Received: " << connection->getPacketsReceived() << std::endl;
+    std::cout << "Packets Sent: " << connection->getPacketsSent() << std::endl;
+    std::cout << "Packets Lost: " << connection->getPacketsLost() << std::endl;
+    std::cout << "MAVLink Version: " << connection->getDetectedMavlinkVersion() << std::endl;
+}
+
+void printParameters(Vehicle* vehicle)
+{
+    if (!vehicle) return;
+
+    auto paramManager = vehicle->parameterManager();
+    if (!paramManager || !paramManager->parametersReady()) {
+        std::cout << "\n=== Parameters ===" << std::endl;
+        std::cout << "Parameters not ready yet." << std::endl;
+        return;
+    }
+
+    std::cout << "\n=== Parameters ===" << std::endl;
+    
+    // Get parameter count and progress
+    int totalParams = paramManager->parameterCount();
+    double progress = paramManager->loadProgress();
+    
+    std::cout << "Total Parameters: " << totalParams << std::endl;
+    std::cout << "Loading Progress: " << (progress * 100.0) << "%" << std::endl;
+    std::cout << "Parameters Ready: " << (paramManager->parametersReady() ? "Yes" : "No") << std::endl;
+    
+    // Display critical system parameters first (like QGroundControl)
+    std::cout << "\n--- Critical System Parameters ---" << std::endl;
+    
+    // System parameters
+    const char* criticalParams[] = {
+        "SYS_AUTOSTART", "SYS_ID_THISMAV", "SYSID_MYGCS", "SYS_COMPANION",
+        "SYS_LOGFILE", "SYS_NUM_TIMERS", "SYS_HITL", "SYS_HAS_RC",
+        "SYS_TYPE", "SYS_AUTOCONFIG_MODE", "SYS_MOT_STARTUP_DELAY"
+    };
+    
+    for (const char* paramName : criticalParams) {
+        auto param = paramManager->getParameter(paramName);
+        if (param) {
+            std::cout << paramName << ": " << param->cookedValueString() << std::endl;
+        }
+    }
+    
+    // Flight mode parameters
+    std::cout << "\n--- Flight Mode Parameters ---" << std::endl;
+    const char* flightModeParams[] = {
+        "COM_FLTMODE1", "COM_FLTMODE2", "COM_FLTMODE3", "COM_FLTMODE4",
+        "COM_FLTMODE5", "COM_FLTMODE6", "COM_FLTMODE7", "COM_FLTMODE8"
+    };
+    
+    for (const char* paramName : flightModeParams) {
+        auto param = paramManager->getParameter(paramName);
+        if (param) {
+            std::cout << paramName << ": " << param->cookedValueString() << std::endl;
+        }
+    }
+    
+    // Safety parameters
+    std::cout << "\n--- Safety Parameters ---" << std::endl;
+    const char* safetyParams[] = {
+        "COM_ARMING_CHECK", "COM_ARM_ECSH", "COM_ARM_HYST", "COM_ARM_WO_GPS",
+        "COM_LOW_BAT_ACT", "COM_DL_LOSS_EN", "COM_RC_LOSS_EN"
+    };
+    
+    for (const char* paramName : safetyParams) {
+        auto param = paramManager->getParameter(paramName);
+        if (param) {
+            std::cout << paramName << ": " << param->cookedValueString() << std::endl;
+        }
+    }
+    
+    // Position control parameters
+    std::cout << "\n--- Position Control Parameters ---" << std::endl;
+    const char* posParams[] = {
+        "MPC_XY_VEL_MAX", "MPC_Z_VEL_MAX", "MPC_XY_ACC_MAX", "MPC_Z_ACC_MAX",
+        "MPC_THR_HOVER", "MPC_MASS", "MPC_TILTMAX_AIR", "MPC_LAND_SPEED"
+    };
+    
+    for (const char* paramName : posParams) {
+        auto param = paramManager->getParameter(paramName);
+        if (param) {
+            std::cout << paramName << ": " << param->cookedValueString() << std::endl;
+        }
+    }
+    
+    // Attitude control parameters
+    std::cout << "\n--- Attitude Control Parameters ---" << std::endl;
+    const char* attParams[] = {
+        "MC_ROLL_P", "MC_PITCH_P", "MC_YAW_P", "MC_ROLLRATE_P", 
+        "MC_PITCHRATE_P", "MC_YAWRATE_P", "MC_ROLLRATE_I", "MC_PITCHRATE_I"
+    };
+    
+    for (const char* paramName : attParams) {
+        auto param = paramManager->getParameter(paramName);
+        if (param) {
+            std::cout << paramName << ": " << param->cookedValueString() << std::endl;
+        }
+    }
+    
+    std::cout << "\n--- Parameter Summary ---" << std::endl;
+    std::cout << "Showing critical parameters only. Total: " << totalParams << " parameters." << std::endl;
+    std::cout << "Use verbose mode (-v) to see all parameters." << std::endl;
+}
+
+    // Always perform version check at startup
+    if (checkVersion) {
+        std::cout << "=== Version Information ===" << std::endl;
+        std::cout << "MAVLink Data Collector v1.0" << std::endl;
+        std::cout << "Based on QGroundControl Parameter Manager" << std::endl;
+        std::cout << "Build date: " << __DATE__ << " " << __TIME__ << std::endl;
+        std::cout << "MAVLink v2.0 support enabled" << std::endl;
+        std::cout << "=============================" << std::endl;
+    }
+
+    // Set up signal handlers
+    std::signal(SIGINT, signalHandler);
+    std::signal(SIGTERM, signalHandler);
+
+    std::cout << "MAVLink Data Collector" << std::endl;
+    std::cout << "=======================" << std::endl;
+    std::cout << "Connecting to " << targetAddress << ":" << targetPort;
+    if (localPort != 0) {
+        std::cout << " (local port: " << localPort << ")";
+    }
+    std::cout << std::endl;
+
+    // Create connection
+    g_connection = std::make_shared<MAVLinkUdpConnection>();
+    
+    // Set up callbacks
+    g_connection->setConnectionChangedCallback([](bool connected) {
+        std::cout << "Connection " << (connected ? "established" : "lost") << std::endl;
+    });
+
+    g_connection->setMessageReceivedCallback([verbose](const mavlink_message_t& message) {
+        if (verbose) {
+            std::cout << "Received message: " << static_cast<int>(message.msgid) 
+                      << " from system " << static_cast<int>(message.sysid) 
+                      << " component " << static_cast<int>(message.compid) << std::endl;
+        }
+    });
+
+    // Connect to vehicle
+    if (!g_connection->connect(targetAddress, targetPort, localPort)) {
+        std::cerr << "Failed to connect to " << targetAddress << ":" << targetPort << std::endl;
+        return 1;
+    }
+
+    // Create vehicle
+    g_vehicle = std::make_shared<Vehicle>(g_connection.get());
+    
+    // Set up parameter manager callbacks
+    auto paramManager = g_vehicle->parameterManager();
+    if (paramManager) {
+        paramManager->setParametersReadyCallback([](bool ready) {
+            std::cout << "Parameters " << (ready ? "ready!" : "not ready") << std::endl;
+        });
+        
+        paramManager->setLoadProgressCallback([](double progress) {
+            std::cout << "Parameter loading progress: " << (progress * 100.0) << "%" << std::endl;
+        });
+    }
+    
+    // Set up vehicle callbacks
+    g_vehicle->setVehicleChangedCallback([verbose](const Vehicle* /*vehicle*/) {
+        if (verbose) {
+            std::cout << "Vehicle state changed" << std::endl;
+        }
+    });
+
+    g_vehicle->setVehicleTextMessageCallback([](const Vehicle* /*vehicle*/, std::string severity, std::string text) {
+        std::cout << "[" << severity << "] " << text << std::endl;
+    });
+
+    std::cout << "Connected! Waiting for vehicle data..." << std::endl;
+    std::cout << "Press Ctrl+C to stop." << std::endl;
+
+    // Main loop
+    auto lastPrintTime = std::chrono::steady_clock::now();
+    const auto printInterval = std::chrono::seconds(5);
+
+    while (g_running) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        
+        // Print telemetry data periodically
+        auto now = std::chrono::steady_clock::now();
+        if (now - lastPrintTime >= printInterval) {
+            printParameters(g_vehicle.get());
+            printTelemetryData(g_vehicle.get());
+            
+            if (showStats) {
+                printConnectionStats(g_connection.get());
+            }
+            
+            lastPrintTime = now;
+        }
+    }
+
+    // Final statistics
+    if (showStats) {
+        printConnectionStats(g_connection.get());
+    }
+
+    std::cout << "\nShutting down..." << std::endl;
+    g_connection->disconnect();
+    
+    return 0;
+}

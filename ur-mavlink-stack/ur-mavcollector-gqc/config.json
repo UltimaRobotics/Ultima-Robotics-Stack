@@ -1,0 +1,63 @@
+{
+    "target_address": "127.0.0.1",
+    "port": 44003,
+    
+    "system_id": 255,
+    "component_id": 1,
+    
+    "health_check_enabled": true,
+    "auto_restart_enabled": true,
+    "connection_timeout_ms": 5000,
+    "restart_delay_ms": 1000,
+    
+    "verbose_logging": false,
+    "show_statistics": false,
+    "enable_data_logging": false,
+    "log_file_path": "mavlink_data.log",
+    
+    "version_check_enabled": true,
+    "auto_version_detection": true,
+    
+    "output_format": "json",
+    "print_config": {
+        "vehicle_info": true,
+        "system_status": true,
+        "gps_data": true,
+        "gps2_data": true,
+        "battery_data": true,
+        "rc_data": true,
+        "vibration_data": false,
+        "temperature_data": false,
+        "estimator_status": false,
+        "wind_data": false,
+        "parameters": false,
+        "connection_stats": false,
+        "heartbeat": false,
+        "autopilot_version": true
+    },
+    
+    "data_fields": {
+        "vehicle_info": ["system_id", "component_id", "vehicle_type", "autopilot_type", "flight_mode", "armed", "flying"],
+        "system_status": ["sensor_present", "sensor_health", "sensor_errors", "control_sensors_present", "control_sensors_health", "control_sensors_errors", "control_sensors_present_decoded", "control_sensors_health_decoded", "sensor_status_analysis"],
+        "gps_data": ["lat", "lon", "alt", "mgrs", "hdop", "vdop", "ground_speed", "course_over_ground", "satellites_visible", "fix_type"],
+        "gps2_data": ["lat", "lon", "alt", "hdop", "vdop", "ground_speed", "course_over_ground", "satellites_visible", "fix_type"],
+        "battery_data": ["voltage", "current", "percent", "consumed", "remaining", "temperature", "id", "function", "type", "cell_count", "time_remaining", "charge_state", "mode", "fault_bitmask", "cell_count_detected", "battery_count", "function_name", "type_name", "charge_state_name", "mode_name", "faults_decoded", "cell_voltages", "configuration_analysis", "parameters"],
+        "rc_data": ["rssi", "rssi_dbm", "rssi_percent", "channel_count"],
+        "vibration_data": ["vibration_x", "vibration_y", "vibration_z", "clipping_x", "clipping_y", "clipping_z"],
+        "temperature_data": ["temperature1", "temperature2", "temperature3"],
+        "estimator_status": ["flags", "innovation_pos_horiz", "innovation_pos_vert", "innovation_vel_horiz", "innovation_vel_vert", "innovation_mag", "innovation_yaw"],
+        "wind_data": ["direction", "speed", "climb"],
+        "parameters": ["total_count", "load_progress", "critical_params"],
+        "connection_stats": ["bytes_received", "bytes_sent", "packets_received", "packets_sent", "packets_lost", "mavlink_version", "connection_healthy"],
+        "heartbeat": ["type", "autopilot", "system_status", "base_mode", "custom_mode"],
+        "autopilot_version": ["board_identification", "board_class", "board_name", "vendor_id", "product_id", "uid", "board_version", "flight_sw_version", "flight_sw_version_raw", "middleware_sw_version", "middleware_sw_version_raw", "os_sw_version", "os_sw_version_raw", "flight_custom_version", "capabilities"]
+    },
+    
+    "json_output": {
+        "pretty_print": true,
+        "include_timestamp": true,
+        "include_metadata": true,
+        "compact_arrays": false,
+        "stringify_numbers": false
+    }
+}
