@@ -9,7 +9,9 @@
 #include <mutex>
 #include <condition_variable>
 #include "metrics_reporter.h"
-#include <json/json.h>
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
 
 // Forward declarations
 class QMISessionHandler;
@@ -112,8 +114,8 @@ public:
 
     // Initialization
     bool initialize(const std::string& device_json);
-    bool initializeFromBasicProfile(const Json::Value& basic_profile);
-    bool initializeFromAdvancedProfile(const Json::Value& advanced_profile);
+    bool initializeFromBasicProfile(const json& basic_profile);
+    bool initializeFromAdvancedProfile(const json& advanced_profile);
 
     // Connection management
     bool connect(const ConnectionConfig& config);
@@ -162,7 +164,7 @@ public:
     bool setCellularMode(const CellularModeConfig& mode_config);
     CellularMode getCurrentCellularMode();
     std::string getCellularModeString(CellularMode mode);
-    bool loadCellularConfigFromJson(const Json::Value& config);
+    bool loadCellularConfigFromJson(const json& config);
 
     // Interface management
     std::vector<std::string> getExistingWWANInterfaces();

@@ -1,5 +1,5 @@
-#include "connection_registry.h"
-#include "command_logger.h"
+#include "connection/connection_registry.h"
+#include "utils/command_logger.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>

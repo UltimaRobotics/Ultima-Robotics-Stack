@@ -1,4 +1,4 @@
-#include "command_logger.h"
+#include "../utils/command_logger.h"
 #include <mutex>
 
 bool CommandLogger::m_verbose_enabled = false;

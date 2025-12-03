@@ -1,6 +1,6 @@
 // Multi-connection support methods implementation for QMISessionHandler
 
-#include "qmi_session_handler.h"
+#include "connection/qmi_session_handler.h"
 #include <iostream>
 #include <sstream>
 #include <algorithm>

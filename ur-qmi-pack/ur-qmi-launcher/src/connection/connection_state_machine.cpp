@@ -1,7 +1,7 @@
 
-#include "connection_state_machine.h"
-#include "qmi_session_handler.h"
-#include "interface_controller.h"
+#include "connection/connection_state_machine.h"
+#include "connection/qmi_session_handler.h"
+#include "connection/interface_controller.h"
 #include <iostream>
 #include <algorithm>
 #include <thread>

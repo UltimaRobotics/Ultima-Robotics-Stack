@@ -1,13 +1,15 @@
-#include "smart_routing.h"
-#include "command_logger.h"
-#include "timeout_config.h"
+#include "recovery/smart_routing.h"
+#include "utils/command_logger.h"
+#include "utils/timeout_config.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <algorithm>
-#include <json/json.h>
+#include <nlohmann/json.hpp>
 #include <regex>
 #include <cstdlib>
+
+using json = nlohmann::json;
 
 // Global smart routing manager instance
 SmartRoutingManager g_smart_routing;
@@ -21,103 +23,96 @@ bool SmartRoutingConfig::loadFromFile(const std::string& config_file) {
         return false;
     }
     
-    Json::Value root;
-    Json::CharReaderBuilder reader_builder;
-    std::string errs;
-    
-    if (!Json::parseFromStream(reader_builder, file, &root, &errs)) {
-        std::cerr << "Error parsing routing config file: " << errs << std::endl;
-        return false;
-    }
-    
     try {
+        json root = json::parse(file);
+        
         // Load basic routing configuration
-        if (root.isMember("auto_routing_enabled")) {
-            auto_routing_enabled = root["auto_routing_enabled"].asBool();
+        if (root.contains("auto_routing_enabled")) {
+            auto_routing_enabled = root["auto_routing_enabled"].get<bool>();
         }
-        if (root.isMember("manual_routing_enabled")) {
-            manual_routing_enabled = root["manual_routing_enabled"].asBool();
+        if (root.contains("manual_routing_enabled")) {
+            manual_routing_enabled = root["manual_routing_enabled"].get<bool>();
         }
-        if (root.isMember("backup_existing_routes")) {
-            backup_existing_routes = root["backup_existing_routes"].asBool();
+        if (root.contains("backup_existing_routes")) {
+            backup_existing_routes = root["backup_existing_routes"].get<bool>();
         }
         
         // Load cellular interface configuration
-        if (root.isMember("cellular_interface")) {
-            cellular_interface = root["cellular_interface"].asString();
+        if (root.contains("cellular_interface")) {
+            cellular_interface = root["cellular_interface"].get<std::string>();
         }
-        if (root.isMember("cellular_default_metric")) {
-            cellular_default_metric = root["cellular_default_metric"].asInt();
+        if (root.contains("cellular_default_metric")) {
+            cellular_default_metric = root["cellular_default_metric"].get<int>();
         }
-        if (root.isMember("cellular_priority_level")) {
-            cellular_priority_level = root["cellular_priority_level"].asInt();
+        if (root.contains("cellular_priority_level")) {
+            cellular_priority_level = root["cellular_priority_level"].get<int>();
         }
-        if (root.isMember("set_cellular_as_default")) {
-            set_cellular_as_default = root["set_cellular_as_default"].asBool();
+        if (root.contains("set_cellular_as_default")) {
+            set_cellular_as_default = root["set_cellular_as_default"].get<bool>();
         }
-        if (root.isMember("coexist_with_other_interfaces")) {
-            coexist_with_other_interfaces = root["coexist_with_other_interfaces"].asBool();
+        if (root.contains("coexist_with_other_interfaces")) {
+            coexist_with_other_interfaces = root["coexist_with_other_interfaces"].get<bool>();
         }
         
         // Load interface priorities
-        if (root.isMember("interface_priorities") && root["interface_priorities"].isObject()) {
-            const Json::Value& priorities = root["interface_priorities"];
-            for (const auto& member : priorities.getMemberNames()) {
-                interface_priorities[member] = priorities[member].asInt();
+        if (root.contains("interface_priorities") && root["interface_priorities"].is_object()) {
+            const json& priorities = root["interface_priorities"];
+            for (auto it = priorities.begin(); it != priorities.end(); ++it) {
+                interface_priorities[it.key()] = it.value().get<int>();
             }
         }
         
         // Load manual routing rules
-        if (root.isMember("manual_rules") && root["manual_rules"].isArray()) {
-            const Json::Value& rules = root["manual_rules"];
+        if (root.contains("manual_rules") && root["manual_rules"].is_array()) {
+            const json& rules = root["manual_rules"];
             for (const auto& rule_json : rules) {
                 RoutingRule rule;
-                if (rule_json.isMember("destination")) rule.destination = rule_json["destination"].asString();
-                if (rule_json.isMember("gateway")) rule.gateway = rule_json["gateway"].asString();
-                if (rule_json.isMember("interface")) rule.interface = rule_json["interface"].asString();
-                if (rule_json.isMember("metric")) rule.metric = rule_json["metric"].asInt();
-                if (rule_json.isMember("table")) rule.table = rule_json["table"].asInt();
-                if (rule_json.isMember("source")) rule.source = rule_json["source"].asString();
-                if (rule_json.isMember("persistent")) rule.persistent = rule_json["persistent"].asBool();
-                if (rule_json.isMember("description")) rule.description = rule_json["description"].asString();
+                if (rule_json.contains("destination")) rule.destination = rule_json["destination"].get<std::string>();
+                if (rule_json.contains("gateway")) rule.gateway = rule_json["gateway"].get<std::string>();
+                if (rule_json.contains("interface")) rule.interface = rule_json["interface"].get<std::string>();
+                if (rule_json.contains("metric")) rule.metric = rule_json["metric"].get<int>();
+                if (rule_json.contains("table")) rule.table = rule_json["table"].get<int>();
+                if (rule_json.contains("source")) rule.source = rule_json["source"].get<std::string>();
+                if (rule_json.contains("persistent")) rule.persistent = rule_json["persistent"].get<bool>();
+                if (rule_json.contains("description")) rule.description = rule_json["description"].get<std::string>();
                 manual_rules.push_back(rule);
             }
         }
         
         // Load routing policies
-        if (root.isMember("preserve_local_routes")) {
-            preserve_local_routes = root["preserve_local_routes"].asBool();
+        if (root.contains("preserve_local_routes")) {
+            preserve_local_routes = root["preserve_local_routes"].get<bool>();
         }
-        if (root.isMember("preserve_vpn_routes")) {
-            preserve_vpn_routes = root["preserve_vpn_routes"].asBool();
+        if (root.contains("preserve_vpn_routes")) {
+            preserve_vpn_routes = root["preserve_vpn_routes"].get<bool>();
         }
         
         // Load protected interfaces
-        if (root.isMember("protected_interfaces") && root["protected_interfaces"].isArray()) {
+        if (root.contains("protected_interfaces") && root["protected_interfaces"].is_array()) {
             for (const auto& iface : root["protected_interfaces"]) {
-                protected_interfaces.push_back(iface.asString());
+                protected_interfaces.push_back(iface.get<std::string>());
             }
         }
         
         // Load priority destinations
-        if (root.isMember("priority_destinations") && root["priority_destinations"].isArray()) {
+        if (root.contains("priority_destinations") && root["priority_destinations"].is_array()) {
             for (const auto& dest : root["priority_destinations"]) {
-                priority_destinations.push_back(dest.asString());
+                priority_destinations.push_back(dest.get<std::string>());
             }
         }
         
         // Load failover configuration
-        if (root.isMember("enable_failover")) {
-            enable_failover = root["enable_failover"].asBool();
+        if (root.contains("enable_failover")) {
+            enable_failover = root["enable_failover"].get<bool>();
         }
-        if (root.isMember("primary_interface")) {
-            primary_interface = root["primary_interface"].asString();
+        if (root.contains("primary_interface")) {
+            primary_interface = root["primary_interface"].get<std::string>();
         }
-        if (root.isMember("backup_interface")) {
-            backup_interface = root["backup_interface"].asString();
+        if (root.contains("backup_interface")) {
+            backup_interface = root["backup_interface"].get<std::string>();
         }
-        if (root.isMember("failover_timeout_ms")) {
-            failover_timeout_ms = root["failover_timeout_ms"].asInt();
+        if (root.contains("failover_timeout_ms")) {
+            failover_timeout_ms = root["failover_timeout_ms"].get<int>();
         }
         
         std::cout << "Smart routing configuration loaded from: " << config_file << std::endl;
@@ -130,7 +125,7 @@ bool SmartRoutingConfig::loadFromFile(const std::string& config_file) {
 }
 
 bool SmartRoutingConfig::saveToFile(const std::string& config_file) const {
-    Json::Value root;
+    json root;
     
     // Save basic configuration
     root["auto_routing_enabled"] = auto_routing_enabled;
@@ -145,16 +140,16 @@ bool SmartRoutingConfig::saveToFile(const std::string& config_file) const {
     root["coexist_with_other_interfaces"] = coexist_with_other_interfaces;
     
     // Save interface priorities
-    Json::Value priorities;
+    json priorities;
     for (const auto& pair : interface_priorities) {
         priorities[pair.first] = pair.second;
     }
     root["interface_priorities"] = priorities;
     
     // Save manual routing rules
-    Json::Value rules(Json::arrayValue);
+    json rules = json::array();
     for (const auto& rule : manual_rules) {
-        Json::Value rule_json;
+        json rule_json;
         rule_json["destination"] = rule.destination;
         rule_json["gateway"] = rule.gateway;
         rule_json["interface"] = rule.interface;
@@ -163,7 +158,7 @@ bool SmartRoutingConfig::saveToFile(const std::string& config_file) const {
         rule_json["source"] = rule.source;
         rule_json["persistent"] = rule.persistent;
         rule_json["description"] = rule.description;
-        rules.append(rule_json);
+        rules.push_back(rule_json);
     }
     root["manual_rules"] = rules;
     
@@ -172,16 +167,16 @@ bool SmartRoutingConfig::saveToFile(const std::string& config_file) const {
     root["preserve_vpn_routes"] = preserve_vpn_routes;
     
     // Save protected interfaces
-    Json::Value protected_ifaces(Json::arrayValue);
+    json protected_ifaces = json::array();
     for (const auto& iface : protected_interfaces) {
-        protected_ifaces.append(iface);
+        protected_ifaces.push_back(iface);
     }
     root["protected_interfaces"] = protected_ifaces;
     
     // Save priority destinations
-    Json::Value priority_dests(Json::arrayValue);
+    json priority_dests = json::array();
     for (const auto& dest : priority_destinations) {
-        priority_dests.append(dest);
+        priority_dests.push_back(dest);
     }
     root["priority_destinations"] = priority_dests;
     
@@ -201,10 +196,7 @@ bool SmartRoutingConfig::saveToFile(const std::string& config_file) const {
         return false;
     }
     
-    Json::StreamWriterBuilder builder;
-    builder["indentation"] = "  ";
-    std::unique_ptr<Json::StreamWriter> writer(builder.newStreamWriter());
-    writer->write(root, &file);
+    file << root.dump(2);
     
     std::cout << "Smart routing configuration saved to: " << config_file << std::endl;
     return true;

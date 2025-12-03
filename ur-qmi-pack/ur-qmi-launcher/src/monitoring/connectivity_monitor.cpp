@@ -1,7 +1,7 @@
 
-#include "connectivity_monitor.h"
-#include "command_logger.h"
-#include "timeout_config.h"
+#include "../monitoring/connectivity_monitor.h"
+#include "../utils/command_logger.h"
+#include "../utils/timeout_config.h"
 #include <iostream>
 #include <sstream>
 #include <algorithm>

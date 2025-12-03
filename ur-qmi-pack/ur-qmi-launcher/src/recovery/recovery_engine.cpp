@@ -1,9 +1,9 @@
 
-#include "recovery_engine.h"
-#include "command_logger.h"
-#include "qmi_session_handler.h"
-#include "interface_controller.h"
-#include "connectivity_monitor.h"
+#include "recovery/recovery_engine.h"
+#include "utils/command_logger.h"
+#include "connection/qmi_session_handler.h"
+#include "connection/interface_controller.h"
+#include "monitoring/connectivity_monitor.h"
 #include <iostream>
 #include <algorithm>
 

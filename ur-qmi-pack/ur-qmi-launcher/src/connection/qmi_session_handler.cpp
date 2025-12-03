@@ -1,5 +1,5 @@
-#include "qmi_session_handler.h"
-#include "command_logger.h"
+#include "connection/qmi_session_handler.h"
+#include "utils/command_logger.h"
 #include <iostream>
 #include <sstream>
 #include <regex>

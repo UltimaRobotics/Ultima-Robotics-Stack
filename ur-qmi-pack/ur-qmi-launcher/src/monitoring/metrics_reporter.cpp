@@ -1,14 +1,16 @@
 
-#include "metrics_reporter.h"
-#include "qmi_session_handler.h"
-#include "interface_controller.h"
-#include "connectivity_monitor.h"
+#include "monitoring/metrics_reporter.h"
+#include "connection/qmi_session_handler.h"
+#include "connection/interface_controller.h"
+#include "monitoring/connectivity_monitor.h"
 #include <iostream>
 #include <iomanip>
 #include <sstream>
 #include <thread>
 #include <ctime>
 #include <algorithm>
+
+using json = nlohmann::json;
 
 MetricsReporter::MetricsReporter(QMISessionHandler* session_handler,
                                 InterfaceController* interface_controller,
@@ -362,54 +364,54 @@ DetailedMetrics MetricsReporter::getAverageMetrics(std::chrono::minutes window) 
     return avg_metrics;
 }
 
-Json::Value MetricsReporter::getMetricsAsJson(const DetailedMetrics& metrics) const {
-    Json::Value json;
+json MetricsReporter::getMetricsAsJson(const DetailedMetrics& metrics) const {
+    json j;
     
     // Timestamp
     auto time_t = std::chrono::system_clock::to_time_t(metrics.timestamp);
     std::stringstream ss;
     ss << std::put_time(std::gmtime(&time_t), "%Y-%m-%dT%H:%M:%SZ");
-    json["timestamp"] = ss.str();
+    j["timestamp"] = ss.str();
     
     // Connection metrics
-    json["connection"]["is_connected"] = metrics.is_connected;
-    json["connection"]["duration_ms"] = static_cast<Json::Int64>(metrics.connection_duration.count());
-    json["connection"]["attempts"] = static_cast<int>(m_connection_attempts);
-    json["connection"]["successful"] = static_cast<int>(m_successful_connections);
-    json["connection"]["failed"] = static_cast<int>(m_failed_connections);
+    j["connection"]["is_connected"] = metrics.is_connected;
+    j["connection"]["duration_ms"] = metrics.connection_duration.count();
+    j["connection"]["attempts"] = static_cast<int>(m_connection_attempts);
+    j["connection"]["successful"] = static_cast<int>(m_successful_connections);
+    j["connection"]["failed"] = static_cast<int>(m_failed_connections);
     
     // Signal metrics
-    json["signal"]["strength_dbm"] = metrics.signal_strength;
-    json["signal"]["quality"] = metrics.signal_quality;
-    json["signal"]["network_type"] = metrics.network_type;
-    json["signal"]["band"] = metrics.band;
-    json["signal"]["carrier"] = metrics.carrier;
+    j["signal"]["strength_dbm"] = metrics.signal_strength;
+    j["signal"]["quality"] = metrics.signal_quality;
+    j["signal"]["network_type"] = metrics.network_type;
+    j["signal"]["band"] = metrics.band;
+    j["signal"]["carrier"] = metrics.carrier;
     
     // Data metrics
-    json["data"]["bytes_sent"] = static_cast<Json::UInt64>(metrics.bytes_sent);
-    json["data"]["bytes_received"] = static_cast<Json::UInt64>(metrics.bytes_received);
-    json["data"]["total_bytes_sent"] = static_cast<Json::UInt64>(metrics.total_bytes_sent);
-    json["data"]["total_bytes_received"] = static_cast<Json::UInt64>(metrics.total_bytes_received);
-    json["data"]["throughput_up_kbps"] = metrics.throughput_up_kbps;
-    json["data"]["throughput_down_kbps"] = metrics.throughput_down_kbps;
+    j["data"]["bytes_sent"] = metrics.bytes_sent;
+    j["data"]["bytes_received"] = metrics.bytes_received;
+    j["data"]["total_bytes_sent"] = metrics.total_bytes_sent;
+    j["data"]["total_bytes_received"] = metrics.total_bytes_received;
+    j["data"]["throughput_up_kbps"] = metrics.throughput_up_kbps;
+    j["data"]["throughput_down_kbps"] = metrics.throughput_down_kbps;
     
     // Network metrics
-    json["network"]["ip_address"] = metrics.ip_address;
-    json["network"]["gateway"] = metrics.gateway;
-    json["network"]["dns_primary"] = metrics.dns_primary;
-    json["network"]["dns_secondary"] = metrics.dns_secondary;
-    json["network"]["ping_latency_ms"] = metrics.ping_latency_ms;
-    json["network"]["packet_loss_percent"] = metrics.packet_loss_percent;
+    j["network"]["ip_address"] = metrics.ip_address;
+    j["network"]["gateway"] = metrics.gateway;
+    j["network"]["dns_primary"] = metrics.dns_primary;
+    j["network"]["dns_secondary"] = metrics.dns_secondary;
+    j["network"]["ping_latency_ms"] = metrics.ping_latency_ms;
+    j["network"]["packet_loss_percent"] = metrics.packet_loss_percent;
     
     // Error metrics
-    json["errors"]["session_errors"] = static_cast<int>(m_session_errors);
-    json["errors"]["ip_config_errors"] = static_cast<int>(m_ip_config_errors);
-    json["errors"]["dns_errors"] = static_cast<int>(m_dns_errors);
-    json["errors"]["connectivity_errors"] = static_cast<int>(m_connectivity_errors);
-    json["errors"]["recovery_attempts"] = static_cast<int>(m_recovery_attempts);
-    json["errors"]["successful_recoveries"] = static_cast<int>(m_successful_recoveries);
+    j["errors"]["session_errors"] = static_cast<int>(m_session_errors);
+    j["errors"]["ip_config_errors"] = static_cast<int>(m_ip_config_errors);
+    j["errors"]["dns_errors"] = static_cast<int>(m_dns_errors);
+    j["errors"]["connectivity_errors"] = static_cast<int>(m_connectivity_errors);
+    j["errors"]["recovery_attempts"] = static_cast<int>(m_recovery_attempts);
+    j["errors"]["successful_recoveries"] = static_cast<int>(m_successful_recoveries);
     
-    return json;
+    return j;
 }
 
 std::string MetricsReporter::getMetricsReport() const {
@@ -482,8 +484,8 @@ void MetricsReporter::writeToFile(const DetailedMetrics& metrics) {
         return;
     }
     
-    Json::Value json = getMetricsAsJson(metrics);
-    *m_log_file << json << std::endl;
+    json j = getMetricsAsJson(metrics);
+    *m_log_file << j.dump() << std::endl;
     m_log_file->flush();
 }
 

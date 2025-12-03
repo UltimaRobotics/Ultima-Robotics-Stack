@@ -11,7 +11,9 @@
 #include <chrono>
 #include <functional>
 #include <condition_variable>
-#include <json/json.h>
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
 
 // Forward declarations
 class QMISessionHandler;
@@ -79,7 +81,7 @@ public:
     
     // Configuration
     bool loadConfigFromFile(const std::string& config_file_path);
-    bool loadConfigFromJson(const Json::Value& config);
+    bool loadConfigFromJson(const json& config);
     void setConfig(const IPMonitorConfig& config);
     IPMonitorConfig getConfig() const;
     

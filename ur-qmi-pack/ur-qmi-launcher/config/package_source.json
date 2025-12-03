@@ -1,0 +1,20 @@
+{
+    "description": "Package source configuration file containing paths to all JSON config files",
+    "version": "1.0",
+    "config_files": {
+        "device_json": "config/dev-lte.json",
+        "cellular_mode": "config/cellular_mode.json",
+        "timeouts": "config/timeouts.json",
+        "network": "config/network.json",
+        "ip_monitor": "config/ip_monitor.json",
+        "routing": "config/smart_routing.json",
+        "log_file": "logs/ur_qmi_launcher.log"
+    },
+    "flags": {
+        "verbose": false,
+        "enable_monitoring": true,
+        "enable_auto_recovery": true,
+        "verbose_cmd": false,
+        "disable_auto_routing": false
+    }
+}

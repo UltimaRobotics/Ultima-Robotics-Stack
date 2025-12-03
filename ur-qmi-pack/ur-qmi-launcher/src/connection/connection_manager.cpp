@@ -1,20 +1,22 @@
-#include "connection_manager.h"
-#include "smart_routing.h"
-#include "qmi_session_handler.h"
-#include "connection_state_machine.h"
-#include "interface_controller.h"
-#include "connectivity_monitor.h"
-#include "failure_detector.h"
-#include "recovery_engine.h"
-#include "metrics_reporter.h"
-#include "connection_registry.h" // Include for ConnectionLifecycleManager
-#include "ip_monitor.h" // Include for IP monitor
-#include <json/json.h>
+#include "connection/connection_manager.h"
+#include "recovery/smart_routing.h"
+#include "connection/qmi_session_handler.h"
+#include "connection/connection_state_machine.h"
+#include "connection/interface_controller.h"
+#include "monitoring/connectivity_monitor.h"
+#include "monitoring/failure_detector.h"
+#include "recovery/recovery_engine.h"
+#include "monitoring/metrics_reporter.h"
+#include "connection/connection_registry.h" // Include for ConnectionLifecycleManager
+#include "monitoring/ip_monitor.h" // Include for IP monitor
+#include <nlohmann/json.hpp>
 #include <iostream>
 #include <sstream>
 #include <thread>
 #include <chrono>
 #include <algorithm>
+
+using json = nlohmann::json;
 
 // Static instance for signal handling
 ConnectionManager* ConnectionManager::s_active_instance = nullptr;
@@ -119,12 +121,12 @@ bool ConnectionManager::initialize(const std::string& device_json) {
     }
 }
 
-bool ConnectionManager::initializeFromBasicProfile(const Json::Value& basic_profile) {
+bool ConnectionManager::initializeFromBasicProfile(const json& basic_profile) {
     try {
         DeviceInfo device;
-        device.device_path = basic_profile["path"].asString();
-        device.imei = basic_profile["imei"].asString();
-        device.model = basic_profile["model"].asString();
+        device.device_path = basic_profile["path"].get<std::string>();
+        device.imei = basic_profile["imei"].get<std::string>();
+        device.model = basic_profile["model"].get<std::string>();
         device.is_available = true;
 
         m_current_device = device;
@@ -145,9 +147,9 @@ bool ConnectionManager::initializeFromBasicProfile(const Json::Value& basic_prof
     }
 }
 
-bool ConnectionManager::initializeFromAdvancedProfile(const Json::Value& advanced_profile) {
+bool ConnectionManager::initializeFromAdvancedProfile(const json& advanced_profile) {
     try {
-        const Json::Value& basic = advanced_profile["basic"];
+        const json& basic = advanced_profile["basic"];
         return initializeFromBasicProfile(basic);
     } catch (const std::exception& e) {
         std::cerr << "Error initializing from advanced profile: " << e.what() << std::endl;
@@ -494,32 +496,31 @@ DeviceInfo ConnectionManager::getCurrentDevice() const {
 }
 
 std::string ConnectionManager::getStatusJson() const {
-    Json::Value status;
+    json status;
     status["state"] = getStateString();
     status["connected"] = isConnected();
     status["device_path"] = m_current_device.device_path;
     status["device_model"] = m_current_device.model;
     status["device_imei"] = m_current_device.imei;
 
-    Json::StreamWriterBuilder builder;
-    return Json::writeString(builder, status);
+    json builder;
+    return status.dump();
 }
 
 std::string ConnectionManager::getMetricsJson() const {
     ConnectionMetrics metrics = const_cast<ConnectionManager*>(this)->getCurrentMetrics();
 
-    Json::Value json_metrics;
+    json json_metrics;
     json_metrics["signal_strength"] = metrics.signal_strength;
     json_metrics["network_type"] = metrics.network_type;
     json_metrics["ip_address"] = metrics.ip_address;
     json_metrics["dns_primary"] = metrics.dns_primary;
     json_metrics["dns_secondary"] = metrics.dns_secondary;
     json_metrics["is_connected"] = metrics.is_connected;
-    json_metrics["bytes_sent"] = static_cast<Json::UInt64>(metrics.bytes_sent);
-    json_metrics["bytes_received"] = static_cast<Json::UInt64>(metrics.bytes_received);
+    json_metrics["bytes_sent"] = static_cast<size_t>(metrics.bytes_sent);
+    json_metrics["bytes_received"] = static_cast<size_t>(metrics.bytes_received);
 
-    Json::StreamWriterBuilder builder;
-    return Json::writeString(builder, json_metrics);
+    return json_metrics.dump();
 }
 
 void ConnectionManager::enableAutoRecovery(bool enable) {
@@ -553,39 +554,38 @@ void ConnectionManager::notifyMetrics(const ConnectionMetrics& metrics) {
 }
 
 void ConnectionManager::parseDeviceJson(const std::string& device_json) {
-    Json::Value root;
-    Json::Reader reader;
+    try {
+        json root = json::parse(device_json);
 
-    if (!reader.parse(device_json, root)) {
-        throw std::runtime_error("Failed to parse device JSON");
-    }
-
-    // Try to parse as device list first
-    if (root.isMember("devices") && root["devices"].isArray() && !root["devices"].empty()) {
-        const Json::Value& device = root["devices"][0];
-        m_current_device.device_path = device["device_path"].asString();
-        m_current_device.imei = device["imei"].asString();
-        m_current_device.model = device["model"].asString();
-        m_current_device.manufacturer = device["manufacturer"].asString();
-        m_current_device.is_available = device["is_available"].asBool();
+        // Try to parse as device list first
+        if (root.contains("devices") && root["devices"].is_array() && !root["devices"].empty()) {
+        const json& device = root["devices"][0];
+        m_current_device.device_path = device["device_path"].get<std::string>();
+        m_current_device.imei = device["imei"].get<std::string>();
+        m_current_device.model = device["model"].get<std::string>();
+        m_current_device.manufacturer = device["manufacturer"].get<std::string>();
+        m_current_device.is_available = device["is_available"].get<bool>();
     }
     // Try profiles
-    else if (root.isMember("profiles") && root["profiles"].isArray() && !root["profiles"].empty()) {
-        const Json::Value& profile = root["profiles"][0];
-        m_current_device.device_path = profile["path"].asString();
-        m_current_device.imei = profile["imei"].asString();
-        m_current_device.model = profile["model"].asString();
+    else if (root.contains("profiles") && root["profiles"].is_array() && !root["profiles"].empty()) {
+        const json& profile = root["profiles"][0];
+        m_current_device.device_path = profile["path"].get<std::string>();
+        m_current_device.imei = profile["imei"].get<std::string>();
+        m_current_device.model = profile["model"].get<std::string>();
         m_current_device.is_available = true;
     }
     // Try single device
-    else if (root.isMember("device_path")) {
-        m_current_device.device_path = root["device_path"].asString();
-        m_current_device.imei = root["imei"].asString();
-        m_current_device.model = root["model"].asString();
+    else if (root.contains("device_path")) {
+        m_current_device.device_path = root["device_path"].get<std::string>();
+        m_current_device.imei = root["imei"].get<std::string>();
+        m_current_device.model = root["model"].get<std::string>();
         m_current_device.is_available = true;
     }
     else {
         throw std::runtime_error("No valid device found in JSON");
+    }
+    } catch (const json::parse_error& e) {
+        throw std::runtime_error("Failed to parse device JSON: " + std::string(e.what()));
     }
 }
 
@@ -852,11 +852,11 @@ std::string ConnectionManager::getCellularModeString(CellularMode mode) {
     }
 }
 
-bool ConnectionManager::loadCellularConfigFromJson(const Json::Value& config) {
+bool ConnectionManager::loadCellularConfigFromJson(const json& config) {
     CellularModeConfig cellular_config;
 
-    if (config.isMember("cellular_mode")) {
-        std::string mode_str = config["cellular_mode"].asString();
+    if (config.contains("cellular_mode")) {
+        std::string mode_str = config["cellular_mode"].get<std::string>();
 
         // Parse mode string
         if (mode_str == "auto") {
@@ -878,26 +878,26 @@ bool ConnectionManager::loadCellularConfigFromJson(const Json::Value& config) {
         cellular_config.mode_description = getCellularModeString(cellular_config.mode);
     }
 
-    if (config.isMember("preferred_bands") && config["preferred_bands"].isArray()) {
+    if (config.contains("preferred_bands") && config["preferred_bands"].is_array()) {
         for (const auto& band : config["preferred_bands"]) {
-            cellular_config.preferred_bands.push_back(band.asInt());
+            cellular_config.preferred_bands.push_back(band.get<int>());
         }
     }
 
-    if (config.isMember("preference_duration")) {
-        cellular_config.preference_duration = config["preference_duration"].asInt();
+    if (config.contains("preference_duration")) {
+        cellular_config.preference_duration = config["preference_duration"].get<int>();
     }
 
-    if (config.isMember("force_mode_selection")) {
-        cellular_config.force_mode_selection = config["force_mode_selection"].asBool();
+    if (config.contains("force_mode_selection")) {
+        cellular_config.force_mode_selection = config["force_mode_selection"].get<bool>();
     }
 
     // Update connection config
     std::lock_guard<std::mutex> lock(m_config_mutex);
     m_config.cellular_mode_config = cellular_config;
 
-    if (config.isMember("enforce_mode_before_connection")) {
-        m_config.enforce_mode_before_connection = config["enforce_mode_before_connection"].asBool();
+    if (config.contains("enforce_mode_before_connection")) {
+        m_config.enforce_mode_before_connection = config["enforce_mode_before_connection"].get<bool>();
     }
 
     std::cout << "Loaded cellular configuration: " << cellular_config.mode_description << std::endl;

@@ -7,7 +7,9 @@
 #include <atomic>
 #include <chrono>
 #include <fstream>
-#include <json/json.h>
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
 
 struct DetailedMetrics {
     // Connection metrics
@@ -83,7 +85,7 @@ public:
     // Statistics
     std::vector<DetailedMetrics> getMetricsHistory(int count = 100) const;
     DetailedMetrics getAverageMetrics(std::chrono::minutes window) const;
-    Json::Value getMetricsAsJson(const DetailedMetrics& metrics) const;
+    json getMetricsAsJson(const DetailedMetrics& metrics) const;
     std::string getMetricsReport() const;
     
     // Event tracking

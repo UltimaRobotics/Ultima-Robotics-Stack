@@ -1,7 +1,7 @@
 #ifndef RECOVERY_ENGINE_H
 #define RECOVERY_ENGINE_H
 
-#include "failure_detector.h"
+#include "../monitoring/failure_detector.h"
 #include "connection_manager.h"
 #include <memory>
 #include <functional>

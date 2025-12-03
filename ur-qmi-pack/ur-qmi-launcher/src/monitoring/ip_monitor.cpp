@@ -1,6 +1,6 @@
 
-#include "ip_monitor.h"
-#include "qmi_session_handler.h"
+#include "monitoring/ip_monitor.h"
+#include "connection/qmi_session_handler.h"
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -9,87 +9,77 @@
 #include <cstdio>
 #include <unistd.h>
 
+using json = nlohmann::json;
+
 std::string PingResult::toJson() const {
-    Json::Value json;
-    json["target_ip"] = target_ip;
-    json["interface_name"] = interface_name;
-    json["success"] = success;
-    json["response_time_ms"] = response_time_ms;
-    json["error_message"] = error_message;
+    json j;
+    j["target_ip"] = target_ip;
+    j["interface_name"] = interface_name;
+    j["success"] = success;
+    j["response_time_ms"] = response_time_ms;
+    j["error_message"] = error_message;
     
     // Format timestamp
     auto time_t = std::chrono::system_clock::to_time_t(timestamp);
     std::stringstream ss;
     ss << std::put_time(std::gmtime(&time_t), "%Y-%m-%dT%H:%M:%SZ");
-    json["timestamp"] = ss.str();
+    j["timestamp"] = ss.str();
     
-    Json::StreamWriterBuilder builder;
-    builder["indentation"] = "";
-    return Json::writeString(builder, json);
+    return j.dump();
 }
 
 std::string ModemReferenceData::toJson() const {
-    Json::Value json;
-    json["device_path"] = device_path;
-    json["imei"] = imei;
-    json["signal_strength"] = signal_strength;
-    json["network_type"] = network_type;
-    json["ip_address"] = ip_address;
-    json["gateway"] = gateway;
-    json["dns_primary"] = dns_primary;
-    json["dns_secondary"] = dns_secondary;
-    json["interface_name"] = interface_name;
-    json["is_connected"] = is_connected;
+    json j;
+    j["device_path"] = device_path;
+    j["imei"] = imei;
+    j["signal_strength"] = signal_strength;
+    j["network_type"] = network_type;
+    j["ip_address"] = ip_address;
+    j["gateway"] = gateway;
+    j["dns_primary"] = dns_primary;
+    j["dns_secondary"] = dns_secondary;
+    j["interface_name"] = interface_name;
+    j["is_connected"] = is_connected;
     
     // Format timestamp
     auto time_t = std::chrono::system_clock::to_time_t(data_timestamp);
     std::stringstream ss;
     ss << std::put_time(std::gmtime(&time_t), "%Y-%m-%dT%H:%M:%SZ");
-    json["data_timestamp"] = ss.str();
+    j["data_timestamp"] = ss.str();
     
-    Json::StreamWriterBuilder builder;
-    builder["indentation"] = "";
-    return Json::writeString(builder, json);
+    return j.dump();
 }
 
 std::string IPMonitorReport::toJson() const {
-    Json::Value json;
+    json j;
     
     // Report metadata
     auto time_t = std::chrono::system_clock::to_time_t(report_timestamp);
     std::stringstream ss;
     ss << std::put_time(std::gmtime(&time_t), "%Y-%m-%dT%H:%M:%SZ");
-    json["report_timestamp"] = ss.str();
-    json["successful_pings"] = successful_pings;
-    json["total_pings"] = total_pings;
-    json["average_response_time_ms"] = average_response_time;
+    j["report_timestamp"] = ss.str();
+    j["successful_pings"] = successful_pings;
+    j["total_pings"] = total_pings;
+    j["average_response_time_ms"] = average_response_time;
     
     // Ping results
-    Json::Value ping_array(Json::arrayValue);
+    json ping_array = json::array();
     for (const auto& ping : ping_results) {
-        Json::Value ping_json;
-        Json::Reader reader;
-        reader.parse(ping.toJson(), ping_json);
-        ping_array.append(ping_json);
+        ping_array.push_back(json::parse(ping.toJson()));
     }
-    json["ping_results"] = ping_array;
+    j["ping_results"] = ping_array;
     
     // Modem data
-    Json::Value modem_json;
-    Json::Reader reader;
-    reader.parse(modem_data.toJson(), modem_json);
-    json["modem_reference_data"] = modem_json;
+    j["modem_reference_data"] = json::parse(modem_data.toJson());
     
-    Json::StreamWriterBuilder builder;
-    builder["indentation"] = "  ";
-    return Json::writeString(builder, json);
+    return j.dump();
 }
 
 std::string IPMonitor::MonitoringStats::toJson() const {
-    Json::Value json;
-    json["total_reports"] = static_cast<Json::UInt64>(total_reports);
-    json["total_pings"] = static_cast<Json::UInt64>(total_pings);
-    json["successful_pings"] = static_cast<Json::UInt64>(successful_pings);
+    json j;
+    j["total_reports"] = total_reports;
+    j["total_pings"] = total_pings;
+    j["successful_pings"] = successful_pings;
     
     auto start_time_t = std::chrono::system_clock::to_time_t(start_time);
     auto last_time_t = std::chrono::system_clock::to_time_t(last_report_time);
@@ -98,15 +88,13 @@ std::string IPMonitor::MonitoringStats::toJson() const {
     ss1 << std::put_time(std::gmtime(&start_time_t), "%Y-%m-%dT%H:%M:%SZ");
     ss2 << std::put_time(std::gmtime(&last_time_t), "%Y-%m-%dT%H:%M:%SZ");
     
-    json["start_time"] = ss1.str();
-    json["last_report_time"] = ss2.str();
+    j["start_time"] = ss1.str();
+    j["last_report_time"] = ss2.str();
     
     double success_rate = total_pings > 0 ? (static_cast<double>(successful_pings) / total_pings * 100.0) : 0.0;
-    json["success_rate_percent"] = success_rate;
+    j["success_rate_percent"] = success_rate;
     
-    Json::StreamWriterBuilder builder;
-    builder["indentation"] = "";
-    return Json::writeString(builder, json);
+    return j.dump();
 }
 
 IPMonitor::IPMonitor() 
@@ -124,48 +112,46 @@ bool IPMonitor::loadConfigFromFile(const std::string& config_file_path) {
         return false;
     }
     
-    Json::Value root;
-    Json::Reader reader;
-    
-    if (!reader.parse(file, root)) {
-        std::cerr << "Failed to parse IP monitor config JSON: " << reader.getFormattedErrorMessages() << std::endl;
+    try {
+        json root = json::parse(file);
+        return loadConfigFromJson(root);
+    } catch (const json::parse_error& e) {
+        std::cerr << "Failed to parse IP monitor config JSON: " << e.what() << std::endl;
         return false;
     }
-    
-    return loadConfigFromJson(root);
 }
 
-bool IPMonitor::loadConfigFromJson(const Json::Value& config) {
+bool IPMonitor::loadConfigFromJson(const json& config) {
     std::lock_guard<std::mutex> lock(m_config_mutex);
     
     try {
-        if (config.isMember("ping_targets") && config["ping_targets"].isArray()) {
+        if (config.contains("ping_targets") && config["ping_targets"].is_array()) {
             m_config.ping_targets.clear();
             for (const auto& target : config["ping_targets"]) {
-                if (target.isString()) {
-                    m_config.ping_targets.push_back(target.asString());
+                if (target.is_string()) {
+                    m_config.ping_targets.push_back(target.get<std::string>());
                 }
             }
         }
         
-        if (config.isMember("ping_interval_ms")) {
-            m_config.ping_interval_ms = config["ping_interval_ms"].asInt();
+        if (config.contains("ping_interval_ms")) {
+            m_config.ping_interval_ms = config["ping_interval_ms"].get<int>();
         }
         
-        if (config.isMember("ping_timeout_ms")) {
-            m_config.ping_timeout_ms = config["ping_timeout_ms"].asInt();
+        if (config.contains("ping_timeout_ms")) {
+            m_config.ping_timeout_ms = config["ping_timeout_ms"].get<int>();
         }
         
-        if (config.isMember("enable_monitoring")) {
-            m_config.enable_monitoring = config["enable_monitoring"].asBool();
+        if (config.contains("enable_monitoring")) {
+            m_config.enable_monitoring = config["enable_monitoring"].get<bool>();
         }
         
-        if (config.isMember("log_format")) {
-            m_config.log_format = config["log_format"].asString();
+        if (config.contains("log_format")) {
+            m_config.log_format = config["log_format"].get<std::string>();
         }
         
-        if (config.isMember("include_modem_data")) {
-            m_config.include_modem_data = config["include_modem_data"].asBool();
+        if (config.contains("include_modem_data")) {
+            m_config.include_modem_data = config["include_modem_data"].get<bool>();
         }
         
         std::cout << "IP Monitor configuration loaded successfully:" << std::endl;

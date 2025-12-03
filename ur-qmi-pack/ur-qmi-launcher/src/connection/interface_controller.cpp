@@ -1,7 +1,7 @@
 
-#include "interface_controller.h"
-#include "command_logger.h"
-#include "smart_routing.h"
+#include "connection/interface_controller.h"
+#include "utils/command_logger.h"
+#include "recovery/smart_routing.h"
 #include <iostream>
 #include <sstream>
 #include <fstream>

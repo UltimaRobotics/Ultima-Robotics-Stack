@@ -1,7 +1,9 @@
-#include "timeout_config.h"
+#include "../utils/timeout_config.h"
 #include <fstream>
 #include <iostream>
-#include <json/json.h>
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
 
 // Global timeout configuration instance
 TimeoutConfig g_timeout_config;
@@ -60,52 +62,51 @@ bool TimeoutConfig::loadFromFile(const std::string& config_file) {
         return false;
     }
     
-    Json::Value root;
-    Json::CharReaderBuilder reader_builder;
-    std::string errs;
-    
-    if (!Json::parseFromStream(reader_builder, file, &root, &errs)) {
-        std::cerr << "Error parsing timeout config file: " << errs << std::endl;
-        return false;
-    }
-    
-    // Load timeouts from JSON
-    bool config_loaded = false;
-    
-    if (root.isMember("timeouts") && root["timeouts"].isObject()) {
-        const Json::Value& timeouts = root["timeouts"];
+    try {
+        json root = json::parse(file);
         
-        for (const auto& member : timeouts.getMemberNames()) {
-            if (timeouts[member].isInt()) {
-                int timeout_value = timeouts[member].asInt();
-                if (setTimeout(member, timeout_value)) {
-                    config_loaded = true;
-                    std::cout << "Loaded timeout: " << member << " = " << timeout_value << "ms" << std::endl;
+        // Load timeouts from JSON
+        bool config_loaded = false;
+        
+        if (root.contains("timeouts") && root["timeouts"].is_object()) {
+            const json& timeouts = root["timeouts"];
+            
+            for (auto it = timeouts.begin(); it != timeouts.end(); ++it) {
+                if (it.value().is_number()) {
+                    int timeout_value = it.value().get<int>();
+                    if (setTimeout(it.key(), timeout_value)) {
+                        config_loaded = true;
+                        std::cout << "Loaded timeout: " << it.key() << " = " << timeout_value << "ms" << std::endl;
+                    } else {
+                        std::cerr << "Warning: Unknown timeout parameter: " << it.key() << std::endl;
+                    }
                 } else {
-                    std::cerr << "Warning: Unknown timeout parameter: " << member << std::endl;
+                    std::cerr << "Warning: Invalid timeout value for: " << it.key() << std::endl;
                 }
-            } else {
-                std::cerr << "Warning: Invalid timeout value for: " << member << std::endl;
             }
         }
-    }
-    
-    if (config_loaded) {
-        std::cout << "Timeout configuration loaded from: " << config_file << std::endl;
-        if (!validateTimeouts()) {
-            std::cerr << "Warning: Some timeout values may be invalid" << std::endl;
+        
+        if (config_loaded) {
+            std::cout << "Timeout configuration loaded from: " << config_file << std::endl;
+            if (!validateTimeouts()) {
+                std::cerr << "Warning: Some timeout values may be invalid" << std::endl;
+            }
+        } else {
+            std::cerr << "Warning: No valid timeout configuration found in file. Using defaults." << std::endl;
+            return false;
         }
-    } else {
-        std::cerr << "Warning: No valid timeout configuration found in file. Using defaults." << std::endl;
+        
+        return config_loaded;
+        
+    } catch (const json::parse_error& e) {
+        std::cerr << "Error parsing timeout config file: " << e.what() << std::endl;
         return false;
     }
-    
-    return config_loaded;
 }
 
 bool TimeoutConfig::saveToFile(const std::string& config_file) const {
-    Json::Value root;
-    Json::Value timeouts;
+    json root;
+    json timeouts;
     
     // Create timeout mapping for saving
     auto temp_config = const_cast<TimeoutConfig*>(this);
@@ -126,10 +127,7 @@ bool TimeoutConfig::saveToFile(const std::string& config_file) const {
         return false;
     }
     
-    Json::StreamWriterBuilder builder;
-    builder["indentation"] = "  ";
-    std::unique_ptr<Json::StreamWriter> writer(builder.newStreamWriter());
-    writer->write(root, &file);
+    file << root.dump(2);
     
     std::cout << "Timeout configuration saved to: " << config_file << std::endl;
     return true;

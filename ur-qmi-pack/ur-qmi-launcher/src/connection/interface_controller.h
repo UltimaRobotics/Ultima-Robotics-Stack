@@ -2,7 +2,7 @@
 #define INTERFACE_CONTROLLER_H
 
 #include <string>
-#include "smart_routing.h"
+#include "../recovery/smart_routing.h"
 #include <vector>
 #include <memory>
 
