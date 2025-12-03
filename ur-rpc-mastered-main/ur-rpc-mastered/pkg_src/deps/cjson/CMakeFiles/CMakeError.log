@@ -1,50 +1,50 @@
 Performing C SOURCE FILE Test FLAG_SUPPORTED_Wcomma failed with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Downloads/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_49d32/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_49d32.dir/build.make CMakeFiles/cmTC_49d32.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_49d32.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_Wcomma  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong    -Wcomma -o CMakeFiles/cmTC_49d32.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_3dcb3/fast && gmake[4]: Entering directory '/home/fyou/Downloads/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_3dcb3.dir/build.make CMakeFiles/cmTC_3dcb3.dir/build
+gmake[5]: Entering directory '/home/fyou/Downloads/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_3dcb3.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_Wcomma  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong    -Wcomma -o CMakeFiles/cmTC_3dcb3.dir/src.c.o -c /home/fyou/Downloads/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
 cc: error: unrecognized command-line option '-Wcomma'; did you mean '-Wcomment'?
-gmake[5]: *** [CMakeFiles/cmTC_49d32.dir/build.make:78: CMakeFiles/cmTC_49d32.dir/src.c.o] Error 1
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: *** [Makefile:127: cmTC_49d32/fast] Error 2
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[5]: *** [CMakeFiles/cmTC_3dcb3.dir/build.make:78: CMakeFiles/cmTC_3dcb3.dir/src.c.o] Error 1
+gmake[5]: Leaving directory '/home/fyou/Downloads/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: *** [Makefile:127: cmTC_3dcb3/fast] Error 2
+gmake[4]: Leaving directory '/home/fyou/Downloads/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
 int main(void) { return 0; }
 Performing C SOURCE FILE Test FLAG_SUPPORTED_Wmissingvariabledeclarations failed with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Downloads/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_32a67/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_32a67.dir/build.make CMakeFiles/cmTC_32a67.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_32a67.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_Wmissingvariabledeclarations  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong -Wdouble-promotion -Wparentheses -Wformat-overflow -Wunused-macros    -Wmissing-variable-declarations -o CMakeFiles/cmTC_32a67.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_770f9/fast && gmake[4]: Entering directory '/home/fyou/Downloads/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_770f9.dir/build.make CMakeFiles/cmTC_770f9.dir/build
+gmake[5]: Entering directory '/home/fyou/Downloads/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_770f9.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_Wmissingvariabledeclarations  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong -Wdouble-promotion -Wparentheses -Wformat-overflow -Wunused-macros    -Wmissing-variable-declarations -o CMakeFiles/cmTC_770f9.dir/src.c.o -c /home/fyou/Downloads/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
 cc: error: unrecognized command-line option '-Wmissing-variable-declarations'; did you mean '-Wmissing-declarations'?
-gmake[5]: *** [CMakeFiles/cmTC_32a67.dir/build.make:78: CMakeFiles/cmTC_32a67.dir/src.c.o] Error 1
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: *** [Makefile:127: cmTC_32a67/fast] Error 2
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[5]: *** [CMakeFiles/cmTC_770f9.dir/build.make:78: CMakeFiles/cmTC_770f9.dir/src.c.o] Error 1
+gmake[5]: Leaving directory '/home/fyou/Downloads/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: *** [Makefile:127: cmTC_770f9/fast] Error 2
+gmake[4]: Leaving directory '/home/fyou/Downloads/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
 int main(void) { return 0; }
 Performing C SOURCE FILE Test FLAG_SUPPORTED_Wusedbutmarkedunused failed with the following output:
-Change Dir: /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
+Change Dir: /home/fyou/Downloads/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_f41d7/fast && gmake[4]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_f41d7.dir/build.make CMakeFiles/cmTC_f41d7.dir/build
-gmake[5]: Entering directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_f41d7.dir/src.c.o
-/usr/bin/cc -DFLAG_SUPPORTED_Wusedbutmarkedunused  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong -Wdouble-promotion -Wparentheses -Wformat-overflow -Wunused-macros    -Wused-but-marked-unused -o CMakeFiles/cmTC_f41d7.dir/src.c.o -c /home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_53068/fast && gmake[4]: Entering directory '/home/fyou/Downloads/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_53068.dir/build.make CMakeFiles/cmTC_53068.dir/build
+gmake[5]: Entering directory '/home/fyou/Downloads/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_53068.dir/src.c.o
+/usr/bin/cc -DFLAG_SUPPORTED_Wusedbutmarkedunused  -fPIC -std=c89 -pedantic -Wall -Wextra -Werror -Wstrict-prototypes -Wwrite-strings -Wshadow -Winit-self -Wcast-align -Wformat=2 -Wmissing-prototypes -Wstrict-overflow=2 -Wcast-qual -Wundef -Wswitch-default -Wconversion -Wc++-compat -fstack-protector-strong -Wdouble-promotion -Wparentheses -Wformat-overflow -Wunused-macros    -Wused-but-marked-unused -o CMakeFiles/cmTC_53068.dir/src.c.o -c /home/fyou/Downloads/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp/src.c
 cc: error: unrecognized command-line option '-Wused-but-marked-unused'
-gmake[5]: *** [CMakeFiles/cmTC_f41d7.dir/build.make:78: CMakeFiles/cmTC_f41d7.dir/src.c.o] Error 1
-gmake[5]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
-gmake[4]: *** [Makefile:127: cmTC_f41d7/fast] Error 2
-gmake[4]: Leaving directory '/home/fyousfi/Pictures/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[5]: *** [CMakeFiles/cmTC_53068.dir/build.make:78: CMakeFiles/cmTC_53068.dir/src.c.o] Error 1
+gmake[5]: Leaving directory '/home/fyou/Downloads/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
+gmake[4]: *** [Makefile:127: cmTC_53068/fast] Error 2
+gmake[4]: Leaving directory '/home/fyou/Downloads/Ultima-Robotics-Stack/ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/deps/cjson/CMakeFiles/CMakeTmp'
 
 
 Source file was:
