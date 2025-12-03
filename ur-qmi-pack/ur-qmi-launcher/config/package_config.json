@@ -2,11 +2,10 @@
     "description": "Package configuration for ur-qmi-launcher",
     "version": "1.0",
     "config_files": {
-        "device_json": "config/dev-lte.json",
-        "cellular_mode": "config/cellular-mode.json",
-        "timeouts": "config/timeouts.json",
-        "network": "config/config-network.json",
-        "ip_monitor": "config/ip-mon.json",
+        "cellular_mode": "config/runtime-spec/cellular-mode.json",
+        "timeouts": "config/runtime-spec/timeouts.json",
+        "network": "config/runtime-spec/config-network.json",
+        "ip_monitor": "config/runtime-spec/ip-mon.json",
         "routing": "",
         "log_file": ""
     },

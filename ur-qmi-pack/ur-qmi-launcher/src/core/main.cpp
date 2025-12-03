@@ -26,12 +26,16 @@ static unsigned int g_runtimeInitThreadId = 0;
 // Global RPC client and operation processor for signal handling
 static std::shared_ptr<RpcClient> g_rpcClient;
 static std::unique_ptr<RpcOperationProcessor> g_operationProcessor;
+static std::thread g_rpcClientThread;
+static std::atomic<bool> g_rpcClientInitialized{false};
+static std::atomic<bool> g_deviceListRequested{false};
+static std::atomic<bool> g_mainloopLaunched{false};
+static std::atomic<bool> g_rpcClientConnected{false};  // New flag for connection state
 
 // Global connection manager for heartbeat handler access
 static ConnectionManager* g_connectionManager = nullptr;
 
 struct PackageConfig {
-    std::string device_json;
     std::string cellular_mode;
     std::string timeouts;
     std::string network;
@@ -48,6 +52,7 @@ struct PackageConfig {
 
 // Forward declaration
 std::string readFile(const std::string& filename);
+void performPreStartupCleanup();
 
 void signalHandler(int signal) {
     std::cout << "\n=== MAIN SIGNAL HANDLER ACTIVATED ===" << std::endl;
@@ -66,20 +71,71 @@ void signalHandler(int signal) {
     }
     std::cout << std::endl;
     
-    std::cout << "Initiating coordinated shutdown sequence..." << std::endl;
+    std::cout << "\n*** PRIORITY 1: EMERGENCY MAINLOOP STOP ***" << std::endl;
     
-    // Stop RPC client first
+    // IMMEDIATELY stop the mainloop thread first - this is the highest priority
+    if (g_threadManager && g_mainloopThreadId != 0) {
+        std::cout << "EMERGENCY: Stopping mainloop thread..." << std::endl;
+        try {
+            // Try graceful stop
+            g_threadManager->stopThread(g_mainloopThreadId);
+            std::cout << "[OK] Mainloop thread emergency stop initiated" << std::endl;
+        } catch (const std::exception& e) {
+            std::cout << "[ERROR] Emergency mainloop stop failed: " << e.what() << std::endl;
+        }
+    } else {
+        std::cout << "[WARNING] Thread manager or mainloop thread ID not available" << std::endl;
+    }
+    
+    // Set global flags to stop all operations immediately
+    g_mainloopLaunched.store(false);
+    g_running.store(false);
+    g_rpcClientInitialized.store(false);
+    g_rpcClientConnected.store(false);  // Reset connection flag
+    g_deviceListRequested.store(false);
+    std::cout << "[OK] Global stop flags set" << std::endl;
+    
+    // Perform emergency cleanup IMMEDIATELY after mainloop stop
+    std::cout << "\n*** PRIORITY 2: EMERGENCY CLEANUP ***" << std::endl;
+    
+    // Emergency connection cleanup first
+    ConnectionManager* active_manager = ConnectionManager::getActiveInstance();
+    if (active_manager) {
+        std::cout << "Performing emergency connection cleanup..." << std::endl;
+        try {
+            active_manager->performEmergencyCleanup();
+            std::cout << "[OK] Emergency connection cleanup completed" << std::endl;
+        } catch (const std::exception& e) {
+            std::cout << "[ERROR] Emergency cleanup failed: " << e.what() << std::endl;
+        }
+    }
+    
+    // Emergency registry cleanup
+    std::cout << "Performing emergency registry cleanup..." << std::endl;
+    try {
+        ConnectionRegistry::handleGlobalTermination();
+        std::cout << "[OK] Emergency registry cleanup completed" << std::endl;
+    } catch (const std::exception& e) {
+        std::cout << "[ERROR] Emergency registry cleanup failed: " << e.what() << std::endl;
+    }
+    
+    std::cout << "\n*** PRIORITY 3: NORMAL SHUTDOWN SEQUENCE ***" << std::endl;
+    std::cout << "Continuing with normal shutdown procedures..." << std::endl;
+    
+    // Stop RPC client
     if (g_rpcClient) {
-        std::cout << "Step 0: Stopping RPC client..." << std::endl;
+        std::cout << "Step 1: Stopping RPC client..." << std::endl;
         g_rpcClient->stop();
+        g_rpcClient.reset();
         std::cout << "RPC client stopped successfully" << std::endl;
     }
     
-    g_running.store(false);
+    // Note: RPC client thread is detached and will clean up itself when g_running becomes false
+    g_operationProcessor.reset();
     
     // Clean up connection manager
     if (g_connectionManager) {
-        std::cout << "Step 0.5: Cleaning up connection manager..." << std::endl;
+        std::cout << "Step 2: Cleaning up connection manager..." << std::endl;
         try {
             g_connectionManager->disconnect();
             g_connectionManager->stopMonitoring();
@@ -91,50 +147,15 @@ void signalHandler(int signal) {
         }
     }
     
-    // Stop the runtime initialization thread first
+    // Stop the runtime initialization thread
     if (g_threadManager && g_runtimeInitThreadId != 0) {
-        std::cout << "Step 1: Stopping runtime initialization thread..." << std::endl;
+        std::cout << "Step 3: Stopping runtime initialization thread..." << std::endl;
         try {
             g_threadManager->stopThread(g_runtimeInitThreadId);
             std::cout << "Runtime initialization thread stopped successfully" << std::endl;
         } catch (const std::exception& e) {
             std::cout << "Warning: Failed to stop runtime initialization thread: " << e.what() << std::endl;
         }
-    }
-    
-    // Stop the mainloop thread second
-    if (g_threadManager && g_mainloopThreadId != 0) {
-        std::cout << "Step 2: Stopping mainloop thread..." << std::endl;
-        try {
-            g_threadManager->stopThread(g_mainloopThreadId);
-            std::cout << "Mainloop thread stopped successfully" << std::endl;
-        } catch (const std::exception& e) {
-            std::cout << "Warning: Failed to stop mainloop thread: " << e.what() << std::endl;
-        }
-    }
-    
-    // First, let connection registry handle its own cleanup
-    std::cout << "Step 3: Connection registry cleanup..." << std::endl;
-    ConnectionRegistry::handleGlobalTermination();
-    
-    // Then perform connection manager emergency cleanup
-    ConnectionManager* active_manager = ConnectionManager::getActiveInstance();
-    if (active_manager) {
-        std::cout << "Step 4: Connection manager emergency cleanup..." << std::endl;
-        active_manager->performEmergencyCleanup();
-        std::cout << "Connection manager emergency cleanup completed" << std::endl;
-    } else {
-        std::cout << "Step 4: No active connection manager, performing basic cleanup..." << std::endl;
-        
-        // Perform basic cleanup if no connection manager is available
-        std::cout << "Attempting basic WWAN interface cleanup..." << std::endl;
-        system("pkill -f dhclient 2>/dev/null || true");
-        system("ip route flush table main | grep wwan 2>/dev/null || true");
-        
-        // Try to bring down any wwan interfaces
-        system("for iface in $(ls /sys/class/net/ | grep wwan 2>/dev/null); do ip link set dev $iface down 2>/dev/null || true; done");
-        
-        std::cout << "Basic cleanup completed" << std::endl;
     }
     
     // Clean up global resources
@@ -181,7 +202,6 @@ bool loadPackageConfig(const std::string& config_file, PackageConfig& config) {
         // Load config file paths
         if (root.contains("config_files")) {
             const auto& config_files = root["config_files"];
-            config.device_json = config_files.value("device_json", "");
             config.cellular_mode = config_files.value("cellular_mode", "");
             config.timeouts = config_files.value("timeouts", "");
             config.network = config_files.value("network", "");
@@ -270,6 +290,368 @@ void startMainloopThread(ConnectionManager* manager, bool verbose) {
     std::cout << "Mainloop thread started with ID: " << g_mainloopThreadId << std::endl;
 }
 
+std::string generateDeviceConfigFromResponse(const json& response) {
+    try {
+        if (!response.contains("result") || !response["result"].contains("devices")) {
+            std::cerr << "Invalid response format - missing devices" << std::endl;
+            return "";
+        }
+        
+        auto devices = response["result"]["devices"];
+        if (devices.empty()) {
+            std::cerr << "No devices found in response" << std::endl;
+            return "";
+        }
+        
+        const auto& device = devices[0];
+        
+        // Generate device configuration in the format expected by ConnectionManager
+        json deviceConfig;
+        deviceConfig["version"] = "1.0";
+        deviceConfig["description"] = "Generated device configuration from ur-qmi-ident response";
+        
+        // Create devices array with expected structure for ConnectionManager
+        json deviceObj;
+        deviceObj["device_path"] = device.value("path", "");
+        deviceObj["imei"] = device.value("imei", "");
+        deviceObj["model"] = device.value("model", "");
+        deviceObj["manufacturer"] = device.value("manufacturer", "");
+        deviceObj["is_available"] = true; // Assume available since it's in the response
+        deviceObj["firmware"] = device.value("firmware", "");
+        deviceObj["hardware_revision"] = device.value("hardware_revision", "");
+        deviceObj["iccid"] = device.value("iccid", "");
+        deviceObj["activation_state"] = device.value("activation_state", "");
+        deviceObj["operating_mode"] = device.value("operating_mode", "");
+        deviceObj["pin_locked"] = device.value("pin_locked", false);
+        deviceObj["sim_present"] = device.value("sim_present", true);
+        
+        deviceConfig["devices"] = json::array();
+        deviceConfig["devices"].push_back(deviceObj);
+        
+        // Add connection configuration
+        json connection;
+        connection["apn"] = "internet";
+        connection["auto_connect"] = true;
+        connection["retry_attempts"] = 3;
+        connection["retry_delay_ms"] = 5000;
+        connection["timeout_ms"] = 30000;
+        deviceConfig["connection"] = connection;
+        
+        // Add capabilities if available
+        if (device.contains("capabilities")) {
+            deviceConfig["capabilities"] = device["capabilities"];
+        }
+        
+        std::string configStr = deviceConfig.dump(4);
+        std::cout << "Generated device configuration:\n" << configStr << std::endl;
+        
+        return configStr;
+        
+    } catch (const std::exception& e) {
+        std::cerr << "Failed to generate device config: " << e.what() << std::endl;
+        return "";
+    }
+}
+
+void launchMainloopWithDeviceConfig(const std::string& deviceConfigJson, const PackageConfig& config) {
+    std::cout << "[MAINLOOP-INIT] Launching mainloop thread with complete device configuration..." << std::endl;
+    
+    // Check if mainloop already launched
+    if (g_mainloopLaunched.exchange(true)) {
+        std::cout << "[MAINLOOP-INIT] Mainloop already launched, skipping" << std::endl;
+        return;
+    }
+    
+    if (!g_threadManager) {
+        std::cerr << "[MAINLOOP-INIT] ThreadManager not available, cannot launch mainloop" << std::endl;
+        g_mainloopLaunched.store(false);
+        return;
+    }
+    
+    try {
+        // Launch mainloop thread via ThreadManager with complete configuration
+        g_mainloopThreadId = g_threadManager->createThread([deviceConfigJson, config]() {
+            std::cout << "[MAINLOOP-THREAD] Starting mainloop with device configuration..." << std::endl;
+            
+            // Initialize connection manager with generated device config
+            if (g_connectionManager) {
+                std::cout << "[MAINLOOP-THREAD] Initializing connection manager with device config..." << std::endl;
+                if (g_connectionManager->initialize(deviceConfigJson)) {
+                    std::cout << "[MAINLOOP-THREAD] Connection manager initialized successfully" << std::endl;
+                    
+                    // Load and apply other configurations
+                    PackageConfig localConfig = config; // Make a copy for this thread
+                    
+                    if (!localConfig.cellular_mode.empty()) {
+                        std::string cellular_mode_json = readFile(localConfig.cellular_mode);
+                        if (!cellular_mode_json.empty()) {
+                            try {
+                                json cellular_mode_config = json::parse(cellular_mode_json);
+                                g_connectionManager->loadCellularConfigFromJson(cellular_mode_config);
+                                std::cout << "[MAINLOOP-THREAD] Cellular mode configuration applied" << std::endl;
+                            } catch (const std::exception& e) {
+                                std::cerr << "[MAINLOOP-THREAD] Failed to parse cellular mode config: " << e.what() << std::endl;
+                            }
+                        }
+                    }
+                    
+                    if (!localConfig.network.empty()) {
+                        std::string network_json = readFile(localConfig.network);
+                        if (!network_json.empty()) {
+                            try {
+                                json network_config = json::parse(network_json);
+                                ConnectionConfig conn_config;
+                                if (network_config.contains("apn")) {
+                                    conn_config.apn = network_config["apn"].get<std::string>();
+                                }
+                                if (network_config.contains("username")) {
+                                    conn_config.username = network_config["username"].get<std::string>();
+                                }
+                                if (network_config.contains("password")) {
+                                    conn_config.password = network_config["password"].get<std::string>();
+                                }
+                                if (network_config.contains("ip_type")) {
+                                    conn_config.ip_type = network_config["ip_type"].get<int>();
+                                }
+                                if (network_config.contains("auto_connect")) {
+                                    conn_config.auto_connect = network_config["auto_connect"].get<bool>();
+                                }
+                                if (network_config.contains("retry_attempts")) {
+                                    conn_config.retry_attempts = network_config["retry_attempts"].get<int>();
+                                }
+                                if (network_config.contains("retry_delay_ms")) {
+                                    conn_config.retry_delay_ms = network_config["retry_delay_ms"].get<int>();
+                                }
+                                if (network_config.contains("enable_monitoring")) {
+                                    conn_config.enable_monitoring = network_config["enable_monitoring"].get<bool>();
+                                }
+                                if (network_config.contains("health_check_interval_ms")) {
+                                    conn_config.health_check_interval_ms = network_config["health_check_interval_ms"].get<int>();
+                                }
+                                
+                                g_connectionManager->setConnectionConfig(conn_config);
+                                std::cout << "[MAINLOOP-THREAD] Network configuration applied" << std::endl;
+                            } catch (const std::exception& e) {
+                                std::cerr << "[MAINLOOP-THREAD] Failed to parse network config: " << e.what() << std::endl;
+                            }
+                        }
+                    }
+                    
+                    // Enable features
+                    if (localConfig.enable_monitoring) {
+                        g_connectionManager->startMonitoring();
+                        std::cout << "[MAINLOOP-THREAD] Monitoring enabled" << std::endl;
+                    }
+                    if (localConfig.enable_auto_recovery) {
+                        g_connectionManager->enableAutoRecovery(true);
+                        std::cout << "[MAINLOOP-THREAD] Auto-recovery enabled" << std::endl;
+                    }
+                    
+                    // Establish connection
+                    ConnectionConfig default_config;
+                    default_config.apn = "internet";
+                    default_config.auto_connect = true;
+                    default_config.retry_attempts = 3;
+                    default_config.retry_delay_ms = 5000;
+                    
+                    std::cout << "[MAINLOOP-THREAD] Establishing connection..." << std::endl;
+                    if (g_connectionManager->connect(default_config)) {
+                        std::cout << "[MAINLOOP-THREAD] Connection established successfully" << std::endl;
+                    } else {
+                        std::cerr << "[MAINLOOP-THREAD] Failed to establish connection" << std::endl;
+                    }
+                } else {
+                    std::cerr << "[MAINLOOP-THREAD] Failed to initialize connection manager" << std::endl;
+                }
+            }
+            
+            // Run mainloop - this is the main operational loop
+            std::cout << "[MAINLOOP-THREAD] Starting main operational loop..." << std::endl;
+            while (g_running.load()) {
+                std::this_thread::sleep_for(std::chrono::seconds(1));
+                
+                if (config.verbose && g_connectionManager && g_connectionManager->isConnected()) {
+                    try {
+                        ConnectionMetrics metrics = g_connectionManager->getCurrentMetrics();
+                        std::cout << "[MAINLOOP-THREAD] Status: Connected, Signal: " << metrics.signal_strength 
+                                  << " dBm, IP: " << metrics.ip_address << std::endl;
+                    } catch (const std::exception& e) {
+                        // Ignore metric errors in verbose mode
+                    }
+                }
+            }
+            
+            std::cout << "[MAINLOOP-THREAD] Mainloop thread received shutdown signal" << std::endl;
+            
+            // Cleanup
+            if (g_connectionManager) {
+                std::cout << "[MAINLOOP-THREAD] Disconnecting and cleaning up..." << std::endl;
+                g_connectionManager->disconnect();
+                g_connectionManager->stopMonitoring();
+            }
+            
+            std::cout << "[MAINLOOP-THREAD] Mainloop thread completed" << std::endl;
+        });
+        
+        std::cout << "[MAINLOOP-INIT] Mainloop thread launched with ID: " << g_mainloopThreadId << std::endl;
+        
+    } catch (const std::exception& e) {
+        std::cerr << "[MAINLOOP-INIT] Failed to launch mainloop thread: " << e.what() << std::endl;
+        g_mainloopLaunched.store(false);
+    }
+}
+
+void initializeRpcClientIndependently(const std::string& rpc_config_file, const PackageConfig& config) {
+    std::cout << "[RPC-INIT] Starting independent RPC client initialization..." << std::endl;
+    
+    if (rpc_config_file.empty()) {
+        std::cout << "[RPC-INIT] No RPC config file provided, skipping RPC client initialization" << std::endl;
+        return;
+    }
+    
+    try {
+        // Pre-allocate memory to avoid std::bad_alloc during critical operations
+        std::cout << "[RPC-INIT] Pre-allocating memory for RPC components..." << std::endl;
+        
+        // Create RPC client with exception handling for memory allocation
+        std::cout << "[RPC-INIT] Creating RPC client with config: " << rpc_config_file << std::endl;
+        try {
+            g_rpcClient = std::make_shared<RpcClient>(rpc_config_file, "ur-qmi-launcher");
+            std::cout << "[RPC-INIT] RPC client object created successfully" << std::endl;
+        } catch (const std::bad_alloc& e) {
+            std::cerr << "[RPC-INIT] Memory allocation failed creating RPC client: " << e.what() << std::endl;
+            g_rpcClientInitialized.store(false);
+            return;
+        } catch (const std::exception& e) {
+            std::cerr << "[RPC-INIT] Exception creating RPC client: " << e.what() << std::endl;
+            g_rpcClientInitialized.store(false);
+            return;
+        }
+        
+        // Create operation processor with exception handling ( it's optional)
+        try {
+            g_operationProcessor = std::make_unique<RpcOperationProcessor>(config, config.verbose);
+            std::cout << "[RPC-INIT] Operation processor created successfully" << std::endl;
+        } catch (const std::bad_alloc& e) {
+            std::cerr << "[RPC-INIT] Memory allocation failed creating operation processor ( RPC will work without it ): " << e.what() << std::endl;
+            // Continue without operation processor - RPC client can still handle basic messaging
+            g_operationProcessor = nullptr;
+        } catch (const std::exception& e) {
+            std::cerr << "[RPC-INIT] Exception creating operation processor ( RPC will work without it ): " << e.what() << std::endl;
+            // Continue without operation processor - RPC client can still handle basic messaging
+            g_operationProcessor = nullptr;
+        }
+        
+        // Set message handler to route requests to operation processor and handle heartbeat
+        std::cout << "[RPC-INIT] Setting up message handlers..." << std::endl;
+        g_rpcClient->setMessageHandler([&](const std::string &topic, const std::string &payload) {
+            std::cout << "[RPC-INIT] Received message on topic: " << topic << std::endl;
+            
+            // Detect when RPC client is fully connected to broker
+            if (topic.find("clients/ur-qmi-ident/heartbeat") != std::string::npos && !g_rpcClientConnected.exchange(true)) {
+                std::cout << "[RPC-INIT] RPC client connected to broker and receiving messages" << std::endl;
+                
+                // Send device list request only on first heartbeat after connection
+                if (!g_deviceListRequested.exchange(true)) {
+                    std::cout << "[RPC-INIT] First heartbeat received - sending device list request" << std::endl;
+                    sendDeviceListRequest();
+                }
+                return;
+            }
+            
+            // Handle subsequent heartbeat messages (but don't send device list again)
+            if (topic.find("clients/ur-qmi-ident/heartbeat") != std::string::npos) {
+                // Silently ignore subsequent heartbeats
+                return;
+            }
+            
+            // Handle device list responses
+            if (topic.find("direct_messaging/ur-qmi-ident/responses") != std::string::npos) {
+                try {
+                    json response = json::parse(payload);
+                    if (response.contains("result") && response["result"].contains("devices")) {
+                        auto devices = response["result"]["devices"];
+                        std::cout << "[RPC-INIT] Received device list response with " << devices.size() << " devices:" << std::endl;
+                        
+                        for (const auto& device : devices) {
+                            std::cout << "[RPC-INIT]   Device: " << device.value("model", "Unknown") 
+                                      << " (IMEI: " << device.value("imei", "Unknown") 
+                                      << ", Path: " << device.value("path", "Unknown") << ")" << std::endl;
+                        }
+                        
+                        if (!devices.empty()) {
+                            // Generate device config from response
+                            std::string deviceConfigJson = generateDeviceConfigFromResponse(response);
+                            if (!deviceConfigJson.empty()) {
+                                std::cout << "[RPC-INIT] Generated device config, launching mainloop thread..." << std::endl;
+                                
+                                // Launch mainloop thread with complete configuration
+                                launchMainloopWithDeviceConfig(deviceConfigJson, config);
+                            } else {
+                                std::cerr << "[RPC-INIT] Failed to generate device config from response" << std::endl;
+                            }
+                        } else {
+                            std::cerr << "[RPC-INIT] No devices found in response" << std::endl;
+                        }
+                    }
+                } catch (const std::exception& e) {
+                    std::cerr << "[RPC-INIT] Failed to parse device list response: " << e.what() << std::endl;
+                }
+                return;
+            }
+            
+            // Topic filtering for selective processing of launcher requests
+            if (topic.find("direct_messaging/ur-qmi-launcher/requests") == std::string::npos) {
+                return;
+            }
+            
+            // Delegate to operation processor if available
+            if (g_operationProcessor) {
+                g_operationProcessor->processRequest(payload.c_str(), payload.size());
+            } else {
+                std::cout << "[RPC-INIT] Operation processor not available - message ignored" << std::endl;
+            }
+        });
+        
+        // Start RPC client with exception handling
+        std::cout << "[RPC-INIT] Starting RPC client..." << std::endl;
+        try {
+            if (!g_rpcClient->start()) {
+                std::cerr << "[RPC-INIT] Failed to start RPC client" << std::endl;
+                g_rpcClient.reset();
+                g_operationProcessor.reset();
+                g_rpcClientInitialized.store(false);
+            } else {
+                std::cout << "[RPC-INIT] RPC client started successfully and running independently" << std::endl;
+                g_rpcClientInitialized.store(true);
+            }
+        } catch (const std::bad_alloc& e) {
+            std::cerr << "[RPC-INIT] Memory allocation failed starting RPC client: " << e.what() << std::endl;
+            g_rpcClient.reset();
+            g_operationProcessor.reset();
+            g_rpcClientInitialized.store(false);
+        } catch (const std::exception& e) {
+            std::cerr << "[RPC-INIT] Exception starting RPC client: " << e.what() << std::endl;
+            g_rpcClient.reset();
+            g_operationProcessor.reset();
+            g_rpcClientInitialized.store(false);
+        }
+        
+    } catch (const std::bad_alloc& e) {
+        std::cerr << "[RPC-INIT] Critical memory allocation failure: " << e.what() << std::endl;
+        g_rpcClient.reset();
+        g_operationProcessor.reset();
+        g_rpcClientInitialized.store(false);
+    } catch (const std::exception& e) {
+        std::cerr << "[RPC-INIT] Critical error during RPC initialization: " << e.what() << std::endl;
+        g_rpcClient.reset();
+        g_operationProcessor.reset();
+        g_rpcClientInitialized.store(false);
+    }
+    
+    std::cout << "[RPC-INIT] Independent RPC client initialization completed" << std::endl;
+}
+
 void runtimeInitialization(const std::string& package_source_file, const std::string& rpc_config_file) {
     std::cout << "Runtime initialization started in thread" << std::endl;
     std::cout << "Loading package source configuration from: " << package_source_file << std::endl;
@@ -283,83 +665,6 @@ void runtimeInitialization(const std::string& package_source_file, const std::st
     }
     
     std::cout << "Package source configuration loaded successfully" << std::endl;
-    std::cout << "Now loading individual JSON configuration files..." << std::endl;
-    
-    // Initialize RPC client if RPC config is provided
-    if (!rpc_config_file.empty()) {
-        std::cout << "Initializing RPC client with config: " << rpc_config_file << std::endl;
-        try {
-            // Create RPC client
-            g_rpcClient = std::make_shared<RpcClient>(rpc_config_file, "ur-qmi-launcher");
-            
-            // Create operation processor
-            g_operationProcessor = std::make_unique<RpcOperationProcessor>(config, config.verbose);
-            
-            // Set message handler to route requests to operation processor and handle heartbeat
-            g_rpcClient->setMessageHandler([&](const std::string &topic, const std::string &payload) {
-                // Handle heartbeat messages from ur-qmi-ident
-                if (topic.find("clients/ur-qmi-ident/heartbeat") != std::string::npos) {
-                    std::cout << "Received heartbeat from ur-qmi-ident" << std::endl;
-                    
-                    // Send device list request
-                    sendDeviceListRequest();
-                    return;
-                }
-                
-                // Handle device list responses
-                if (topic.find("direct_messaging/ur-qmi-ident/responses") != std::string::npos) {
-                    try {
-                        json response = json::parse(payload);
-                        if (response.contains("result") && response["result"].contains("devices")) {
-                            auto devices = response["result"]["devices"];
-                            std::cout << "Received device list response with " << devices.size() << " devices:" << std::endl;
-                            
-                            for (const auto& device : devices) {
-                                std::cout << "  Device: " << device.value("model", "Unknown") 
-                                          << " (IMEI: " << device.value("imei", "Unknown") 
-                                          << ", Path: " << device.value("path", "Unknown") << ")" << std::endl;
-                            }
-                            
-                            // Start mainloop thread after receiving device list
-                            if (g_mainloopThreadId == 0 && g_threadManager && g_connectionManager) {
-                                std::cout << "Starting mainloop thread after device discovery..." << std::endl;
-                                startMainloopThread(g_connectionManager, config.verbose);
-                            }
-                        }
-                    } catch (const std::exception& e) {
-                        std::cerr << "Failed to parse device list response: " << e.what() << std::endl;
-                    }
-                    return;
-                }
-                
-                // Topic filtering for selective processing of launcher requests
-                if (topic.find("direct_messaging/ur-qmi-launcher/requests") == std::string::npos) {
-                    return;
-                }
-                
-                // Delegate to operation processor
-                if (g_operationProcessor) {
-                    g_operationProcessor->processRequest(payload.c_str(), payload.size());
-                }
-            });
-            
-            // Start RPC client
-            if (!g_rpcClient->start()) {
-                std::cerr << "Failed to start RPC client" << std::endl;
-                g_rpcClient.reset();
-                g_operationProcessor.reset();
-            } else {
-                std::cout << "RPC client started successfully" << std::endl;
-            }
-            
-        } catch (const std::exception& e) {
-            std::cerr << "Error initializing RPC client: " << e.what() << std::endl;
-            g_rpcClient.reset();
-            g_operationProcessor.reset();
-        }
-    } else {
-        std::cout << "No RPC config file provided, RPC functionality disabled" << std::endl;
-    }
     
     // Initialize connection registry
     ConnectionRegistry::initialize();
@@ -413,12 +718,9 @@ void runtimeInitialization(const std::string& package_source_file, const std::st
         std::cout << "Verbose command logging enabled" << std::endl;
     }
     
-    // Read device JSON
-    std::string device_json = readFile(config.device_json);
-    if (device_json.empty()) {
-        g_running = false;
-        return;
-    }
+    // Note: Device JSON will be generated from ur-qmi-ident response
+    // Don't read device config from file - wait for device discovery
+    std::cout << "Device configuration will be generated from ur-qmi-ident response" << std::endl;
     
     // Create connection manager (heap allocated for global access)
     g_connectionManager = new ConnectionManager();
@@ -444,14 +746,8 @@ void runtimeInitialization(const std::string& package_source_file, const std::st
         }
     });
     
-    // Initialize
-    if (!g_connectionManager->initialize(device_json)) {
-        std::cerr << "Error: Failed to initialize connection manager" << std::endl;
-        g_running = false;
-        return;
-    }
-    
-    std::cout << "Connection manager initialized successfully" << std::endl;
+    // Note: Connection manager will be initialized later when device config is generated
+    std::cout << "Connection manager created, will be initialized after device discovery" << std::endl;
 
     // Load cellular mode configuration if specified
     if (!config.cellular_mode.empty()) {
@@ -537,77 +833,19 @@ void runtimeInitialization(const std::string& package_source_file, const std::st
         std::cout << "Cellular IP monitor configuration file set: " << config.ip_monitor << std::endl;
     }
     
-    // Initialize lifecycle manager for connection tracking
-    // Parse device path from the JSON configuration
-    std::string device_path = "";
-    std::string interface_name = "";
+    // Note: Device path and lifecycle manager will be set up after device discovery
+    std::cout << "Device path and lifecycle tracking will be configured after device discovery" << std::endl;
     
-    // Simple JSON parsing to extract device path and interface
-    size_t device_pos = device_json.find("\"device_path\"");
-    if (device_pos != std::string::npos) {
-        size_t colon_pos = device_json.find(":", device_pos);
-        if (colon_pos != std::string::npos) {
-            size_t quote_start = device_json.find("\"", colon_pos);
-            size_t quote_end = device_json.find("\"", quote_start + 1);
-            if (quote_start != std::string::npos && quote_end != std::string::npos) {
-                device_path = device_json.substr(quote_start + 1, quote_end - quote_start - 1);
-            }
-        }
-    }
+    // Note: Features will be enabled after device discovery
+    std::cout << "Monitoring and auto-recovery will be enabled after device discovery" << std::endl;
     
-    size_t interface_pos = device_json.find("\"interface_name\"");
-    if (interface_pos != std::string::npos) {
-        size_t colon_pos = device_json.find(":", interface_pos);
-        if (colon_pos != std::string::npos) {
-            size_t quote_start = device_json.find("\"", colon_pos);
-            size_t quote_end = device_json.find("\"", quote_start + 1);
-            if (quote_start != std::string::npos && quote_end != std::string::npos) {
-                interface_name = device_json.substr(quote_start + 1, quote_end - quote_start - 1);
-            }
-        }
-    }
-    
-    if (!device_path.empty()) {
-        lifecycle_manager = std::make_unique<ConnectionLifecycleManager>(device_path, interface_name, "internet");
-        std::cout << "Connection registry tracking enabled for " << device_path << std::endl;
-        std::cout << "Note: Both main and connection-specific signal handlers are active" << std::endl;
-    }
-    
-    // Enable features
-    if (config.enable_monitoring) {
-        g_connectionManager->startMonitoring();
-        std::cout << "Monitoring enabled" << std::endl;
-    }
-    
-    if (config.enable_auto_recovery) {
-        g_connectionManager->enableAutoRecovery(true);
-        std::cout << "Auto recovery enabled" << std::endl;
-    }
-    
-    // Connect
-    std::cout << "Connecting..." << std::endl;
-    ConnectionConfig default_config;
-    default_config.apn = "internet";
-    default_config.auto_connect = true;
-    default_config.retry_attempts = 3;
-    default_config.retry_delay_ms = 5000;
-    
-    if (!g_connectionManager->connect(default_config)) {
-        std::cerr << "Error: Failed to establish connection" << std::endl;
-        g_running = false;
-        return;
-    }
-    
-    std::cout << "Connection established successfully" << std::endl;
-    
-    // Don't start mainloop thread automatically - wait for heartbeat trigger
-    std::cout << "Mainloop thread autostart disabled - waiting for heartbeat trigger" << std::endl;
+    // Note: Connection will be established after device discovery
+    std::cout << "Connection will be established after device discovery" << std::endl;
     
     // Main initialization loop - wait for shutdown signal
     while (g_running.load()) {
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }
-    
     std::cout << "Runtime initialization received shutdown signal" << std::endl;
     
     // Cleanup
@@ -618,12 +856,111 @@ void runtimeInitialization(const std::string& package_source_file, const std::st
     std::cout << "Runtime initialization complete" << std::endl;
 }
 
+void performPreStartupCleanup() {
+    std::cout << "Starting pre-startup cleanup to remove residues from previous runs..." << std::endl;
+    
+    // 1. Clean up ur-qmi-launcher specific processes
+    std::cout << "Cleaning up ur-qmi-launcher specific processes..." << std::endl;
+    
+    // Kill any hanging qmicli processes from previous runs
+    system("pkill -f 'qmicli.*--client-no-release-cid' 2>/dev/null || true");
+    system("pkill -f 'qmicli.*--wds-start-network' 2>/dev/null || true");
+    system("pkill -f 'qmicli.*--wds-stop-network' 2>/dev/null || true");
+    
+    // Kill any hanging dhclient processes for wwan interfaces
+    system("pkill -f 'dhclient.*wwan' 2>/dev/null || true");
+    
+    std::cout << "[OK] Process cleanup completed" << std::endl;
+    
+    // 2. Clean up ur-qmi-launcher specific registry files
+    std::cout << "Cleaning up ur-qmi-launcher registry files..." << std::endl;
+    
+    const char* registry_files[] = {
+        "/tmp/qmi_connections.registry",
+        "/tmp/ur-qmi-launcher.pid",
+        "/tmp/ur-qmi-launcher.lock",
+        nullptr
+    };
+    
+    for (int i = 0; registry_files[i] != nullptr; ++i) {
+        if (access(registry_files[i], F_OK) == 0) {
+            if (unlink(registry_files[i]) == 0) {
+                std::cout << "[OK] Removed " << registry_files[i] << std::endl;
+            } else {
+                std::cout << "[WARNING] Could not remove " << registry_files[i] << std::endl;
+            }
+        }
+    }
+    
+    // 3. Reset wwan interfaces to clean state (without removing system routes)
+    std::cout << "Resetting wwan interfaces to clean state..." << std::endl;
+    
+    // Find and reset wwan interfaces safely
+    std::ostringstream find_wwan_cmd;
+    find_wwan_cmd << "for iface in $(ls /sys/class/net/ 2>/dev/null | grep wwan 2>/dev/null); do "
+                  << "if [ -e /sys/class/net/$iface ]; then "
+                  << "echo 'Resetting interface $iface'; "
+                  << "ip link set dev $iface down 2>/dev/null || true; "
+                  << "ip link set dev $iface up 2>/dev/null || true; "
+                  << "ip addr flush dev $iface 2>/dev/null || true; "
+                  << "fi; "
+                  << "done";
+    
+    int result = system(find_wwan_cmd.str().c_str());
+    (void)result; // Suppress unused result warning
+    
+    std::cout << "[OK] WWAN interface reset completed" << std::endl;
+    
+    // 4. Clean up ur-qmi-launcher specific routing entries (preserve system routes)
+    std::cout << "Cleaning up ur-qmi-launcher specific routing entries..." << std::endl;
+    
+    // Remove only routes that are specific to ur-qmi-launcher (identified by specific patterns)
+    std::ostringstream cleanup_routes_cmd;
+    cleanup_routes_cmd << "ip route show | grep -E '(wwan|qmi|ur-qmi)' | while read route; do "
+                       << "echo 'Removing route: $route'; "
+                       << "ip route del $route 2>/dev/null || true; "
+                       << "done";
+    
+    result = system(cleanup_routes_cmd.str().c_str());
+    (void)result; // Suppress unused result warning
+    
+    // Clean up any leftover iptables rules from ur-qmi-launcher
+    system("iptables -S | grep 'ur-qmi' | sed 's/^-A/iptables -D/' | bash 2>/dev/null || true");
+    system("iptables -t nat -S | grep 'ur-qmi' | sed 's/^-A/iptables -t nat -D/' | bash 2>/dev/null || true");
+    
+    std::cout << "[OK] Routing cleanup completed" << std::endl;
+    
+    // 5. Verify system networking is intact
+    std::cout << "Verifying system networking integrity..." << std::endl;
+    
+    // Check that non-wwan interfaces are still up
+    system("for iface in $(ls /sys/class/net/ 2>/dev/null | grep -v wwan); do "
+           "if [ -e /sys/class/net/$iface ] && [ \"$(cat /sys/class/net/$iface/operstate 2>/dev/null)\" = 'up' ]; then "
+           "echo '[OK] Interface $iface is operational'; "
+           "fi; "
+           "done");
+    
+    // Check that default routes still exist (if they existed before)
+    system("if ip route show default | grep -q default; then "
+           "echo '[OK] Default routes preserved'; "
+           "else "
+           "echo '[INFO] No default routes found (may be normal for this system)'; "
+           "fi");
+    
+    std::cout << "\n=== PRE-STARTUP CLEANUP COMPLETED ===" << std::endl;
+    std::cout << "System is ready for ur-qmi-launcher startup" << std::endl;
+}
+
 int main(int argc, char* argv[]) {
     // Set up global signal handlers with high priority
     signal(SIGINT, signalHandler);
     signal(SIGTERM, signalHandler);
     
     std::cout << "Main application signal handlers installed" << std::endl;
+    
+    // PRE-STARTUP CLEANUP: Clean up residues from previous runs
+    std::cout << "\n=== PRE-STARTUP CLEANUP ===" << std::endl;
+    performPreStartupCleanup();
     
     // Parse command line arguments
     std::string package_config_file;
@@ -669,10 +1006,75 @@ int main(int argc, char* argv[]) {
         std::cout << "Initializing thread manager..." << std::endl;
         g_threadManager = new ThreadMgr::ThreadManager(4); // Initial capacity of 4 threads
         
-        // Create runtime initialization thread using ThreadManager
+        // Launch RPC client FIRST as independent detached thread
+        if (!rpc_config_file.empty()) {
+            std::cout << "Launching RPC client as independent detached thread..." << std::endl;
+            
+            // Start RPC client thread detached - it will run completely independently
+            g_rpcClientThread = std::thread([rpc_config_file]() {
+                std::cout << "[RPC-THREAD] Independent RPC client thread started" << std::endl;
+                
+                // Load minimal config for RPC initialization
+                PackageConfig rpc_config;
+                rpc_config.verbose = true; // Enable verbose for RPC debugging
+                
+                initializeRpcClientIndependently(rpc_config_file, rpc_config);
+                
+                // Keep RPC thread alive to handle messages independently
+                while (g_running.load()) {
+                    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                }
+                
+                std::cout << "[RPC-THREAD] Independent RPC client thread shutting down" << std::endl;
+                
+                // Cleanup RPC client
+                if (g_rpcClient) {
+                    g_rpcClient->stop();
+                    g_rpcClient.reset();
+                }
+                g_operationProcessor.reset();
+                g_rpcClientInitialized.store(false);
+                g_rpcClientConnected.store(false);  // Reset connection flag
+                g_deviceListRequested.store(false); // Reset for potential restart
+                g_mainloopLaunched.store(false); // Reset for potential restart
+            });
+            
+            // Detach the thread so it runs completely independently
+            g_rpcClientThread.detach();
+            std::cout << "RPC client thread detached and running independently" << std::endl;
+        } else {
+            std::cout << "No RPC config provided - RPC client will not be started" << std::endl;
+        }
+        
+        // Wait for RPC client to be connected to broker before proceeding
+        if (!rpc_config_file.empty()) {
+            std::cout << "Waiting for RPC client to connect to MQTT broker..." << std::endl;
+            const int MAX_CONNECTION_WAIT_MS = 10000;  // 10 seconds timeout
+            const int POLL_INTERVAL_MS = 100;
+            int elapsed = 0;
+            
+            while (elapsed < MAX_CONNECTION_WAIT_MS && !g_rpcClientConnected.load()) {
+                std::this_thread::sleep_for(std::chrono::milliseconds(POLL_INTERVAL_MS));
+                elapsed += POLL_INTERVAL_MS;
+                
+                // Show progress every second
+                if (elapsed % 1000 == 0) {
+                    std::cout << "Waiting for RPC connection... (" << elapsed/1000 << "s)" << std::endl;
+                }
+            }
+            
+            if (g_rpcClientConnected.load()) {
+                std::cout << "[OK] RPC client connected to broker after " << elapsed << "ms" << std::endl;
+            } else {
+                std::cout << "[WARNING] RPC client connection timeout after " << MAX_CONNECTION_WAIT_MS << "ms" << std::endl;
+                std::cout << "[INFO] Proceeding with startup anyway - some features may not work" << std::endl;
+            }
+        }
+        
+        // Now start runtime initialization thread (only after RPC is connected)
         std::cout << "Starting runtime initialization thread via ThreadManager..." << std::endl;
-        g_runtimeInitThreadId = g_threadManager->createThread([package_config_file, rpc_config_file]() {
-            runtimeInitialization(package_config_file, rpc_config_file);
+        g_runtimeInitThreadId = g_threadManager->createThread([package_config_file]() {
+            runtimeInitialization(package_config_file, ""); // RPC config handled by independent thread
         });
         
         std::cout << "Runtime initialization thread started with ID: " << g_runtimeInitThreadId << std::endl;

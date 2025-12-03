@@ -13,8 +13,8 @@ extern "C" {
 
 RpcClient::RpcClient(const std::string &configPath, const std::string &clientId)
     : configPath_(configPath), clientId_(clientId) {
-    // Initialize thread manager
-    threadManager_ = std::make_unique<ThreadMgr::ThreadManager>(10);
+    // Initialize thread manager with reduced capacity to prevent memory allocation issues
+    threadManager_ = std::make_unique<ThreadMgr::ThreadManager>(3);
 }
 
 RpcClient::~RpcClient() {
