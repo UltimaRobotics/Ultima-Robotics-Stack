@@ -5,7 +5,7 @@
 #include <bitset>
 #include <cstring>
 
-Vehicle::Vehicle() : _hasAutopilotVersion(false) {
+Vehicle::Vehicle() : _hasAutopilotVersion(false), _hasGPSData(false), _hasSystemStatus(false) {
     memset(&_autopilotVersion, 0, sizeof(_autopilotVersion));
 }
 
@@ -44,4 +44,30 @@ std::string Vehicle::getBoardName() const {
 
 bool Vehicle::hasAutopilotVersion() const {
     return _hasAutopilotVersion;
+}
+
+void Vehicle::setGPSData(const MavlinkGPSData& data) {
+    _gpsData = data;
+    _hasGPSData = true;
+}
+
+const MavlinkGPSData& Vehicle::getGPSData() const {
+    return _gpsData;
+}
+
+bool Vehicle::hasGPSData() const {
+    return _hasGPSData;
+}
+
+void Vehicle::setSystemStatus(const MavlinkSystemStatus& data) {
+    _systemStatus = data;
+    _hasSystemStatus = true;
+}
+
+const MavlinkSystemStatus& Vehicle::getSystemStatus() const {
+    return _systemStatus;
+}
+
+bool Vehicle::hasSystemStatus() const {
+    return _hasSystemStatus;
 }

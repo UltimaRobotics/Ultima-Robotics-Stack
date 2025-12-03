@@ -50,7 +50,8 @@ struct MavlinkUdpConnection::Impl {
     }
 };
 
-MavlinkUdpConnection::MavlinkUdpConnection() : pImpl(std::make_unique<Impl>()) {}
+MavlinkUdpConnection::MavlinkUdpConnection(uint8_t system_id, uint8_t component_id) 
+    : pImpl(std::make_unique<Impl>()), m_system_id(system_id), m_component_id(component_id) {}
 
 MavlinkUdpConnection::~MavlinkUdpConnection() = default;
 
@@ -179,20 +180,34 @@ void MavlinkUdpConnection::setAutopilotVersionCallback(AutopilotVersionCallback 
     pImpl->parser.setAutopilotVersionCallback(callback);
 }
 
+void MavlinkUdpConnection::setBatteryInfoCallback(BatteryInfoCallback callback) {
+    pImpl->parser.setBatteryInfoCallback(callback);
+}
+
+void MavlinkUdpConnection::setBatteryStatusCallback(BatteryStatusCallback callback) {
+    pImpl->parser.setBatteryStatusCallback(callback);
+}
+
+void MavlinkUdpConnection::setGPSDataCallback(GPSDataCallback callback) {
+    pImpl->parser.setGPSDataCallback(callback);
+}
+
+void MavlinkUdpConnection::setSystemStatusCallback(SystemStatusCallback callback) {
+    pImpl->parser.setSystemStatusCallback(callback);
+}
+
 void MavlinkUdpConnection::sendHeartbeat() {
     if (!pImpl->connected) {
         return;
     }
     
     mavlink_message_t message;
-    const uint8_t system_id = 255;  // GCS system ID
-    const uint8_t component_id = MAV_COMP_ID_MISSIONPLANNER;  // Mission Planner component ID
     const uint8_t base_mode = 0;
     const uint32_t custom_mode = 0;
     
     mavlink_msg_heartbeat_pack_chan(
-        system_id,
-        component_id,
+        m_system_id,
+        m_component_id,
         MAVLINK_COMM_0,
         &message,
         MAV_TYPE_GCS,  // Ground Control Station
@@ -235,15 +250,13 @@ void MavlinkUdpConnection::requestAutopilotVersion() {
     }
     
     mavlink_message_t message;
-    const uint8_t system_id = 255;  // GCS system ID
-    const uint8_t component_id = MAV_COMP_ID_MISSIONPLANNER;  // Mission Planner component ID
     const uint8_t target_system = 1;  // Request from system 1
     const uint8_t target_component = 1;  // Request from component 1 (autopilot)
     
     // Use MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES as per MAVLink spec
     mavlink_msg_command_long_pack_chan(
-        system_id,
-        component_id,
+        m_system_id,
+        m_component_id,
         MAVLINK_COMM_0,
         &message,
         target_system,
@@ -279,5 +292,301 @@ void MavlinkUdpConnection::requestAutopilotVersion() {
         if (verbose_mode) {
             std::cout << "Sent AUTOPILOT_VERSION request command" << std::endl;
         }
+    }
+}
+
+void MavlinkUdpConnection::requestBatteryInfo() {
+    if (!pImpl->connected) {
+        return;
+    }
+    
+    mavlink_message_t message;
+    const uint8_t target_system = 1;  // Request from system 1
+    const uint8_t target_component = 1;  // Request from component 1 (autopilot)
+    
+    // Use MAV_CMD_REQUEST_MESSAGE to request battery info
+    mavlink_msg_command_long_pack_chan(
+        m_system_id,
+        m_component_id,
+        MAVLINK_COMM_0,
+        &message,
+        target_system,
+        target_component,
+        MAV_CMD_REQUEST_MESSAGE,
+        1,  // confirmation = 1
+        MAVLINK_MSG_ID_BATTERY_INFO,  // param1 = message ID to request
+        0,  // param2: reserved
+        0,  // param3: reserved
+        0,  // param4: reserved
+        0,  // param5: reserved
+        0,  // param6: reserved
+        0   // param7: reserved
+    );
+    
+    uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+    const int len = mavlink_msg_to_send_buffer(buffer, &message);
+    
+    int ret = sendto(
+        pImpl->socket_fd, 
+        buffer, 
+        len, 
+        0, 
+        (const struct sockaddr*)&pImpl->remote_addr, 
+        pImpl->remote_addr_len
+    );
+    
+    if (ret != len) {
+        if (verbose_mode) {
+            std::cerr << "Request battery info sendto error: " << strerror(errno) << std::endl;
+        }
+    } else {
+        if (verbose_mode) {
+            std::cout << "Sent BATTERY_INFO request command" << std::endl;
+        }
+    }
+}
+
+void MavlinkUdpConnection::requestBatteryStatus() {
+    if (!pImpl->connected) {
+        return;
+    }
+    
+    mavlink_message_t message;
+    const uint8_t target_system = 1;  // Request from system 1
+    const uint8_t target_component = 1;  // Request from component 1 (autopilot)
+    
+    // Use MAV_CMD_REQUEST_MESSAGE to request battery status
+    mavlink_msg_command_long_pack_chan(
+        m_system_id,
+        m_component_id,
+        MAVLINK_COMM_0,
+        &message,
+        target_system,
+        target_component,
+        MAV_CMD_REQUEST_MESSAGE,
+        1,  // confirmation = 1
+        MAVLINK_MSG_ID_BATTERY_STATUS,  // param1 = message ID to request
+        0,  // param2: reserved
+        0,  // param3: reserved
+        0,  // param4: reserved
+        0,  // param5: reserved
+        0,  // param6: reserved
+        0   // param7: reserved
+    );
+    
+    uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+    const int len = mavlink_msg_to_send_buffer(buffer, &message);
+    
+    int ret = sendto(
+        pImpl->socket_fd, 
+        buffer, 
+        len, 
+        0, 
+        (const struct sockaddr*)&pImpl->remote_addr, 
+        pImpl->remote_addr_len
+    );
+    
+    if (ret != len) {
+        if (verbose_mode) {
+            std::cerr << "Request battery status sendto error: " << strerror(errno) << std::endl;
+        }
+    } else {
+        if (verbose_mode) {
+            std::cout << "Sent BATTERY_STATUS request command" << std::endl;
+        }
+    }
+}
+
+void MavlinkUdpConnection::requestGPSData(uint8_t target_system, uint8_t target_component, uint16_t message_rate_hz) {
+    if (!pImpl->connected) {
+        if (verbose_mode) {
+            std::cerr << "Cannot request GPS data: not connected" << std::endl;
+        }
+        return;
+    }
+    
+    if (verbose_mode) {
+        std::cout << "Requesting GPS data streams at " << message_rate_hz << " Hz" << std::endl;
+    }
+    
+    uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+    mavlink_message_t msg;
+    
+    // Method 1: Try data stream requests first
+    if (verbose_mode) {
+        std::cout << "Requesting data streams..." << std::endl;
+    }
+    
+    // Request GPS_RAW_INT stream (for basic GPS data)
+    if (verbose_mode) {
+        std::cout << "Requesting MAV_DATA_STREAM_RAW_SENSORS stream" << std::endl;
+    }
+    mavlink_msg_request_data_stream_pack_chan(
+        m_system_id, m_component_id, MAVLINK_COMM_0, &msg,
+        target_system, target_component,
+        MAV_DATA_STREAM_RAW_SENSORS, message_rate_hz, 1);
+    
+    const int len1 = mavlink_msg_to_send_buffer(buffer, &msg);
+    int ret1 = sendto(pImpl->socket_fd, buffer, len1, 0, 
+                     (const struct sockaddr*)&pImpl->remote_addr, pImpl->remote_addr_len);
+    
+    if (verbose_mode) {
+        std::cout << "RAW_SENSORS request sent: " << (ret1 == len1 ? "SUCCESS" : "FAILED") << std::endl;
+    }
+    
+    // Request GPS_STATUS stream (for satellite info)
+    if (verbose_mode) {
+        std::cout << "Requesting MAV_DATA_STREAM_EXTENDED_STATUS stream" << std::endl;
+    }
+    mavlink_msg_request_data_stream_pack_chan(
+        m_system_id, m_component_id, MAVLINK_COMM_0, &msg,
+        target_system, target_component,
+        MAV_DATA_STREAM_EXTENDED_STATUS, message_rate_hz, 1);
+    
+    const int len2 = mavlink_msg_to_send_buffer(buffer, &msg);
+    int ret2 = sendto(pImpl->socket_fd, buffer, len2, 0, 
+                     (const struct sockaddr*)&pImpl->remote_addr, pImpl->remote_addr_len);
+    
+    if (verbose_mode) {
+        std::cout << "EXTENDED_STATUS request sent: " << (ret2 == len2 ? "SUCCESS" : "FAILED") << std::endl;
+    }
+    
+    // Request GLOBAL_POSITION_INT stream (for position data)
+    if (verbose_mode) {
+        std::cout << "Requesting MAV_DATA_STREAM_POSITION stream" << std::endl;
+    }
+    mavlink_msg_request_data_stream_pack_chan(
+        m_system_id, m_component_id, MAVLINK_COMM_0, &msg,
+        target_system, target_component,
+        MAV_DATA_STREAM_POSITION, message_rate_hz, 1);
+    
+    const int len3 = mavlink_msg_to_send_buffer(buffer, &msg);
+    int ret3 = sendto(pImpl->socket_fd, buffer, len3, 0, 
+                     (const struct sockaddr*)&pImpl->remote_addr, pImpl->remote_addr_len);
+    
+    if (verbose_mode) {
+        std::cout << "POSITION request sent: " << (ret3 == len3 ? "SUCCESS" : "FAILED") << std::endl;
+    }
+    
+    // Method 2: Try individual message requests (alternative approach)
+    if (verbose_mode) {
+        std::cout << "Requesting individual GPS messages..." << std::endl;
+    }
+    
+    // Request GPS_RAW_INT message
+    mavlink_msg_command_long_pack_chan(
+        m_system_id, m_component_id, MAVLINK_COMM_0, &msg,
+        target_system, target_component,
+        MAV_CMD_SET_MESSAGE_INTERVAL, 0, 
+        MAVLINK_MSG_ID_GPS_RAW_INT, static_cast<int32_t>(1000000.0f / message_rate_hz), 0, 0, 0, 0, 0);
+    
+    const int len4 = mavlink_msg_to_send_buffer(buffer, &msg);
+    int ret4 = sendto(pImpl->socket_fd, buffer, len4, 0, 
+                     (const struct sockaddr*)&pImpl->remote_addr, pImpl->remote_addr_len);
+    
+    if (verbose_mode) {
+        std::cout << "GPS_RAW_INT request sent: " << (ret4 == len4 ? "SUCCESS" : "FAILED") << std::endl;
+    }
+    
+    // Request GPS_STATUS message
+    mavlink_msg_command_long_pack_chan(
+        m_system_id, m_component_id, MAVLINK_COMM_0, &msg,
+        target_system, target_component,
+        MAV_CMD_SET_MESSAGE_INTERVAL, 0, 
+        MAVLINK_MSG_ID_GPS_STATUS, static_cast<int32_t>(1000000.0f / message_rate_hz), 0, 0, 0, 0, 0);
+    
+    const int len5 = mavlink_msg_to_send_buffer(buffer, &msg);
+    int ret5 = sendto(pImpl->socket_fd, buffer, len5, 0, 
+                     (const struct sockaddr*)&pImpl->remote_addr, pImpl->remote_addr_len);
+    
+    if (verbose_mode) {
+        std::cout << "GPS_STATUS request sent: " << (ret5 == len5 ? "SUCCESS" : "FAILED") << std::endl;
+    }
+    
+    // Request GLOBAL_POSITION_INT message
+    mavlink_msg_command_long_pack_chan(
+        m_system_id, m_component_id, MAVLINK_COMM_0, &msg,
+        target_system, target_component,
+        MAV_CMD_SET_MESSAGE_INTERVAL, 0, 
+        MAVLINK_MSG_ID_GLOBAL_POSITION_INT, static_cast<int32_t>(1000000.0f / message_rate_hz), 0, 0, 0, 0, 0);
+    
+    const int len6 = mavlink_msg_to_send_buffer(buffer, &msg);
+    int ret6 = sendto(pImpl->socket_fd, buffer, len6, 0, 
+                     (const struct sockaddr*)&pImpl->remote_addr, pImpl->remote_addr_len);
+    
+    if (verbose_mode) {
+        std::cout << "GLOBAL_POSITION_INT request sent: " << (ret6 == len6 ? "SUCCESS" : "FAILED") << std::endl;
+    }
+}
+
+void MavlinkUdpConnection::stopGPSData(uint8_t target_system, uint8_t target_component) {
+    if (!pImpl->connected) {
+        return;
+    }
+    
+    if (verbose_mode) {
+        std::cout << "Stopping GPS data streams" << std::endl;
+    }
+    
+    uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+    mavlink_message_t msg;
+    
+    // Stop all GPS-related streams
+    mavlink_msg_request_data_stream_pack_chan(
+        m_system_id, m_component_id, MAVLINK_COMM_0, &msg,
+        target_system, target_component,
+        MAV_DATA_STREAM_RAW_SENSORS, 0, 0);
+    
+    const int len1 = mavlink_msg_to_send_buffer(buffer, &msg);
+    sendto(pImpl->socket_fd, buffer, len1, 0, 
+          (const struct sockaddr*)&pImpl->remote_addr, pImpl->remote_addr_len);
+    
+    mavlink_msg_request_data_stream_pack_chan(
+        m_system_id, m_component_id, MAVLINK_COMM_0, &msg,
+        target_system, target_component,
+        MAV_DATA_STREAM_EXTENDED_STATUS, 0, 0);
+    
+    const int len2 = mavlink_msg_to_send_buffer(buffer, &msg);
+    sendto(pImpl->socket_fd, buffer, len2, 0, 
+          (const struct sockaddr*)&pImpl->remote_addr, pImpl->remote_addr_len);
+    
+    mavlink_msg_request_data_stream_pack_chan(
+        m_system_id, m_component_id, MAVLINK_COMM_0, &msg,
+        target_system, target_component,
+        MAV_DATA_STREAM_POSITION, 0, 0);
+    
+    const int len3 = mavlink_msg_to_send_buffer(buffer, &msg);
+    sendto(pImpl->socket_fd, buffer, len3, 0, 
+          (const struct sockaddr*)&pImpl->remote_addr, pImpl->remote_addr_len);
+}
+
+void MavlinkUdpConnection::requestSystemStatus(uint8_t target_system, uint8_t target_component, uint16_t message_rate_hz) {
+    if (!pImpl->connected) {
+        if (verbose_mode) {
+            std::cerr << "Cannot request system status: not connected" << std::endl;
+        }
+        return;
+    }
+    
+    if (verbose_mode) {
+        std::cout << "Requesting system status data at " << message_rate_hz << " Hz" << std::endl;
+    }
+    
+    uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+    mavlink_message_t msg;
+    
+    // Request SYS_STATUS message using message interval command
+    mavlink_msg_command_long_pack_chan(
+        m_system_id, m_component_id, MAVLINK_COMM_0, &msg,
+        target_system, target_component,
+        MAV_CMD_SET_MESSAGE_INTERVAL, 0, 
+        MAVLINK_MSG_ID_SYS_STATUS, static_cast<int32_t>(1000000.0f / message_rate_hz), 0, 0, 0, 0, 0);
+    
+    const int len = mavlink_msg_to_send_buffer(buffer, &msg);
+    int ret = sendto(pImpl->socket_fd, buffer, len, 0, 
+                    (const struct sockaddr*)&pImpl->remote_addr, pImpl->remote_addr_len);
+    
+    if (verbose_mode) {
+        std::cout << "SYS_STATUS request sent: " << (ret == len ? "SUCCESS" : "FAILED") << std::endl;
     }
 }
