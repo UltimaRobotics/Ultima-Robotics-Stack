@@ -23,6 +23,9 @@ public:
 
     // Send response back to requester
     void sendResponse(const std::string& topic, const std::string& response);
+    
+    // Publish message to any topic
+    void publishMessage(const std::string& topic, const std::string& message);
 
 private:
     std::string configPath_;

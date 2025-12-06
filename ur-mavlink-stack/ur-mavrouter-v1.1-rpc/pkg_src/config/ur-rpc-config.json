@@ -2,7 +2,7 @@
   "client_id": "ur-mavrouter",
   "broker_host": "127.0.0.1",
   "broker_port": 1899,
-  "keepalive": 60,
+  "keepalive": 30,
   "qos": 0,
   "auto_reconnect": true,
   "reconnect_delay_min": 1,
@@ -10,7 +10,7 @@
   "use_tls": false,
   "heartbeat": {
     "enabled": true,
-    "interval_seconds": 5,
+    "interval_seconds": 1,
     "topic": "clients/ur-mavrouter/heartbeat",
     "payload": "{\"client\":\"ur-mavrouter\",\"status\":\"alive\"}"
   },
@@ -26,6 +26,7 @@
       "direct_messaging/ur-mavrouter/requests",
       "direct_messaging/ur-mavdiscovery/responses",
       "clients/ur-mavdiscovery/heartbeat"
+      
     ]
   }
 }

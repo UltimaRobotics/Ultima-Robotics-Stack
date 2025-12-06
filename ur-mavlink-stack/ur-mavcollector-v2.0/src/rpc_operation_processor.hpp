@@ -6,8 +6,11 @@
 #include <mutex>
 #include <atomic>
 #include <future>
+#include <chrono>
 #include <ThreadManager.hpp>
 #include "../include/PackageConfig.h"
+#include "../include/Vehicle.h"
+#include <nlohmann/json.hpp>
 
 extern "C" {
 #include "../../ur-rpc-template/deps/cJSON/cJSON.h"
@@ -74,6 +77,22 @@ private:
     static void sendResponseStatic(const std::string& transactionId, bool success,
                                    const std::string& result, const std::string& error,
                                    const std::string& responseTopic);
+    
+    // Device discovery methods
+    void triggerStartupDeviceDiscovery();
+    void performStartupDeviceDiscovery();
+    std::string sendDeviceListRequest();
+    bool waitForDiscoveryResponse(const std::string& transactionId, std::chrono::seconds timeout);
+    void processDiscoveryResponse(const nlohmann::json& responseData);
+    void processDiscoveredDevice(const nlohmann::json& deviceJson);
+    
+    // Handle discovery responses from ur-mavdiscovery
+public:
+    void handleDiscoveryResponse(const std::string& topic, const std::string& payload);
+    
+    // Shutdown method for signal handling
+    void shutdown();
+private:
     
     std::shared_ptr<const PackageConfig> config_;  // Immutable shared pointer to prevent corruption
     bool verbose_;

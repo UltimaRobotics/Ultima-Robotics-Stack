@@ -2,7 +2,7 @@
   "client_id": "ur-mavdiscovery",
   "broker_host": "127.0.0.1",
   "broker_port": 1899,
-  "keepalive": 60,
+  "keepalive": 30,
   "qos": 1,
   "auto_reconnect": true,
   "reconnect_delay_min": 1,
@@ -12,7 +12,7 @@
   "message_timeout": 30,
   "heartbeat": {
     "enabled": true,
-    "interval_seconds": 5,
+    "interval_seconds": 1,
     "topic": "clients/ur-mavdiscovery/heartbeat",
     "payload": "{\"client\":\"ur-mavdiscovery\",\"status\":\"alive\",\"service\":\"device_discovery\"}"
   },
@@ -21,7 +21,7 @@
       "direct_messaging/ur-mavdiscovery/responses",
       "direct_messaging/ur-mavrouter/requests",
       "direct_messaging/ur-mavcollector/requests",
-      "ur-shared-bus/ur-mavlink-stack/notifications"
+      "ur-shared-bus/ur-mavlink-stack/ur-mavdiscovery/notifications"
     ]
   },
   "json_added_subs": {

@@ -1,9 +1,13 @@
 #include "rpc_client.hpp"
-#include <cstring>
 #include <iostream>
-#include <stdexcept>
+#include <fstream>
+#include <sstream>
 #include <thread>
 #include <chrono>
+#include <atomic>
+
+// External global variables
+extern bool verbose_mode;
 
 extern "C" {
 #include "../../ur-rpc-template/deps/cJSON/cJSON.h"
@@ -169,8 +173,7 @@ void RpcClient::setMessageHandler(
   messageHandler_ = std::move(handler);
 }
 
-void RpcClient::sendResponse(const std::string &topic,
-                             const std::string &response) {
+void RpcClient::sendResponse(const std::string& topic, const std::string& response) {
   if (!running_.load()) {
     std::cerr << "[RPC] Cannot send response - client not running" << std::endl;
     return;
@@ -183,5 +186,23 @@ void RpcClient::sendResponse(const std::string &topic,
     }
   } catch (const std::exception &e) {
     std::cerr << "[RPC] Failed to send response: " << e.what() << std::endl;
+  }
+}
+
+void RpcClient::publishMessage(const std::string& topic, const std::string& message) {
+  if (!running_.load()) {
+    std::cerr << "[RPC] Cannot publish message - client not running" << std::endl;
+    return;
+  }
+
+  try {
+    if (direct_client_publish_raw_message(topic.c_str(), message.c_str(),
+                                          message.size()) != 0) {
+      std::cerr << "[RPC] Failed to publish message to topic: " << topic << std::endl;
+    } else if (verbose_mode) {
+      std::cout << "[RPC] Published message to topic: " << topic << std::endl;
+    }
+  } catch (const std::exception &e) {
+    std::cerr << "[RPC] Failed to publish message: " << e.what() << std::endl;
   }
 }

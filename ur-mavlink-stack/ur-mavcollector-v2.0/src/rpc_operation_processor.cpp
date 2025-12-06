@@ -6,11 +6,27 @@
 #include <cstring>
 #include <thread>
 #include <stdexcept>
+#include <chrono>
+#include <atomic>
+#include <map>
+#include <mutex>
+#include <condition_variable>
 
 using json = nlohmann::json;
 
 // Global MAVLink collector thread ID for RPC operations
 static unsigned int g_collectorThreadId = 0;
+static unsigned int g_publisherThreadId = 0;
+
+// External global variables
+extern std::atomic<bool> g_collector_running;
+
+// Device discovery state
+static std::atomic<bool> g_discoveryInProgress{false};
+static std::atomic<bool> g_startupDiscoveryCompleted{false};
+static std::map<std::string, json> g_pendingDiscoveryResponses;
+static std::mutex g_discoveryMutex;
+static std::condition_variable g_discoveryCondition;
 
 extern "C" {
 #include "../../ur-rpc-template/extensions/direct_template.h"
@@ -29,7 +45,11 @@ RpcOperationProcessor::RpcOperationProcessor(const PackageConfig& config, bool v
     if (verbose_) {
         std::cout << "[RPC Processor] Initialized with thread pool size: 100" << std::endl;
         std::cout << "[RPC Processor] PackageConfig stored as immutable shared_ptr to prevent corruption" << std::endl;
+        std::cout << "[RPC Processor] Device discovery state initialized" << std::endl;
     }
+    
+    // Trigger startup device discovery
+    triggerStartupDeviceDiscovery();
 }
 
 RpcOperationProcessor::~RpcOperationProcessor() {
@@ -309,63 +329,155 @@ void RpcOperationProcessor::processOperationThreadStatic(std::shared_ptr<Request
         bool success = true;
         std::string errorMsg = "";
 
-        if (method == "start_collector") {
-            // Start MAVLink collector operation
+        if (method == "mavlink_device_added") {
+            // Handle MAVLink device added event
+            if (verbose) {
+                std::cerr << "[RPC Thread " << transactionId << "] Processing mavlink_device_added" << std::endl;
+            }
+            
+            // Extract device information from params
+            DeviceInfo deviceInfo;
+            deviceInfo.isValid = true;
+            
+            if (paramsObj.contains("devicePath")) {
+                deviceInfo.devicePath = paramsObj["devicePath"].get<std::string>();
+            }
+            if (paramsObj.contains("baudrate")) {
+                deviceInfo.baudrate = paramsObj["baudrate"].get<int>();
+            }
+            if (paramsObj.contains("systemId")) {
+                deviceInfo.systemId = paramsObj["systemId"].get<int>();
+            }
+            if (paramsObj.contains("componentId")) {
+                deviceInfo.componentId = paramsObj["componentId"].get<int>();
+            }
+            if (paramsObj.contains("mavlinkVersion")) {
+                deviceInfo.mavlinkVersion = paramsObj["mavlinkVersion"].get<int>();
+            }
+            if (paramsObj.contains("state")) {
+                deviceInfo.state = paramsObj["state"].get<std::string>();
+            }
+            if (paramsObj.contains("timestamp")) {
+                deviceInfo.timestamp = paramsObj["timestamp"].get<std::string>();
+            }
+            
+            // Extract USB info if available
+            if (paramsObj.contains("usbInfo")) {
+                auto usbInfo = paramsObj["usbInfo"];
+                if (usbInfo.contains("autopilotType")) {
+                    deviceInfo.autopilotType = usbInfo["autopilotType"].get<std::string>();
+                }
+                if (usbInfo.contains("boardClass")) {
+                    deviceInfo.boardClass = usbInfo["boardClass"].get<std::string>();
+                }
+                if (usbInfo.contains("boardName")) {
+                    deviceInfo.boardName = usbInfo["boardName"].get<std::string>();
+                }
+                if (usbInfo.contains("deviceName")) {
+                    deviceInfo.deviceName = usbInfo["deviceName"].get<std::string>();
+                }
+                if (usbInfo.contains("manufacturer")) {
+                    deviceInfo.manufacturer = usbInfo["manufacturer"].get<std::string>();
+                }
+                if (usbInfo.contains("serialNumber")) {
+                    deviceInfo.serialNumber = usbInfo["serialNumber"].get<std::string>();
+                }
+                if (usbInfo.contains("vendorId")) {
+                    deviceInfo.vendorId = usbInfo["vendorId"].get<std::string>();
+                }
+                if (usbInfo.contains("productId")) {
+                    deviceInfo.productId = usbInfo["productId"].get<std::string>();
+                }
+            }
+            
+            // Store device info in vehicle
+            vehicle.setDeviceInfo(deviceInfo);
+            
+            // Start MAVLink collector if not already running
             if (g_collectorThreadId > 0) {
                 result["status"] = "already_running";
                 result["thread_id"] = g_collectorThreadId;
-                result["message"] = "MAVLink collector is already running";
+                result["message"] = "MAVLink device added but collector was already running";
+                result["device_info"] = {
+                    {"devicePath", deviceInfo.devicePath},
+                    {"systemId", deviceInfo.systemId},
+                    {"componentId", deviceInfo.componentId}
+                };
             } else {
-                // Create a running flag for the collector
-                static std::atomic<bool> collector_running(true);
+                // Start collector using global running flag
+                g_collectorThreadId = startMavlinkCollector(*config, &g_collector_running);
                 
-                g_collectorThreadId = startMavlinkCollector(*config, &collector_running);
-                if (g_collectorThreadId > 0) {
+                // Start device data publisher thread
+                g_publisherThreadId = startDeviceDataPublisher();
+                
+                if (g_collectorThreadId > 0 && g_publisherThreadId > 0) {
                     result["status"] = "started";
                     result["thread_id"] = g_collectorThreadId;
-                    result["message"] = "MAVLink collector started successfully";
+                    result["publisher_thread_id"] = g_publisherThreadId;
+                    result["message"] = "MAVLink device added and collector with publisher started successfully";
+                    result["device_info"] = {
+                        {"devicePath", deviceInfo.devicePath},
+                        {"systemId", deviceInfo.systemId},
+                        {"componentId", deviceInfo.componentId}
+                    };
                 } else {
                     success = false;
-                    errorMsg = "Failed to start MAVLink collector";
+                    errorMsg = "Failed to start MAVLink collector after device added";
                 }
             }
             if (verbose) {
-                std::cerr << "[RPC Thread " << transactionId << "] Start collector operation completed" << std::endl;
+                std::cerr << "[RPC Thread " << transactionId << "] Device added operation completed" << std::endl;
             }
-        } else if (method == "stop_collector") {
-            // Stop MAVLink collector operation
+        } else if (method == "mavlink_device_removed") {
+            // Handle MAVLink device removed event
+            if (verbose) {
+                std::cerr << "[RPC Thread " << transactionId << "] Processing mavlink_device_removed" << std::endl;
+            }
+            
+            // Extract device path for logging
+            std::string devicePath;
+            if (paramsObj.contains("devicePath")) {
+                devicePath = paramsObj["devicePath"].get<std::string>();
+            }
+            
+            // Stop MAVLink collector if running
             if (g_collectorThreadId > 0) {
                 stopMavlinkCollector(g_collectorThreadId);
                 result["status"] = "stopped";
                 result["thread_id"] = g_collectorThreadId;
-                result["message"] = "MAVLink collector stopped successfully";
+                result["message"] = "MAVLink device removed and collector stopped successfully";
+                result["devicePath"] = devicePath;
                 g_collectorThreadId = 0;
+                
+                // Clear vehicle data
+                vehicle = Vehicle(); // Reset vehicle to clear all data
             } else {
                 result["status"] = "not_running";
-                result["message"] = "MAVLink collector was not running";
+                result["message"] = "MAVLink device removed but collector was not running";
+                result["devicePath"] = devicePath;
             }
             if (verbose) {
-                std::cerr << "[RPC Thread " << transactionId << "] Stop collector operation completed" << std::endl;
-            }
-        } else if (method == "get_status") {
-            // Get collector status operation
-            if (g_collectorThreadId > 0) {
-                result["status"] = "running";
-                result["thread_id"] = g_collectorThreadId;
-                result["uptime"] = "unknown";
-                result["vehicles_detected"] = 0;
-                result["message"] = "MAVLink collector is operational";
-            } else {
-                result["status"] = "stopped";
-                result["message"] = "MAVLink collector is not running";
-            }
-            if (verbose) {
-                std::cerr << "[RPC Thread " << transactionId << "] Get status operation completed" << std::endl;
+                std::cerr << "[RPC Thread " << transactionId << "] Device removed operation completed" << std::endl;
             }
         } else if (method == "get_vehicle_info") {
             // Get vehicle information operation
-            result["vehicles"] = json::array();
-            result["message"] = "Vehicle information not yet implemented";
+            if (verbose) {
+                std::cerr << "[RPC Thread " << transactionId << "] Processing get_vehicle_info" << std::endl;
+            }
+            
+            // Return complete vehicle information as JSON
+            std::string vehicleJson = vehicle.getVehicleInfoJson();
+            result = json::parse(vehicleJson);
+            
+            // Add collector status
+            if (g_collectorThreadId > 0) {
+                result["collector_status"] = "running";
+                result["collector_thread_id"] = g_collectorThreadId;
+            } else {
+                result["collector_status"] = "stopped";
+                result["collector_thread_id"] = 0;
+            }
+            
             if (verbose) {
                 std::cerr << "[RPC Thread " << transactionId << "] Get vehicle info operation completed" << std::endl;
             }
@@ -483,5 +595,378 @@ void RpcOperationProcessor::cleanupCompletedThreads() {
             std::cout << "[RPC Processor] Cleaned up " << threadsToClean.size() 
                       << " completed threads, remaining active: " << activeThreads_.size() << std::endl;
         }
+    }
+}
+
+void RpcOperationProcessor::triggerStartupDeviceDiscovery() {
+    if (verbose_) {
+        std::cout << "[RPC Processor] Triggering startup device discovery..." << std::endl;
+    }
+    
+    // Start device discovery in a separate thread
+    threadManager_->createThread([this]() {
+        performStartupDeviceDiscovery();
+    });
+}
+
+void RpcOperationProcessor::performStartupDeviceDiscovery() {
+    if (g_startupDiscoveryCompleted.load()) {
+        if (verbose_) {
+            std::cout << "[RPC Processor] Startup discovery already completed" << std::endl;
+        }
+        return;
+    }
+    
+    if (g_discoveryInProgress.exchange(true)) {
+        if (verbose_) {
+            std::cout << "[RPC Processor] Discovery already in progress" << std::endl;
+        }
+        return;
+    }
+    
+    try {
+        if (verbose_) {
+            std::cout << "[RPC Processor] Starting device discovery process..." << std::endl;
+        }
+        
+        // Wait a moment for RPC client to be ready
+        std::this_thread::sleep_for(std::chrono::seconds(2));
+        
+        // Send device discovery request
+        std::string transactionId = sendDeviceListRequest();
+        if (transactionId.empty()) {
+            std::cerr << "[RPC Processor] Failed to send device discovery request" << std::endl;
+            g_discoveryInProgress.store(false);
+            return;
+        }
+        
+        // Wait for response with 5 second timeout
+        if (!waitForDiscoveryResponse(transactionId, std::chrono::seconds(5))) {
+            std::cerr << "[RPC Processor] Timeout waiting for device discovery response" << std::endl;
+            g_discoveryInProgress.store(false);
+            return;
+        }
+        
+        // Process the response
+        {
+            std::lock_guard<std::mutex> lock(g_discoveryMutex);
+            
+            if (g_pendingDiscoveryResponses.find(transactionId) != g_pendingDiscoveryResponses.end()) {
+                const auto& response = g_pendingDiscoveryResponses[transactionId];
+                
+                if (response.contains("success") && response["success"].get<bool>()) {
+                    json resultData = response["result"];
+                    processDiscoveryResponse(resultData);
+                    
+                    if (verbose_) {
+                        std::cout << "[RPC Processor] Startup device discovery completed successfully" << std::endl;
+                    }
+                } else {
+                    std::string errorMsg = response.value("error", "Unknown error");
+                    std::cerr << "[RPC Processor] Device discovery request failed: " << errorMsg << std::endl;
+                }
+            }
+        }
+        
+        g_startupDiscoveryCompleted.store(true);
+        
+    } catch (const std::exception& e) {
+        std::cerr << "[RPC Processor] Error during device discovery: " << e.what() << std::endl;
+    }
+    
+    g_discoveryInProgress.store(false);
+    
+    // Clean up pending responses
+    {
+        std::lock_guard<std::mutex> lock(g_discoveryMutex);
+        g_pendingDiscoveryResponses.clear();
+    }
+    
+    if (verbose_) {
+        std::cout << "[RPC Processor] Device discovery thread exiting" << std::endl;
+    }
+}
+
+std::string RpcOperationProcessor::sendDeviceListRequest() {
+    try {
+        if (verbose_) {
+            std::cout << "[RPC Processor] Sending device list request..." << std::endl;
+        }
+        
+        // Generate unique transaction ID
+        std::string transactionId = "device_discovery_" + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::system_clock::now().time_since_epoch()).count());
+        
+        // Create JSON-RPC 2.0 request
+        json request = json::object();
+        request["jsonrpc"] = "2.0";
+        request["id"] = transactionId;
+        request["method"] = "device-list";
+        
+        // Parameters
+        json params = json::object();
+        params["include_unverified"] = false;
+        params["include_usb_info"] = true;
+        params["timeout_seconds"] = 3;
+        request["params"] = params;
+        
+        std::string requestStr = request.dump();
+        
+        // Send request via direct client publish
+        direct_client_publish_raw_message("direct_messaging/ur-mavdiscovery/requests", 
+                                         requestStr.c_str(), 
+                                         requestStr.size());
+        
+        if (verbose_) {
+            std::cout << "[RPC Processor] Sent device discovery request with transaction: " << transactionId << std::endl;
+        }
+        
+        return transactionId;
+        
+    } catch (const std::exception& e) {
+        std::cerr << "[RPC Processor] Error sending device discovery request: " << e.what() << std::endl;
+        return "";
+    }
+}
+
+bool RpcOperationProcessor::waitForDiscoveryResponse(const std::string& transactionId, std::chrono::seconds timeout) {
+    std::unique_lock<std::mutex> lock(g_discoveryMutex);
+    
+    auto deadline = std::chrono::steady_clock::now() + timeout;
+    
+    return g_discoveryCondition.wait_until(lock, deadline, [&]() {
+        return g_pendingDiscoveryResponses.find(transactionId) != g_pendingDiscoveryResponses.end() || 
+               isShuttingDown_.load();
+    });
+}
+
+void RpcOperationProcessor::processDiscoveryResponse(const nlohmann::json& responseData) {
+    try {
+        if (verbose_) {
+            std::cout << "[RPC Processor] Processing device discovery response" << std::endl;
+        }
+        
+        if (!responseData.contains("devices") || !responseData["devices"].is_array()) {
+            std::cerr << "[RPC Processor] Invalid response format - missing devices array" << std::endl;
+            return;
+        }
+        
+        auto devicesJson = responseData["devices"];
+        
+        if (devicesJson.empty()) {
+            if (verbose_) {
+                std::cout << "[RPC Processor] No devices found in discovery response" << std::endl;
+            }
+            return;
+        }
+        
+        if (verbose_) {
+            std::cout << "[RPC Processor] Found " << devicesJson.size() << " devices, processing..." << std::endl;
+        }
+        
+        // Process first device (simplified - could be extended for multiple devices)
+        for (const auto& deviceJson : devicesJson) {
+            processDiscoveredDevice(deviceJson);
+            break; // Process only first device for now
+        }
+        
+    } catch (const std::exception& e) {
+        std::cerr << "[RPC Processor] Error processing discovery response: " << e.what() << std::endl;
+    }
+}
+
+void RpcOperationProcessor::processDiscoveredDevice(const nlohmann::json& deviceJson) {
+    try {
+        if (verbose_) {
+            std::cout << "[RPC Processor] Processing discovered device..." << std::endl;
+        }
+        
+        // Extract device information
+        std::string devicePath = deviceJson.value("devicePath", "");
+        int baudrate = deviceJson.value("baudrate", 57600);
+        int systemId = deviceJson.value("systemId", 1);
+        int componentId = deviceJson.value("componentId", 1);
+        
+        if (devicePath.empty()) {
+            std::cerr << "[RPC Processor] Skipping device with empty path" << std::endl;
+            return;
+        }
+        
+        if (verbose_) {
+            std::cout << "[RPC Processor] Found device: " << devicePath 
+                      << " (sysid:" << systemId << ", compid:" << componentId << ", baud:" << baudrate << ")" << std::endl;
+        }
+        
+        // Create device info for vehicle
+        DeviceInfo deviceInfo;
+        deviceInfo.devicePath = devicePath;
+        deviceInfo.baudrate = baudrate;
+        deviceInfo.systemId = systemId;
+        deviceInfo.componentId = componentId;
+        deviceInfo.isValid = true;
+        
+        // Extract USB info if available
+        if (deviceJson.contains("usbInfo")) {
+            auto usbInfo = deviceJson["usbInfo"];
+            deviceInfo.autopilotType = usbInfo.value("autopilotType", "");
+            deviceInfo.boardClass = usbInfo.value("boardClass", "");
+            deviceInfo.boardName = usbInfo.value("boardName", "");
+            deviceInfo.deviceName = usbInfo.value("deviceName", "");
+            deviceInfo.manufacturer = usbInfo.value("manufacturer", "");
+            deviceInfo.serialNumber = usbInfo.value("serialNumber", "");
+            deviceInfo.vendorId = usbInfo.value("vendorId", "");
+            deviceInfo.productId = usbInfo.value("productId", "");
+        }
+        
+        // Store device info in vehicle
+        vehicle.setDeviceInfo(deviceInfo);
+        
+        // Start MAVLink collector
+        if (g_collectorThreadId == 0) {
+            g_collectorThreadId = startMavlinkCollector(*config_, &g_collector_running);
+            
+            // Start device data publisher thread
+            g_publisherThreadId = startDeviceDataPublisher();
+            
+            if (g_collectorThreadId > 0 && g_publisherThreadId > 0) {
+                if (verbose_) {
+                    std::cout << "[RPC Processor] Started MAVLink collector and publisher for device: " << devicePath << std::endl;
+                }
+            } else {
+                std::cerr << "[RPC Processor] Failed to start MAVLink collector or publisher for device: " << devicePath << std::endl;
+            }
+        } else {
+            if (verbose_) {
+                std::cout << "[RPC Processor] MAVLink collector already running for device: " << devicePath << std::endl;
+            }
+        }
+        
+    } catch (const std::exception& e) {
+        std::cerr << "[RPC Processor] Error processing discovered device: " << e.what() << std::endl;
+    }
+}
+
+void RpcOperationProcessor::handleDiscoveryResponse(const std::string& topic, const std::string& payload) {
+    if (verbose_) {
+        std::cout << "[RPC Processor] Discovery response received on topic: " << topic << std::endl;
+    }
+    
+    // Validate that this is a discovery response from ur-mavdiscovery
+    if (topic.find("direct_messaging/ur-mavdiscovery/responses") == std::string::npos) {
+        if (verbose_) {
+            std::cout << "[RPC Processor] Ignoring non-discovery response: " << topic << std::endl;
+        }
+        return;
+    }
+    
+    try {
+        if (payload.empty()) {
+            std::cerr << "[RPC Processor] Empty discovery response payload" << std::endl;
+            return;
+        }
+        
+        json response = json::parse(payload);
+        
+        // Check if this is a JSON-RPC 2.0 response
+        if (!response.contains("jsonrpc") || response["jsonrpc"].get<std::string>() != "2.0") {
+            if (verbose_) {
+                std::cout << "[RPC Processor] Ignoring non-JSON-RPC 2.0 response" << std::endl;
+            }
+            return;
+        }
+        
+        // Extract transaction ID
+        std::string transactionId;
+        if (response.contains("id")) {
+            if (response["id"].is_string()) {
+                transactionId = response["id"].get<std::string>();
+            } else if (response["id"].is_number()) {
+                transactionId = std::to_string(response["id"].get<int>());
+            } else {
+                std::cerr << "[RPC Processor] Invalid transaction ID type in response" << std::endl;
+                return;
+            }
+        } else {
+            std::cerr << "[RPC Processor] Missing transaction ID in response" << std::endl;
+            return;
+        }
+        
+        // Check if this is a discovery response
+        if (transactionId.find("device_discovery_") != 0) {
+            if (verbose_) {
+                std::cout << "[RPC Processor] Ignoring non-discovery response: " << transactionId << std::endl;
+            }
+            return;
+        }
+        
+        // Parse the response
+        bool success = false;
+        json resultData;
+        std::string errorMessage;
+        
+        if (response.contains("result")) {
+            resultData = response["result"];
+            success = true;
+        }
+        
+        if (response.contains("error")) {
+            if (response["error"].contains("message")) {
+                errorMessage = response["error"]["message"].get<std::string>();
+            }
+            success = false;
+        }
+        
+        // Store the response and notify waiting thread
+        {
+            std::lock_guard<std::mutex> lock(g_discoveryMutex);
+            g_pendingDiscoveryResponses[transactionId] = {
+                {"success", success},
+                {"result", resultData},
+                {"error", errorMessage}
+            };
+        }
+        g_discoveryCondition.notify_all();
+        
+        if (verbose_) {
+            std::cout << "[RPC Processor] Stored discovery response for transaction: " << transactionId 
+                      << " (success: " << (success ? "true" : "false") << ")" << std::endl;
+        }
+        
+    } catch (const std::exception& e) {
+        std::cerr << "[RPC Processor] Error handling discovery response: " << e.what() << std::endl;
+    }
+}
+
+void RpcOperationProcessor::shutdown() {
+    if (verbose_) {
+        std::cout << "[RPC Processor] Shutdown initiated..." << std::endl;
+    }
+    
+    // Set shutdown flag to prevent new thread creation
+    isShuttingDown_.store(true);
+    
+    // Notify all waiting threads to wake up and check shutdown flag
+    g_discoveryCondition.notify_all();
+    
+    // Stop collector if running
+    if (g_collectorThreadId > 0) {
+        if (verbose_) {
+            std::cout << "[RPC Processor] Stopping MAVLink collector thread..." << std::endl;
+        }
+        stopMavlinkCollector(g_collectorThreadId);
+        g_collectorThreadId = 0;
+    }
+    
+    // Stop publisher if running
+    if (g_publisherThreadId > 0) {
+        if (verbose_) {
+            std::cout << "[RPC Processor] Stopping device data publisher thread..." << std::endl;
+        }
+        stopDeviceDataPublisher();
+        g_publisherThreadId = 0;
+    }
+    
+    if (verbose_) {
+        std::cout << "[RPC Processor] Shutdown completed" << std::endl;
     }
 }

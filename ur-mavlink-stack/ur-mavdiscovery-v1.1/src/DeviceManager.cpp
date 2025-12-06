@@ -470,7 +470,7 @@ void DeviceManager::sendDeviceVerifiedNotification(const DeviceInfo& info) {
         
         // Send to shared bus
         LOG_INFO("Sending device verified notification to ur-shared-bus");
-        rpcClient_->sendResponse("ur-shared-bus/ur-mavlink-stack/notifications", notificationPayload);
+        rpcClient_->sendResponse("ur-shared-bus/ur-mavlink-stack/ur-mavdiscovery/notifications", notificationPayload);
         
     } catch (const std::exception& e) {
         LOG_ERROR("Failed to send device verified notification: " + std::string(e.what()));
@@ -493,7 +493,7 @@ void DeviceManager::sendDeviceRemovedSharedNotification(const std::string& devic
         
         // Send to shared bus
         LOG_INFO("Sending device removed notification to ur-shared-bus");
-        rpcClient_->sendResponse("ur-shared-bus/ur-mavlink-stack/notifications", notificationPayload);
+        rpcClient_->sendResponse("ur-shared-bus/ur-mavlink-stack/ur-mavdiscovery/notifications", notificationPayload);
         
     } catch (const std::exception& e) {
         LOG_ERROR("Failed to send device removed notification: " + std::string(e.what()));
@@ -527,7 +527,7 @@ void DeviceManager::sendInitProcessDiscoveryNotification() {
         
         // Send to shared bus
         LOG_INFO("Sending init process discovery notification to ur-shared-bus");
-        rpcClient_->sendResponse("ur-shared-bus/ur-mavlink-stack/notifications", notificationPayload);
+        rpcClient_->sendResponse("ur-shared-bus/ur-mavlink-stack/ur-mavdiscovery/notifications", notificationPayload);
         
     } catch (const std::exception& e) {
         LOG_ERROR("Failed to send init process discovery notification: " + std::string(e.what()));

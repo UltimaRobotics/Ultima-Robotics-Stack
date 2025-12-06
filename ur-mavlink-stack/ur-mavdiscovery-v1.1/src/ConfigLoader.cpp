@@ -177,7 +177,7 @@ void ConfigLoader::setRpcDefaults() {
     rpcConfig_.clientId = "ur-mavdiscovery";
     rpcConfig_.brokerHost = "127.0.0.1";
     rpcConfig_.brokerPort = 1899;
-    rpcConfig_.keepalive = 60;
+    rpcConfig_.keepalive = 30;
     rpcConfig_.qos = 1;
     rpcConfig_.autoReconnect = true;
     rpcConfig_.reconnectDelayMin = 1;

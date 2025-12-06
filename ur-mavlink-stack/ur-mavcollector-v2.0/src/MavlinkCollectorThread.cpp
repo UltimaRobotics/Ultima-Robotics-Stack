@@ -2,10 +2,13 @@
 #include "MavlinkUdpConnection.h"
 #include "Vehicle.h"
 #include "BoardIdentifier.h"
+#include "rpc_client.hpp"
 #include <iostream>
 #include <csignal>
 #include <chrono>
 #include <thread>
+#include <mutex>
+#include <unistd.h>  // For _exit
 #include "../thirdparty/nlohmann/json.hpp"
 #include "../thirdparty/ur-threadder-api/cpp/include/ThreadManager.hpp"
 
@@ -13,8 +16,76 @@ using json = nlohmann::json;
 
 // Global variables
 std::atomic<bool> g_running(true);
+std::atomic<bool> g_collector_running(true);  // Separate flag for collector thread
 Vehicle vehicle;
 bool verbose_mode = false;
+
+// Global RPC client for publishing device info
+extern std::shared_ptr<RpcClient> g_rpcClient;
+
+// Global data storage for cron job publisher
+struct GlobalDeviceData {
+    std::mutex data_mutex;
+    json last_heartbeat;
+    json last_autopilot_version;
+    bool has_heartbeat = false;
+    bool has_autopilot_version = false;
+    std::chrono::steady_clock::time_point last_heartbeat_time;
+    std::chrono::steady_clock::time_point last_autopilot_time;
+};
+
+GlobalDeviceData g_device_data;
+std::atomic<bool> g_publisher_running(true);
+
+// Cron job publisher function
+void deviceDataPublisherThreadFunction() {
+    if (verbose_mode) {
+        std::cout << "[PUBLISHER] Device data publisher thread started" << std::endl;
+    }
+    
+    const auto publish_interval = std::chrono::seconds(1);
+    auto last_publish_time = std::chrono::steady_clock::now();
+    
+    while (g_publisher_running.load()) {
+        auto now = std::chrono::steady_clock::now();
+        
+        // Check if it's time to publish (every 1 second)
+        if (now - last_publish_time >= publish_interval) {
+            std::lock_guard<std::mutex> lock(g_device_data.data_mutex);
+            
+            // Publish heartbeat data if available
+            if (g_device_data.has_heartbeat && g_rpcClient && g_rpcClient->isRunning()) {
+                g_rpcClient->publishMessage("ur-shared-bus/ur-mavlink-stack/ur-mavcollector/device-info", 
+                                           g_device_data.last_heartbeat.dump());
+                
+                if (verbose_mode) {
+                    std::cout << "[PUBLISHER] Published heartbeat data" << std::endl;
+                }
+            }
+            
+            // Publish autopilot version data if available (less frequently)
+            static int autopilot_publish_counter = 0;
+            if (g_device_data.has_autopilot_version && g_rpcClient && g_rpcClient->isRunning() && 
+                (++autopilot_publish_counter % 10) == 0) { // Every 10 seconds
+                g_rpcClient->publishMessage("ur-shared-bus/ur-mavlink-stack/ur-mavcollector/device-info", 
+                                           g_device_data.last_autopilot_version.dump());
+                
+                if (verbose_mode) {
+                    std::cout << "[PUBLISHER] Published autopilot version data" << std::endl;
+                }
+            }
+            
+            last_publish_time = now;
+        }
+        
+        // Sleep for a short time to avoid busy waiting
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
+    
+    if (verbose_mode) {
+        std::cout << "[PUBLISHER] Device data publisher thread shutting down" << std::endl;
+    }
+}
 
 // Helper functions
 std::string getAutopilotName(uint8_t autopilot) {
@@ -84,12 +155,21 @@ void* mavlinkCollectorThreadFunction(void* arg) {
     
     // Initialize signal handlers
     std::signal(SIGINT, [](int signal) {
-        std::cout << "\nReceived signal " << signal << ", shutting down..." << std::endl;
+        std::cout << "\nReceived signal " << signal << " in collector thread, shutting down..." << std::endl;
         g_running = false;
+        g_collector_running = false;  // Also set collector flag
+        g_publisher_running = false;  // Stop publisher thread
+        // Force immediate exit to prevent hanging
+        _exit(0);
     });
+    
     std::signal(SIGTERM, [](int signal) {
-        std::cout << "\nReceived signal " << signal << ", shutting down..." << std::endl;
+        std::cout << "\nReceived signal " << signal << " in collector thread, shutting down..." << std::endl;
         g_running = false;
+        g_collector_running = false;  // Also set collector flag
+        g_publisher_running = false;  // Stop publisher thread
+        // Force immediate exit to prevent hanging
+        _exit(0);
     });
     
     // Create and initialize connection
@@ -109,7 +189,19 @@ void* mavlinkCollectorThreadFunction(void* arg) {
     }
     
     // Set up callbacks (moved from main.cpp)
-    g_connection->setHeartbeatCallback([](const MavlinkHeartbeatInfo& info) {
+    // Store target system_id for filtering
+    uint8_t target_system_id = 1; // Target device system_id (not our own)
+    
+    g_connection->setHeartbeatCallback([target_system_id](const MavlinkHeartbeatInfo& info) {
+        // Filter heartbeat messages by target system_id
+        if (info.system_id != target_system_id) {
+            if (verbose_mode) {
+                std::cout << "[FILTER] Ignoring heartbeat from system_id: " << static_cast<int>(info.system_id) 
+                          << " (target: " << static_cast<int>(target_system_id) << ")" << std::endl;
+            }
+            return;
+        }
+        
         json heartbeat_json = {
             {"type", "heartbeat"},
             {"timestamp", std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -130,6 +222,14 @@ void* mavlinkCollectorThreadFunction(void* arg) {
         };
         std::cout << heartbeat_json.dump() << std::endl;
         
+        // Store heartbeat data in global structure for cron job publisher
+        {
+            std::lock_guard<std::mutex> lock(g_device_data.data_mutex);
+            g_device_data.last_heartbeat = heartbeat_json;
+            g_device_data.has_heartbeat = true;
+            g_device_data.last_heartbeat_time = std::chrono::steady_clock::now();
+        }
+        
         if (verbose_mode) {
             std::cout << "\n=== HEARTBEAT RECEIVED ===" << std::endl;
             std::cout << "System ID: " << static_cast<int>(info.system_id) << std::endl;
@@ -143,7 +243,9 @@ void* mavlinkCollectorThreadFunction(void* arg) {
         }
     });
     
-    g_connection->setAutopilotVersionCallback([](const MavlinkAutopilotVersionInfo& info) {
+    g_connection->setAutopilotVersionCallback([target_system_id](const MavlinkAutopilotVersionInfo& info) {
+        // Note: Autopilot version messages don't have system_id, but they're typically
+        // only sent by the target device we're communicating with
         json autopilot_json = {
             {"type", "autopilot_version"},
             {"timestamp", std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -158,6 +260,14 @@ void* mavlinkCollectorThreadFunction(void* arg) {
             {"uid", info.uid}
         };
         std::cout << autopilot_json.dump() << std::endl;
+        
+        // Store autopilot version data in global structure for cron job publisher
+        {
+            std::lock_guard<std::mutex> lock(g_device_data.data_mutex);
+            g_device_data.last_autopilot_version = autopilot_json;
+            g_device_data.has_autopilot_version = true;
+            g_device_data.last_autopilot_time = std::chrono::steady_clock::now();
+        }
         
         vehicle.setAutopilotVersionInfo(info);
         
@@ -444,18 +554,6 @@ void* mavlinkCollectorThreadFunction(void* arg) {
     }
     
     // Cleanup
-    if (verbose_mode) {
-        std::cout << "Shutting down MAVLink collector..." << std::endl;
-    }
-    
-    g_connection->stopReceiving();
-    g_connection->disconnect();
-    g_connection.reset();
-    
-    if (verbose_mode) {
-        std::cout << "MAVLink collector stopped" << std::endl;
-    }
-    
     return nullptr;
 }
 
@@ -563,5 +661,79 @@ void stopMavlinkCollector(unsigned int threadId) {
         
     } catch (const std::exception& e) {
         std::cerr << "Error stopping MAVLink collector: " << e.what() << std::endl;
+    }
+}
+
+// Global publisher thread ID
+static unsigned int g_publisherThreadId = 0;
+static std::unique_ptr<ThreadMgr::ThreadManager> g_publisherThreadManager = nullptr;
+
+// Function to start the device data publisher thread
+unsigned int startDeviceDataPublisher() {
+    if (g_publisherThreadId > 0) {
+        std::cout << "Device data publisher is already running" << std::endl;
+        return g_publisherThreadId;
+    }
+    
+    try {
+        // Initialize thread manager if not already done
+        if (!g_publisherThreadManager) {
+            g_publisherThreadManager = std::make_unique<ThreadMgr::ThreadManager>(10);
+        }
+        
+        // Create the publisher thread using ThreadManager
+        g_publisherThreadId = g_publisherThreadManager->createThread([]() {
+            deviceDataPublisherThreadFunction();
+        });
+        
+        if (verbose_mode) {
+            std::cout << "Device data publisher thread started with ID: " << g_publisherThreadId << std::endl;
+        }
+        
+        return g_publisherThreadId;
+        
+    } catch (const ThreadMgr::ThreadManagerException& e) {
+        std::cerr << "ThreadManager error: " << e.what() << std::endl;
+        return 0;
+    } catch (const std::exception& e) {
+        std::cerr << "Error starting device data publisher: " << e.what() << std::endl;
+        return 0;
+    }
+}
+
+// Function to stop the device data publisher thread
+void stopDeviceDataPublisher() {
+    if (g_publisherThreadId == 0) {
+        return; // Not running
+    }
+    
+    try {
+        // Signal the publisher thread to stop
+        g_publisher_running = false;
+        
+        if (g_publisherThreadManager && g_publisherThreadId > 0) {
+            g_publisherThreadManager->stopThread(g_publisherThreadId);
+            
+            // Wait for thread to finish (with timeout)
+            auto startTime = std::chrono::steady_clock::now();
+            const auto timeout = std::chrono::seconds(5);
+            
+            while (g_publisherThreadManager->getThreadState(g_publisherThreadId) != ThreadMgr::ThreadState::Stopped) {
+                if (std::chrono::steady_clock::now() - startTime > timeout) {
+                    std::cerr << "Warning: Publisher thread did not stop within timeout, forcing cleanup" << std::endl;
+                    break;
+                }
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            }
+        }
+        
+        g_publisherThreadId = 0;
+        
+        if (verbose_mode) {
+            std::cout << "Device data publisher stopped successfully" << std::endl;
+        }
+        
+    } catch (const std::exception& e) {
+        std::cerr << "Error stopping device data publisher: " << e.what() << std::endl;
     }
 }

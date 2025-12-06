@@ -71,4 +71,19 @@ unsigned int startMavlinkCollector(const PackageConfig& config, std::atomic<bool
  */
 void stopMavlinkCollector(unsigned int threadId);
 
+/**
+ * @brief Start the device data publisher thread
+ * 
+ * This thread publishes collected device data to MQTT every 1 second
+ * using a cron job mechanism.
+ * 
+ * @return Thread ID if successful, 0 otherwise
+ */
+unsigned int startDeviceDataPublisher();
+
+/**
+ * @brief Stop the device data publisher thread
+ */
+void stopDeviceDataPublisher();
+
 #endif // MAVLINK_COLLECTOR_THREAD_H

@@ -170,7 +170,7 @@ json MavlinkEventSerializer::createDeviceVerifiedNotification(const DeviceVerifi
     notif["source"] = notification.sourceService;
     notif["timestamp"] = notification.timestamp;
     notif["payload"] = deviceInfoToJson(notification.deviceInfo);
-    notif["targetTopic"] = "ur-shared-bus/ur-mavlink-stack/notifications";
+    notif["targetTopic"] = "ur-shared-bus/ur-mavlink-stack/ur-mavdiscovery/notifications";
     return notif;
 }
 
@@ -186,7 +186,7 @@ json MavlinkEventSerializer::createDeviceRemovedNotification(const DeviceRemoved
     payload["source"] = notification.sourceService;
     notif["payload"] = payload;
     
-    notif["targetTopic"] = "ur-shared-bus/ur-mavlink-stack/notifications";
+    notif["targetTopic"] = "ur-shared-bus/ur-mavlink-stack/ur-mavdiscovery/notifications";
     return notif;
 }
 
@@ -206,7 +206,7 @@ json MavlinkEventSerializer::createInitProcessDiscoveryNotification(const InitPr
     payload["discoveryCount"] = static_cast<int>(event.existingDevices.size());
     notif["payload"] = payload;
     
-    notif["targetTopic"] = "ur-shared-bus/ur-mavlink-stack/notifications";
+    notif["targetTopic"] = "ur-shared-bus/ur-mavlink-stack/ur-mavdiscovery/notifications";
     return notif;
 }
 

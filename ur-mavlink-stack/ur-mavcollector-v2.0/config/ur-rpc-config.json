@@ -2,7 +2,7 @@
   "client_id": "ur-mavcollector",
   "broker_host": "127.0.0.1",
   "broker_port": 1899,
-  "keepalive": 60,
+  "keepalive": 30,
   "qos": 0,
   "auto_reconnect": true,
   "reconnect_delay_min": 1,
@@ -16,12 +16,16 @@
   },
   "json_added_pubs": {
     "topics": [
-      "direct_messaging/ur-mavcollector/responses"
+      "direct_messaging/ur-mavcollector/responses",
+      "direct_messaging/ur-mavdiscovery/requests",
+      "ur-shared-bus/ur-mavlink-stack/ur-mavcollector/device-info"
     ]
   },
   "json_added_subs": {
     "topics": [
-      "direct_messaging/ur-mavcollector/requests"
+      "direct_messaging/ur-mavcollector/requests",
+      "clients/ur-mavdiscovery/heartbeat",
+      "direct_messaging/ur-mavdiscovery/responses"
     ]
   }
 }

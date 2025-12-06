@@ -11,7 +11,7 @@
   },
   "broker": {
     "max_inflight_messages": 50,
-    "max_queued_messages": 100,
+    "max_queued_messages": 9999999999999,
     "retain_available": true,
     "wildcard_subscriptions": true,
     "subscription_identifiers": true,

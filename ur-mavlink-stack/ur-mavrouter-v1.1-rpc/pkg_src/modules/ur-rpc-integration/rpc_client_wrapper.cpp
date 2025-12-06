@@ -498,7 +498,7 @@ nlohmann::json RpcConfigLoader::createDefaultConfig(const std::string& clientId)
     config["client_id"] = clientId;
     config["broker_host"] = "127.0.0.1";
     config["broker_port"] = 1899;
-    config["keepalive"] = 60;
+    config["keepalive"] = 30;
     config["qos"] = 1;
     config["auto_reconnect"] = true;
     config["reconnect_delay_min"] = 1;

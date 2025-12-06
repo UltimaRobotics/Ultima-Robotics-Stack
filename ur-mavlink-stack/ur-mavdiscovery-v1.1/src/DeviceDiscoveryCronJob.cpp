@@ -165,7 +165,7 @@ void DeviceDiscoveryCronJob::sendDeviceListNotification() {
         
         notificationPayload["payload"] = devicesArray;
         notificationPayload["deviceCount"] = static_cast<int>(verifiedDevices.size());
-        notificationPayload["targetTopic"] = "ur-shared-bus/ur-mavlink-stack/notifications";
+        notificationPayload["targetTopic"] = "ur-shared-bus/ur-mavlink-stack/ur-mavdiscovery/notifications";
         
         LOG_DEBUG("Created notification payload with " + std::to_string(verifiedDevices.size()) + " devices");
         
@@ -173,7 +173,7 @@ void DeviceDiscoveryCronJob::sendDeviceListNotification() {
         std::string notificationJson = notificationPayload.dump();
         LOG_DEBUG("Sending notification to shared bus: " + notificationJson.substr(0, 200) + "...");
         
-        rpcClient_.sendResponse("ur-shared-bus/ur-mavlink-stack/notifications", notificationJson);
+        rpcClient_.sendResponse("ur-shared-bus/ur-mavlink-stack/ur-mavdiscovery/notifications", notificationJson);
         
         LOG_INFO("Sent device list notification with " + std::to_string(verifiedDevices.size()) + " verified devices");
         
