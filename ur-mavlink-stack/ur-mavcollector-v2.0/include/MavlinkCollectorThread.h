@@ -49,6 +49,21 @@ bool initializeMavlinkCollector(const PackageConfig& config);
 void cleanupMavlinkCollector();
 
 /**
+ * @brief Clear all device data flags
+ * 
+ * This function resets all device data flags to false when a device is removed.
+ */
+void clearDeviceData();
+
+/**
+ * @brief Publish "no device" messages to all MQTT topics
+ * 
+ * This function publishes JSON messages indicating no device is being monitored
+ * to all relevant MQTT topics when a device is removed.
+ */
+void publishNoDeviceMessages();
+
+/**
  * @brief Check if the MAVLink collector is properly initialized
  * 
  * @return true if initialized, false otherwise

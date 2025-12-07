@@ -77,6 +77,11 @@ static void print_startup_info(mqtt_broker_t *broker) {
     format_bytes(broker->config.memory_limit, memory_str, sizeof(memory_str));
     LOG_INFO("Memory Limit: %s", memory_str);
     
+    // Performance info
+    LOG_INFO("Max Publish Rate: %d/min", broker->config.max_publish_rate);
+    LOG_INFO("Max Subscribe Rate: %d/min", broker->config.max_subscribe_rate);
+    LOG_INFO("Max Connections per IP: %d", broker->config.max_connections_per_ip);
+    
     long current_memory = get_memory_usage();
     if (current_memory > 0) {
         format_bytes(current_memory, memory_str, sizeof(memory_str));

@@ -51,7 +51,13 @@ struct MavlinkUdpConnection::Impl {
 };
 
 MavlinkUdpConnection::MavlinkUdpConnection(uint8_t system_id, uint8_t component_id) 
-    : pImpl(std::make_unique<Impl>()), m_system_id(system_id), m_component_id(component_id) {}
+    : pImpl(std::make_unique<Impl>()), m_system_id(system_id), m_component_id(component_id) {
+    // Initialize remote address to loopback for sending as fallback
+    // These will be updated when we receive data from the actual source
+    pImpl->remote_addr.sin_family = AF_INET;
+    pImpl->remote_addr.sin_port = htons(44003); // Default MAVLink port - should be configurable
+    inet_pton(AF_INET, "127.0.0.1", &pImpl->remote_addr.sin_addr); // Default fallback address
+}
 
 MavlinkUdpConnection::~MavlinkUdpConnection() = default;
 
@@ -295,14 +301,12 @@ void MavlinkUdpConnection::requestAutopilotVersion() {
     }
 }
 
-void MavlinkUdpConnection::requestBatteryInfo() {
+void MavlinkUdpConnection::requestBatteryInfo(uint8_t target_system_id, uint8_t target_component_id) {
     if (!pImpl->connected) {
         return;
     }
     
     mavlink_message_t message;
-    const uint8_t target_system = 1;  // Request from system 1
-    const uint8_t target_component = 1;  // Request from component 1 (autopilot)
     
     // Use MAV_CMD_REQUEST_MESSAGE to request battery info
     mavlink_msg_command_long_pack_chan(
@@ -310,8 +314,8 @@ void MavlinkUdpConnection::requestBatteryInfo() {
         m_component_id,
         MAVLINK_COMM_0,
         &message,
-        target_system,
-        target_component,
+        target_system_id,
+        target_component_id,
         MAV_CMD_REQUEST_MESSAGE,
         1,  // confirmation = 1
         MAVLINK_MSG_ID_BATTERY_INFO,  // param1 = message ID to request
@@ -346,14 +350,12 @@ void MavlinkUdpConnection::requestBatteryInfo() {
     }
 }
 
-void MavlinkUdpConnection::requestBatteryStatus() {
+void MavlinkUdpConnection::requestBatteryStatus(uint8_t target_system_id, uint8_t target_component_id) {
     if (!pImpl->connected) {
         return;
     }
     
     mavlink_message_t message;
-    const uint8_t target_system = 1;  // Request from system 1
-    const uint8_t target_component = 1;  // Request from component 1 (autopilot)
     
     // Use MAV_CMD_REQUEST_MESSAGE to request battery status
     mavlink_msg_command_long_pack_chan(
@@ -361,8 +363,8 @@ void MavlinkUdpConnection::requestBatteryStatus() {
         m_component_id,
         MAVLINK_COMM_0,
         &message,
-        target_system,
-        target_component,
+        target_system_id,
+        target_component_id,
         MAV_CMD_REQUEST_MESSAGE,
         1,  // confirmation = 1
         MAVLINK_MSG_ID_BATTERY_STATUS,  // param1 = message ID to request

@@ -28,10 +28,19 @@ struct GlobalDeviceData {
     std::mutex data_mutex;
     json last_heartbeat;
     json last_autopilot_version;
+    json last_battery_info;
+    json last_gps_data;
+    json last_system_status;
     bool has_heartbeat = false;
     bool has_autopilot_version = false;
+    bool has_battery_info = false;
+    bool has_gps_data = false;
+    bool has_system_status = false;
     std::chrono::steady_clock::time_point last_heartbeat_time;
     std::chrono::steady_clock::time_point last_autopilot_time;
+    std::chrono::steady_clock::time_point last_battery_info_time;
+    std::chrono::steady_clock::time_point last_gps_data_time;
+    std::chrono::steady_clock::time_point last_system_status_time;
 };
 
 GlobalDeviceData g_device_data;
@@ -53,25 +62,65 @@ void deviceDataPublisherThreadFunction() {
         if (now - last_publish_time >= publish_interval) {
             std::lock_guard<std::mutex> lock(g_device_data.data_mutex);
             
-            // Publish heartbeat data if available
-            if (g_device_data.has_heartbeat && g_rpcClient && g_rpcClient->isRunning()) {
-                g_rpcClient->publishMessage("ur-shared-bus/ur-mavlink-stack/ur-mavcollector/device-info", 
-                                           g_device_data.last_heartbeat.dump());
-                
-                if (verbose_mode) {
-                    std::cout << "[PUBLISHER] Published heartbeat data" << std::endl;
-                }
-            }
+            // Check if any device data is available
+            bool has_any_data = g_device_data.has_heartbeat || 
+                               g_device_data.has_autopilot_version || 
+                               g_device_data.has_battery_info || 
+                               g_device_data.has_gps_data || 
+                               g_device_data.has_system_status;
             
-            // Publish autopilot version data if available (less frequently)
-            static int autopilot_publish_counter = 0;
-            if (g_device_data.has_autopilot_version && g_rpcClient && g_rpcClient->isRunning() && 
-                (++autopilot_publish_counter % 10) == 0) { // Every 10 seconds
-                g_rpcClient->publishMessage("ur-shared-bus/ur-mavlink-stack/ur-mavcollector/device-info", 
-                                           g_device_data.last_autopilot_version.dump());
+            if (!has_any_data && g_rpcClient && g_rpcClient->isRunning()) {
+                // No device data available - publish "no device" messages
+                publishNoDeviceMessages();
+            } else {
+                // Publish heartbeat data if available
+                if (g_device_data.has_heartbeat && g_rpcClient && g_rpcClient->isRunning()) {
+                    g_rpcClient->publishMessage("ur-shared-bus/ur-mavlink-stack/ur-mavcollector/device-info", 
+                                               g_device_data.last_heartbeat.dump());
+                    
+                    if (verbose_mode) {
+                        std::cout << "[PUBLISHER] Published heartbeat data" << std::endl;
+                    }
+                }
                 
-                if (verbose_mode) {
-                    std::cout << "[PUBLISHER] Published autopilot version data" << std::endl;
+                // Publish autopilot version data if available (every 1 second)
+                if (g_device_data.has_autopilot_version && g_rpcClient && g_rpcClient->isRunning()) {
+                    g_rpcClient->publishMessage("ur-shared-bus/ur-mavlink-stack/ur-mavcollector/device-autopilot-version", 
+                                               g_device_data.last_autopilot_version.dump());
+                    
+                    if (verbose_mode) {
+                        std::cout << "[PUBLISHER] Published autopilot version data" << std::endl;
+                    }
+                }
+                
+                // Publish battery info data if available
+                if (g_device_data.has_battery_info && g_rpcClient && g_rpcClient->isRunning()) {
+                    g_rpcClient->publishMessage("ur-shared-bus/ur-mavlink-stack/ur-mavcollector/device-battery-data", 
+                                               g_device_data.last_battery_info.dump());
+                    
+                    if (verbose_mode) {
+                        std::cout << "[PUBLISHER] Published battery info data" << std::endl;
+                    }
+                }
+                
+                // Publish GPS data if available
+                if (g_device_data.has_gps_data && g_rpcClient && g_rpcClient->isRunning()) {
+                    g_rpcClient->publishMessage("ur-shared-bus/ur-mavlink-stack/ur-mavcollector/device-gps-data", 
+                                               g_device_data.last_gps_data.dump());
+                    
+                    if (verbose_mode) {
+                        std::cout << "[PUBLISHER] Published GPS data" << std::endl;
+                    }
+                }
+                
+                // Publish system status data if available
+                if (g_device_data.has_system_status && g_rpcClient && g_rpcClient->isRunning()) {
+                    g_rpcClient->publishMessage("ur-shared-bus/ur-mavlink-stack/ur-mavcollector/device-system-status", 
+                                               g_device_data.last_system_status.dump());
+                    
+                    if (verbose_mode) {
+                        std::cout << "[PUBLISHER] Published system status data" << std::endl;
+                    }
                 }
             }
             
@@ -144,53 +193,118 @@ void* mavlinkCollectorThreadFunction(void* arg) {
         return nullptr;
     }
     
-    MavlinkCollectorArgs* collector_args = static_cast<MavlinkCollectorArgs*>(arg);
-    const PackageConfig& config = collector_args->config;
-    std::atomic<bool>* running = collector_args->running;
-    
-    if (verbose_mode) {
-        std::cout << "MAVLink collector thread started with config:" << std::endl;
-        config.print();
-    }
-    
-    // Initialize signal handlers
-    std::signal(SIGINT, [](int signal) {
-        std::cout << "\nReceived signal " << signal << " in collector thread, shutting down..." << std::endl;
-        g_running = false;
-        g_collector_running = false;  // Also set collector flag
-        g_publisher_running = false;  // Stop publisher thread
-        // Force immediate exit to prevent hanging
-        _exit(0);
-    });
-    
-    std::signal(SIGTERM, [](int signal) {
-        std::cout << "\nReceived signal " << signal << " in collector thread, shutting down..." << std::endl;
-        g_running = false;
-        g_collector_running = false;  // Also set collector flag
-        g_publisher_running = false;  // Stop publisher thread
-        // Force immediate exit to prevent hanging
-        _exit(0);
-    });
-    
-    // Create and initialize connection
-    g_connection = std::make_unique<MavlinkUdpConnection>(config.system_id, config.component_id);
-    
-    if (!g_connection->connect(config.address, config.port)) {
-        if (verbose_mode) {
-            std::cerr << "Failed to connect to " << config.address << ":" << config.port << std::endl;
+    // Set verbose mode from config early to avoid access issues
+    try {
+        MavlinkCollectorArgs* collector_args = static_cast<MavlinkCollectorArgs*>(arg);
+        if (!collector_args) {
+            std::cerr << "Error: Invalid collector arguments" << std::endl;
+            return nullptr;
         }
-        return nullptr;
-    }
-    
-    if (verbose_mode) {
-        std::cout << "Connected to " << config.address << ":" << config.port 
-                  << " with system ID " << static_cast<int>(config.system_id) 
-                  << " and component ID " << static_cast<int>(config.component_id) << std::endl;
-    }
+        
+        // Copy the essential config data to avoid memory corruption issues
+        std::string address = "127.0.0.1";  // Default fallback
+        uint16_t port = 44003;
+        uint8_t system_id = 250;
+        uint8_t component_id = 1;
+        uint8_t target_system_id = 1;
+        bool local_verbose = false;
+        std::atomic<bool>* running = collector_args->running;
+        
+        // Safely copy config values with fallbacks
+        try {
+            if (collector_args && &collector_args->config) {
+                address = collector_args->config.address;
+                port = collector_args->config.port;
+                system_id = collector_args->config.system_id;
+                component_id = collector_args->config.component_id;
+                target_system_id = collector_args->config.target_system_id;
+                local_verbose = collector_args->config.verbose;
+            }
+        } catch (...) {
+            std::cerr << "Warning: Using default config values due to copy error" << std::endl;
+        }
+        
+        if (!running) {
+            std::cerr << "Error: Invalid running flag pointer" << std::endl;
+            return nullptr;
+        }
+        
+        // Update global verbose mode safely
+        verbose_mode = local_verbose;
+        
+        if (verbose_mode) {
+            std::cout << "MAVLink collector thread started" << std::endl;
+            std::cout << "Target: " << (address.empty() ? "unknown" : address) << ":" << port << std::endl;
+            std::cout << "System ID: " << static_cast<int>(system_id) 
+                      << ", Component ID: " << static_cast<int>(component_id) << std::endl;
+            std::cout << "Target System ID: " << static_cast<int>(target_system_id) << std::endl;
+        }
+        
+        // Initialize signal handlers
+        std::signal(SIGINT, [](int signal) {
+            std::cout << "\nReceived signal " << signal << " in collector thread, shutting down..." << std::endl;
+            g_running = false;
+            g_collector_running = false;  // Also set collector flag
+            g_publisher_running = false;  // Stop publisher thread
+            // Force immediate exit to prevent hanging
+            _exit(0);
+        });
+        
+        std::signal(SIGTERM, [](int signal) {
+            std::cout << "\nReceived signal " << signal << " in collector thread, shutting down..." << std::endl;
+            g_running = false;
+            g_collector_running = false;  // Also set collector flag
+            g_publisher_running = false;  // Stop publisher thread
+            // Force immediate exit to prevent hanging
+            _exit(0);
+        });
+        
+        // Check if we have device info from discovery
+        DeviceInfo deviceInfo = vehicle.getDeviceInfo();
+        if (deviceInfo.isValid && !deviceInfo.devicePath.empty()) {
+            if (verbose_mode) {
+                std::cout << "Using discovered device: " << deviceInfo.devicePath << std::endl;
+                std::cout << "Device System ID: " << static_cast<int>(deviceInfo.systemId) 
+                          << ", Component ID: " << static_cast<int>(deviceInfo.componentId) << std::endl;
+            }
+            
+            // For now, we still use UDP but with better error handling
+            // TODO: Implement serial connection for discovered devices
+            g_connection = std::make_unique<MavlinkUdpConnection>(system_id, component_id);
+            
+            if (!g_connection->connect(address, port)) {
+                if (verbose_mode) {
+                    std::cerr << "Failed to connect to " << address << ":" << port 
+                              << " - this is expected if no MAVLink proxy is running on UDP" << std::endl;
+                    std::cerr << "The collector will wait for a MAVLink connection..." << std::endl;
+                }
+                // Don't return - continue and wait for potential future connections
+            } else {
+                if (verbose_mode) {
+                    std::cout << "Connected to " << address << ":" << port 
+                              << " with system ID " << static_cast<int>(system_id) 
+                              << " and component ID " << static_cast<int>(component_id) << std::endl;
+                }
+            }
+        } else {
+            if (verbose_mode) {
+                std::cout << "No device info available, using default UDP connection" << std::endl;
+            }
+            
+            // Create and initialize connection
+            g_connection = std::make_unique<MavlinkUdpConnection>(system_id, component_id);
+            
+            if (!g_connection->connect(address, port)) {
+                if (verbose_mode) {
+                    std::cerr << "Failed to connect to " << address << ":" << port << std::endl;
+                    std::cerr << "The collector will wait for a MAVLink connection..." << std::endl;
+                }
+                // Don't return - continue and wait for potential future connections
+            }
+        }
     
     // Set up callbacks (moved from main.cpp)
-    // Store target system_id for filtering
-    uint8_t target_system_id = 1; // Target device system_id (not our own)
+    // Use target_system_id from config for filtering
     
     g_connection->setHeartbeatCallback([target_system_id](const MavlinkHeartbeatInfo& info) {
         // Filter heartbeat messages by target system_id
@@ -314,6 +428,14 @@ void* mavlinkCollectorThreadFunction(void* arg) {
         };
         std::cout << battery_info_json.dump() << std::endl;
         
+        // Store battery info data in global structure for cron job publisher
+        {
+            std::lock_guard<std::mutex> lock(g_device_data.data_mutex);
+            g_device_data.last_battery_info = battery_info_json;
+            g_device_data.has_battery_info = true;
+            g_device_data.last_battery_info_time = std::chrono::steady_clock::now();
+        }
+        
         if (verbose_mode) {
             std::cout << "\n=== BATTERY INFO RECEIVED ===" << std::endl;
             std::cout << "ID: " << static_cast<int>(info.id) << std::endl;
@@ -353,6 +475,10 @@ void* mavlinkCollectorThreadFunction(void* arg) {
             {"fault_bitmask", status.fault_bitmask}
         };
         std::cout << battery_status_json.dump() << std::endl;
+        
+        // Store battery data for MQTT publishing
+        g_device_data.last_battery_info = battery_status_json;
+        g_device_data.has_battery_info = true;
         
         if (verbose_mode) {
             std::cout << "\n=== BATTERY STATUS RECEIVED ===" << std::endl;
@@ -399,6 +525,14 @@ void* mavlinkCollectorThreadFunction(void* arg) {
         };
         
         std::cout << gps_json.dump() << std::endl;
+        
+        // Store GPS data in global structure for cron job publisher
+        {
+            std::lock_guard<std::mutex> lock(g_device_data.data_mutex);
+            g_device_data.last_gps_data = gps_json;
+            g_device_data.has_gps_data = true;
+            g_device_data.last_gps_data_time = std::chrono::steady_clock::now();
+        }
         
         // Update vehicle GPS data
         vehicle.setGPSData(gps);
@@ -456,6 +590,11 @@ void* mavlinkCollectorThreadFunction(void* arg) {
         
         std::cout << system_status_json.dump() << std::endl;
         
+        // Store system status data for MQTT publishing
+        g_device_data.last_system_status = system_status_json;
+        g_device_data.has_system_status = true;
+        g_device_data.last_system_status_time = std::chrono::steady_clock::now();
+        
         // Update vehicle system status
         vehicle.setSystemStatus(status);
         
@@ -478,76 +617,99 @@ void* mavlinkCollectorThreadFunction(void* arg) {
         }
     });
     
-    g_connection->startReceiving();
-    
-    if (verbose_mode) {
-        std::cout << "MAVLink UDP Collector started on " << config.address << ":" << config.port << std::endl;
-        std::cout << "Press Ctrl+C to stop..." << std::endl;
+    // Start receiving only if connected
+    if (g_connection && g_connection->isConnected()) {
+        g_connection->startReceiving();
+        if (verbose_mode) {
+            std::cout << "MAVLink UDP Collector started on " << address << ":" << port << std::endl;
+            std::cout << "Press Ctrl+C to stop..." << std::endl;
+        }
+    } else {
+        if (verbose_mode) {
+            std::cout << "MAVLink UDP Collector waiting for connection on " << address << ":" << port << std::endl;
+            std::cout << "Press Ctrl+C to stop..." << std::endl;
+        }
     }
     
-    // Main loop
+    // Main loop - run continuously and send data requests
     auto last_heartbeat_sent = std::chrono::steady_clock::now();
     const auto heartbeat_interval = std::chrono::seconds(1);
-    bool received_first_heartbeat = false;
-    bool data_collection_complete = false;
     
-    while (*running && !data_collection_complete) {
-        auto now = std::chrono::steady_clock::now();
-        if (now - last_heartbeat_sent >= heartbeat_interval) {
-            g_connection->sendHeartbeat();
-            last_heartbeat_sent = now;
-        }
-        
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    }
-    
-    // Continuous monitoring loop
-    if (data_collection_complete && verbose_mode) {
-        std::cout << "Initial data collection complete. Starting continuous monitoring..." << std::endl;
-    }
-    
+    // Initialize timing variables for data requests
     auto last_battery_request_sent = std::chrono::steady_clock::now();
     auto last_gps_request_sent = std::chrono::steady_clock::now();
     auto last_system_status_request_sent = std::chrono::steady_clock::now();
+    auto last_autopilot_request_sent = std::chrono::steady_clock::now();
     const auto battery_request_interval = std::chrono::seconds(5);
     const auto gps_request_interval = std::chrono::seconds(10);
     const auto system_status_request_interval = std::chrono::seconds(2);
+    const auto autopilot_request_interval = std::chrono::seconds(1);
+    
+    // Request initial data streams only if connected
+    if (g_connection && g_connection->isConnected()) {
+        if (verbose_mode) {
+            std::cout << "Requesting initial data streams from vehicle..." << std::endl;
+        }
+        g_connection->requestAutopilotVersion();
+        g_connection->requestBatteryInfo(target_system_id, 1);
+        g_connection->requestBatteryStatus(target_system_id, 1);
+        g_connection->requestGPSData(target_system_id, 1, 4);
+        g_connection->requestSystemStatus(target_system_id, 1, 1);
+    } else {
+        if (verbose_mode) {
+            std::cout << "Waiting for MAVLink connection before requesting data..." << std::endl;
+        }
+    }
     
     while (*running) {
         auto now = std::chrono::steady_clock::now();
         
         // Send heartbeat periodically
         if (now - last_heartbeat_sent >= heartbeat_interval) {
-            g_connection->sendHeartbeat();
+            if (g_connection && g_connection->isConnected()) {
+                g_connection->sendHeartbeat();
+            }
             last_heartbeat_sent = now;
         }
         
-        // Send battery requests periodically
-        if (now - last_battery_request_sent >= battery_request_interval) {
-            if (verbose_mode) {
-                std::cout << "Requesting battery information..." << std::endl;
+        // Only send data requests if we have a connection
+        if (g_connection && g_connection->isConnected()) {
+            // Send autopilot version requests periodically (less frequent)
+            if (now - last_autopilot_request_sent >= autopilot_request_interval) {
+                if (verbose_mode) {
+                    std::cout << "Requesting autopilot version..." << std::endl;
+                }
+                g_connection->requestAutopilotVersion();
+                last_autopilot_request_sent = now;
             }
-            g_connection->requestBatteryInfo();
-            g_connection->requestBatteryStatus();
-            last_battery_request_sent = now;
-        }
-        
-        // Send GPS requests periodically
-        if (now - last_gps_request_sent >= gps_request_interval) {
-            if (verbose_mode) {
-                std::cout << "Requesting GPS data..." << std::endl;
+            
+            // Send battery requests periodically
+            if (now - last_battery_request_sent >= battery_request_interval) {
+                if (verbose_mode) {
+                    std::cout << "Requesting battery information..." << std::endl;
+                }
+                g_connection->requestBatteryInfo(target_system_id, 1);
+                g_connection->requestBatteryStatus(target_system_id, 1);
+                last_battery_request_sent = now;
             }
-            g_connection->requestGPSData(1, 1, 4);
-            last_gps_request_sent = now;
-        }
-        
-        // Send system status requests periodically
-        if (now - last_system_status_request_sent >= system_status_request_interval) {
-            if (verbose_mode) {
-                std::cout << "Requesting system status..." << std::endl;
+            
+            // Send GPS requests periodically
+            if (now - last_gps_request_sent >= gps_request_interval) {
+                if (verbose_mode) {
+                    std::cout << "Requesting GPS data..." << std::endl;
+                }
+                g_connection->requestGPSData(target_system_id, 1, 4);
+                last_gps_request_sent = now;
             }
-            g_connection->requestSystemStatus(1, 1, 1);
-            last_system_status_request_sent = now;
+            
+            // Send system status requests periodically
+            if (now - last_system_status_request_sent >= system_status_request_interval) {
+                if (verbose_mode) {
+                    std::cout << "Requesting system status..." << std::endl;
+                }
+                g_connection->requestSystemStatus(target_system_id, 1, 1);
+                last_system_status_request_sent = now;
+            }
         }
         
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -555,6 +717,96 @@ void* mavlinkCollectorThreadFunction(void* arg) {
     
     // Cleanup
     return nullptr;
+    
+    } catch (const std::exception& e) {
+        std::cerr << "Exception in mavlinkCollectorThreadFunction: " << e.what() << std::endl;
+        return nullptr;
+    } catch (...) {
+        std::cerr << "Unknown exception in mavlinkCollectorThreadFunction" << std::endl;
+        return nullptr;
+    }
+}
+
+void clearDeviceData() {
+    std::lock_guard<std::mutex> lock(g_device_data.data_mutex);
+    g_device_data.has_heartbeat = false;
+    g_device_data.has_autopilot_version = false;
+    g_device_data.has_battery_info = false;
+    g_device_data.has_gps_data = false;
+    g_device_data.has_system_status = false;
+    
+    if (verbose_mode) {
+        std::cout << "[COLLECTOR] Cleared all device data flags" << std::endl;
+    }
+}
+
+void publishNoDeviceMessages() {
+    if (!g_rpcClient || !g_rpcClient->isRunning()) {
+        return;
+    }
+    
+    auto now = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::system_clock::now().time_since_epoch()).count();
+    
+    // Create "no device" JSON messages
+    json no_device_info = {
+        {"type", "heartbeat"},
+        {"timestamp", now},
+        {"status", "no_device"},
+        {"message", "No device to monitor"}
+    };
+    
+    json no_device_autopilot = {
+        {"type", "autopilot_version"},
+        {"timestamp", now},
+        {"status", "no_device"},
+        {"message", "No device to monitor"}
+    };
+    
+    json no_device_battery = {
+        {"type", "battery_status"},
+        {"timestamp", now},
+        {"status", "no_device"},
+        {"message", "No device to monitor"}
+    };
+    
+    json no_device_gps = {
+        {"type", "gps_data"},
+        {"timestamp", now},
+        {"status", "no_device"},
+        {"message", "No device to monitor"}
+    };
+    
+    json no_device_system_status = {
+        {"type", "system_status"},
+        {"timestamp", now},
+        {"status", "no_device"},
+        {"message", "No device to monitor"}
+    };
+    
+    // Publish all "no device" messages
+    try {
+        g_rpcClient->publishMessage("ur-shared-bus/ur-mavlink-stack/ur-mavcollector/device-info", 
+                                   no_device_info.dump());
+        
+        g_rpcClient->publishMessage("ur-shared-bus/ur-mavlink-stack/ur-mavcollector/device-autopilot-version", 
+                                   no_device_autopilot.dump());
+        
+        g_rpcClient->publishMessage("ur-shared-bus/ur-mavlink-stack/ur-mavcollector/device-battery-data", 
+                                   no_device_battery.dump());
+        
+        g_rpcClient->publishMessage("ur-shared-bus/ur-mavlink-stack/ur-mavcollector/device-gps-data", 
+                                   no_device_gps.dump());
+        
+        g_rpcClient->publishMessage("ur-shared-bus/ur-mavlink-stack/ur-mavcollector/device-system-status", 
+                                   no_device_system_status.dump());
+        
+        if (verbose_mode) {
+            std::cout << "[PUBLISHER] Published 'no device' messages to all topics" << std::endl;
+        }
+    } catch (const std::exception& e) {
+        std::cerr << "Error publishing 'no device' messages: " << e.what() << std::endl;
+    }
 }
 
 bool initializeMavlinkCollector(const PackageConfig& config) {

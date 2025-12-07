@@ -255,8 +255,8 @@ public:
     
     void sendHeartbeat();
     void requestAutopilotVersion();
-    void requestBatteryInfo();
-    void requestBatteryStatus();
+    void requestBatteryInfo(uint8_t target_system_id = 1, uint8_t target_component_id = 1);
+    void requestBatteryStatus(uint8_t target_system_id = 1, uint8_t target_component_id = 1);
     void requestGPSData(uint8_t target_system = 1, uint8_t target_component = 1, uint16_t message_rate_hz = 4);
     void stopGPSData(uint8_t target_system = 1, uint8_t target_component = 1);
     void requestSystemStatus(uint8_t target_system = 1, uint8_t target_component = 1, uint16_t message_rate_hz = 1);

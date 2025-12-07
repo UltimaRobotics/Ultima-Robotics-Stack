@@ -5,7 +5,7 @@
     "port": 1899,
     "max_clients": 100,
     "max_message_size": 16384,
-    "keep_alive_interval": 60,
+    "keep_alive_interval": 999999999,
     "socket_timeout": 30,
     "select_timeout": 1
   },
@@ -31,7 +31,7 @@
     "acl_file": ""
   },
   "notification": {
-    "enabled": true,
+    "enabled": false,
     "destination_client_id": "notification_client",
     "topic": "broker/notifications",
     "include_client_details": true,
@@ -49,8 +49,8 @@
       "broker_stopping": false
     },
     "rate_limit": {
-      "enabled": false,
-      "max_notifications_per_second": 100,
+      "enabled": true,
+      "max_notifications_per_second": 9999999999,
       "burst_size": 200
     }
   },

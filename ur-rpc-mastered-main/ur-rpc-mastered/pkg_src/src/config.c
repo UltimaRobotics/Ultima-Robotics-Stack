@@ -786,6 +786,11 @@ void config_print(const broker_config_t *config) {
     printf("    Memory Limit: %d bytes\n", config->memory_limit);
     printf("    Connection Timeout: %d seconds\n", config->connection_timeout);
     
+    printf("  Performance:\n");
+    printf("    Max Publish Rate: %d per minute\n", config->max_publish_rate);
+    printf("    Max Subscribe Rate: %d per minute\n", config->max_subscribe_rate);
+    printf("    Max Connections per IP: %d\n", config->max_connections_per_ip);
+    
     printf("  Logging:\n");
     printf("    Log Level: %d\n", config->log_level);
     printf("    Log to Console: %s\n", config->log_to_console ? "yes" : "no");

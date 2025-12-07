@@ -14,6 +14,7 @@ struct PackageConfig {
     uint16_t port;
     uint8_t system_id;
     uint8_t component_id;
+    uint8_t target_system_id;
     bool verbose;
     
     PackageConfig() : 
@@ -21,6 +22,7 @@ struct PackageConfig {
         port(44003),
         system_id(250),
         component_id(1),
+        target_system_id(1),
         verbose(false) {}
     
     bool loadFromFile(const std::string& config_file_path) {
@@ -52,6 +54,10 @@ struct PackageConfig {
                 component_id = config_json["component_id"].get<uint8_t>();
             }
             
+            if (config_json.contains("target_system_id")) {
+                target_system_id = config_json["target_system_id"].get<uint8_t>();
+            }
+            
             if (config_json.contains("verbose")) {
                 verbose = config_json["verbose"].get<bool>();
             }
@@ -70,6 +76,7 @@ struct PackageConfig {
         std::cout << "  Port: " << port << std::endl;
         std::cout << "  System ID: " << static_cast<int>(system_id) << std::endl;
         std::cout << "  Component ID: " << static_cast<int>(component_id) << std::endl;
+        std::cout << "  Target System ID: " << static_cast<int>(target_system_id) << std::endl;
         std::cout << "  Verbose: " << (verbose ? "true" : "false") << std::endl;
     }
 };

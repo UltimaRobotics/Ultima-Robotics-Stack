@@ -5,15 +5,15 @@
   "boardName": "Holybro (Unknown Model)",
   "componentId": 1,
   "deviceName": "Pixhawk6C",
-  "devicePath": "/dev/ttyACM0",
+  "devicePath": "/dev/ttyACM1",
   "manufacturer": "Holybro",
   "mavlinkVersion": 2,
   "physicalDeviceId": "3:3162:0053:3B0032001651333337363133",
   "productId": "0053",
   "serialNumber": "3B0032001651333337363133",
   "systemId": 1,
-  "timestamp": "2025-12-06 18:51:49",
+  "timestamp": "2025-12-07 15:26:57",
   "usbBusNumber": "3",
-  "usbDeviceAddress": "6",
+  "usbDeviceAddress": "12",
   "vendorId": "3162"
 }

@@ -407,14 +407,10 @@ void RpcOperationProcessor::processOperationThreadStatic(std::shared_ptr<Request
                 // Start collector using global running flag
                 g_collectorThreadId = startMavlinkCollector(*config, &g_collector_running);
                 
-                // Start device data publisher thread
-                g_publisherThreadId = startDeviceDataPublisher();
-                
-                if (g_collectorThreadId > 0 && g_publisherThreadId > 0) {
+                if (g_collectorThreadId > 0) {
                     result["status"] = "started";
                     result["thread_id"] = g_collectorThreadId;
-                    result["publisher_thread_id"] = g_publisherThreadId;
-                    result["message"] = "MAVLink device added and collector with publisher started successfully";
+                    result["message"] = "MAVLink device added and collector started successfully";
                     result["device_info"] = {
                         {"devicePath", deviceInfo.devicePath},
                         {"systemId", deviceInfo.systemId},
@@ -443,6 +439,13 @@ void RpcOperationProcessor::processOperationThreadStatic(std::shared_ptr<Request
             // Stop MAVLink collector if running
             if (g_collectorThreadId > 0) {
                 stopMavlinkCollector(g_collectorThreadId);
+                
+                // Clear device data flags to prevent publishing stale data
+                clearDeviceData();
+                
+                // Publish "no device" messages to all topics
+                publishNoDeviceMessages();
+                
                 result["status"] = "stopped";
                 result["thread_id"] = g_collectorThreadId;
                 result["message"] = "MAVLink device removed and collector stopped successfully";
@@ -825,15 +828,12 @@ void RpcOperationProcessor::processDiscoveredDevice(const nlohmann::json& device
         if (g_collectorThreadId == 0) {
             g_collectorThreadId = startMavlinkCollector(*config_, &g_collector_running);
             
-            // Start device data publisher thread
-            g_publisherThreadId = startDeviceDataPublisher();
-            
-            if (g_collectorThreadId > 0 && g_publisherThreadId > 0) {
+            if (g_collectorThreadId > 0) {
                 if (verbose_) {
-                    std::cout << "[RPC Processor] Started MAVLink collector and publisher for device: " << devicePath << std::endl;
+                    std::cout << "[RPC Processor] Started MAVLink collector for device: " << devicePath << std::endl;
                 }
             } else {
-                std::cerr << "[RPC Processor] Failed to start MAVLink collector or publisher for device: " << devicePath << std::endl;
+                std::cerr << "[RPC Processor] Failed to start MAVLink collector for device: " << devicePath << std::endl;
             }
         } else {
             if (verbose_) {

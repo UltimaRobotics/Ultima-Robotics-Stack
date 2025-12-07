@@ -45,6 +45,7 @@ void signalHandler(int signal) {
     
     // Don't exit immediately - let main loop handle graceful shutdown
     std::cout << "Shutdown flags set, waiting for main loop to exit..." << std::endl;
+    exit(0);
 }
 
 void printUsage(const char* program_name) {
@@ -173,6 +174,17 @@ int main(int argc, char* argv[]) {
     std::cout << "Listening on: direct_messaging/ur-mavcollector/requests" << std::endl;
     std::cout << "Responding on: direct_messaging/ur-mavcollector/responses" << std::endl;
     std::cout << "Press Ctrl+C to stop..." << std::endl;
+    
+    // Start device data publisher thread immediately after RPC client connects
+    std::cout << "Starting device data publisher thread..." << std::endl;
+    unsigned int publisherThreadId = startDeviceDataPublisher();
+    if (publisherThreadId > 0) {
+        if (verbose_mode) {
+            std::cout << "Device data publisher thread started with ID: " << publisherThreadId << std::endl;
+        }
+    } else {
+        std::cerr << "Failed to start device data publisher thread" << std::endl;
+    }
     
     // Main loop - keep running until signal received
     std::cout << "Entering main event loop..." << std::endl;
