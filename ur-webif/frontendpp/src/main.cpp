@@ -312,12 +312,12 @@ int main(int argc, char* argv[]) {
     }
     
     // Initialize logger first
-    auto& logger = FrontendPP::Logger::get_instance();
+    auto& logger = UrWebManager::Logger::get_instance();
     logger.set_verbose_mode(verbose_mode);
     
     if (verbose_mode) {
         logger.enable_file_logging("logs/frontendpp.log");
-        LOG_INFO(FrontendPP::BuildAttributes::get_build_info());
+        LOG_INFO(UrWebManager::BuildAttributes::get_build_info());
         LOG_INFO("Verbose logging mode enabled");
         LOG_INFO("Log file: logs/frontendpp.log");
     }
@@ -340,7 +340,7 @@ int main(int argc, char* argv[]) {
     
     // Validate and fix JWT secret before creating JWTManager
     std::string validated_jwt_secret = auth_config.jwt_secret;
-    if (validated_jwt_secret == FrontendPP::BuildAttributes::DEFAULT_JWT_SECRET || 
+    if (validated_jwt_secret == UrWebManager::BuildAttributes::DEFAULT_JWT_SECRET || 
         validated_jwt_secret.empty() || validated_jwt_secret.length() < 32) {
         LOG_INFO("JWT secret is invalid or default, generating new one");
         validated_jwt_secret = AuthHandler::generate_jwt_secret();

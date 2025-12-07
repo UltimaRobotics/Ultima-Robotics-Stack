@@ -441,9 +441,9 @@ bool AuthHandler::create_database_with_defaults() {
     std::string current_time = get_current_timestamp();
     
     // Use build-time default credentials
-    sqlite3_bind_text(stmt, 1, FrontendPP::BuildAttributes::DEFAULT_ADMIN_USERNAME, -1, SQLITE_TRANSIENT);
-    sqlite3_bind_text(stmt, 2, FrontendPP::BuildAttributes::DEFAULT_ADMIN_EMAIL, -1, SQLITE_TRANSIENT);
-    sqlite3_bind_text(stmt, 3, hash_password(FrontendPP::BuildAttributes::DEFAULT_ADMIN_PASSWORD).c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 1, UrWebManager::BuildAttributes::DEFAULT_ADMIN_USERNAME, -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 2, UrWebManager::BuildAttributes::DEFAULT_ADMIN_EMAIL, -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 3, hash_password(UrWebManager::BuildAttributes::DEFAULT_ADMIN_PASSWORD).c_str(), -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(stmt, 4, "administrator", -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(stmt, 5, "System Administrator", -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(stmt, 6, current_time.c_str(), -1, SQLITE_TRANSIENT);
@@ -459,8 +459,8 @@ bool AuthHandler::create_database_with_defaults() {
     sqlite3_finalize(stmt);
     sqlite3_close(temp_db);
     
-    LOG_INFO("Created database with admin user: " + std::string(FrontendPP::BuildAttributes::DEFAULT_ADMIN_USERNAME));
-    LOG_INFO("Default credentials: " + FrontendPP::BuildAttributes::get_credential_info());
+    LOG_INFO("Created database with admin user: " + std::string(UrWebManager::BuildAttributes::DEFAULT_ADMIN_USERNAME));
+    LOG_INFO("Default credentials: " + UrWebManager::BuildAttributes::get_credential_info());
     
     return true;
 }
@@ -472,7 +472,7 @@ std::string AuthHandler::generate_jwt_secret() {
     unsigned char random_bytes[32];
     if (RAND_bytes(random_bytes, sizeof(random_bytes)) != 1) {
         LOG_ERROR("Failed to generate random bytes for JWT secret");
-        return FrontendPP::BuildAttributes::DEFAULT_JWT_SECRET;
+        return UrWebManager::BuildAttributes::DEFAULT_JWT_SECRET;
     }
     
     // Convert to hex string
@@ -505,7 +505,7 @@ bool AuthHandler::update_config_jwt_secret(const std::string& config_path, const
         
         // Check if JWT secret is the default or invalid
         std::string current_secret = config["auth"]["jwt_secret"];
-        bool needs_update = (current_secret == FrontendPP::BuildAttributes::DEFAULT_JWT_SECRET) || 
+        bool needs_update = (current_secret == UrWebManager::BuildAttributes::DEFAULT_JWT_SECRET) || 
                            (current_secret.empty()) || 
                            (current_secret.length() < 32);
         

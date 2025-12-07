@@ -8,7 +8,7 @@
 #include <iomanip>
 #include <sstream>
 
-namespace FrontendPP {
+namespace UrWebManager {
     enum class LogLevel {
         DEBUG = 0,
         INFO = 1,
@@ -160,22 +160,22 @@ namespace FrontendPP {
     };
 
     // Convenience macros for logging
-    #define LOG_DEBUG(message)    FrontendPP::Logger::get_instance().log(FrontendPP::LogLevel::DEBUG, message)
-    #define LOG_INFO(message)     FrontendPP::Logger::get_instance().log(FrontendPP::LogLevel::INFO, message)
-    #define LOG_WARNING(message)  FrontendPP::Logger::get_instance().log(FrontendPP::LogLevel::WARNING, message)
-    #define LOG_ERROR(message)    FrontendPP::Logger::get_instance().log(FrontendPP::LogLevel::ERROR, message)
-    #define LOG_CRITICAL(message) FrontendPP::Logger::get_instance().log(FrontendPP::LogLevel::CRITICAL, message)
+    #define LOG_DEBUG(message)    UrWebManager::Logger::get_instance().log(UrWebManager::LogLevel::DEBUG, message)
+    #define LOG_INFO(message)     UrWebManager::Logger::get_instance().log(UrWebManager::LogLevel::INFO, message)
+    #define LOG_WARNING(message)  UrWebManager::Logger::get_instance().log(UrWebManager::LogLevel::WARNING, message)
+    #define LOG_ERROR(message)    UrWebManager::Logger::get_instance().log(UrWebManager::LogLevel::ERROR, message)
+    #define LOG_CRITICAL(message) UrWebManager::Logger::get_instance().log(UrWebManager::LogLevel::CRITICAL, message)
 
     #define LOG_HTTP_REQUEST(method, path, ip) \
-        FrontendPP::Logger::get_instance().log_http_request(method, path, ip)
+        UrWebManager::Logger::get_instance().log_http_request(method, path, ip)
     #define LOG_HTTP_RESPONSE(status, size) \
-        FrontendPP::Logger::get_instance().log_http_response(status, size)
+        UrWebManager::Logger::get_instance().log_http_response(status, size)
     #define LOG_FILE_REQUEST(path, found) \
-        FrontendPP::Logger::get_instance().log_file_request(path, found)
+        UrWebManager::Logger::get_instance().log_file_request(path, found)
     #define LOG_DATABASE_OPERATION(op, success) \
-        FrontendPP::Logger::get_instance().log_database_operation(op, success)
+        UrWebManager::Logger::get_instance().log_database_operation(op, success)
     #define LOG_AUTH_EVENT(event, user, success) \
-        FrontendPP::Logger::get_instance().log_authentication_event(event, user, success)
+        UrWebManager::Logger::get_instance().log_authentication_event(event, user, success)
     #define LOG_INIT_STEP(step, success) \
-        FrontendPP::Logger::get_instance().log_initialization_step(step, success)
+        UrWebManager::Logger::get_instance().log_initialization_step(step, success)
 }

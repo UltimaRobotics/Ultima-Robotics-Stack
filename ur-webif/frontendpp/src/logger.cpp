@@ -1,6 +1,6 @@
 #include "logger.h"
 
-namespace FrontendPP {
+namespace UrWebManager {
     Logger* Logger::instance_ = nullptr;
     std::mutex Logger::mutex_;
 }

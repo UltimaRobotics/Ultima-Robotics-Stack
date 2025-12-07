@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(backend-datalink)
+project(ur-backend-datalink)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -129,10 +129,10 @@ set(HEADERS
 )
 
 # Create executable
-add_executable(backend-datalink ${SOURCES} ${HEADERS})
+add_executable(ur-backend-datalink ${SOURCES} ${HEADERS})
 
 # Link libraries
-target_link_libraries(backend-datalink 
+target_link_libraries(ur-backend-datalink 
     ${OPENSSL_LIBRARIES}
     ${SQLITE3_LIBRARIES}
     system_data
@@ -146,7 +146,7 @@ target_link_libraries(backend-datalink
 )
 
 # Add include directories
-target_include_directories(backend-datalink PRIVATE 
+target_include_directories(ur-backend-datalink PRIVATE 
     ${OPENSSL_INCLUDE_DIRS}
     ${SQLITE3_INCLUDE_DIRS}
     ${NLOHMANN_JSON_INCLUDE_DIRS}
@@ -166,10 +166,10 @@ target_include_directories(backend-datalink PRIVATE
 )
 
 # Compiler flags
-target_compile_options(backend-datalink PRIVATE -Wall -Wextra -O2)
+target_compile_options(ur-backend-datalink PRIVATE -Wall -Wextra -O2)
 
 # Add definitions for found packages
-target_compile_definitions(backend-datalink PRIVATE HAVE_OPENSSL HAVE_NLOHMANN_JSON HAVE_WEBSOCKETPP ASIO_STANDALONE)
+target_compile_definitions(ur-backend-datalink PRIVATE HAVE_OPENSSL HAVE_NLOHMANN_JSON HAVE_WEBSOCKETPP ASIO_STANDALONE)
 
 # Copy config files to build directory
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config/config.json ${CMAKE_BINARY_DIR}/config/config.json COPYONLY)

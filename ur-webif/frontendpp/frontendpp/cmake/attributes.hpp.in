@@ -3,7 +3,7 @@
 #include <string>
 #include <chrono>
 
-namespace FrontendPP {
+namespace UrWebManager {
     namespace BuildAttributes {
         // Build-time configuration
         constexpr const char* BUILD_TIMESTAMP = "@BUILD_TIMESTAMP@";

@@ -40,7 +40,7 @@ set(VERBOSE_ENABLED true CACHE BOOL "Enable verbose logging")
 set(ENCRYPTION_ENABLED true CACHE BOOL "Enable data encryption")
 
 # Application metadata
-set(APP_NAME "FrontendPP" CACHE STRING "Application name")
+set(APP_NAME "ur-web-manager" CACHE STRING "Application name")
 set(APP_VERSION "2.0.0" CACHE STRING "Application version")
 set(APP_DESCRIPTION "Production C++ Web Server with Enhanced Authentication" CACHE STRING "Application description")
 

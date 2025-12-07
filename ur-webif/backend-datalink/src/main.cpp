@@ -236,7 +236,7 @@ void onMessage(const std::string& connection_id, const json& message) {
                 {"original", message},
                 {"timestamp", std::chrono::duration_cast<std::chrono::seconds>(
                     std::chrono::system_clock::now().time_since_epoch()).count()},
-                {"server", "backend-datalink"}
+                {"server", "ur-backend-datalink"}
             };
             
             if (g_server) {
@@ -356,7 +356,7 @@ void onConnectionOpen(const std::string& connection_id) {
     
     json welcome = {
         {"type", "welcome"},
-        {"message", "Connected to backend-datalink WebSocket server"},
+        {"message", "Connected to ur-backend-datalink WebSocket server"},
         {"connection_id", connection_id},
         {"timestamp", std::chrono::duration_cast<std::chrono::seconds>(
             std::chrono::system_clock::now().time_since_epoch()).count()}
@@ -521,7 +521,7 @@ int main(int argc, char* argv[]) {
         
         // Initialize RPC client and operation processor
         LOG_WEBSOCKETS_INFO("Initializing RPC client...");
-        g_rpcClient = std::make_unique<RpcClient>(rpc_config_path, "backend-datalink");
+        g_rpcClient = std::make_unique<RpcClient>(rpc_config_path, "ur-backend-datalink");
         g_operationProcessor = std::make_unique<RpcOperationProcessor>(true);
         
         // Create message router to handle different topic types
@@ -530,14 +530,14 @@ int main(int argc, char* argv[]) {
         // Set message handler BEFORE starting the client
         g_rpcClient->setMessageHandler([messageRouter](const std::string &topic, const std::string &payload) {
             // Log message processing
-            LOG_RPC_INFO("[backend-datalink] Processing message from topic: " + topic);
+            LOG_RPC_INFO("[ur-backend-datalink] Processing message from topic: " + topic);
             
             // Route message to appropriate handler
             messageRouter->routeMessage(topic, payload);
         });
         
         // Set response topic for operation processor
-        g_operationProcessor->setResponseTopic("direct_messaging/backend-datalink/responses");
+        g_operationProcessor->setResponseTopic("direct_messaging/ur-backend-datalink/responses");
         
         // Start RPC client
         if (!g_rpcClient->start()) {
@@ -561,13 +561,13 @@ int main(int argc, char* argv[]) {
                 licenseJob->handleLicenseResponse(topic, payload);
             });
         
-        messageRouter->registerHandler("direct_messaging/backend-datalink/requests",
+        messageRouter->registerHandler("direct_messaging/ur-backend-datalink/requests",
             [](const std::string& /*topic*/, const std::string& payload) {
-                LOG_RPC_INFO("[backend-datalink] Delegating to operation processor");
+                LOG_RPC_INFO("[ur-backend-datalink] Delegating to operation processor");
                 if (g_operationProcessor) {
                     g_operationProcessor->processRequest(payload.c_str(), payload.size());
                 } else {
-                    LOG_RPC_ERROR("[backend-datalink] Operation processor not available");
+                    LOG_RPC_ERROR("[ur-backend-datalink] Operation processor not available");
                 }
             });
         

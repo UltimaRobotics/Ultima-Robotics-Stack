@@ -1,5 +1,5 @@
 {
-  "client_id": "backend-datalink",
+  "client_id": "ur-backend-datalink",
   "broker_host": "127.0.0.1",
   "broker_port": 1899,
   "keepalive": 60,
@@ -11,18 +11,18 @@
   "heartbeat": {
     "enabled": true,
     "interval_seconds": 2,
-    "topic": "clients/backend-datalink/heartbeat",
-    "payload": "{\"client\":\"backend-datalink\",\"status\":\"alive\"}"
+    "topic": "clients/ur-backend-datalink/heartbeat",
+    "payload": "{\"client\":\"ur-backend-datalink\",\"status\":\"alive\"}"
   },
   "json_added_pubs": {
     "topics": [
-      "direct_messaging/backend-datalink/responses",
+      "direct_messaging/ur-backend-datalink/responses",
       "direct_messaging/ur-licence-mann/requests"
     ]
   },
   "json_added_subs": {
     "topics": [
-      "direct_messaging/backend-datalink/requests",
+      "direct_messaging/ur-backend-datalink/requests",
       "direct_messaging/ur-licence-mann/responses",
       "clients/ur-licence-mann/heartbeat"
     ]
