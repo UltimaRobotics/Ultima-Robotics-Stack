@@ -1,0 +1,66 @@
+{
+  "persistence": {
+    "backup_count": 5,
+    "backup_enabled": true,
+    "config_file": "config/wireless-config.json",
+    "saved_networks_file": "config/saved-networks.json",
+    "state_file": "config/state.json"
+  },
+  "security": {
+    "encryption_enabled": true,
+    "encryption_key_file": "config/encryption.key",
+    "require_encryption_for_passwords": true
+  },
+  "wireless": {
+    "ap_mode": {
+      "channel": 6,
+      "country_code": "US",
+      "dhcp_lease_time": "12h",
+      "dhcp_range_end": "192.168.4.200",
+      "dhcp_range_start": "192.168.4.100",
+      "hidden": false,
+      "hw_mode": "g",
+      "ieee80211n": true,
+      "interface": "wlp4s0",
+      "ip_address": "192.168.4.1",
+      "max_clients": 10,
+      "netmask": "255.255.255.0",
+      "password": "",
+      "security": "WPA2",
+      "ssid": "UR-Wireless-AP",
+      "wmm_enabled": true
+    },
+    "automation": {
+      "auto_connect": true,
+      "auto_reconnect": true,
+      "connection_timeout_seconds": 30,
+      "enabled": true,
+      "max_connection_attempts": 3,
+      "reconnect_delay_seconds": 10,
+      "scan_interval_seconds": 30
+    },
+    "enabled": true,
+    "mode": "sta",
+    "monitoring": {
+      "cache_duration_seconds": 120,
+      "enabled": true,
+      "event_topic": "wireless/ur-wireless-mann/events",
+      "publish_events": true,
+      "scan_interval_seconds": 30,
+      "scan_timeout_seconds": 10
+    },
+    "sta_mode": {
+      "dhcp_enabled": true,
+      "interface": "wlp4s0",
+      "power_save": false,
+      "regulatory_domain": "US",
+      "saved_networks": [],
+      "static_ip_config": {
+        "dns_servers": [],
+        "gateway": null,
+        "ip_address": null,
+        "netmask": null
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "description": "List all VLAN configurations",
+  "listing": {
+    "list_vlans": true
+  }
+}

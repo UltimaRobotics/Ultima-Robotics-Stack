@@ -1,0 +1,6 @@
+{
+  "description": "List all NAT rules configuration",
+  "listing": {
+    "list_nat_rules": true
+  }
+}

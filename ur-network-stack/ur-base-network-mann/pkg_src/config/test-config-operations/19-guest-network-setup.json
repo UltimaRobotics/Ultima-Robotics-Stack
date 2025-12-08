@@ -1,0 +1,72 @@
+{
+  "description": "Guest network isolation setup",
+  "network": {
+    "connection_mode": "dhcp"
+  },
+  "vlans": [
+    {
+      "operation": "add",
+      "name": "guest-vlan",
+      "vlan_id": 200,
+      "base_interface": "eth3",
+      "protocol": "802.1q",
+      "enabled": true
+    }
+  ],
+  "bridges": [
+    {
+      "operation": "add",
+      "name": "guest-bridge",
+      "interfaces": ["eth3", "eth4"],
+      "stp": "off",
+      "forward_delay": "15",
+      "max_age": "20",
+      "hello_time": "2",
+      "enabled": true
+    }
+  ],
+  "firewall_rules": [
+    {
+      "operation": "add",
+      "name": "guest-to-lan-block",
+      "type": "rule",
+      "src": "guest",
+      "dest": "lan",
+      "target": "DROP",
+      "proto": "all",
+      "enabled": true
+    },
+    {
+      "operation": "add",
+      "name": "guest-to-wan-allow",
+      "type": "rule",
+      "src": "guest",
+      "dest": "wan",
+      "target": "ACCEPT",
+      "proto": "all",
+      "enabled": true
+    },
+    {
+      "operation": "add",
+      "name": "lan-to-guest-block",
+      "type": "rule",
+      "src": "lan",
+      "dest": "guest",
+      "target": "DROP",
+      "proto": "all",
+      "enabled": true
+    }
+  ],
+  "nat_rules": [
+    {
+      "operation": "add",
+      "name": "guest-masquerade",
+      "type": "nat",
+      "src": "guest",
+      "dest": "wan",
+      "target": "MASQUERADE",
+      "proto": "",
+      "enabled": true
+    }
+  ]
+}

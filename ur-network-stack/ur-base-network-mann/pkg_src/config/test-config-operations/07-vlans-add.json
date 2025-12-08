@@ -1,0 +1,29 @@
+{
+  "description": "Add VLAN configurations",
+  "vlans": [
+    {
+      "operation": "add",
+      "name": "mgmt-vlan",
+      "vlan_id": 100,
+      "base_interface": "eth0",
+      "protocol": "802.1q",
+      "enabled": true
+    },
+    {
+      "operation": "add",
+      "name": "guest-vlan",
+      "vlan_id": 200,
+      "base_interface": "eth1",
+      "protocol": "802.1q",
+      "enabled": true
+    },
+    {
+      "operation": "add",
+      "name": "iot-vlan",
+      "vlan_id": 300,
+      "base_interface": "eth2",
+      "protocol": "802.1ad",
+      "enabled": true
+    }
+  ]
+}

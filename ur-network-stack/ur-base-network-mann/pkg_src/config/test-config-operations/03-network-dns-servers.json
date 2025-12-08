@@ -1,0 +1,6 @@
+{
+  "description": "Set DNS servers",
+  "network": {
+    "dns_servers": ["8.8.8.8", "1.1.1.1", "208.67.222.222"]
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "description": "Restart network interface",
+  "system": {
+    "restart_interface": true,
+    "restore_defaults": false
+  }
+}

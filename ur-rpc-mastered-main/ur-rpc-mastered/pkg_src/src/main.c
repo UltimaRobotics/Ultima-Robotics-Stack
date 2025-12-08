@@ -68,6 +68,8 @@ static void print_startup_info(mqtt_broker_t *broker) {
     }
     LOG_INFO("Bind Address: %s", broker->config.bind_address);
     LOG_INFO("Max Clients:  %d", broker->config.max_clients);
+    LOG_INFO("Max Message Size: %d bytes", broker->config.max_message_size);
+    LOG_INFO("Buffer Size: %d bytes", broker->config.buffer_size);
     LOG_INFO("Log Level:    %d", broker->config.log_level);
     LOG_INFO("Anonymous:    %s", broker->config.allow_anonymous ? "yes" : "no");
     LOG_INFO("SSL/TLS:      %s", broker->config.ssl_enabled ? "yes" : "no");

@@ -1,0 +1,48 @@
+{
+  "description": "Add firewall rules",
+  "firewall_rules": [
+    {
+      "operation": "add",
+      "name": "allow-ssh-wan",
+      "type": "rule",
+      "src": "wan",
+      "dest": "lan",
+      "target": "ACCEPT",
+      "proto": "tcp",
+      "src_port": "22",
+      "enabled": true
+    },
+    {
+      "operation": "add",
+      "name": "allow-https-wan",
+      "type": "rule",
+      "src": "wan",
+      "dest": "lan",
+      "target": "ACCEPT",
+      "proto": "tcp",
+      "src_port": "443",
+      "enabled": true
+    },
+    {
+      "operation": "add",
+      "name": "block-p2p",
+      "type": "rule",
+      "src": "lan",
+      "dest": "wan",
+      "target": "DROP",
+      "proto": "tcp",
+      "src_port": "6881:6889",
+      "enabled": true
+    },
+    {
+      "operation": "add",
+      "name": "allow-icmp",
+      "type": "rule",
+      "src": "wan",
+      "dest": "lan",
+      "target": "ACCEPT",
+      "proto": "icmp",
+      "enabled": true
+    }
+  ]
+}

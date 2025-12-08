@@ -1,0 +1,6 @@
+{
+  "description": "List all firewall rules configuration",
+  "listing": {
+    "list_firewall_rules": true
+  }
+}

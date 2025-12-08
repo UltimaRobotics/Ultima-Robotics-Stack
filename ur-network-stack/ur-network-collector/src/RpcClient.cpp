@@ -1,0 +1,224 @@
+#include "RpcClient.h"
+#include <iostream>
+#include <stdexcept>
+#include <thread>
+#include <chrono>
+
+// C includes for ur-rpc-template
+extern "C" {
+#include "../thirdparty/ur-rpc-template/deps/cJSON/cJSON.h"
+#include "../thirdparty/ur-rpc-template/extensions/direct_template.h"
+#include "../thirdparty/ur-rpc-template/ur-rpc-template.h"
+}
+
+RpcClient::RpcClient(const std::string& configPath, const std::string& clientId)
+    : configPath_(configPath), clientId_(clientId) {
+    // Initialize thread manager with configurable pool size
+    threadManager_ = std::make_unique<ThreadMgr::ThreadManager>(10);
+}
+
+RpcClient::~RpcClient() {
+    if (running_.load()) {
+        stop();
+    }
+}
+
+RpcClient::RpcClient(RpcClient&& other) noexcept
+    : configPath_(std::move(other.configPath_))
+    , clientId_(std::move(other.clientId_))
+    , running_(other.running_.load())
+    , messageHandler_(std::move(other.messageHandler_))
+    , threadManager_(std::move(other.threadManager_))
+    , rpcThreadId_(other.rpcThreadId_) {
+    
+    other.running_ = false;
+    other.rpcThreadId_ = 0;
+}
+
+RpcClient& RpcClient::operator=(RpcClient&& other) noexcept {
+    if (this != &other) {
+        if (running_.load()) {
+            stop();
+        }
+        
+        configPath_ = std::move(other.configPath_);
+        clientId_ = std::move(other.clientId_);
+        running_ = other.running_.load();
+        messageHandler_ = std::move(other.messageHandler_);
+        threadManager_ = std::move(other.threadManager_);
+        rpcThreadId_ = other.rpcThreadId_;
+        
+        other.running_ = false;
+        other.rpcThreadId_ = 0;
+    }
+    return *this;
+}
+
+bool RpcClient::start() {
+    if (running_.load()) {
+        std::cout << "[RPC] Client is already running" << std::endl;
+        return true;
+    }
+
+    try {
+        // Create RPC client thread using ThreadManager
+        rpcThreadId_ = threadManager_->createThread([this]() {
+            this->rpcClientThreadFunc();
+        });
+
+        // Wait for thread initialization with timeout
+        const int MAX_WAIT_MS = 3000;
+        const int POLL_INTERVAL_MS = 100;
+        int elapsed = 0;
+        
+        while (elapsed < MAX_WAIT_MS && !running_.load()) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(POLL_INTERVAL_MS));
+            elapsed += POLL_INTERVAL_MS;
+        }
+
+        if (running_.load()) {
+            std::cout << "[RPC] Client started successfully with thread ID: " << rpcThreadId_ << std::endl;
+            return true;
+        } else {
+            std::cerr << "[RPC] Client failed to start within timeout" << std::endl;
+            return false;
+        }
+        
+    } catch (const std::exception& e) {
+        std::cerr << "[RPC] start() failed: " << e.what() << std::endl;
+        return false;
+    }
+}
+
+void RpcClient::stop() {
+    if (!running_.load()) {
+        return;
+    }
+
+    std::cout << "[RPC] Stopping RPC client..." << std::endl;
+    running_.store(false);
+
+    try {
+        // Stop the thread using ThreadManager (like ur-licence-mann)
+        if (rpcThreadId_ > 0) {
+            threadManager_->stopThread(rpcThreadId_);
+        }
+        
+        std::cout << "[RPC] Client stopped" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "[RPC] Error stopping client: " << e.what() << std::endl;
+    }
+}
+
+bool RpcClient::isRunning() const {
+    return running_.load();
+}
+
+void RpcClient::setMessageHandler(std::function<void(const std::string&, const std::string&)> handler) {
+    messageHandler_ = handler;
+}
+
+void RpcClient::sendResponse(const std::string& topic, const std::string& response) {
+    if (!running_.load()) {
+        std::cerr << "[RPC] Cannot send response - client not running" << std::endl;
+        return;
+    }
+
+    try {
+        if (direct_client_publish_raw_message(topic.c_str(), response.c_str(),
+                                              response.size()) != 0) {
+            std::cerr << "[RPC] Failed to publish message" << std::endl;
+        } else {
+            std::cout << "[RPC] Response sent to topic: " << topic << std::endl;
+        }
+    } catch (const std::exception& e) {
+        std::cerr << "[RPC] Failed to send response: " << e.what() << std::endl;
+    }
+}
+
+const std::string& RpcClient::getClientId() const {
+    return clientId_;
+}
+
+const std::string& RpcClient::getConfigPath() const {
+    return configPath_;
+}
+
+void RpcClient::rpcClientThreadFunc() {
+    try {
+        // Validate message handler is set before starting
+        if (!messageHandler_) {
+            std::cerr << "[RPC] ERROR: No message handler set!" << std::endl;
+            running_.store(false);
+            return;
+        }
+
+        std::cout << "[RPC] Creating client thread context..." << std::endl;
+
+        // Create thread context - this will handle library initialization and client creation
+        direct_client_thread_t* ctx = direct_client_thread_create(configPath_.c_str());
+        
+        if (!ctx) {
+            std::cerr << "[RPC] Failed to create client thread context" << std::endl;
+            running_.store(false);
+            return;
+        }
+
+        // CRITICAL: Set message handler BEFORE starting the thread
+        // The thread context now stores the handler and will use it when creating the client
+        direct_client_set_message_handler(ctx, staticMessageHandler, this);
+        std::cout << "[RPC] Custom message handler registered on thread context" << std::endl;
+
+        // Start the client thread - it will initialize the library, create a client with our custom handler,
+        // set it as the global client, connect, and subscribe to topics
+        if (direct_client_thread_start(ctx) != 0) {
+            std::cerr << "[RPC] Failed to start client thread" << std::endl;
+            direct_client_thread_destroy(ctx);
+            running_.store(false);
+            return;
+        }
+
+        // Set running flag immediately after thread starts to prevent premature shutdown
+        running_.store(true);
+        std::cout << "[RPC] Client thread started, waiting for connection..." << std::endl;
+
+        // Wait for connection establishment
+        if (!direct_client_thread_wait_for_connection(ctx, 10000)) {
+            std::cerr << "[RPC] Connection timeout" << std::endl;
+            direct_client_thread_stop(ctx);
+            direct_client_thread_destroy(ctx);
+            running_.store(false);
+            return;
+        }
+
+        std::cout << "[RPC] Connected successfully with custom handler active" << std::endl;
+
+        // Main thread loop - keep running until stop is called
+        while (running_.load()) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        }
+
+        std::cout << "[RPC] Shutting down client thread..." << std::endl;
+
+        // Cleanup - stop the thread context which will clean up its client
+        direct_client_thread_stop(ctx);
+        direct_client_thread_destroy(ctx);
+        
+    } catch (const std::exception& e) {
+        std::cerr << "[RPC] Thread function error: " << e.what() << std::endl;
+        running_.store(false);
+    }
+}
+
+void RpcClient::staticMessageHandler(const char* topic, const char* payload,
+                                     size_t payload_len, void* user_data) {
+    RpcClient* self = static_cast<RpcClient*>(user_data);
+    if (!self || !self->messageHandler_) {
+        return;
+    }
+
+    const std::string topicStr(topic ? topic : "");
+    const std::string payloadStr(payload ? payload : "", payload_len);
+
+    self->messageHandler_(topicStr, payloadStr);
+}

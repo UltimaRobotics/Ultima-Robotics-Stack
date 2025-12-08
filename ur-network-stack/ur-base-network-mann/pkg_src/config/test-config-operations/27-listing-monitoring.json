@@ -1,0 +1,7 @@
+{
+  "description": "Start and stop network monitoring",
+  "listing": {
+    "start_monitoring": true,
+    "stop_monitoring": true
+  }
+}

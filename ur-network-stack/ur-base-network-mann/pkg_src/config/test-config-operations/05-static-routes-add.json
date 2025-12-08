@@ -1,0 +1,29 @@
+{
+  "description": "Add multiple static routes",
+  "static_routes": [
+    {
+      "operation": "add",
+      "target": "10.0.0.0/8",
+      "gateway": "192.168.1.1",
+      "interface": "br-lan",
+      "metric": 10,
+      "enabled": true
+    },
+    {
+      "operation": "add",
+      "target": "172.16.0.0/12",
+      "gateway": "192.168.1.1",
+      "interface": "br-lan",
+      "metric": 20,
+      "enabled": true
+    },
+    {
+      "operation": "add",
+      "target": "192.168.100.0/24",
+      "gateway": "192.168.1.254",
+      "interface": "br-lan",
+      "metric": 5,
+      "enabled": true
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "description": "List all static routes configuration",
+  "listing": {
+    "list_static_routes": true
+  }
+}

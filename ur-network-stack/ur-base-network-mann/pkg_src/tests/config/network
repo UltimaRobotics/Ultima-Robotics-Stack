@@ -1,0 +1,4 @@
+config interface 'lan'
+	option dns '1.1.1.1 8.8.8.8'
+	option mtu '1500'
+	option proto 'dhcp'

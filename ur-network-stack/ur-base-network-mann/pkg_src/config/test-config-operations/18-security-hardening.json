@@ -1,0 +1,64 @@
+{
+  "description": "Security-focused network configuration",
+  "network": {
+    "connection_mode": "static",
+    "mtu_size": 1400
+  },
+  "firewall_rules": [
+    {
+      "operation": "add",
+      "name": "drop-all-wan-lan",
+      "type": "rule",
+      "src": "wan",
+      "dest": "lan",
+      "target": "DROP",
+      "proto": "all",
+      "enabled": true
+    },
+    {
+      "operation": "add",
+      "name": "allow-established",
+      "type": "rule",
+      "src": "lan",
+      "dest": "wan",
+      "target": "ACCEPT",
+      "proto": "all",
+      "enabled": true
+    },
+    {
+      "operation": "add",
+      "name": "allow-dns",
+      "type": "rule",
+      "src": "lan",
+      "dest": "wan",
+      "target": "ACCEPT",
+      "proto": "udp",
+      "dest_port": "53",
+      "enabled": true
+    },
+    {
+      "operation": "add",
+      "name": "allow-dhcp",
+      "type": "rule",
+      "src": "lan",
+      "dest": "wan",
+      "target": "ACCEPT",
+      "proto": "udp",
+      "src_port": "68",
+      "dest_port": "67",
+      "enabled": true
+    }
+  ],
+  "nat_rules": [
+    {
+      "operation": "add",
+      "name": "strict-masquerade",
+      "type": "nat",
+      "src": "lan",
+      "dest": "wan",
+      "target": "MASQUERADE",
+      "proto": "",
+      "enabled": true
+    }
+  ]
+}

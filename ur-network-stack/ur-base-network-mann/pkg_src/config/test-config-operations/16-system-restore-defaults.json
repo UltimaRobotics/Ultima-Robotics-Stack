@@ -1,0 +1,7 @@
+{
+  "description": "Restore default network settings",
+  "system": {
+    "restart_interface": false,
+    "restore_defaults": true
+  }
+}

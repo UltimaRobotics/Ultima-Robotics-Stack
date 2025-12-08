@@ -1,0 +1,13 @@
+{
+  "description": "List all network configurations and status information",
+  "listing": {
+    "show_status": true,
+    "show_interface_info": true,
+    "list_profiles": true,
+    "list_static_routes": true,
+    "list_vlans": true,
+    "list_firewall_rules": true,
+    "list_bridges": true,
+    "list_nat_rules": true
+  }
+}

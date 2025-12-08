@@ -1,0 +1,33 @@
+{
+  "client_id": "ur-wireless-mann",
+  "broker_host": "0.0.0.0",
+  "broker_port": 1899,
+  "keepalive": 60,
+  "clean_session": true,
+  "qos": 0,
+  "connect_timeout": 10,
+  "message_timeout": 30,
+  "auto_reconnect": true,
+  "reconnect_delay_min": 1,
+  "reconnect_delay_max": 60,
+  "use_tls": false,
+  "heartbeat": {
+    "enabled": true,
+    "interval_seconds": 2,
+    "topic": "clients/ur-wireless-mann/heartbeat",
+    "payload": "{\"client\":\"ur-wireless-mann\",\"status\":\"alive\",\"type\":\"heartbeat\",\"ssl\":false}"
+  },
+  "json_added_pubs": {
+    "topics": [
+      "clients/ur-wireless-mann/heartbeat",
+      "direct_messaging/ur-wireless-mann/responses"
+    ]
+  },
+  "json_added_subs": {
+    "topics": ["direct_messaging/ur-wireless-mann/requests"]
+  },
+  "relay": {
+    "enabled": false,
+    "conditional_relay": false
+  }
+}

@@ -15,6 +15,7 @@ typedef struct {
     uint16_t ssl_port;
     uint32_t max_clients;
     uint32_t max_message_size;
+    uint32_t buffer_size;
     uint16_t keep_alive_interval;
     
     // SSL/TLS settings

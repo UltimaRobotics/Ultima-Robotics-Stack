@@ -1,0 +1,121 @@
+{
+  "description": "Complete network setup with all configurations",
+  "network": {
+    "connection_mode": "static",
+    "static_ip": "192.168.1.1",
+    "subnet_mask": "255.255.255.0",
+    "gateway": "192.168.1.254",
+    "dns_servers": ["8.8.8.8", "1.1.1.1"],
+    "mtu_size": 1500
+  },
+  "static_routes": [
+    {
+      "operation": "add",
+      "target": "10.0.0.0/8",
+      "gateway": "192.168.1.254",
+      "interface": "br-lan",
+      "metric": 10,
+      "enabled": true
+    },
+    {
+      "operation": "add",
+      "target": "172.16.0.0/12",
+      "gateway": "192.168.1.254",
+      "interface": "br-lan",
+      "metric": 20,
+      "enabled": true
+    }
+  ],
+  "vlans": [
+    {
+      "operation": "add",
+      "name": "mgmt-network",
+      "vlan_id": 100,
+      "base_interface": "eth0",
+      "protocol": "802.1q",
+      "enabled": true
+    },
+    {
+      "operation": "add",
+      "name": "guest-network",
+      "vlan_id": 200,
+      "base_interface": "eth1",
+      "protocol": "802.1q",
+      "enabled": true
+    }
+  ],
+  "bridges": [
+    {
+      "operation": "add",
+      "name": "lan-bridge",
+      "interfaces": ["eth0", "eth1", "eth2"],
+      "stp": "on",
+      "forward_delay": "15",
+      "max_age": "20",
+      "hello_time": "2",
+      "enabled": true
+    }
+  ],
+  "firewall_rules": [
+    {
+      "operation": "add",
+      "name": "allow-ssh-wan",
+      "type": "rule",
+      "src": "wan",
+      "dest": "lan",
+      "target": "ACCEPT",
+      "proto": "tcp",
+      "src_port": "22",
+      "enabled": true
+    },
+    {
+      "operation": "add",
+      "name": "allow-https-wan",
+      "type": "rule",
+      "src": "wan",
+      "dest": "lan",
+      "target": "ACCEPT",
+      "proto": "tcp",
+      "src_port": "443",
+      "enabled": true
+    },
+    {
+      "operation": "add",
+      "name": "allow-icmp",
+      "type": "rule",
+      "src": "wan",
+      "dest": "lan",
+      "target": "ACCEPT",
+      "proto": "icmp",
+      "enabled": true
+    }
+  ],
+  "nat_rules": [
+    {
+      "operation": "add",
+      "name": "masquerade-lan",
+      "type": "nat",
+      "src": "lan",
+      "dest": "wan",
+      "target": "MASQUERADE",
+      "proto": "",
+      "enabled": true
+    },
+    {
+      "operation": "add",
+      "name": "port-forward-ssh",
+      "type": "redirect",
+      "src": "wan",
+      "dest": "lan",
+      "target": "DNAT",
+      "proto": "tcp",
+      "src_port": "2222",
+      "dest_port": "22",
+      "enabled": true
+    }
+  ],
+  "system": {
+    "restart_interface": true,
+    "restore_defaults": false
+  }
+}

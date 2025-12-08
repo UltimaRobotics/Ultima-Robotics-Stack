@@ -23,7 +23,13 @@ std::string CommandExecutor::executeCommand(const std::string& command) {
     
     int exit_code = pclose(pipe);
     if (exit_code != 0) {
-        throw std::runtime_error("Command failed with exit code " + std::to_string(exit_code) + ": " + command);
+        // Check for common permission-related errors
+        if (result.find("Permission denied") != std::string::npos || 
+            result.find("Operation not permitted") != std::string::npos ||
+            exit_code == 4) {  // Permission denied exit code
+            throw std::runtime_error("Permission denied: " + command + " (requires root privileges)");
+        }
+        throw std::runtime_error("Command failed with exit code " + std::to_string(exit_code) + ": " + command + "\nOutput: " + result);
     }
     
     return result;

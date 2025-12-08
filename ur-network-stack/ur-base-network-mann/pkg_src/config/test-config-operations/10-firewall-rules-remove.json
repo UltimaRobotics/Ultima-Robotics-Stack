@@ -1,0 +1,25 @@
+{
+  "description": "Remove firewall rules",
+  "firewall_rules": [
+    {
+      "operation": "remove",
+      "name": "allow-ssh-wan",
+      "type": "rule",
+      "src": "wan",
+      "dest": "lan",
+      "target": "ACCEPT",
+      "proto": "tcp",
+      "enabled": true
+    },
+    {
+      "operation": "remove",
+      "name": "block-p2p",
+      "type": "rule",
+      "src": "lan",
+      "dest": "wan",
+      "target": "DROP",
+      "proto": "tcp",
+      "enabled": true
+    }
+  ]
+}

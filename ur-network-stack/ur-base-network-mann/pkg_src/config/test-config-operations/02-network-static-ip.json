@@ -1,0 +1,9 @@
+{
+  "description": "Set static IP configuration",
+  "network": {
+    "connection_mode": "static",
+    "static_ip": "192.168.1.100",
+    "subnet_mask": "255.255.255.0",
+    "gateway": "192.168.1.1"
+  }
+}

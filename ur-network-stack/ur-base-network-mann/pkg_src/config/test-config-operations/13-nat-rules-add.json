@@ -1,0 +1,50 @@
+{
+  "description": "Add NAT rules",
+  "nat_rules": [
+    {
+      "operation": "add",
+      "name": "port-forward-ssh",
+      "type": "redirect",
+      "src": "wan",
+      "dest": "lan",
+      "target": "DNAT",
+      "proto": "tcp",
+      "src_port": "2222",
+      "dest_port": "22",
+      "enabled": true
+    },
+    {
+      "operation": "add",
+      "name": "port-forward-https",
+      "type": "redirect",
+      "src": "wan",
+      "dest": "lan",
+      "target": "DNAT",
+      "proto": "tcp",
+      "src_port": "8443",
+      "dest_port": "443",
+      "enabled": true
+    },
+    {
+      "operation": "add",
+      "name": "masquerade-lan",
+      "type": "nat",
+      "src": "lan",
+      "dest": "wan",
+      "target": "MASQUERADE",
+      "proto": "",
+      "enabled": true
+    },
+    {
+      "operation": "add",
+      "name": "dmz-forward",
+      "type": "redirect",
+      "src": "wan",
+      "dest": "lan",
+      "target": "DNAT",
+      "proto": "",
+      "dest_ip": "192.168.1.100",
+      "enabled": true
+    }
+  ]
+}

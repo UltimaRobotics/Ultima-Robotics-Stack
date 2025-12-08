@@ -1,0 +1,19 @@
+{
+  "description": "Remove network bridges",
+  "bridges": [
+    {
+      "operation": "remove",
+      "name": "guest-bridge",
+      "interfaces": ["eth3", "eth4"],
+      "stp": "off",
+      "enabled": true
+    },
+    {
+      "operation": "remove",
+      "name": "iot-bridge",
+      "interfaces": ["eth5"],
+      "stp": "off",
+      "enabled": true
+    }
+  ]
+}

@@ -10,24 +10,61 @@ json NatCollector::collectDataJson() {
     
     try {
         std::vector<NatRule> rules;
+        bool hasPermission = true;
+        std::string permissionError = "";
         
         if (CommandExecutor::commandExists("iptables")) {
-            auto iptablesRules = parseIptablesNat();
-            rules.insert(rules.end(), iptablesRules.begin(), iptablesRules.end());
+            try {
+                auto iptablesRules = parseIptablesNat();
+                rules.insert(rules.end(), iptablesRules.begin(), iptablesRules.end());
+            } catch (const std::exception& e) {
+                std::string errorMsg = e.what();
+                if (errorMsg.find("Permission denied") != std::string::npos) {
+                    hasPermission = false;
+                    permissionError = "iptables requires root privileges";
+                } else {
+                    throw; // Re-throw non-permission errors
+                }
+            }
         }
         
-        if (CommandExecutor::commandExists("nft")) {
-            auto nftablesRules = parseNftablesNat();
-            rules.insert(rules.end(), nftablesRules.begin(), nftablesRules.end());
+        if (hasPermission && CommandExecutor::commandExists("nft")) {
+            try {
+                auto nftablesRules = parseNftablesNat();
+                rules.insert(rules.end(), nftablesRules.begin(), nftablesRules.end());
+            } catch (const std::exception& e) {
+                std::string errorMsg = e.what();
+                if (errorMsg.find("Permission denied") != std::string::npos) {
+                    hasPermission = false;
+                    permissionError = "nft requires root privileges";
+                } else {
+                    throw; // Re-throw non-permission errors
+                }
+            }
         }
         
-        if (CommandExecutor::commandExists("conntrack")) {
-            auto conntrackRules = parseConntrack();
-            rules.insert(rules.end(), conntrackRules.begin(), conntrackRules.end());
+        if (hasPermission && CommandExecutor::commandExists("conntrack")) {
+            try {
+                auto conntrackRules = parseConntrack();
+                rules.insert(rules.end(), conntrackRules.begin(), conntrackRules.end());
+            } catch (const std::exception& e) {
+                std::string errorMsg = e.what();
+                if (errorMsg.find("Permission denied") != std::string::npos) {
+                    hasPermission = false;
+                    permissionError = "conntrack requires root privileges";
+                } else {
+                    throw; // Re-throw non-permission errors
+                }
+            }
         }
         
         result["data"] = formatNatDataJson(rules);
         result["success"] = true;
+        
+        // Add warning if permission was denied
+        if (!hasPermission && !permissionError.empty()) {
+            result["warning"] = permissionError;
+        }
         
     } catch (const std::exception& e) {
         result["success"] = false;

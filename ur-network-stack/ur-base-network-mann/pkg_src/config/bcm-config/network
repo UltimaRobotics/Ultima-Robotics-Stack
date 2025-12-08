@@ -1,0 +1,7 @@
+config interface 'lan'
+	option dns '8.8.8.8 1.1.1.1'
+	option gateway '192.168.1.1'
+	option ipaddr '192.168.1.100'
+	option mtu '1500'
+	option netmask '255.255.255.0'
+	option proto 'static'

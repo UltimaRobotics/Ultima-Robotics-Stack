@@ -1,0 +1,6 @@
+{
+  "description": "List all network bridge configurations",
+  "listing": {
+    "list_bridges": true
+  }
+}

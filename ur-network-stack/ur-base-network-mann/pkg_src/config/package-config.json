@@ -1,0 +1,14 @@
+{
+  "config_files": {
+    "network": "/etc/config/network",
+    "firewall": "/etc/config/firewall",
+    "static_routes": "/etc/config/network",
+    "resolv_conf": "/etc/resolv.conf",
+    "network_profiles": "/etc/network-profiles",
+    "network_backups": "/etc/network-backups"
+  },
+  "defaults": {
+    "interface": "br-lan",
+    "connection_mode": "static"
+  }
+}

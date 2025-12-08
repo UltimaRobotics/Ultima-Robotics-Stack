@@ -1,0 +1,7 @@
+{
+  "description": "Show comprehensive network status and information",
+  "listing": {
+    "show_status": true,
+    "show_interface_info": true
+  }
+}

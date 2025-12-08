@@ -1,0 +1,21 @@
+{
+  "description": "Remove VLAN configurations",
+  "vlans": [
+    {
+      "operation": "remove",
+      "name": "mgmt-vlan",
+      "vlan_id": 100,
+      "base_interface": "eth0",
+      "protocol": "802.1q",
+      "enabled": true
+    },
+    {
+      "operation": "remove",
+      "name": "guest-vlan",
+      "vlan_id": 200,
+      "base_interface": "eth1",
+      "protocol": "802.1q",
+      "enabled": true
+    }
+  ]
+}

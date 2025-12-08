@@ -1,0 +1,6 @@
+{
+  "description": "Set network connection mode to DHCP",
+  "network": {
+    "connection_mode": "dhcp"
+  }
+}

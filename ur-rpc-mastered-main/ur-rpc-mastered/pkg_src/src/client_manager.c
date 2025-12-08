@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <errno.h>
 #include <time.h>
 
 int client_manager_init(client_manager_t *manager, uint32_t max_clients) {
@@ -59,7 +58,11 @@ static void client_free_pending_messages(mqtt_client_t *client) {
     pending_message_t *msg = client->pending_out;
     while (msg) {
         pending_message_t *next = msg->next;
-        free(msg->data);
+        
+        // Safety check before freeing
+        if (msg->data) {
+            free(msg->data);
+        }
         free(msg);
         msg = next;
     }
@@ -69,7 +72,11 @@ static void client_free_pending_messages(mqtt_client_t *client) {
     msg = client->pending_in;
     while (msg) {
         pending_message_t *next = msg->next;
-        free(msg->data);
+        
+        // Safety check before freeing
+        if (msg->data) {
+            free(msg->data);
+        }
         free(msg);
         msg = next;
     }
@@ -122,33 +129,37 @@ void client_manager_remove_client(client_manager_t *manager, int socket_fd) {
     mqtt_client_t **current = &manager->clients;
     while (*current) {
         mqtt_client_t *client = *current;
-        if (client->socket_fd == socket_fd) {
-            // Remove from linked list
-            *current = client->next;
-            
-            // Cleanup client resources
-            free(client->username);
-            free(client->password);
-            free(client->will_topic);
-            free(client->will_message);
-            
-            client_free_subscriptions(client);
-            client_free_pending_messages(client);
-            
-            if (client->ssl_ctx) {
-                ssl_free_client_context(client->ssl_ctx);
-            }
-            
-            free(client);
-            manager->active_count--;
-            
-            LOG_DEBUG("Removed client fd=%d (active=%u)", socket_fd, manager->active_count);
-            return;
+        
+        // Safety check: ensure client pointer is valid
+        if (!client || client->socket_fd != socket_fd) {
+            current = &client->next;
+            continue;
         }
-        current = &client->next;
+        
+        // Remove from linked list
+        *current = client->next;
+        
+        // Cleanup client resources
+        if (client->username) free(client->username);
+        if (client->password) free(client->password);
+        if (client->will_topic) free(client->will_topic);
+        if (client->will_message) free(client->will_message);
+        
+        client_free_subscriptions(client);
+        client_free_pending_messages(client);
+        
+        if (client->ssl_ctx) {
+            ssl_free_client_context(client->ssl_ctx);
+        }
+        
+        free(client);
+        manager->active_count--;
+        
+        LOG_DEBUG("Removed client fd=%d (active=%u)", socket_fd, manager->active_count);
+        return;
     }
     
-    LOG_WARNING("Client fd=%d not found for removal", socket_fd);
+    LOG_DEBUG("Client fd=%d not found for removal", socket_fd);
 }
 
 mqtt_client_t* client_manager_get_client(client_manager_t *manager, int socket_fd) {
@@ -365,6 +376,13 @@ bool client_manager_check_rate_limit(mqtt_client_t *client, uint32_t max_rate) {
     if (!client || max_rate == 0) return true;
     
     time_t now = time(NULL);
+    
+    // Debug: Check for corrupted values
+    if (client->publish_count_minute > 1000000) {
+        LOG_ERROR("Corrupted publish_count_minute detected: %u (resetting)", client->publish_count_minute);
+        client->publish_count_minute = 0;
+        client->last_publish_time = now;
+    }
     
     // Reset counter every minute
     if (now - client->last_publish_time >= 60) {

@@ -10,7 +10,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <sys/stat.h>
-#include <cJSON.h>
+#include <cJSON.h>  // Note: cJSON is built as part of the build process - IDE linting may not find this header
 
 static int handle_mqtt_packet(mqtt_client_t *client, mqtt_broker_t *broker, 
                               const mqtt_fixed_header_t *header, const uint8_t *payload, uint32_t payload_len);
@@ -18,7 +18,7 @@ static int handle_mqtt_packet(mqtt_client_t *client, mqtt_broker_t *broker,
 int message_handler_process_client(mqtt_client_t *client, mqtt_broker_t *broker) {
     if (!client || !broker) return -1;
 
-    uint8_t buffer[MQTT_BUFFER_SIZE];
+    uint8_t buffer[broker->config.buffer_size];
     ssize_t received = client_manager_recv(client, buffer, sizeof(buffer));
 
     if (received < 0) {
@@ -32,8 +32,25 @@ int message_handler_process_client(mqtt_client_t *client, mqtt_broker_t *broker)
     }
 
     // Add received data to client's read buffer
-    if (client->read_buffer_len + (size_t)received > sizeof(client->read_buffer)) {
-        LOG_WARNING("Client fd=%d read buffer overflow", client->socket_fd);
+    if (client->read_buffer_len + (size_t)received > broker->config.buffer_size) {
+        // Try to parse what we can to provide useful debugging info
+        if (client->read_buffer_len >= 1) {
+            uint8_t first_byte = client->read_buffer[0];
+            uint8_t msg_type = (first_byte >> 4) & 0x0F;
+            uint8_t flags = first_byte & 0x0F;
+            
+            LOG_WARNING("Client fd=%d read buffer overflow: current_buffer=%zu, new_data=%zd, max_buffer=%u, "
+                       "msg_type=%d, flags=0x%x, client_id=%s", 
+                       client->socket_fd, client->read_buffer_len, received, 
+                       broker->config.buffer_size, msg_type, flags,
+                       client->client_id[0] ? client->client_id : "unknown");
+        } else {
+            LOG_WARNING("Client fd=%d read buffer overflow: current_buffer=%zu, new_data=%zd, max_buffer=%u, "
+                       "client_id=%s", 
+                       client->socket_fd, client->read_buffer_len, received, 
+                       broker->config.buffer_size,
+                       client->client_id[0] ? client->client_id : "unknown");
+        }
         return -1;
     }
 
@@ -299,6 +316,18 @@ int message_handler_connect(mqtt_client_t *client, mqtt_broker_t *broker, const 
 
 int message_handler_publish(mqtt_client_t *client, mqtt_broker_t *broker, const mqtt_publish_t *publish) {
     if (!client || !broker || !publish) return -1;
+
+    // Validate message size against configured maximum
+    if (publish->payload_len > broker->config.max_message_size) {
+        LOG_WARNING("Message size validation failed: payload_len=%u, max_allowed=%u, "
+                   "topic='%s', qos=%d, retain=%s, client_id=%s, fd=%d", 
+                   publish->payload_len, broker->config.max_message_size, 
+                   publish->topic ? publish->topic : "unknown",
+                   publish->qos, publish->retain ? "yes" : "no",
+                   client->client_id[0] ? client->client_id : "unknown",
+                   client->socket_fd);
+        return -1;
+    }
 
     // Validate topic
     if (!mqtt_validate_topic(publish->topic)) {
@@ -965,18 +994,21 @@ int message_handler_broadcast(mqtt_broker_t *broker, const char *topic,
                     publish.packet_id = client_manager_get_next_packet_id(client);
                 }
 
-                uint8_t publish_buffer[MQTT_BUFFER_SIZE];
+                uint8_t publish_buffer[broker->config.buffer_size];
                 int publish_len = mqtt_serialize_publish(publish_buffer, sizeof(publish_buffer), &publish);
 
                 if (publish_len > 0) {
+                    // Add to pending for QoS > 0 BEFORE sending (correct MQTT flow)
+                    if (effective_qos > 0) {
+                        client_manager_add_pending_message(client, publish.packet_id, 
+                                                         publish_buffer, publish_len, effective_qos);
+                    }
+                    
                     if (message_handler_send_packet(client, publish_buffer, publish_len) == 0) {
                         subscriber_count++;
-
-                        // Add to pending for QoS > 0
-                        if (effective_qos > 0) {
-                            client_manager_add_pending_message(client, publish.packet_id, 
-                                                             publish_buffer, publish_len, effective_qos);
-                        }
+                    } else if (effective_qos > 0) {
+                        // Remove from pending if send failed
+                        client_manager_remove_pending_message(client, publish.packet_id, true);
                     }
                 }
             }
@@ -1127,19 +1159,22 @@ int message_handler_send_cert_response(mqtt_client_t *client, mqtt_broker_t *bro
     publish.retain = false;
     publish.packet_id = client_manager_get_next_packet_id(client);
 
-    uint8_t publish_buffer[MQTT_BUFFER_SIZE];
+    uint8_t publish_buffer[broker->config.buffer_size];
     int publish_len = mqtt_serialize_publish(publish_buffer, sizeof(publish_buffer), &publish);
 
     if (publish_len > 0) {
+        // Add to pending for QoS 1 BEFORE sending (correct MQTT flow)
+        client_manager_add_pending_message(client, publish.packet_id, 
+                                         publish_buffer, publish_len, 1);
+        
         int result = message_handler_send_packet(client, publish_buffer, publish_len);
         if (result == 0) {
             LOG_DEBUG("Sent certificate response to client %s on topic %s", 
                      client->client_id, response_topic);
-
-            // Add to pending for QoS 1
-            client_manager_add_pending_message(client, publish.packet_id, 
-                                             publish_buffer, publish_len, 1);
             return 0;
+        } else {
+            // Remove from pending if send failed
+            client_manager_remove_pending_message(client, publish.packet_id, true);
         }
     }
 
@@ -1180,17 +1215,22 @@ int message_handler_cert_list(mqtt_client_t *client, mqtt_broker_t *broker) {
         publish.retain = false;
         publish.packet_id = client_manager_get_next_packet_id(client);
 
-        uint8_t publish_buffer[MQTT_BUFFER_SIZE];
+        uint8_t publish_buffer[broker->config.buffer_size];
         int publish_len = mqtt_serialize_publish(publish_buffer, sizeof(publish_buffer), &publish);
 
         if (publish_len > 0) {
+            // Add to pending for QoS 1 BEFORE sending (correct MQTT flow)
+            client_manager_add_pending_message(client, publish.packet_id, 
+                                             publish_buffer, publish_len, 1);
+            
             int result = message_handler_send_packet(client, publish_buffer, publish_len);
             if (result == 0) {
                 LOG_DEBUG("Sent certificate list to client %s", client->client_id);
-                client_manager_add_pending_message(client, publish.packet_id, 
-                                                 publish_buffer, publish_len, 1);
                 free(cert_list_json);
                 return 0;
+            } else {
+                // Remove from pending if send failed
+                client_manager_remove_pending_message(client, publish.packet_id, true);
             }
         }
 
@@ -1250,19 +1290,24 @@ int message_handler_cert_revoke(mqtt_client_t *client, mqtt_broker_t *broker, co
         publish.retain = false;
         publish.packet_id = client_manager_get_next_packet_id(client);
 
-        uint8_t publish_buffer[MQTT_BUFFER_SIZE];
+        uint8_t publish_buffer[broker->config.buffer_size];
         int publish_len = mqtt_serialize_publish(publish_buffer, sizeof(publish_buffer), &publish);
 
         if (publish_len > 0) {
+            // Add to pending for QoS 1 BEFORE sending (correct MQTT flow)
+            client_manager_add_pending_message(client, publish.packet_id, 
+                                             publish_buffer, publish_len, 1);
+            
             int result = message_handler_send_packet(client, publish_buffer, publish_len);
             if (result == 0) {
                 LOG_DEBUG("Sent certificate revocation response to client %s", client->client_id);
-                client_manager_add_pending_message(client, publish.packet_id, 
-                                                 publish_buffer, publish_len, 1);
                 free(response_str);
                 cJSON_Delete(response_json);
                 cJSON_Delete(json);
                 return 0;
+            } else {
+                // Remove from pending if send failed
+                client_manager_remove_pending_message(client, publish.packet_id, true);
             }
         }
 

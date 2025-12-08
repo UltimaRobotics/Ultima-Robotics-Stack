@@ -1,0 +1,6 @@
+{
+  "description": "List all network profiles",
+  "listing": {
+    "list_profiles": true
+  }
+}

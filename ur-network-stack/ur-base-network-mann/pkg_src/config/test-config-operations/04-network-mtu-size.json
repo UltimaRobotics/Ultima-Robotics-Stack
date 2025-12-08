@@ -1,0 +1,6 @@
+{
+  "description": "Set MTU size for network interface",
+  "network": {
+    "mtu_size": 9000
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "description": "Remove NAT rules",
+  "nat_rules": [
+    {
+      "operation": "remove",
+      "name": "port-forward-ssh",
+      "type": "redirect",
+      "src": "wan",
+      "dest": "lan",
+      "target": "DNAT",
+      "proto": "tcp",
+      "enabled": true
+    },
+    {
+      "operation": "remove",
+      "name": "dmz-forward",
+      "type": "redirect",
+      "src": "wan",
+      "dest": "lan",
+      "target": "DNAT",
+      "proto": "",
+      "enabled": true
+    }
+  ]
+}
