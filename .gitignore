@@ -4,27 +4,27 @@
 **/*build*/
 
 # Specific build folders in Ultima-Robotics-Stack
-ur-licence-mann/build/
+ur-licence-mann/build/*
 
-ur-mavlink-stack/ur-mavcollector-v2.0/build/
-ur-mavlink-stack/ur-mavdiscovery-v1.1/build/
-ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/
+ur-mavlink-stack/ur-mavcollector-v2.0/build/*
+ur-mavlink-stack/ur-mavdiscovery-v1.1/build/*
+ur-mavlink-stack/ur-mavrouter-v1.1-rpc/pkg_src/build/*
 
-ur-network-stack/ur-netbench-mann/build/
-ur-network-stack/ur-network-collector/build/
-ur-network-stack/ur-wireless-mann/build/
-ur-network-stack/ur-base-network-mann/build/
+ur-network-stack/ur-netbench-mann/build/*
+ur-network-stack/ur-network-collector/build/*
+ur-network-stack/ur-wireless-mann/build/*
+ur-network-stack/ur-base-network-mann/build/*
 
-ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/
+ur-rpc-mastered-main/ur-rpc-mastered/pkg_src/build/*
 
-ur-qmi-pack/ur-qmi-ident/build/
-ur-qmi-pack/ur-qmi-launcher/build/
-ur-qmi-pack/ur-qmi-watchdog/build/
+ur-qmi-pack/ur-qmi-ident/build/*
+ur-qmi-pack/ur-qmi-launcher/build/*
+ur-qmi-pack/ur-qmi-watchdog/build/*
 
-ur-vpn-extended/build/
+ur-vpn-extended/build/*
 
-ur-webif/backend-datalink/build/
-ur-webif/frontendpp/build/
+ur-webif/backend-datalink/build/*
+ur-webif/frontendpp/build/*
 
 # CMake generated files
 **/CMakeCache.txt
