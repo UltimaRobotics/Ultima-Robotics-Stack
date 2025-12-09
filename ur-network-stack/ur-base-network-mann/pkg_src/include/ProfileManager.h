@@ -13,7 +13,7 @@ public:
     ProfileManager();
     ~ProfileManager();
 
-    bool initialize(const std::string& profileDir = "/etc/network-profiles");
+    bool initialize(const std::string& profileDir = "/etc/Ultima-Config/ur-base-network-mann/network-profiles");
     
     // Profile operations
     bool createProfile(const ConnectionProfile& profile);

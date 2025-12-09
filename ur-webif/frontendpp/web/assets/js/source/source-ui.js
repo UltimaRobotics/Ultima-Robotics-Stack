@@ -27,6 +27,15 @@ import { initializeBackupRestore, cleanupBackupRestore } from './backup-restore/
 // Import MAVLink extension modules
 import { initializeMavlinkExtension, cleanupMavlinkExtension, getMavlinkExtensionContentHTML } from './mavlink-extension/index.js';
 
+// Import wired configuration modules
+import { initializeWired, getWiredConfigContentHTML } from './wired/index.js';
+
+// Import wireless configuration modules
+import { initializeWireless, getWirelessConfigContentHTML } from './wireless/index.js';
+
+// Import cellular configuration modules
+import { initializeCellular, getCellularConfigContentHTML } from './cellular/index.js';
+
 class SourceUI {
     constructor(sourceManager) {
         this.sourceManager = sourceManager;
@@ -355,6 +364,36 @@ class SourceUI {
             }
         }
         
+        // Cleanup wired config if it's the current tab
+        if (this.currentSection === 'wired-config') {
+            if (this.tabComponents.has('wired-config')) {
+                const component = this.tabComponents.get('wired-config');
+                if (component && typeof component.destroy === 'function') {
+                    component.destroy();
+                }
+                this.tabComponents.delete('wired-config');
+            }
+            // Clear global wired UI reference
+            if (window.wiredUI) {
+                delete window.wiredUI;
+            }
+        }
+        
+        // Cleanup wireless config if it's the current tab
+        if (this.currentSection === 'wireless-config') {
+            if (this.tabComponents.has('wireless-config')) {
+                const component = this.tabComponents.get('wireless-config');
+                if (component && typeof component.destroy === 'function') {
+                    component.destroy();
+                }
+                this.tabComponents.delete('wireless-config');
+            }
+            // Clear global wireless UI reference
+            if (window.wirelessUI) {
+                delete window.wirelessUI;
+            }
+        }
+        
         // Cleanup any stored components for current tab
         if (this.tabComponents.has(this.currentSection)) {
             const component = this.tabComponents.get(this.currentSection);
@@ -482,6 +521,15 @@ class SourceUI {
         switch (sectionId) {
             case 'system-dashboard':
                 this.initializeDashboard();
+                break;
+            case 'wired-config':
+                this.initializeWiredConfig();
+                break;
+            case 'wireless-config':
+                this.initializeWirelessConfig();
+                break;
+            case 'cellular-config':
+                this.initializeCellularConfig();
                 break;
             case 'network-priority':
                 this.initializeNetworkPriority();
@@ -965,15 +1013,15 @@ class SourceUI {
     }
     // Placeholder methods for other sections
     createWiredConfigContent() { 
-        return this.createDefaultContent(); 
+        return getWiredConfigContentHTML();
     }
     
     createWirelessConfigContent() { 
-        return this.createDefaultContent(); 
+        return getWirelessConfigContentHTML();
     }
     
     createCellularConfigContent() { 
-        return this.createDefaultContent(); 
+        return getCellularConfigContentHTML(); 
     }
     
     createVPNConfigContent() { 
@@ -1102,6 +1150,117 @@ class SourceUI {
     
     loadDefaultSection() {
         this.switchToTab('system-dashboard');
+    }
+    
+    /**
+     * Initialize Wired Configuration section
+     */
+    initializeWiredConfig() {
+        console.log('[SOURCE-UI] Initializing Wired Configuration section...');
+        
+        try {
+            // Get the wired config container
+            const wiredContainer = document.getElementById('wired-config-container');
+            if (!wiredContainer) {
+                console.error('[SOURCE-UI] Wired config container not found');
+                return;
+            }
+            
+            // Initialize the wired configuration module
+            const wiredModule = initializeWired(this.sourceManager.httpClient, wiredContainer);
+            
+            // Store the module reference for cleanup
+            this.tabComponents.set('wired-config', wiredModule);
+            
+            console.log('[SOURCE-UI] Wired Configuration section initialized successfully');
+        } catch (error) {
+            console.error('[SOURCE-UI] Failed to initialize Wired Configuration section:', error);
+            
+            // Show error in the container
+            const wiredContainer = document.getElementById('wired-config-container');
+            if (wiredContainer) {
+                wiredContainer.innerHTML = `
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-6 m-4">
+                        <h3 class="text-red-800 font-semibold mb-2">Initialization Error</h3>
+                        <p class="text-red-600">Failed to load wired configuration: ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+    }
+    
+    /**
+     * Initialize Wireless Configuration section
+     */
+    initializeWirelessConfig() {
+        console.log('[SOURCE-UI] Initializing Wireless Configuration section...');
+        
+        try {
+            // Get the wireless config container
+            const wirelessContainer = document.getElementById('wireless-config-container');
+            if (!wirelessContainer) {
+                console.error('[SOURCE-UI] Wireless config container not found');
+                return;
+            }
+            
+            // Initialize the wireless configuration module
+            const wirelessModule = initializeWireless(this.sourceManager.httpClient, wirelessContainer);
+            
+            // Store the module reference for cleanup
+            this.tabComponents.set('wireless-config', wirelessModule);
+            
+            console.log('[SOURCE-UI] Wireless Configuration section initialized successfully');
+        } catch (error) {
+            console.error('[SOURCE-UI] Failed to initialize Wireless Configuration section:', error);
+            
+            // Show error in the container
+            const wirelessContainer = document.getElementById('wireless-config-container');
+            if (wirelessContainer) {
+                wirelessContainer.innerHTML = `
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-6 m-4">
+                        <h3 class="text-red-800 font-semibold mb-2">Initialization Error</h3>
+                        <p class="text-red-600">Failed to load wireless configuration: ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+    }
+    
+    /**
+     * Initialize Cellular Configuration section
+     */
+    initializeCellularConfig() {
+        console.log('[SOURCE-UI] Initializing Cellular Configuration section...');
+        
+        try {
+            // Get the cellular config container
+            const cellularContainer = document.getElementById('cellular-config-container');
+            if (!cellularContainer) {
+                console.error('[SOURCE-UI] Cellular config container not found');
+                return;
+            }
+            
+            // Initialize the cellular configuration module
+            const cellularModule = initializeCellular(this.sourceManager.httpClient, cellularContainer);
+            
+            // Store the module reference for cleanup
+            this.tabComponents.set('cellular-config', cellularModule);
+            
+            console.log('[SOURCE-UI] Cellular Configuration section initialized successfully');
+        } catch (error) {
+            console.error('[SOURCE-UI] Failed to initialize Cellular Configuration section:', error);
+            
+            // Show error in the container
+            const cellularContainer = document.getElementById('cellular-config-container');
+            if (cellularContainer) {
+                cellularContainer.innerHTML = `
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-6 m-4">
+                        <h3 class="text-red-800 font-semibold mb-2">Initialization Error</h3>
+                        <p class="text-red-600">Failed to load cellular configuration: ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
     }
     
     /**

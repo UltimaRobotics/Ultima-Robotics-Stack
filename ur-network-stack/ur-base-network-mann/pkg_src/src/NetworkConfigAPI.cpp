@@ -2,7 +2,6 @@
 #include "../include/Utils.h"
 #include <iostream>
 #include <fstream>
-#include <sstream>
 #include <cstdlib>
 #include <algorithm>
 
@@ -19,8 +18,8 @@ NetworkConfigAPI::NetworkConfigAPI() : configFilePath("/etc/config/network") {
     packageConfig.firewallConfigPath = "/etc/config/firewall";
     packageConfig.staticRouteConfigPath = "/etc/config/network";
     packageConfig.resolvConfPath = "/etc/resolv.conf";
-    packageConfig.networkProfilesDir = "/etc/network-profiles";
-    packageConfig.networkBackupsDir = "/etc/network-backups";
+    packageConfig.networkProfilesDir = "/etc/Ultima-Config/ur-base-network-mann/network-profiles";
+    packageConfig.networkBackupsDir = "/etc/Ultima-Config/ur-base-network-mann/network-backups";
     packageConfig.defaultInterface = "eth0";
     packageConfig.defaultConnectionMode = "dhcp";
     packageConfig.defaultMtuSize = 1500;
@@ -1020,7 +1019,22 @@ bool NetworkConfigAPI::parseNetworkConfig(const std::string& configPath, std::ma
 }
 
 bool NetworkConfigAPI::executeSystemCommand(const std::string& command) {
+    // Print command in verbose mode
+    if (Utils::isVerboseMode()) {
+        std::cout << "[VERBOSE] Executing system command: " << command << std::endl;
+    }
+    
     int result = system(command.c_str());
+    
+    // Print result in verbose mode
+    if (Utils::isVerboseMode()) {
+        if (result == 0) {
+            std::cout << "[VERBOSE] System command executed successfully" << std::endl;
+        } else {
+            std::cout << "[VERBOSE] System command failed with exit code: " << result << std::endl;
+        }
+    }
+    
     return result == 0;
 }
 
@@ -1055,8 +1069,8 @@ bool NetworkConfigAPI::parseJsonConfig(const std::string& jsonContent, PackageCo
     config.firewallConfigPath = "/etc/config/firewall";
     config.staticRouteConfigPath = "/etc/config/network";
     config.resolvConfPath = "/etc/resolv.conf";
-    config.networkProfilesDir = "/etc/network-profiles";
-    config.networkBackupsDir = "/etc/network-backups";
+    config.networkProfilesDir = "/etc/Ultima-Config/ur-base-network-mann/network-profiles";
+    config.networkBackupsDir = "/etc/Ultima-Config/ur-base-network-mann/network-backups";
     config.defaultInterface = "eth0";
     config.defaultConnectionMode = "dhcp";
     config.defaultMtuSize = 1500;

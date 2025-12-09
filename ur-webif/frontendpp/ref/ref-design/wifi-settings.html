@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wi-Fi Settings</title>
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: #f3f4f6;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 24px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbd5e1;
+            transition: 0.3s;
+            border-radius: 24px;
+        }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+        input:checked + .toggle-slider {
+            background-color: #60a5fa;
+        }
+        input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .mode-card {
+            border: 2px solid #e5e7eb;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .mode-card:hover {
+            border-color: #60a5fa;
+        }
+        .mode-card.active {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+        .network-item {
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .network-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body class="p-8">
+    <div class="max-w-4xl mx-auto space-y-4">
+        
+        <!-- Wi-Fi Radio Toggle -->
+        <div class="card p-4 flex items-center justify-between">
+            <div>
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-power-off text-gray-600"></i>
+                    <h2 class="font-medium text-gray-900">Wi-Fi Radio</h2>
+                </div>
+                <p class="text-sm text-gray-500 mt-1">Enable or disable wireless functionality</p>
+            </div>
+            <label class="toggle-switch">
+                <input type="checkbox" id="wifiRadio" checked onchange="toggleWiFiRadio()">
+                <span class="toggle-slider"></span>
+            </label>
+        </div>
+
+        <!-- Wireless Mode -->
+        <div class="card p-4">
+            <h3 class="font-medium text-gray-900 mb-4">Wireless Mode</h3>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="mode-card p-4 rounded-lg" id="clientModeCard" onclick="switchMode('client')">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fas fa-laptop text-gray-600"></i>
+                        <h4 class="font-medium text-gray-900">Client Mode</h4>
+                    </div>
+                    <p class="text-sm text-gray-500">Connect to existing Wi-Fi network</p>
+                </div>
+                <div class="mode-card p-4 rounded-lg active" id="accessPointCard" onclick="switchMode('accessPoint')">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fas fa-wifi text-gray-600"></i>
+                        <h4 class="font-medium text-gray-900">Access Point</h4>
+                    </div>
+                    <p class="text-sm text-gray-500">Create Wi-Fi hotspot</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Access Point Settings -->
+        <div id="accessPointSettings" class="card p-6">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-medium text-gray-900">Access Point Settings</h3>
+                <div class="flex items-center gap-2 text-sm text-gray-600">
+                    <span id="statusBadge">Broadcasting as MyDevice-AP · On channel 6</span>
+                </div>
+            </div>
+            <p class="text-sm text-gray-500 mb-6">Configure the hotspot clients will connect to</p>
+
+            <div class="grid grid-cols-2 gap-6">
+                <!-- Network Name (SSID) -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Network name (SSID)</label>
+                    <input type="text" id="ssid" value="MyDevice-AP" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <p class="text-xs text-gray-500 mt-1">This is how your hotspot will appear to other devices.</p>
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                    <div class="relative">
+                        <input type="password" id="password" value="mypassword123" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button onclick="togglePassword()" class="absolute right-3 top-2.5 text-sm text-blue-600 hover:text-blue-700">Show password</button>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-1">Use at least 8 characters. Required for secured networks.</p>
+                </div>
+
+                <!-- Band -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Band</label>
+                    <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="dual" selected>2.4 GHz + 5 GHz</option>
+                        <option value="2.4">2.4 GHz only</option>
+                        <option value="5">5 GHz only</option>
+                    </select>
+                    <p class="text-xs text-gray-500 mt-1">Dual-band is recommended for most devices.</p>
+                </div>
+
+                <!-- Channel -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Channel</label>
+                    <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="auto" selected>Auto select</option>
+                        <option value="1">Channel 1</option>
+                        <option value="6">Channel 6</option>
+                        <option value="11">Channel 11</option>
+                    </select>
+                    <p class="text-xs text-gray-500 mt-1">Automatically picks the least congested channel.</p>
+                </div>
+
+                <!-- Security -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Security</label>
+                    <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="wpa2-psk" selected>WPA2-PSK</option>
+                        <option value="wpa3">WPA3</option>
+                        <option value="open">Open (No security)</option>
+                    </select>
+                    <p class="text-xs text-gray-500 mt-1">Recommended: WPA2 for compatibility and security.</p>
+                </div>
+
+                <!-- Maximum clients -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Maximum clients</label>
+                    <input type="number" value="10" min="1" max="50" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <p class="text-xs text-gray-500 mt-1">Limit how many devices can connect at once.</p>
+                </div>
+            </div>
+
+            <!-- Options -->
+            <div class="grid grid-cols-2 gap-6 mt-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-eye-slash text-gray-600"></i>
+                            <span class="font-medium text-gray-900">Broadcast network</span>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">Hide SSID to make the network less visible.</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="broadcastSSID">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-user-lock text-gray-600"></i>
+                            <span class="font-medium text-gray-900">Guest isolation</span>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">Prevent connected devices from seeing each other.</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="guestIsolation" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Show Status Toggle -->
+            <div class="mt-6 pt-6 border-t border-gray-200">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h4 class="font-medium text-gray-900">Show status</h4>
+                        <p class="text-sm text-gray-500">View connected clients and real-time hotspot activity.</p>
+                    </div>
+                    <button onclick="toggleStatus()" class="text-blue-600 hover:text-blue-700 text-sm font-medium">
+                        <span id="statusToggleBtn">Show <i class="fas fa-chevron-down ml-1"></i></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Connected Devices Status (Hidden by default) -->
+            <div id="connectedDevices" class="hidden mt-4">
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                    <p class="text-sm text-gray-700">
+                        <strong>3 devices</strong> connected to MyDevice-AP
+                        <span class="float-right">
+                            Current throughput: <strong>48 Mbps</strong> · Peak today: <strong>96 Mbps</strong>
+                        </span>
+                    </p>
+                </div>
+
+                <div class="space-y-3">
+                    <div class="text-xs font-medium text-gray-500 grid grid-cols-12 gap-4 px-4">
+                        <div class="col-span-3">Device<br>Name and band</div>
+                        <div class="col-span-2">Signal<br>Quality (dBm)</div>
+                        <div class="col-span-2">Traffic<br>Today / live</div>
+                        <div class="col-span-3">IP / MAC<br>Address details</div>
+                        <div class="col-span-2 text-right">Limit speed</div>
+                    </div>
+
+                    <!-- Device 1 -->
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <div class="grid grid-cols-12 gap-4 items-center">
+                            <div class="col-span-3">
+                                <div class="font-medium text-gray-900">Work Laptop</div>
+                                <div class="text-xs text-gray-500">AA:BB:CC:DD:EE:01 · 5 GHz</div>
+                            </div>
+                            <div class="col-span-2">
+                                <div class="font-medium text-green-600">Excellent (-45 dBm)</div>
+                            </div>
+                            <div class="col-span-2">
+                                <div class="font-medium text-gray-900">2.4 GB today</div>
+                                <div class="text-xs text-gray-500">Now: 6 Mbps</div>
+                            </div>
+                            <div class="col-span-3">
+                                <div class="font-medium text-gray-900">192.168.1.24</div>
+                                <div class="text-xs text-gray-500">Static lease</div>
+                            </div>
+                            <div class="col-span-2 text-right">
+                                <button class="px-3 py-1 bg-blue-500 text-white text-xs rounded-lg hover:bg-blue-600">Disconnect</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Device 2 -->
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <div class="grid grid-cols-12 gap-4 items-center">
+                            <div class="col-span-3">
+                                <div class="font-medium text-gray-900">Alice's Phone</div>
+                                <div class="text-xs text-gray-500">AA:BB:CC:DD:EE:02 · 5 GHz</div>
+                            </div>
+                            <div class="col-span-2">
+                                <div class="font-medium text-yellow-600">Good (-68 dBm)</div>
+                            </div>
+                            <div class="col-span-2">
+                                <div class="font-medium text-gray-900">860 MB today</div>
+                                <div class="text-xs text-gray-500">Now: 3 Mbps</div>
+                            </div>
+                            <div class="col-span-3">
+                                <div class="font-medium text-gray-900">192.168.1.37</div>
+                                <div class="text-xs text-gray-500">DHCP lease</div>
+                            </div>
+                            <div class="col-span-2 text-right">
+                                <button class="px-3 py-1 bg-blue-500 text-white text-xs rounded-lg hover:bg-blue-600">Disconnect</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Device 3 -->
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <div class="grid grid-cols-12 gap-4 items-center">
+                            <div class="col-span-3">
+                                <div class="font-medium text-gray-900">Living Room TV</div>
+                                <div class="text-xs text-gray-500">AA:BB:CC:DD:EE:03 · 2.4 GHz</div>
+                            </div>
+                            <div class="col-span-2">
+                                <div class="font-medium text-orange-600">Fair (-68 dBm)</div>
+                            </div>
+                            <div class="col-span-2">
+                                <div class="font-medium text-gray-900">3.1 GB today</div>
+                                <div class="text-xs text-gray-500">Now: 5 Mbps</div>
+                            </div>
+                            <div class="col-span-3">
+                                <div class="font-medium text-gray-900">192.168.1.45</div>
+                                <div class="text-xs text-gray-500">DHCP lease</div>
+                            </div>
+                            <div class="col-span-2 text-right">
+                                <button class="px-3 py-1 bg-blue-500 text-white text-xs rounded-lg hover:bg-blue-600">Disconnect</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="text-xs text-gray-500 mt-4">Values update in real time while this page is open. Disconnecting a device will immediately drop its connection.</p>
+            </div>
+
+            <div class="mt-6 pt-6 border-t border-gray-200">
+                <p class="text-sm text-gray-600 mb-4">Clients will connect to MyDevice-AP using WPA2-PSK on the best available channel.</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-gray-500">Changes apply immediately after saving.</span>
+                    <div class="flex gap-2">
+                        <span class="px-3 py-1 bg-green-100 text-green-700 text-xs rounded-lg font-medium">Hotspot enabled</span>
+                        <span class="px-3 py-1 bg-blue-100 text-blue-700 text-xs rounded-lg font-medium">2.4 / 5 GHz</span>
+                    </div>
+                </div>
+                <div class="flex gap-3 mt-4">
+                    <button class="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50">Discard</button>
+                    <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">Save access point</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Client Mode Settings (Hidden by default) -->
+        <div id="clientModeSettings" class="hidden space-y-4">
+            <!-- Available Networks -->
+            <div class="card p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-medium text-gray-900">Available Networks</h3>
+                    <button onclick="scanNetworks()" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center gap-2">
+                        <i class="fas fa-sync-alt" id="scanIcon"></i>
+                        Scan Networks
+                    </button>
+                </div>
+
+                <div class="space-y-0" id="networkList">
+                    <!-- Network 1 -->
+                    <div class="network-item py-4 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-wifi text-2xl text-green-600"></i>
+                            <div>
+                                <div class="font-medium text-gray-900">Home-Office</div>
+                                <div class="text-sm text-gray-500">Strong signal · WPA2</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-lock text-gray-400"></i>
+                            <span class="px-3 py-1 bg-green-100 text-green-700 text-xs rounded-lg font-medium">Connected</span>
+                        </div>
+                    </div>
+
+                    <!-- Network 2 -->
+                    <div class="network-item py-4 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-wifi text-2xl text-yellow-600"></i>
+                            <div>
+                                <div class="font-medium text-gray-900">Guest-WiFi</div>
+                                <div class="text-sm text-gray-500">Medium signal · WPA2</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-lock text-gray-400"></i>
+                            <span class="px-3 py-1 bg-gray-200 text-gray-700 text-xs rounded-lg font-medium">5 GHz</span>
+                            <button class="px-4 py-1.5 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50">Connect</button>
+                        </div>
+                    </div>
+
+                    <!-- Network 3 -->
+                    <div class="network-item py-4 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-wifi text-2xl text-orange-600"></i>
+                            <div>
+                                <div class="font-medium text-gray-900">Cafe-Nextdoor</div>
+                                <div class="text-sm text-gray-500">Weak signal · Open</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="px-3 py-1 bg-gray-200 text-gray-700 text-xs rounded-lg font-medium">Public</span>
+                            <button class="px-4 py-1.5 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50">Connect</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Manual Connection -->
+            <div class="card p-6">
+                <button onclick="toggleManualConnection()" class="w-full flex items-center justify-between">
+                    <h3 class="font-medium text-gray-900">Manual Connection</h3>
+                    <i class="fas fa-chevron-down" id="manualIcon"></i>
+                </button>
+                <div id="manualConnectionForm" class="hidden mt-4">
+                    <p class="text-sm text-gray-500 mb-4">Enter network details to connect to a hidden or custom Wi-Fi network.</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Network name (SSID)</label>
+                            <input type="text" placeholder="e.g. MyNetwork" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Security</label>
+                            <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="wpa2-personal" selected>WPA2-Personal</option>
+                                <option value="wpa3">WPA3</option>
+                                <option value="wep">WEP</option>
+                                <option value="open">Open (No security)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Band</label>
+                            <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="auto" selected>Auto</option>
+                                <option value="2.4">2.4 GHz only</option>
+                                <option value="5">5 GHz only</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                            <input type="password" placeholder="Enter network password" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 mt-4">
+                        <input type="checkbox" id="saveNetwork" class="w-4 h-4 text-blue-600">
+                        <label for="saveNetwork" class="text-sm text-gray-700">Save this network</label>
+                    </div>
+                    <div class="flex gap-3 mt-4">
+                        <button class="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50">Cancel</button>
+                        <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">Connect</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Saved Networks -->
+            <div class="card p-6">
+                <button onclick="toggleSavedNetworks()" class="w-full flex items-center justify-between">
+                    <h3 class="font-medium text-gray-900">Saved Networks</h3>
+                    <i class="fas fa-chevron-down" id="savedIcon"></i>
+                </button>
+                <div id="savedNetworksList" class="hidden mt-4">
+                    <p class="text-sm text-gray-500 mb-4">Manage networks this device will remember and connect to automatically.</p>
+                    
+                    <!-- Saved Network 1 -->
+                    <div class="bg-gray-50 rounded-lg p-4 mb-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900">Home-Office</div>
+                                <div class="text-sm text-gray-500">Preferred · Auto-connect enabled</div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">2.4 / 5 GHz</span>
+                                <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded">Auto-connect</span>
+                                <button class="p-2 text-gray-600 hover:text-gray-900">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <button class="text-blue-600 hover:text-blue-700 text-sm">Show password</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Saved Network 2 -->
+                    <div class="bg-gray-50 rounded-lg p-4 mb-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900">Guest-WiFi</div>
+                                <div class="text-sm text-gray-500">Saved · Manual connect only</div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-1 bg-gray-200 text-gray-700 text-xs rounded">5 GHz</span>
+                                <span class="px-2 py-1 bg-gray-200 text-gray-700 text-xs rounded">Auto-connect</span>
+                                <button class="p-2 text-gray-600 hover:text-gray-900">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <button class="text-blue-600 hover:text-blue-700 text-sm">Show password</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Saved Network 3 -->
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900">Cafe-Nextdoor</div>
+                                <div class="text-sm text-gray-500">Public · Captive portal</div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-1 bg-gray-200 text-gray-700 text-xs rounded">Public</span>
+                                <span class="px-2 py-1 bg-gray-200 text-gray-700 text-xs rounded">Auto-connect</span>
+                                <button class="p-2 text-gray-600 hover:text-gray-900">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <button class="text-blue-600 hover:text-blue-700 text-sm">Show password</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="mt-4 text-red-600 hover:text-red-700 text-sm font-medium">Clear all saved</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let currentMode = 'accessPoint';
+        let wifiEnabled = true;
+
+        function toggleWiFiRadio() {
+            wifiEnabled = document.getElementById('wifiRadio').checked;
+            if (!wifiEnabled) {
+                document.getElementById('accessPointSettings').classList.add('opacity-50', 'pointer-events-none');
+                document.getElementById('clientModeSettings').classList.add('opacity-50', 'pointer-events-none');
+            } else {
+                document.getElementById('accessPointSettings').classList.remove('opacity-50', 'pointer-events-none');
+                document.getElementById('clientModeSettings').classList.remove('opacity-50', 'pointer-events-none');
+            }
+        }
+
+        function switchMode(mode) {
+            currentMode = mode;
+            
+            // Update mode cards
+            document.getElementById('clientModeCard').classList.remove('active');
+            document.getElementById('accessPointCard').classList.remove('active');
+            
+            if (mode === 'client') {
+                document.getElementById('clientModeCard').classList.add('active');
+                document.getElementById('accessPointSettings').classList.add('hidden');
+                document.getElementById('clientModeSettings').classList.remove('hidden');
+            } else {
+                document.getElementById('accessPointCard').classList.add('active');
+                document.getElementById('accessPointSettings').classList.remove('hidden');
+                document.getElementById('clientModeSettings').classList.add('hidden');
+            }
+        }
+
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const button = event.target;
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                button.textContent = 'Hide password';
+            } else {
+                passwordInput.type = 'password';
+                button.textContent = 'Show password';
+            }
+        }
+
+        function toggleStatus() {
+            const devicesDiv = document.getElementById('connectedDevices');
+            const toggleBtn = document.getElementById('statusToggleBtn');
+            
+            if (devicesDiv.classList.contains('hidden')) {
+                devicesDiv.classList.remove('hidden');
+                toggleBtn.innerHTML = 'Hide <i class="fas fa-chevron-up ml-1"></i>';
+            } else {
+                devicesDiv.classList.add('hidden');
+                toggleBtn.innerHTML = 'Show <i class="fas fa-chevron-down ml-1"></i>';
+            }
+        }
+
+        function scanNetworks() {
+            const icon = document.getElementById('scanIcon');
+            icon.classList.add('fa-spin');
+            
+            setTimeout(() => {
+                icon.classList.remove('fa-spin');
+                alert('Network scan complete! Found 3 networks.');
+            }, 2000);
+        }
+
+        function toggleManualConnection() {
+            const form = document.getElementById('manualConnectionForm');
+            const icon = document.getElementById('manualIcon');
+            
+            if (form.classList.contains('hidden')) {
+                form.classList.remove('hidden');
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            } else {
+                form.classList.add('hidden');
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        }
+
+        function toggleSavedNetworks() {
+            const list = document.getElementById('savedNetworksList');
+            const icon = document.getElementById('savedIcon');
+            
+            if (list.classList.contains('hidden')) {
+                list.classList.remove('hidden');
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            } else {
+                list.classList.add('hidden');
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        }
+
+        // Initialize with Access Point mode
+        document.addEventListener('DOMContentLoaded', function() {
+            switchMode('accessPoint');
+        });
+    </script>
+</body>
+</html>

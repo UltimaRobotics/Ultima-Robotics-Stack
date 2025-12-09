@@ -314,6 +314,16 @@ bool BackupManager::createBackup(const std::string& configPath, const std::strin
         return false;
     }
     
+    // Ensure backup directory exists
+    std::string backupDir = getBackupDir();
+    if (!Utils::fileExists(backupDir)) {
+        Logger::info("Creating backup directory: " + backupDir);
+        if (!Utils::createDirectory(backupDir)) {
+            Logger::error("Failed to create backup directory: " + backupDir);
+            return false;
+        }
+    }
+    
     std::ifstream src(configPath, std::ios::binary);
     std::ofstream dst(backupPath, std::ios::binary);
     
@@ -387,7 +397,7 @@ bool BackupManager::deleteBackup(const std::string& backupName) {
 }
 
 // Initialize static member
-std::string BackupManager::backupDirectory = "/etc/network-backups";
+std::string BackupManager::backupDirectory = "/etc/Ultima-Config/ur-base-network-mann/network-backups";
 
 std::string BackupManager::getBackupDir() {
     return backupDirectory;
@@ -395,6 +405,18 @@ std::string BackupManager::getBackupDir() {
 
 void BackupManager::setBackupDirectory(const std::string& backupDir) {
     backupDirectory = backupDir;
+}
+
+bool BackupManager::initialize() {
+    std::string backupDir = getBackupDir();
+    if (!Utils::fileExists(backupDir)) {
+        Logger::info("Creating backup directory: " + backupDir);
+        if (!Utils::createDirectory(backupDir)) {
+            Logger::error("Failed to create backup directory: " + backupDir);
+            return false;
+        }
+    }
+    return true;
 }
 
 std::string BackupManager::getBackupPath(const std::string& backupName) {
@@ -406,7 +428,22 @@ NetworkDiagnostics::DiagnosticResult NetworkDiagnostics::testConnectivity(const 
     auto start = std::chrono::high_resolution_clock::now();
     
     std::string command = "ping -c 3 -W 5 " + host + " > /dev/null 2>&1";
+    
+    // Print command in verbose mode
+    if (Utils::isVerboseMode()) {
+        std::cout << "[VERBOSE] Executing diagnostic command: " << command << std::endl;
+    }
+    
     int result = system(command.c_str());
+    
+    // Print result in verbose mode
+    if (Utils::isVerboseMode()) {
+        if (result == 0) {
+            std::cout << "[VERBOSE] Diagnostic command executed successfully" << std::endl;
+        } else {
+            std::cout << "[VERBOSE] Diagnostic command failed with exit code: " << result << std::endl;
+        }
+    }
     
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
@@ -424,7 +461,22 @@ NetworkDiagnostics::DiagnosticResult NetworkDiagnostics::testDnsResolution(const
     auto start = std::chrono::high_resolution_clock::now();
     
     std::string command = "nslookup " + domain + " > /dev/null 2>&1";
+    
+    // Print command in verbose mode
+    if (Utils::isVerboseMode()) {
+        std::cout << "[VERBOSE] Executing diagnostic command: " << command << std::endl;
+    }
+    
     int result = system(command.c_str());
+    
+    // Print result in verbose mode
+    if (Utils::isVerboseMode()) {
+        if (result == 0) {
+            std::cout << "[VERBOSE] Diagnostic command executed successfully" << std::endl;
+        } else {
+            std::cout << "[VERBOSE] Diagnostic command failed with exit code: " << result << std::endl;
+        }
+    }
     
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
@@ -482,7 +534,22 @@ NetworkDiagnostics::DiagnosticResult NetworkDiagnostics::testDhcpServer() {
     auto start = std::chrono::high_resolution_clock::now();
     
     std::string command = "udhcpc -n -t 3 -T 5 eth0 > /dev/null 2>&1";
+    
+    // Print command in verbose mode
+    if (Utils::isVerboseMode()) {
+        std::cout << "[VERBOSE] Executing diagnostic command: " << command << std::endl;
+    }
+    
     int result = system(command.c_str());
+    
+    // Print result in verbose mode
+    if (Utils::isVerboseMode()) {
+        if (result == 0) {
+            std::cout << "[VERBOSE] Diagnostic command executed successfully" << std::endl;
+        } else {
+            std::cout << "[VERBOSE] Diagnostic command failed with exit code: " << result << std::endl;
+        }
+    }
     
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);

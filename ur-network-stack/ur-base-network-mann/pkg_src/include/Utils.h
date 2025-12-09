@@ -13,6 +13,10 @@ namespace OpenWrtNetwork {
 
 class Utils {
 public:
+    // Verbose mode control
+    static void setVerboseMode(bool enabled);
+    static bool isVerboseMode();
+    
     // String utilities
     static std::vector<std::string> split(const std::string& str, char delimiter);
     static std::string trim(const std::string& str);
@@ -51,6 +55,7 @@ public:
 
 private:
     static std::vector<std::string> splitWithQuotes(const std::string& str, char delimiter);
+    static bool verboseMode;
 };
 
 } // namespace OpenWrtNetwork

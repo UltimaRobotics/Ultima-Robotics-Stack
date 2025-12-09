@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAVLink System Overview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(2px);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Main Container -->
+    <div class="container mx-auto p-6">
+        <!-- Header -->
+        <div class="bg-white rounded-lg shadow-sm p-6 mb-4">
+            <div class="flex justify-between items-center mb-4">
+                <div>
+                    <h1 class="text-2xl font-semibold text-gray-800">MAVLink System Overview</h1>
+                    <p class="text-sm text-gray-500">Real-time monitoring of flight controllers and RTK systems</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span class="text-red-600 text-sm flex items-center gap-2">
+                        <i class="fas fa-circle text-xs"></i> Error
+                    </span>
+                    <button onclick="refreshAll()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+                        <i class="fas fa-sync-alt"></i> Refresh All
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="flex border-b border-gray-200">
+                <button id="fcTab" onclick="switchTab('fc')" class="px-4 py-2 text-blue-600 border-b-2 border-blue-600 font-medium">
+                    <i class="fas fa-microchip mr-2"></i> Flight Controllers <span class="ml-1 bg-gray-200 px-2 py-0.5 rounded text-xs" id="fcCount">0</span>
+                </button>
+                <button id="rtkTab" onclick="switchTab('rtk')" class="px-4 py-2 text-gray-600 hover:text-gray-800 font-medium">
+                    <i class="fas fa-satellite-dish mr-2"></i> RTK Systems <span class="ml-1 bg-gray-200 px-2 py-0.5 rounded text-xs" id="rtkCount">0</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Flight Controllers View -->
+        <div id="fcView" class="bg-white rounded-lg shadow-sm p-6">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                        <i class="fas fa-microchip text-blue-500"></i> Flight Controllers
+                    </h2>
+                    <p class="text-sm text-gray-500">Monitor and manage connected autopilots</p>
+                </div>
+                <div class="text-sm text-gray-500 flex items-center gap-2">
+                    <i class="far fa-clock"></i> Last updated: <span id="fcLastUpdate">Never</span>
+                </div>
+            </div>
+
+            <!-- Empty State / Add Device -->
+            <div id="fcEmpty" class="text-center py-12">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
+                    <i class="fas fa-plus text-2xl text-gray-400"></i>
+                </div>
+                <h3 class="text-lg font-medium text-gray-800 mb-2">Add Flight Controller</h3>
+                <p class="text-sm text-gray-500 mb-6">Connect a new autopilot or flight controller to the MAVLink network</p>
+                <button onclick="openAddDeviceModal()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg inline-flex items-center gap-2">
+                    <i class="fas fa-plus"></i> Add Device
+                </button>
+            </div>
+
+            <!-- Flight Controller List -->
+            <div id="fcList" class="hidden space-y-4"></div>
+        </div>
+
+        <!-- RTK Systems View -->
+        <div id="rtkView" class="bg-white rounded-lg shadow-sm p-6 hidden">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                        <i class="fas fa-satellite-dish text-blue-500"></i> RTK Systems
+                    </h2>
+                    <p class="text-sm text-gray-500">Track and manage connected RTK base stations and rovers</p>
+                </div>
+                <div class="text-sm text-gray-500 flex items-center gap-2">
+                    <i class="far fa-clock"></i> Last updated: <span id="rtkLastUpdate">Never</span>
+                </div>
+            </div>
+
+            <!-- Empty State / Add RTK Device -->
+            <div id="rtkEmpty" class="text-center py-12">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
+                    <i class="fas fa-plus text-2xl text-gray-400"></i>
+                </div>
+                <h3 class="text-lg font-medium text-gray-800 mb-2">Add RTK System</h3>
+                <p class="text-sm text-gray-500 mb-6">Register a new RTK base station or rover on the MAVLink network</p>
+                <button onclick="openAddDeviceModal('rtk')" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg inline-flex items-center gap-2">
+                    <i class="fas fa-plus"></i> Add RTK Device
+                </button>
+            </div>
+
+            <!-- RTK Systems List -->
+            <div id="rtkList" class="hidden space-y-4"></div>
+        </div>
+    </div>
+
+    <!-- Add Device Modal -->
+    <div id="addDeviceModal" class="fixed inset-0 modal-overlay hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 relative">
+            <button onclick="closeAddDeviceModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="p-6">
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Add New Device</h3>
+                <p class="text-sm text-gray-500 mb-6">Connect a new MAVLink device</p>
+
+                <div class="text-center py-8">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
+                        <i class="fas fa-search text-2xl text-blue-500"></i>
+                    </div>
+                    <h4 class="text-lg font-medium text-gray-800 mb-2">Device Auto-Discovery</h4>
+                    <p class="text-sm text-gray-500 mb-6">Automatic device detection and configuration is coming soon.</p>
+                </div>
+
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                    <p class="text-sm text-blue-800">
+                        <strong>Advanced Configuration Available</strong><br>
+                        For manual device setup and advanced configuration options, please use the MAVLink Expansion section.
+                    </p>
+                </div>
+
+                <button onclick="closeAddDeviceModal()" class="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Device Found Modal -->
+    <div id="deviceFoundModal" class="fixed inset-0 modal-overlay hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 relative">
+            <button onclick="closeDeviceFoundModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="p-6">
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Device Found</h3>
+                <p class="text-sm text-gray-500 mb-6">Flight controller MAVLink connection successfully validated</p>
+
+                <div class="text-center py-4">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
+                        <i class="fas fa-check text-2xl text-green-500"></i>
+                    </div>
+                </div>
+
+                <h4 class="text-base font-medium text-gray-800 mb-4">Flight controller ready to be added</h4>
+                <p class="text-sm text-gray-600 mb-4">We detected a compatible MAVLink flight controller. Review the identification details below and confirm to add it to your Flight Controllers.</p>
+
+                <div class="bg-gray-50 rounded-lg p-4 mb-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-medium text-gray-800" id="deviceName">Pixhawk6C</span>
+                        <div class="flex gap-2">
+                            <span class="bg-blue-500 text-white text-xs px-2 py-1 rounded">MAVLink v2</span>
+                            <span class="bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded" id="deviceAutopilot">PX4 autopilot</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <p class="text-gray-500">System ID</p>
+                            <p class="text-gray-800 font-medium" id="deviceSystemId">1</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500">Component ID</p>
+                            <p class="text-gray-800 font-medium" id="deviceComponentId">1</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500">Autopilot type</p>
+                            <p class="text-gray-800 font-medium" id="deviceAutopilotType">PX4</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500">Board class</p>
+                            <p class="text-gray-800 font-medium" id="deviceBoardClass">Pixhawk</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500">Board name</p>
+                            <p class="text-gray-800 font-medium" id="deviceBoardName">Holybro (Unknown Model)</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500">Manufacturer</p>
+                            <p class="text-gray-800 font-medium" id="deviceManufacturer">Holybro</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500">Vendor ID</p>
+                            <p class="text-gray-800 font-medium" id="deviceVendorId">3162</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500">Product ID</p>
+                            <p class="text-gray-800 font-medium" id="deviceProductId">0053</p>
+                        </div>
+                        <div class="col-span-2">
+                            <p class="text-gray-500">Serial number</p>
+                            <p class="text-gray-800 font-medium text-xs" id="deviceSerial">3B0032001651333333363133</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
+                    <p class="text-xs text-blue-800">
+                        <i class="fas fa-info-circle mr-1"></i> <strong>MAVLink checks passed</strong><br>
+                        The flight controller responded to identification and heartbeat messages. You can safely attach it to your Flight Controllers overview.
+                    </p>
+                </div>
+
+                <div class="flex gap-3">
+                    <button onclick="closeDeviceFoundModal()" class="flex-1 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 px-4 py-2 rounded-lg">
+                        Close
+                    </button>
+                    <button onclick="addDeviceToList()" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
+                        Add device to Flight Controllers
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Disconnect Modal -->
+    <div id="disconnectModal" class="fixed inset-0 modal-overlay hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4">
+            <div class="p-6">
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Disconnect flight controller?</h3>
+                <p class="text-sm text-gray-500 mb-6">This will stop MAVLink communication with the selected flight controller.</p>
+
+                <div class="bg-gray-50 rounded-lg p-4 mb-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="font-medium text-gray-800" id="disconnectDeviceName">PX4 – Main Autopilot</span>
+                        <div class="flex gap-2">
+                            <span class="bg-green-500 text-white text-xs px-2 py-1 rounded">Connected</span>
+                            <span class="bg-blue-500 text-white text-xs px-2 py-1 rounded">Primary</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <p class="text-gray-500">System name</p>
+                            <p class="text-gray-800 font-medium" id="disconnectSystemName">px4-main-01</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500">MAVLink system ID</p>
+                            <p class="text-gray-800 font-medium" id="disconnectSystemId">1</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500">Link type</p>
+                            <p class="text-gray-800 font-medium" id="disconnectLinkType">Telemetry radio – 57600 bps</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500">Message rate</p>
+                            <p class="text-gray-800 font-medium" id="disconnectMessageRate">52 msg/s</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-6">
+                    <p class="text-sm text-yellow-800">
+                        <strong>Are you sure you want to disconnect?</strong><br>
+                        Any commands, telemetry, and status updates from this controller will stop until you reconnect it.
+                    </p>
+                </div>
+
+                <div class="flex gap-3">
+                    <button onclick="closeDisconnectModal()" class="flex-1 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 px-4 py-2 rounded-lg">
+                        Cancel
+                    </button>
+                    <button onclick="confirmDisconnect()" class="flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg">
+                        Disconnect
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reboot Modal -->
+    <div id="rebootModal" class="fixed inset-0 modal-overlay hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4">
+            <div class="p-6">
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Reboot flight controller?</h3>
+                <p class="text-sm text-gray-500 mb-6">The selected flight controller will momentarily go offline while it restarts.</p>
+
+                <div class="bg-gray-50 rounded-lg p-4 mb-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="font-medium text-gray-800">PX4 – Main Autopilot</span>
+                        <div class="flex gap-2">
+                            <span class="bg-green-500 text-white text-xs px-2 py-1 rounded">Connected</span>
+                            <span class="bg-blue-500 text-white text-xs px-2 py-1 rounded">Primary</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <p class="text-gray-500">System name</p>
+                            <p class="text-gray-800 font-medium">px4-main-01</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500">MAVLink system ID</p>
+                            <p class="text-gray-800 font-medium">1</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500">Autopilot / firmware</p>
+                            <p class="text-gray-800 font-medium">PX4 v1.14.2</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500">Link type</p>
+                            <p class="text-gray-800 font-medium">Telemetry radio – 57600 bps</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-6">
+                    <p class="text-sm text-blue-800">
+                        <strong>Confirm reboot</strong><br>
+                        Telemetry, commands, and status updates will briefly stop during the reboot. The controller should automatically reconnect once it is back online.
+                    </p>
+                </div>
+
+                <div class="flex gap-3">
+                    <button onclick="closeRebootModal()" class="flex-1 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 px-4 py-2 rounded-lg">
+                        Cancel
+                    </button>
+                    <button onclick="confirmReboot()" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
+                        Reboot controller
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading State Modal -->
+    <div id="loadingModal" class="fixed inset-0 modal-overlay hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4">
+            <div class="p-6">
+                <h3 class="text-xl font-semibold text-gray-800 mb-2" id="loadingTitle">Establishing MAVLink session</h3>
+                <p class="text-sm text-gray-500 mb-6" id="loadingSubtitle">Waiting for heartbeat, system ID and basic telemetry from the connected autopilot.</p>
+
+                <div class="mb-6">
+                    <h4 class="font-medium text-gray-800 mb-4">Connection & identity</h4>
+                    <div class="space-y-3">
+                        <div class="skeleton h-8 rounded"></div>
+                        <div class="skeleton h-8 rounded"></div>
+                        <div class="skeleton h-32 rounded"></div>
+                    </div>
+                </div>
+
+                <p class="text-xs text-gray-500 italic">Layout and borders mirror the connection & identity section of the flight controller detail view. Values will populate as soon as MAVLink messages are received.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State management
+        let currentTab = 'fc';
+        let flightControllers = [];
+        let rtkSystems = [];
+        let currentDevice = null;
+
+        // Tab switching
+        function switchTab(tab) {
+            currentTab = tab;
+            
+            // Update tab buttons
+            document.getElementById('fcTab').className = tab === 'fc' 
+                ? 'px-4 py-2 text-blue-600 border-b-2 border-blue-600 font-medium'
+                : 'px-4 py-2 text-gray-600 hover:text-gray-800 font-medium';
+            document.getElementById('rtkTab').className = tab === 'rtk' 
+                ? 'px-4 py-2 text-blue-600 border-b-2 border-blue-600 font-medium'
+                : 'px-4 py-2 text-gray-600 hover:text-gray-800 font-medium';
+            
+            // Toggle views
+            document.getElementById('fcView').classList.toggle('hidden', tab !== 'fc');
+            document.getElementById('rtkView').classList.toggle('hidden', tab !== 'rtk');
+        }
+
+        // Modal functions
+        function openAddDeviceModal(type = 'fc') {
+            document.getElementById('addDeviceModal').classList.remove('hidden');
+            document.getElementById('addDeviceModal').classList.add('flex');
+            
+            // Simulate device discovery after 2 seconds
+            setTimeout(() => {
+                closeAddDeviceModal();
+                if (type === 'fc') {
+                    showDeviceFoundModal();
+                } else {
+                    showRTKDeviceFoundModal();
+                }
+            }, 2000);
+        }
+
+        function closeAddDeviceModal() {
+            document.getElementById('addDeviceModal').classList.add('hidden');
+            document.getElementById('addDeviceModal').classList.remove('flex');
+        }
+
+        function showDeviceFoundModal() {
+            // Populate with sample data
+            document.getElementById('deviceName').textContent = 'Pixhawk6C';
+            document.getElementById('deviceSystemId').textContent = '1';
+            document.getElementById('deviceComponentId').textContent = '1';
+            document.getElementById('deviceAutopilotType').textContent = 'PX4';
+            document.getElementById('deviceBoardClass').textContent = 'Pixhawk';
+            document.getElementById('deviceBoardName').textContent = 'Holybro (Unknown Model)';
+            document.getElementById('deviceManufacturer').textContent = 'Holybro';
+            document.getElementById('deviceVendorId').textContent = '3162';
+            document.getElementById('deviceProductId').textContent = '0053';
+            document.getElementById('deviceSerial').textContent = '3B0032001651333333363133';
+            
+            document.getElementById('deviceFoundModal').classList.remove('hidden');
+            document.getElementById('deviceFoundModal').classList.add('flex');
+        }
+
+        function closeDeviceFoundModal() {
+            document.getElementById('deviceFoundModal').classList.add('hidden');
+            document.getElementById('deviceFoundModal').classList.remove('flex');
+        }
+
+        function showRTKDeviceFoundModal() {
+            // For RTK devices, show a similar modal with RTK-specific data
+            alert('RTK Base Station #01 detected and ready to add!');
+        }
+
+        function addDeviceToList() {
+            const device = {
+                id: Date.now(),
+                name: 'PX4 – Main Autopilot',
+                systemName: 'px4-main-01',
+                systemId: '1',
+                autopilot: 'PX4 v1.14.2',
+                frameType: 'Quadcopter X',
+                linkType: 'Telemetry radio – 57600 bps',
+                messageRate: '52 msg/s',
+                status: 'connected',
+                isPrimary: true
+            };
+            
+            flightControllers.push(device);
+            closeDeviceFoundModal();
+            renderFlightControllers();
+            updateCounts();
+        }
+
+        function renderFlightControllers() {
+            const fcList = document.getElementById('fcList');
+            const fcEmpty = document.getElementById('fcEmpty');
+            
+            if (flightControllers.length === 0) {
+                fcList.classList.add('hidden');
+                fcEmpty.classList.remove('hidden');
+                document.getElementById('fcLastUpdate').textContent = 'Never';
+                return;
+            }
+            
+            fcEmpty.classList.add('hidden');
+            fcList.classList.remove('hidden');
+            document.getElementById('fcLastUpdate').textContent = '< 1s ago';
+            
+            fcList.innerHTML = flightControllers.map(fc => `
+                <div class="border border-gray-200 rounded-lg p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-1">${fc.name}</h3>
+                            <p class="text-sm text-gray-500">${fc.isPrimary ? 'Primary flight controller used for current mission' : 'Hot standby controller for failover scenarios'}</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="px-3 py-1 ${fc.status === 'connected' ? 'bg-green-500' : 'bg-gray-400'} text-white text-sm rounded">
+                                ${fc.status === 'connected' ? 'Connected' : 'Disconnected'}
+                            </button>
+                            ${fc.isPrimary ? '<button class="px-3 py-1 bg-blue-500 text-white text-sm rounded">Primary</button>' : '<button class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded">Standby</button>'}
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-6 mb-4">
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-700 mb-3">Connection & identity</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">System name</span>
+                                    <span class="text-gray-800 font-medium">${fc.systemName}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">MAVLink system ID</span>
+                                    <span class="text-gray-800 font-medium">${fc.systemId}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">Autopilot / firmware</span>
+                                    <span class="text-gray-800 font-medium">${fc.autopilot}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">Frame type</span>
+                                    <span class="text-gray-800 font-medium">${fc.frameType}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-700 mb-3">Link & health</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">Link type</span>
+                                    <span class="text-gray-800 font-medium">${fc.linkType}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">Message rate</span>
+                                    <span class="text-gray-800 font-medium">${fc.messageRate}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-sm text-gray-600 mb-4">${fc.isPrimary ? 'Active flight controller used for guidance and navigation. Status updates while the session is live.' : 'Redundant controller ready for takeover. Health and link monitored continuously.'}</p>
+                    
+                    <div class="flex gap-3">
+                        ${!fc.isPrimary ? '<button class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm rounded-lg">Make primary</button>' : ''}
+                        <button onclick="openRenameModal(${fc.id})" class="px-4 py-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 text-sm rounded-lg">Rename</button>
+                        <button onclick="openRebootModal(${fc.id})" class="px-4 py-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 text-sm rounded-lg">Reboot</button>
+                        <button onclick="openDisconnectModal(${fc.id})" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm rounded-lg">Disconnect</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderRTKSystems() {
+            const rtkList = document.getElementById('rtkList');
+            const rtkEmpty = document.getElementById('rtkEmpty');
+            
+            if (rtkSystems.length === 0) {
+                rtkList.classList.add('hidden');
+                rtkEmpty.classList.remove('hidden');
+                document.getElementById('rtkLastUpdate').textContent = 'Never';
+                return;
+            }
+            
+            rtkEmpty.classList.add('hidden');
+            rtkList.classList.remove('hidden');
+            document.getElementById('rtkLastUpdate').textContent = '< 5s ago';
+            
+            rtkList.innerHTML = rtkSystems.map(rtk => `
+                <div class="border border-gray-200 rounded-lg p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-1">${rtk.name}</h3>
+                            <p class="text-sm text-gray-500">${rtk.description}</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="px-3 py-1 bg-green-500 text-white text-sm rounded">Connected</button>
+                            <button class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded">${rtk.role}</button>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-6 mb-4">
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-700 mb-3">Connection & identity</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">System name</span>
+                                    <span class="text-gray-800 font-medium">${rtk.systemName}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">MAVLink system ID</span>
+                                    <span class="text-gray-800 font-medium">${rtk.systemId}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">RTK role</span>
+                                    <span class="text-gray-800 font-medium">${rtk.rtkRole}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">Message stream</span>
+                                    <span class="text-gray-800 font-medium">${rtk.messageStream}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-700 mb-3">Correction quality</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">Fix type</span>
+                                    <span class="text-gray-800 font-medium">${rtk.fixType}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">Satellites in use</span>
+                                    <span class="text-gray-800 font-medium">${rtk.satellites}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">Age of corrections</span>
+                                    <span class="text-gray-800 font-medium">${rtk.ageCorrections}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">Baseline length</span>
+                                    <span class="text-gray-800 font-medium">${rtk.baselineLength}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h4 class="text-sm font-medium text-gray-700 mb-3">Position summary</h4>
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <span class="text-gray-500">Latitude / Longitude</span>
+                                <p class="text-gray-800 font-medium">${rtk.position}</p>
+                            </div>
+                            <div>
+                                <span class="text-gray-500">Last MAVLink message</span>
+                                <p class="text-gray-800 font-medium">${rtk.lastMessage}</p>
+                            </div>
+                            <div>
+                                <span class="text-gray-500">Altitude (MSL)</span>
+                                <p class="text-gray-800 font-medium">${rtk.altitude}</p>
+                            </div>
+                            <div>
+                                <span class="text-gray-500">Packets / lost (1 min)</span>
+                                <p class="text-gray-800 font-medium">${rtk.packets}</p>
+                            </div>
+                            <div>
+                                <span class="text-gray-500">Estimated accuracy (H / V)</span>
+                                <p class="text-gray-800 font-medium">${rtk.accuracy}</p>
+                            </div>
+                            <div>
+                                <span class="text-gray-500">Correction link</span>
+                                <p class="text-gray-800 font-medium">${rtk.correctionLink}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h4 class="text-sm font-medium text-gray-700 mb-3">Link health</h4>
+                        <p class="text-sm text-gray-600">${rtk.linkHealth}</p>
+                    </div>
+                    
+                    <p class="text-sm text-gray-600 mb-4">${rtk.note}</p>
+                </div>
+            `).join('');
+        }
+
+        function updateCounts() {
+            document.getElementById('fcCount').textContent = flightControllers.length;
+            document.getElementById('rtkCount').textContent = rtkSystems.length;
+        }
+
+        function openDisconnectModal(id) {
+            currentDevice = flightControllers.find(fc => fc.id === id);
+            if (!currentDevice) return;
+            
+            document.getElementById('disconnectDeviceName').textContent = currentDevice.name;
+            document.getElementById('disconnectSystemName').textContent = currentDevice.systemName;
+            document.getElementById('disconnectSystemId').textContent = currentDevice.systemId;
+            document.getElementById('disconnectLinkType').textContent = currentDevice.linkType;
+            document.getElementById('disconnectMessageRate').textContent = currentDevice.messageRate;
+            
+            document.getElementById('disconnectModal').classList.remove('hidden');
+            document.getElementById('disconnectModal').classList.add('flex');
+        }
+
+        function closeDisconnectModal() {
+            document.getElementById('disconnectModal').classList.add('hidden');
+            document.getElementById('disconnectModal').classList.remove('flex');
+            currentDevice = null;
+        }
+
+        function confirmDisconnect() {
+            if (currentDevice) {
+                flightControllers = flightControllers.filter(fc => fc.id !== currentDevice.id);
+                renderFlightControllers();
+                updateCounts();
+            }
+            closeDisconnectModal();
+        }
+
+        function openRebootModal(id) {
+            currentDevice = flightControllers.find(fc => fc.id === id);
+            document.getElementById('rebootModal').classList.remove('hidden');
+            document.getElementById('rebootModal').classList.add('flex');
+        }
+
+        function closeRebootModal() {
+            document.getElementById('rebootModal').classList.add('hidden');
+            document.getElementById('rebootModal').classList.remove('flex');
+            currentDevice = null;
+        }
+
+        function confirmReboot() {
+            alert('Rebooting flight controller...');
+            closeRebootModal();
+        }
+
+        function openRenameModal(id) {
+            const device = flightControllers.find(fc => fc.id === id);
+            const newName = prompt('Enter new name for flight controller:', device.name);
+            if (newName && newName.trim()) {
+                device.name = newName.trim();
+                renderFlightControllers();
+            }
+        }
+
+        function refreshAll() {
+            alert('Refreshing all systems...');
+            renderFlightControllers();
+            renderRTKSystems();
+        }
+
+        // Initialize with sample RTK data
+        function initSampleData() {
+            rtkSystems.push({
+                id: 1,
+                name: 'RTK Base – Surveyed Site A',
+                description: 'MAVLink RTK system reporting fixed integer solution',
+                systemName: 'rtk-base-01',
+                systemId: '42',
+                rtkRole: 'Base (Reference station)',
+                messageStream: 'GPS_RTCM / OPS_RAW_INT',
+                fixType: 'RTK Fixed',
+                satellites: '21',
+                ageCorrections: '0.3 s',
+                baselineLength: '1.4 km',
+                position: '48.13740°, 11.57549°',
+                lastMessage: '< 0.5 s ago (GPS_RTCM_DATA)',
+                altitude: '518.24 m',
+                packets: '3,240 / 2 (0.06%)',
+                accuracy: '0.012 m / 0.021 m',
+                correctionLink: 'Telemetry radio – 57600 bps',
+                linkHealth: 'This card represents the currently active RTK base station as reported over MAVLink. Values refresh continuously while the session is live.',
+                note: 'This card represents the currently active RTK base station as reported over MAVLink. Values refresh continuously while the session is live.',
+                role: 'Base station'
+            });
+        }
+
+        // Initialize
+        updateCounts();
+        initSampleData();
+    </script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-#include "Utils.h"
+#include "../include/Utils.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -16,8 +16,21 @@
 #include <map>
 #include <unistd.h>
 #include <sys/types.h>
+#include <chrono>
 
 namespace OpenWrtNetwork {
+
+// Initialize static member
+bool Utils::verboseMode = false;
+
+// Verbose mode control
+void Utils::setVerboseMode(bool enabled) {
+    verboseMode = enabled;
+}
+
+bool Utils::isVerboseMode() {
+    return verboseMode;
+}
 
 std::vector<std::string> Utils::split(const std::string& str, char delimiter) {
     std::vector<std::string> tokens;
@@ -158,8 +171,20 @@ bool Utils::fileExists(const std::string& path) {
 
 bool Utils::createDirectory(const std::string& path) {
     try {
-        return std::filesystem::create_directories(path);
-    } catch (const std::exception&) {
+        if (std::filesystem::create_directories(path)) {
+            return true;
+        } else {
+            // Directory might already exist, check if it's actually a directory
+            if (std::filesystem::exists(path) && std::filesystem::is_directory(path)) {
+                return true;
+            }
+            return false;
+        }
+    } catch (const std::filesystem::filesystem_error& e) {
+        std::cerr << "Filesystem error creating directory '" << path << "': " << e.what() << std::endl;
+        return false;
+    } catch (const std::exception& e) {
+        std::cerr << "Error creating directory '" << path << "': " << e.what() << std::endl;
         return false;
     }
 }
@@ -222,8 +247,16 @@ std::string Utils::executeCommand(const std::string& command) {
     std::array<char, 128> buffer;
     std::string result;
     
+    // Print command in verbose mode
+    if (verboseMode) {
+        std::cout << "[VERBOSE] Executing command: " << command << std::endl;
+    }
+    
     std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(command.c_str(), "r"), pclose);
     if (!pipe) {
+        if (verboseMode) {
+            std::cout << "[VERBOSE] Command failed to execute (popen returned NULL)" << std::endl;
+        }
         return "";
     }
     
@@ -231,7 +264,18 @@ std::string Utils::executeCommand(const std::string& command) {
         result += buffer.data();
     }
     
-    return trim(result);
+    // Trim and print result in verbose mode
+    std::string trimmedResult = trim(result);
+    if (verboseMode) {
+        if (trimmedResult.empty()) {
+            std::cout << "[VERBOSE] Command executed successfully (no output)" << std::endl;
+        } else {
+            std::cout << "[VERBOSE] Command output:" << std::endl;
+            std::cout << "[VERBOSE] " << trimmedResult << std::endl;
+        }
+    }
+    
+    return trimmedResult;
 }
 
 bool Utils::isRoot() {

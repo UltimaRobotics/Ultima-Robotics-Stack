@@ -141,6 +141,7 @@ public:
     static bool deleteBackup(const std::string& backupName);
     
     static void setBackupDirectory(const std::string& backupDir);
+    static bool initialize();
     
 private:
     static std::string backupDirectory;

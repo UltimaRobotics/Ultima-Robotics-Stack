@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VPN Configuration Management</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .header-subtitle {
+            color: #86868b;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .btn-primary {
+            background-color: #4a8eff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #3a7eef;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-subtitle {
+            color: #86868b;
+            font-size: 13px;
+        }
+
+        .badge {
+            background-color: #f5f5f7;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #86868b;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        thead {
+            background-color: #f9f9fb;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #86868b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 16px 12px;
+            border-top: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background-color: #fafafa;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .status-connected {
+            background-color: #d4f4dd;
+            color: #0e7c23;
+        }
+
+        .status-disconnected {
+            background-color: #f5f5f7;
+            color: #86868b;
+        }
+
+        .status-error {
+            background-color: #ffe5e5;
+            color: #d70015;
+        }
+
+        .status-enabled {
+            background-color: #d4f4dd;
+            color: #0e7c23;
+        }
+
+        .status-disabled {
+            background-color: #f5f5f7;
+            color: #86868b;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 6px;
+            color: #86868b;
+            transition: all 0.2s;
+        }
+
+        .icon-btn:hover {
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+        }
+
+        .search-box {
+            padding: 8px 12px;
+            border: 1px solid #d2d2d7;
+            border-radius: 8px;
+            font-size: 14px;
+            width: 200px;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #4a8eff;
+        }
+
+        .connection-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .connection-card {
+            border: 1px solid #e5e5e7;
+            border-radius: 12px;
+            padding: 20px;
+            background: white;
+        }
+
+        .connection-card-header {
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .connection-card-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .connection-card-label {
+            color: #86868b;
+        }
+
+        .connection-card-value {
+            font-weight: 500;
+        }
+
+        .connection-card-footer {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .btn-disconnect {
+            width: 100%;
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .btn-disconnect:hover {
+            background-color: #e8e8ed;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .modal-subtitle {
+            color: #86868b;
+            font-size: 14px;
+        }
+
+        .form-section {
+            background-color: #f9f9fb;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-section-header {
+            margin-bottom: 15px;
+        }
+
+        .form-section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .form-section-subtitle {
+            font-size: 13px;
+            color: #86868b;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d2d2d7;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #4a8eff;
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d2d2d7;
+            border-radius: 8px;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: #4a8eff;
+        }
+
+        .form-hint {
+            font-size: 12px;
+            color: #86868b;
+            margin-top: 4px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .checkbox-group {
+            margin-top: 10px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .checkbox-label input {
+            margin-top: 2px;
+        }
+
+        .checkbox-text {
+            flex: 1;
+        }
+
+        .checkbox-title {
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .checkbox-desc {
+            font-size: 12px;
+            color: #86868b;
+            margin-top: 2px;
+        }
+
+        .tag-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .tag {
+            padding: 6px 12px;
+            background-color: #f5f5f7;
+            border-radius: 6px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .upload-area {
+            border: 2px dashed #d2d2d7;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            background-color: #f9f9fb;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .upload-area:hover {
+            border-color: #4a8eff;
+            background-color: #f0f7ff;
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+            color: #86868b;
+        }
+
+        .upload-icon i {
+            font-size: 48px;
+        }
+
+        .upload-text {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .upload-hint {
+            font-size: 12px;
+            color: #86868b;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .btn-secondary {
+            background-color: white;
+            color: #1d1d1f;
+            border: 1px solid #d2d2d7;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background-color: #f5f5f7;
+        }
+
+        .info-note {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 12px;
+            background-color: #f9f9fb;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #86868b;
+            margin-top: 15px;
+        }
+
+        .read-only-badge {
+            background-color: #f5f5f7;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            color: #86868b;
+            margin-left: auto;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #d2d2d7;
+            transition: 0.3s;
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: #4a8eff;
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1><i class="fas fa-shield-alt mr-3"></i>VPN Configuration Management</h1>
+                <p class="header-subtitle">Manage your VPN connections, monitor status, and configure routing rules.</p>
+            </div>
+            <button class="btn-primary" onclick="openAddProfileModal()"><i class="fas fa-plus mr-2"></i>Add VPN Profile</button>
+        </div>
+
+        <!-- VPN Profiles Section -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-server mr-2"></i>VPN Profiles
+                    <span class="badge" id="profileCount">3 profiles</span>
+                </div>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <div style="position: relative;">
+                    <i class="fas fa-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #86868b;"></i>
+                    <input type="text" class="search-box" placeholder="Search profiles..." id="profileSearch" onkeyup="filterProfiles()" style="padding-left: 35px;">
+                </div>
+                    <button class="btn-primary" onclick="openAddProfileModal()"><i class="fas fa-plus mr-2"></i>Add New Profile</button>
+                </div>
+            </div>
+
+            <table id="profilesTable">
+                <thead>
+                    <tr>
+                        <th>NAME</th>
+                        <th>TYPE</th>
+                        <th>STATUS</th>
+                        <th>SERVER ADDRESS</th>
+                        <th>ASSIGNED IP</th>
+                        <th>LAST CONNECTED</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody id="profilesTableBody">
+                    <!-- Populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Active VPN Connections Section -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-plug mr-2"></i>Active VPN Connections
+                    <span class="badge" id="activeCount">4 active</span>
+                </div>
+            </div>
+
+            <p class="section-subtitle">You have 4 active VPN sessions. Manage them below.</p>
+
+            <div class="connection-cards" id="activeConnections">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Multi-VPN Routing Rules Section -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-route mr-2"></i>Multi-VPN Routing Rules
+                    <span class="badge" id="rulesCount">3 rules</span>
+                </div>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <div style="position: relative;">
+                        <i class="fas fa-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #86868b;"></i>
+                        <input type="text" class="search-box" placeholder="Search rules..." id="rulesSearch" onkeyup="filterRules()" style="padding-left: 35px;">
+                    </div>
+                    <button class="btn-primary" onclick="openAddRuleModal()"><i class="fas fa-plus mr-2"></i>Add Rule</button>
+                </div>
+            </div>
+
+            <p class="section-subtitle">Configure traffic routing across multiple VPN connections.</p>
+
+            <table id="rulesTable">
+                <thead>
+                    <tr>
+                        <th>RULE NAME</th>
+                        <th>DESTINATION</th>
+                        <th>ASSIGNED VPN</th>
+                        <th>PRIORITY</th>
+                        <th>STATUS</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody id="rulesTableBody">
+                    <!-- Populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Add VPN Profile Modal -->
+    <div id="addProfileModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title"><i class="fas fa-plus-circle mr-2"></i>Add New VPN Profile</h2>
+                <p class="modal-subtitle">Configure and import your VPN connection settings. Upload a config file or enter details manually.</p>
+            </div>
+
+            <form id="addProfileForm">
+                <!-- Profile Configuration -->
+                <div class="form-section">
+                    <div class="form-section-header">
+                        <div class="form-section-title"><i class="fas fa-file-alt mr-2"></i>Profile configuration</div>
+                        <div class="form-section-subtitle">Name and identify this VPN profile in your list.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Profile name</label>
+                        <input type="text" class="form-input" placeholder="Enter VPN profile name (e.g. My VPN Connection)" required>
+                        <div class="form-hint">This name will help you recognize this profile across devices.</div>
+                    </div>
+                </div>
+
+                <!-- Configuration File Upload -->
+                <div class="form-section">
+                    <div class="form-section-header">
+                        <div class="form-section-title"><i class="fas fa-cloud-upload-alt mr-2"></i>Configuration file upload</div>
+                        <div class="form-section-subtitle">Upload your VPN configuration file to auto-fill connection details.</div>
+                    </div>
+
+                    <div class="upload-area" onclick="document.getElementById('configFile').click()">
+                        <div class="upload-icon"><i class="fas fa-folder-open"></i></div>
+                        <div class="upload-text"><strong>Drop your VPN config file here</strong></div>
+                        <div style="margin: 5px 0;">Or click to browse and select manually</div>
+                        <div class="upload-hint">The system will try to detect protocol and extract connection details automatically.</div>
+                        <input type="file" id="configFile" style="display: none;" accept=".ovpn,.conf,.wg">
+                    </div>
+                    <div class="form-hint" style="margin-top: 10px;">Supported formats: .ovpn (OpenVPN), .conf, .wg (WireGuard) - Maximum file size: 5 MB</div>
+                </div>
+
+                <!-- Connection Details -->
+                <div class="form-section">
+                    <div class="form-section-header">
+                        <div class="form-section-title"><i class="fas fa-laptop mr-2"></i>Connection details</div>
+                        <div class="form-section-subtitle">These fields are loaded from your config file and cannot be edited here.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Server address <span class="read-only-badge">From config file</span></label>
+                        <input type="text" class="form-input" value="us-west-1.vpn.example.com" readonly style="background-color: #f9f9fb;">
+                        <div class="form-hint">The VPN server hostname or IP address. To change this value, upload a different configuration file.</div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Protocol <span class="read-only-badge">From config file</span></label>
+                            <input type="text" class="form-input" value="OpenVPN" readonly style="background-color: #f9f9fb;">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Port <span class="read-only-badge">From config file</span></label>
+                            <input type="text" class="form-input" value="1194" readonly style="background-color: #f9f9fb;">
+                            <div class="form-hint">Default ports: OpenVPN(1194), IKEv2(500), WireGuard(51820)</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Interface <span style="color: #86868b; font-weight: normal;">Tap / Tun</span></label>
+                        <input type="text" class="form-input" placeholder="Select interface (TAP / TUN)" value="Select interface (TAP / TUN)" style="background-color: #f9f9fb;">
+                        <div class="form-hint">Choose the virtual interface type your VPN config expects (TAP or TUN).</div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Username <span style="color: #86868b; font-weight: normal;">(if required)</span></label>
+                            <input type="text" class="form-input" placeholder="Username (if required)">
+                            <div class="form-hint">Leave empty if using certificate-based authentication.</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Password <span style="color: #86868b; font-weight: normal;">(if required)</span></label>
+                            <input type="password" class="form-input" placeholder="Password (if required)">
+                            <div class="form-hint">Leave empty if using certificate-based authentication.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Settings -->
+                <div class="form-section">
+                    <div class="form-section-header">
+                        <div class="form-section-title"><i class="fas fa-cog mr-2"></i>Advanced settings</div>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked>
+                            <div class="checkbox-text">
+                                <div class="checkbox-title">Auto-connect on startup</div>
+                                <div class="checkbox-desc">Automatically connect to this VPN when the system starts.</div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="info-note">
+                    <span><i class="fas fa-info-circle"></i></span>
+                    <span>Profile will be saved to "VPN Profiles". Settings from your config file will overwrite manual values.</span>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeAddProfileModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Create profile</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Routing Rule Modal -->
+    <div id="addRuleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title"><i class="fas fa-route mr-2"></i>Add Routing Rule</h2>
+                <p class="modal-subtitle">Define how specific destinations should be routed across your VPN profiles.</p>
+            </div>
+
+            <form id="addRuleForm">
+                <!-- Rule Basics -->
+                <div class="form-section">
+                    <div class="form-section-header">
+                        <div class="form-section-title"><i class="fas fa-list-alt mr-2"></i>Rule basics</div>
+                        <div class="form-section-subtitle">Name this rule and describe what it does.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Rule name</label>
+                        <input type="text" class="form-input" placeholder="Enter rule name" required>
+                        <div class="form-hint">Use a short, descriptive name to quickly recognize this rule in your routing table.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Description <span style="color: #86868b; font-weight: normal;">Optional</span></label>
+                        <textarea class="form-textarea" placeholder="Add a description for this routing rule..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Match Conditions -->
+                <div class="form-section">
+                    <div class="form-section-header">
+                        <div class="form-section-title"><i class="fas fa-filter mr-2"></i>Match conditions</div>
+                        <div class="form-section-subtitle">Define which traffic this rule should apply to.</div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Source type <span style="color: #d70015;">Required</span></label>
+                            <select class="form-input">
+                                <option>IP address</option>
+                                <option>Domain</option>
+                                <option>Country</option>
+                                <option>Subnet</option>
+                            </select>
+                            <div class="form-hint">Choose what this rule should match against (IP address, subnet, domain, country, etc.).</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Source value <span style="color: #d70015;">Required</span></label>
+                            <input type="text" class="form-input" placeholder="e.g. 192.168.1.0/24 or *.example.com" required>
+                            <div class="form-hint">Enter the value in a format appropriate for the selected source type.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Protocol <span style="color: #86868b; font-weight: normal;">Optional</span></label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="protocol" value="tcp" checked> TCP
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="protocol" value="udp"> UDP
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="protocol" value="both"> Both
+                            </label>
+                        </div>
+                        <div class="form-hint">Limit this rule to specific protocols, or leave as-is to apply to any.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Rule settings</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" checked>
+                                <div class="checkbox-text">
+                                    <div class="checkbox-title">Enable this rule immediately</div>
+                                    <div class="checkbox-desc">New traffic that matches these conditions will start using this rule right away.</div>
+                                </div>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox">
+                                <div class="checkbox-text">
+                                    <div class="checkbox-title">Apply to existing connections</div>
+                                    <div class="checkbox-desc">Re-evaluate active connections that already match these conditions.</div>
+                                </div>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox">
+                                <div class="checkbox-text">
+                                    <div class="checkbox-title">Log matching traffic</div>
+                                    <div class="checkbox-desc">Send lightweight logs for traffic that hits this rule for easier troubleshooting.</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Routing Behavior -->
+                <div class="form-section">
+                    <div class="form-section-header">
+                        <div class="form-section-title"><i class="fas fa-directions mr-2"></i>Routing behavior</div>
+                        <div class="form-section-subtitle">Choose which VPN profile should handle matched traffic.</div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Assigned VPN <span style="color: #d70015;">Required</span></label>
+                            <select class="form-input" required>
+                                <option value="">Select VPN profile</option>
+                                <option>Home OpenVPN</option>
+                                <option>WireGuard EU</option>
+                                <option>Corp Gateway</option>
+                            </select>
+                            <div class="form-hint">Pick the VPN profile that will be used for destinations matched by this rule.</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Priority <span style="color: #86868b; font-weight: normal;">1 = highest</span></label>
+                            <input type="number" class="form-input" value="1" min="1" required>
+                            <div class="form-hint">Rules with lower numbers are evaluated first for overlapping destinations.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Fallback behavior <span style="color: #d70015;">Required</span></label>
+                        <select class="form-input" required>
+                            <option>If VPN is unavailable, send traffic directly</option>
+                            <option>If VPN is unavailable, block traffic</option>
+                            <option>If VPN is unavailable, use backup VPN</option>
+                        </select>
+                        <div class="form-hint">Choose whether to fail-closed (block), fail-open (direct), or use a backup VPN.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Rule status</label>
+                        <label class="checkbox-label">
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <div class="checkbox-text">
+                                <div class="checkbox-title">Enabled</div>
+                                <div class="checkbox-desc">Disable to keep the rule configured but not active in the routing table.</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="info-note">
+                    <span><i class="fas fa-info-circle"></i></span>
+                    <span>Rules are applied from lowest to highest priority. Changes take effect immediately after saving.</span>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeAddRuleModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Create rule</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Sample Data
+        const vpnProfiles = [
+            {
+                id: 1,
+                name: 'Home OpenVPN',
+                type: 'OpenVPN',
+                status: 'connected',
+                server: 'ovpn.home.example.com:1194',
+                assignedIp: '10.8.0.12',
+                lastConnected: 'Just now'
+            },
+            {
+                id: 2,
+                name: 'WireGuard EU',
+                type: 'WireGuard',
+                status: 'disconnected',
+                server: 'wg-eu1.example.net:51820',
+                assignedIp: '—',
+                lastConnected: 'Today - 08:14'
+            },
+            {
+                id: 3,
+                name: 'Corp Gateway',
+                type: 'OpenVPN',
+                status: 'error',
+                server: 'vpn.corp.example.org:443',
+                assignedIp: '10.9.2.5',
+                lastConnected: 'Yesterday - 17:32'
+            }
+        ];
+
+        const activeConnections = [
+            {
+                profile: 'Home OpenVPN',
+                location: 'ovpn.home.example.com - 10.8.0.12',
+                status: 'Connected',
+                duration: '00:42:18',
+                bandwidth: '12.4 Mbps ↓ 1.8 Mbps ↑'
+            },
+            {
+                profile: 'WireGuard EU',
+                location: 'wg-eu1.example.net - 10.10.4.21',
+                status: 'Connected',
+                duration: '03:17:05',
+                bandwidth: '54.2 Mbps ↓ 6.3 Mbps ↑'
+            },
+            {
+                profile: 'Corp Gateway',
+                location: 'vpn.corp.example.org - 10.9.2.5',
+                status: 'Connected',
+                duration: '01:05:33',
+                bandwidth: '22.1 Mbps ↓ 3.4 Mbps ↑'
+            },
+            {
+                profile: 'Mobile WireGuard',
+                location: 'wg-mobile.example.net - 10.1.0.7',
+                status: 'Connected',
+                duration: '00:12:49',
+                bandwidth: '8.9 Mbps ↓ 0.9 Mbps ↑'
+            }
+        ];
+
+        const routingRules = [
+            {
+                id: 1,
+                name: 'Streaming Traffic',
+                destination: '*.netflix.com, *.hulu.com',
+                assignedVpn: 'WireGuard EU',
+                priority: 1,
+                status: 'enabled'
+            },
+            {
+                id: 2,
+                name: 'Work Subnets',
+                destination: '10.0.0.0/16',
+                assignedVpn: 'Corp Gateway',
+                priority: 2,
+                status: 'enabled'
+            },
+            {
+                id: 3,
+                name: 'Bypass Local',
+                destination: '192.168.0.0/16',
+                assignedVpn: 'None (Direct)',
+                priority: 3,
+                status: 'disabled'
+            }
+        ];
+
+        // Initialize
+        function init() {
+            renderProfiles();
+            renderActiveConnections();
+            renderRules();
+        }
+
+        // Render VPN Profiles
+        function renderProfiles() {
+            const tbody = document.getElementById('profilesTableBody');
+            tbody.innerHTML = '';
+
+            vpnProfiles.forEach(profile => {
+                const row = document.createElement('tr');
+                
+                let statusClass = '';
+                if (profile.status === 'connected') statusClass = 'status-connected';
+                else if (profile.status === 'disconnected') statusClass = 'status-disconnected';
+                else if (profile.status === 'error') statusClass = 'status-error';
+
+                row.innerHTML = `
+                    <td><strong>${profile.name}</strong></td>
+                    <td>${profile.type}</td>
+                    <td><span class="status-badge ${statusClass}">${profile.status.charAt(0).toUpperCase() + profile.status.slice(1)}</span></td>
+                    <td>${profile.server}</td>
+                    <td>${profile.assignedIp}</td>
+                    <td>${profile.lastConnected}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="icon-btn" title="Edit" onclick="editProfile(${profile.id})"><i class="fas fa-edit"></i></button>
+                            <button class="icon-btn" title="Connect/Disconnect" onclick="toggleConnection(${profile.id})"><i class="fas fa-power-off"></i></button>
+                            <button class="icon-btn" title="Delete" onclick="deleteProfile(${profile.id})"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            document.getElementById('profileCount').textContent = `${vpnProfiles.length} profiles`;
+        }
+
+        // Render Active Connections
+        function renderActiveConnections() {
+            const container = document.getElementById('activeConnections');
+            container.innerHTML = '';
+
+            activeConnections.forEach(connection => {
+                const card = document.createElement('div');
+                card.className = 'connection-card';
+                card.innerHTML = `
+                    <div class="connection-card-header">${connection.profile}</div>
+                    <div class="connection-card-detail">
+                        <span class="connection-card-label">Location / Server</span>
+                        <span class="connection-card-value">${connection.location}</span>
+                    </div>
+                    <div class="connection-card-detail">
+                        <span class="connection-card-label">Status</span>
+                        <span class="connection-card-value"><span class="status-badge status-connected">${connection.status}</span></span>
+                    </div>
+                    <div class="connection-card-detail">
+                        <span class="connection-card-label">Duration</span>
+                        <span class="connection-card-value">${connection.duration}</span>
+                    </div>
+                    <div class="connection-card-detail">
+                        <span class="connection-card-label">Bandwidth</span>
+                        <span class="connection-card-value">${connection.bandwidth}</span>
+                    </div>
+                    <div class="connection-card-footer">
+                        <button class="btn-disconnect" onclick="disconnectVPN('${connection.profile}')"><i class="fas fa-plug mr-2"></i>Disconnect</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            document.getElementById('activeCount').textContent = `${activeConnections.length} active`;
+        }
+
+        // Render Routing Rules
+        function renderRules() {
+            const tbody = document.getElementById('rulesTableBody');
+            tbody.innerHTML = '';
+
+            routingRules.forEach(rule => {
+                const row = document.createElement('tr');
+                
+                const statusClass = rule.status === 'enabled' ? 'status-enabled' : 'status-disabled';
+
+                row.innerHTML = `
+                    <td><strong>${rule.name}</strong></td>
+                    <td>${rule.destination}</td>
+                    <td>${rule.assignedVpn}</td>
+                    <td>${rule.priority}</td>
+                    <td><span class="status-badge ${statusClass}">${rule.status.charAt(0).toUpperCase() + rule.status.slice(1)}</span></td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="icon-btn" title="Edit" onclick="editRule(${rule.id})"><i class="fas fa-edit"></i></button>
+                            <button class="icon-btn" title="Toggle" onclick="toggleRule(${rule.id})"><i class="fas fa-bolt"></i></button>
+                            <button class="icon-btn" title="Delete" onclick="deleteRule(${rule.id})"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            document.getElementById('rulesCount').textContent = `${routingRules.length} rules`;
+        }
+
+        // Modal Functions
+        function openAddProfileModal() {
+            document.getElementById('addProfileModal').classList.add('active');
+        }
+
+        function closeAddProfileModal() {
+            document.getElementById('addProfileModal').classList.remove('active');
+        }
+
+        function openAddRuleModal() {
+            document.getElementById('addRuleModal').classList.add('active');
+        }
+
+        function closeAddRuleModal() {
+            document.getElementById('addRuleModal').classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const profileModal = document.getElementById('addProfileModal');
+            const ruleModal = document.getElementById('addRuleModal');
+            
+            if (event.target === profileModal) {
+                closeAddProfileModal();
+            }
+            if (event.target === ruleModal) {
+                closeAddRuleModal();
+            }
+        }
+
+        // Form Submissions
+        document.getElementById('addProfileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Profile would be created! (Demo mode)');
+            closeAddProfileModal();
+        });
+
+        document.getElementById('addRuleForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Routing rule would be created! (Demo mode)');
+            closeAddRuleModal();
+        });
+
+        // Action Functions
+        function editProfile(id) {
+            alert(`Edit profile ${id} (Demo mode)`);
+        }
+
+        function toggleConnection(id) {
+            alert(`Toggle connection for profile ${id} (Demo mode)`);
+        }
+
+        function deleteProfile(id) {
+            if (confirm('Are you sure you want to delete this profile?')) {
+                alert(`Profile ${id} deleted (Demo mode)`);
+            }
+        }
+
+        function disconnectVPN(name) {
+            if (confirm(`Disconnect from ${name}?`)) {
+                alert(`Disconnected from ${name} (Demo mode)`);
+            }
+        }
+
+        function editRule(id) {
+            alert(`Edit rule ${id} (Demo mode)`);
+        }
+
+        function toggleRule(id) {
+            const rule = routingRules.find(r => r.id === id);
+            if (rule) {
+                rule.status = rule.status === 'enabled' ? 'disabled' : 'enabled';
+                renderRules();
+            }
+        }
+
+        function deleteRule(id) {
+            if (confirm('Are you sure you want to delete this routing rule?')) {
+                alert(`Rule ${id} deleted (Demo mode)`);
+            }
+        }
+
+        // Search/Filter Functions
+        function filterProfiles() {
+            const searchTerm = document.getElementById('profileSearch').value.toLowerCase();
+            const rows = document.querySelectorAll('#profilesTableBody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        }
+
+        function filterRules() {
+            const searchTerm = document.getElementById('rulesSearch').value.toLowerCase();
+            const rows = document.querySelectorAll('#rulesTableBody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        }
+
+        // Initialize on page load
+        init();
+    </script>
+</body>
+</html>

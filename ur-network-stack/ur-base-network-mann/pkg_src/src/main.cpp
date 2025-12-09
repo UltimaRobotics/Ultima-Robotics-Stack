@@ -10,6 +10,7 @@
 #include <memory>
 #include <getopt.h>
 #include <chrono>
+#include <cstdlib>
 
 using namespace OpenWrtNetwork;
 
@@ -30,15 +31,21 @@ private:
     bool running;
     std::string packageConfigPath;
     bool testMode;
+    bool verboseMode;
+    bool profilesEnabled;
+    bool backupsEnabled;
 
 public:
-    CLIApp(const std::string& configPath = "", bool isTestMode = false) : running(false), packageConfigPath(configPath), testMode(isTestMode) {}
+    CLIApp(const std::string& configPath = "", bool isTestMode = false, bool isVerboseMode = false) : running(false), packageConfigPath(configPath), testMode(isTestMode), verboseMode(isVerboseMode), profilesEnabled(false), backupsEnabled(false) {}
     
     ~CLIApp() {}
     
     NetworkConfigAPI* getConfigAPI() { return configAPI.get(); }
 
     bool initialize() {
+        // Set verbose mode in Utils first
+        Utils::setVerboseMode(verboseMode);
+        
         configAPI = std::make_unique<NetworkConfigAPI>();
         monitor = std::make_unique<NetworkMonitor>();
         profileManager = std::make_unique<ProfileManager>();
@@ -63,6 +70,62 @@ public:
         PackageConfig pkgConfig = configAPI->getPackageConfig();
         
         if (!testMode) {
+            // Helper function to create directory with fallback
+            auto createDirectoryWithFallback = [](const std::string& originalPath, const std::string& fallbackPath, const std::string& dirName) -> std::string {
+                std::cout << "Checking " << dirName << " directory: " << originalPath << std::endl;
+                if (!Utils::fileExists(originalPath)) {
+                    std::cout << "Directory does not exist, creating: " << originalPath << std::endl;
+                    if (!Utils::createDirectory(originalPath)) {
+                        std::cerr << "Failed to create " << dirName << " directory: " << originalPath << std::endl;
+                        std::cerr << "Trying fallback directory: " << fallbackPath << std::endl;
+                        
+                        if (!Utils::createDirectory(fallbackPath)) {
+                            std::cerr << "Failed to create fallback " << dirName << " directory: " << fallbackPath << std::endl;
+                            std::cerr << "This may be due to insufficient permissions. Try running with sudo or check directory permissions." << std::endl;
+                            return "";
+                        } else {
+                            std::cout << "Successfully created fallback " << dirName << " directory." << std::endl;
+                            return fallbackPath;
+                        }
+                    } else {
+                        std::cout << "Successfully created " << dirName << " directory." << std::endl;
+                        return originalPath;
+                    }
+                } else {
+                    std::cout << dirName << " directory already exists." << std::endl;
+                    return originalPath;
+                }
+            };
+            
+            // Create directories with fallback to user home
+            std::string homeDir = std::getenv("HOME") ? std::getenv("HOME") : "/tmp";
+            std::string profilesFallback = homeDir + "/.ultima-ur-base-network-mann/network-profiles";
+            std::string backupsFallback = homeDir + "/.ultima-ur-base-network-mann/network-backups";
+            
+            std::string actualProfilesDir = createDirectoryWithFallback(
+                pkgConfig.networkProfilesDir, profilesFallback, "network profiles");
+            std::string actualBackupsDir = createDirectoryWithFallback(
+                pkgConfig.networkBackupsDir, backupsFallback, "network backups");
+            
+            if (actualProfilesDir.empty() || actualBackupsDir.empty()) {
+                std::cerr << "Warning: Failed to create profile/backup directories. Profile and backup features will be disabled." << std::endl;
+                std::cout << "Continuing with basic network functionality only..." << std::endl;
+                
+                // Set flags to disable profile and backup features
+                pkgConfig.networkProfilesDir = "";
+                pkgConfig.networkBackupsDir = "";
+            } else {
+                // Update package config with actual directories if fallback was used
+                if (actualProfilesDir != pkgConfig.networkProfilesDir) {
+                    std::cout << "Using fallback profiles directory: " << actualProfilesDir << std::endl;
+                    pkgConfig.networkProfilesDir = actualProfilesDir;
+                }
+                if (actualBackupsDir != pkgConfig.networkBackupsDir) {
+                    std::cout << "Using fallback backups directory: " << actualBackupsDir << std::endl;
+                    pkgConfig.networkBackupsDir = actualBackupsDir;
+                }
+            }
+            
             // Initialize monitor with configuration
             MonitorConfig monitorConfig;
             monitorConfig.resolvConfPath = pkgConfig.resolvConfPath;
@@ -73,14 +136,36 @@ public:
                 return false;
             }
             
-            // Initialize profile manager with configuration
-            if (!profileManager->initialize(pkgConfig.networkProfilesDir)) {
-                std::cerr << "Failed to initialize Profile Manager" << std::endl;
-                return false;
+            // Initialize profile manager with configuration (optional)
+            if (!pkgConfig.networkProfilesDir.empty()) {
+                if (!profileManager->initialize(pkgConfig.networkProfilesDir)) {
+                    std::cerr << "Warning: Failed to initialize Profile Manager. Profile features will be disabled." << std::endl;
+                    pkgConfig.networkProfilesDir = "";
+                    profilesEnabled = false;
+                } else {
+                    profilesEnabled = true;
+                }
+            } else {
+                std::cout << "Profile Manager disabled due to directory creation failure." << std::endl;
+                profilesEnabled = false;
             }
             
-            // Set backup directory in BackupManager
-            BackupManager::setBackupDirectory(pkgConfig.networkBackupsDir);
+            // Set backup directory in BackupManager (optional)
+            if (!pkgConfig.networkBackupsDir.empty()) {
+                BackupManager::setBackupDirectory(pkgConfig.networkBackupsDir);
+                
+                // Initialize backup manager (optional)
+                if (!BackupManager::initialize()) {
+                    std::cerr << "Warning: Failed to initialize Backup Manager. Backup features will be disabled." << std::endl;
+                    pkgConfig.networkBackupsDir = "";
+                    backupsEnabled = false;
+                } else {
+                    backupsEnabled = true;
+                }
+            } else {
+                std::cout << "Backup Manager disabled due to directory creation failure." << std::endl;
+                backupsEnabled = false;
+            }
         }
         
         running = true;
@@ -91,6 +176,9 @@ public:
         std::cout << "OpenWrt Network Configuration CLI";
         if (testMode) {
             std::cout << " (TEST MODE - No system commands will be executed)";
+        }
+        if (verboseMode) {
+            std::cout << " (VERBOSE MODE - All commands will be shown)";
         }
         std::cout << std::endl;
         std::cout << "Type 'help' for available commands or 'quit' to exit" << std::endl;
@@ -252,6 +340,7 @@ private:
         std::cout << "Options:" << std::endl;
         std::cout << "  -pkg_config <file>  Path to package configuration JSON file" << std::endl;
         std::cout << "  -t                   Enable test mode (no system commands)" << std::endl;
+        std::cout << "  -v                   Enable verbose mode (show all commands and results)" << std::endl;
         std::cout << "  -h, --help          Show this help message" << std::endl;
         std::cout << std::endl;
         std::cout << "Available commands:" << std::endl;
@@ -264,10 +353,16 @@ private:
         std::cout << "  set-static <ip> <mask> <gw> - Set static IP configuration" << std::endl;
         std::cout << "  set-dns <dns1> [dns2]   - Set DNS servers" << std::endl;
         std::cout << "  set-mtu <size>          - Set MTU size (576-9000)" << std::endl;
-        std::cout << "  profile-create <name>   - Create a new profile" << std::endl;
-        std::cout << "  profile-list            - List all profiles" << std::endl;
-        std::cout << "  profile-activate <name> - Activate a profile" << std::endl;
-        std::cout << "  profile-delete <name>   - Delete a profile" << std::endl;
+        
+        if (profilesEnabled) {
+            std::cout << "  profile-create <name>   - Create a new profile" << std::endl;
+            std::cout << "  profile-list            - List all profiles" << std::endl;
+            std::cout << "  profile-activate <name> - Activate a profile" << std::endl;
+            std::cout << "  profile-delete <name>   - Delete a profile" << std::endl;
+        } else {
+            std::cout << "  # Profile commands disabled - could not create profile directories" << std::endl;
+        }
+        
         std::cout << "  restore-defaults        - Restore default settings" << std::endl;
         std::cout << "  restart-interface       - Restart network interface" << std::endl;
         std::cout << std::endl;
@@ -469,6 +564,11 @@ private:
     }
     
     void createProfile(const std::string& name) {
+        if (!profilesEnabled) {
+            std::cout << "Profile features are disabled. Could not create profile directories during initialization." << std::endl;
+            return;
+        }
+        
         if (name.empty()) {
             std::cout << "Profile name cannot be empty" << std::endl;
             return;
@@ -489,6 +589,11 @@ private:
     }
     
     void listProfiles() {
+        if (!profilesEnabled) {
+            std::cout << "Profile features are disabled. Could not create profile directories during initialization." << std::endl;
+            return;
+        }
+        
         auto profiles = profileManager->getAllProfiles();
         std::string activeProfile = profileManager->getActiveProfile();
         
@@ -518,6 +623,11 @@ private:
     }
     
     void activateProfile(const std::string& name) {
+        if (!profilesEnabled) {
+            std::cout << "Profile features are disabled. Could not create profile directories during initialization." << std::endl;
+            return;
+        }
+        
         if (profileManager->activateProfile(name, *configAPI)) {
             std::cout << "Profile '" << name << "' activated successfully" << std::endl;
         } else {
@@ -526,6 +636,10 @@ private:
     }
     
     void deleteProfile(const std::string& name) {
+        if (!profilesEnabled) {
+            std::cout << "Profile features are disabled. Could not create profile directories during initialization." << std::endl;
+            return;
+        }
         if (profileManager->deleteProfile(name)) {
             std::cout << "Profile '" << name << "' deleted successfully" << std::endl;
         } else {
@@ -792,12 +906,14 @@ int main(int argc, char* argv[]) {
     std::string packageConfigPath;
     std::string operationConfigPath;
     bool isTestMode = false;
+    bool isVerboseMode = false;
     
     // Parse command line arguments
     static struct option long_options[] = {
         {"pkg_config", required_argument, 0, 1000},
         {"operation_config", required_argument, 0, 1001},
         {"test", no_argument, 0, 't'},
+        {"verbose", no_argument, 0, 'v'},
         {"help", no_argument, 0, 'h'},
         {0, 0, 0, 0}
     };
@@ -805,7 +921,7 @@ int main(int argc, char* argv[]) {
     int option_index = 0;
     int c;
     
-    while ((c = getopt_long(argc, argv, "p:o:th", long_options, &option_index)) != -1) {
+    while ((c = getopt_long(argc, argv, "p:o:tvh", long_options, &option_index)) != -1) {
         switch (c) {
             case 'p':
             case 1000:
@@ -818,6 +934,9 @@ int main(int argc, char* argv[]) {
             case 't':
                 isTestMode = true;
                 break;
+            case 'v':
+                isVerboseMode = true;
+                break;
             case 'h':
                 std::cout << "OpenWrt Network Configuration CLI" << std::endl;
                 std::cout << "Usage: openwrt-network-cli [options]" << std::endl;
@@ -828,6 +947,7 @@ int main(int argc, char* argv[]) {
                 std::cout << "  -operation_config <file>, --operation_config <file>" << std::endl;
                 std::cout << "                        Path to operation configuration JSON file" << std::endl;
                 std::cout << "  -t, --test             Enable test mode (no system commands)" << std::endl;
+                std::cout << "  -v, --verbose          Enable verbose mode (show all commands and results)" << std::endl;
                 std::cout << "  -h, --help          Show this help message" << std::endl;
                 return 0;
             case '?':
@@ -848,7 +968,7 @@ int main(int argc, char* argv[]) {
         packageConfigPath = "/etc/Ultima-Config/ur-base-network-mann/package-config.json";
     }
     
-    CLIApp app(packageConfigPath, isTestMode);
+    CLIApp app(packageConfigPath, isTestMode, isVerboseMode);
     
     if (!app.initialize()) {
         std::cerr << "Failed to initialize application" << std::endl;
