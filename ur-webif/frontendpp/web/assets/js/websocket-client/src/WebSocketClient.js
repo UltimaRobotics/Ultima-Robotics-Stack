@@ -21,13 +21,11 @@ class WebSocketClient {
     }
     
     init() {
-        console.log('[WEBSOCKET-CLIENT] Initializing WebSocket client...');
         this.connect();
     }
     
     connect() {
         try {
-            console.log(`[WEBSOCKET-CLIENT] Connecting to ${this.url}...`);
             
             this.ws = new WebSocket(this.url, this.protocols);
             
@@ -43,7 +41,6 @@ class WebSocketClient {
     }
     
     handleOpen() {
-        console.log('[WEBSOCKET-CLIENT] WebSocket connected');
         this.isConnected = true;
         this.reconnectAttempts = 0;
         
@@ -65,7 +62,6 @@ class WebSocketClient {
     }
     
     handleClose(event) {
-        console.log(`[WEBSOCKET-CLIENT] WebSocket closed: ${event.code} - ${event.reason}`);
         this.isConnected = false;
         this.stopHeartbeat();
         
@@ -91,7 +87,6 @@ class WebSocketClient {
         }
         
         this.reconnectAttempts++;
-        console.log(`[WEBSOCKET-CLIENT] Scheduling reconnection attempt ${this.reconnectAttempts}/${this.maxReconnectAttempts} in ${this.reconnectInterval}ms`);
         
         setTimeout(() => {
             this.connect();
@@ -125,7 +120,6 @@ class WebSocketClient {
         try {
             const message = typeof data === 'string' ? data : JSON.stringify(data);
             this.ws.send(message);
-            console.log('[WEBSOCKET-CLIENT] Message sent:', data);
         } catch (error) {
             console.error('[WEBSOCKET-CLIENT] Failed to send message:', error);
             throw error;
@@ -133,7 +127,6 @@ class WebSocketClient {
     }
     
     disconnect() {
-        console.log('[WEBSOCKET-CLIENT] Disconnecting WebSocket...');
         this.stopHeartbeat();
         
         if (this.ws) {

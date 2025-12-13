@@ -15,7 +15,6 @@ class DashboardUI {
     }
 
     init() {
-        console.log('[DASHBOARD-UI] Initializing dashboard UI...');
         this.loadingUI = new DashboardLoadingUI();
         this.createDashboardHTML();
         // Show loading states immediately after creating HTML
@@ -28,7 +27,6 @@ class DashboardUI {
      * Show loading states for all dashboard components
      */
     showLoadingStates() {
-        console.log('[DASHBOARD-UI] Showing dashboard loading states...');
         if (this.loadingUI) {
             this.loadingUI.showAllLoadingStates();
         }
@@ -381,7 +379,6 @@ class DashboardUI {
             return false;
         }
 
-        console.log('[DASHBOARD-UI] Rendering dashboard in container:', containerId);
         this.container.innerHTML = this.createDashboardHTML();
         this.attachEventListeners();
         return true;
@@ -429,7 +426,6 @@ class DashboardUI {
      * Handle auto refresh toggle
      */
     handleAutoRefreshToggle() {
-        console.log('[DASHBOARD-UI] Toggling auto refresh...');
         const icon = this.container.querySelector('#auto-refresh-icon');
         const text = this.container.querySelector('#auto-refresh-text');
         
@@ -453,7 +449,6 @@ class DashboardUI {
      * Handle refresh data button
      */
     handleRefreshData() {
-        console.log('[DASHBOARD-UI] Refreshing data...');
         const icon = this.container.querySelector('#refresh-icon');
         if (icon) {
             icon.classList.add('animate-spin');
@@ -468,7 +463,6 @@ class DashboardUI {
      * Handle cellular configuration action
      */
     handleCellularConfig() {
-        console.log('[DASHBOARD-UI] Opening cellular configuration...');
         document.dispatchEvent(new CustomEvent('dashboard:cellularConfig'));
     }
 
@@ -476,7 +470,6 @@ class DashboardUI {
      * Handle network scan action
      */
     handleNetworkScan() {
-        console.log('[DASHBOARD-UI] Starting network scan...');
         document.dispatchEvent(new CustomEvent('dashboard:networkScan'));
     }
 
@@ -484,7 +477,6 @@ class DashboardUI {
      * Handle firmware update action
      */
     handleUpdateFirmware() {
-        console.log('[DASHBOARD-UI] Checking for firmware updates...');
         document.dispatchEvent(new CustomEvent('dashboard:updateFirmware'));
     }
 
@@ -492,7 +484,6 @@ class DashboardUI {
      * Handle backup configuration action
      */
     handleBackupConfig() {
-        console.log('[DASHBOARD-UI] Creating configuration backup...');
         document.dispatchEvent(new CustomEvent('dashboard:backupConfig'));
     }
 
@@ -500,7 +491,6 @@ class DashboardUI {
      * Update dashboard data with system monitoring information
      */
     updateData(data) {
-        console.log('[DASHBOARD-UI] Updating dashboard data:', data);
         
         if (!this.container) {
             console.error('[DASHBOARD-UI] Container not found for data update');
@@ -515,38 +505,32 @@ class DashboardUI {
         try {
             // Update system stats
             if (data.system) {
-                console.log('[DASHBOARD-UI] Updating system stats:', data.system);
                 this.updateSystemStats(data.system);
                 // Hide loading state for system stats
                 if (this.loadingUI) {
                     this.loadingUI.hideLoading('systemStats');
                 }
             } else {
-                console.warn('[DASHBOARD-UI] No system data provided');
             }
             
             // Update network status
             if (data.network) {
-                console.log('[DASHBOARD-UI] Updating network status:', data.network);
                 this.updateNetworkStatus(data.network);
                 // Hide loading state for network status
                 if (this.loadingUI) {
                     this.loadingUI.hideLoading('networkStatus');
                 }
             } else {
-                console.warn('[DASHBOARD-UI] No network data provided');
             }
             
             // Update cellular status
             if (data.cellular) {
-                console.log('[DASHBOARD-UI] Updating cellular status:', data.cellular);
                 this.updateCellularStatus(data.cellular);
                 // Hide loading state for cellular status
                 if (this.loadingUI) {
                     this.loadingUI.hideLoading('cellularStatus');
                 }
             } else {
-                console.warn('[DASHBOARD-UI] No cellular data provided');
             }
             
             // Update last login and update times
@@ -555,7 +539,6 @@ class DashboardUI {
                 if (lastLoginElement) {
                     lastLoginElement.textContent = data.lastLogin;
                 } else {
-                    console.warn('[DASHBOARD-UI] Last login element not found');
                 }
             }
             
@@ -568,11 +551,9 @@ class DashboardUI {
                         this.loadingUI.hideLoading('updateIndicators');
                     }
                 } else {
-                    console.warn('[DASHBOARD-UI] Last update element not found');
                 }
             }
             
-            console.log('[DASHBOARD-UI] Dashboard data update completed successfully');
             
         } catch (error) {
             console.error('[DASHBOARD-UI] Error updating dashboard data:', error);
@@ -589,12 +570,10 @@ class DashboardUI {
      * Update system statistics
      */
     updateSystemStats(system) {
-        console.log('[DASHBOARD-UI] Updating system stats:', system);
         
         try {
             // CPU
             if (system.cpu) {
-                console.log('[DASHBOARD-UI] Updating CPU data:', system.cpu);
                 const cpuUsage = this.container.querySelector('[data-cpu-usage]');
                 const cpuProgress = this.container.querySelector('[data-cpu-progress]');
                 const cpuCores = this.container.querySelector('[data-cpu-cores]');
@@ -605,7 +584,6 @@ class DashboardUI {
                 if (cpuUsage) {
                     cpuUsage.textContent = system.cpu.usage || '0%';
                 } else {
-                    console.warn('[DASHBOARD-UI] CPU usage element not found');
                 }
                 
                 if (cpuProgress) {
@@ -623,7 +601,6 @@ class DashboardUI {
                         }
                     }
                 } else {
-                    console.warn('[DASHBOARD-UI] CPU progress element not found');
                 }
                 
                 if (cpuCores) cpuCores.textContent = system.cpu.cores || '0 Cores';
@@ -631,12 +608,10 @@ class DashboardUI {
                 if (cpuBaseClock) cpuBaseClock.textContent = system.cpu.baseClock || '0 GHz';
                 if (cpuBoostClock) cpuBoostClock.textContent = system.cpu.boostClock || '0 GHz';
             } else {
-                console.warn('[DASHBOARD-UI] No CPU data provided');
             }
             
             // RAM
             if (system.ram) {
-                console.log('[DASHBOARD-UI] Updating RAM data:', system.ram);
                 const ramUsage = this.container.querySelector('[data-ram-usage]');
                 const ramProgress = this.container.querySelector('[data-ram-progress]');
                 const ramUsed = this.container.querySelector('[data-ram-used]');
@@ -647,7 +622,6 @@ class DashboardUI {
                 if (ramUsage) {
                     ramUsage.textContent = system.ram.usage || '0%';
                 } else {
-                    console.warn('[DASHBOARD-UI] RAM usage element not found');
                 }
                 
                 if (ramProgress) {
@@ -665,7 +639,6 @@ class DashboardUI {
                         }
                     }
                 } else {
-                    console.warn('[DASHBOARD-UI] RAM progress element not found');
                 }
                 
                 if (ramUsed) ramUsed.textContent = system.ram.used || '0 GB';
@@ -673,12 +646,10 @@ class DashboardUI {
                 if (ramAvailable) ramAvailable.textContent = system.ram.available || '0 GB';
                 if (ramType) ramType.textContent = system.ram.type || 'N/A';
             } else {
-                console.warn('[DASHBOARD-UI] No RAM data provided');
             }
             
             // Swap
             if (system.swap) {
-                console.log('[DASHBOARD-UI] Updating Swap data:', system.swap);
                 const swapUsage = this.container.querySelector('[data-swap-usage]');
                 const swapProgress = this.container.querySelector('[data-swap-progress]');
                 const swapUsed = this.container.querySelector('[data-swap-used]');
@@ -689,7 +660,6 @@ class DashboardUI {
                 if (swapUsage) {
                     swapUsage.textContent = system.swap.usage || '0%';
                 } else {
-                    console.warn('[DASHBOARD-UI] Swap usage element not found');
                 }
                 
                 if (swapProgress) {
@@ -707,7 +677,6 @@ class DashboardUI {
                         }
                     }
                 } else {
-                    console.warn('[DASHBOARD-UI] Swap progress element not found');
                 }
                 
                 if (swapUsed) swapUsed.textContent = system.swap.used || '0 MB';
@@ -715,7 +684,6 @@ class DashboardUI {
                 if (swapAvailable) swapAvailable.textContent = system.swap.available || '0 GB';
                 if (swapPriority) swapPriority.textContent = system.swap.priority || 'Normal';
             } else {
-                console.warn('[DASHBOARD-UI] No Swap data provided');
             }
             
         } catch (error) {
@@ -727,12 +695,10 @@ class DashboardUI {
      * Update network status
      */
     updateNetworkStatus(network) {
-        console.log('[DASHBOARD-UI] Updating network status:', network);
         
         try {
             // Internet
             if (network.internet) {
-                console.log('[DASHBOARD-UI] Updating internet data:', network.internet);
                 const internetIndicator = this.container.querySelector('[data-internet-indicator]');
                 const internetStatus = this.container.querySelector('[data-internet-status]');
                 const externalIp = this.container.querySelector('[data-external-ip]');
@@ -746,7 +712,6 @@ class DashboardUI {
                                        network.internet.status === 'Connecting' ? 'bg-yellow-500' : 'bg-red-500';
                     internetIndicator.className = `w-2 h-2 rounded-full ${statusClass}`;
                 } else if (internetIndicator) {
-                    console.warn('[DASHBOARD-UI] Internet indicator found but no status data');
                 }
                 
                 if (internetStatus) internetStatus.textContent = network.internet.status || 'Unknown';
@@ -756,12 +721,10 @@ class DashboardUI {
                 if (latency) latency.textContent = network.internet.latency || '0 ms';
                 if (bandwidth) bandwidth.textContent = network.internet.bandwidth || 'N/A';
             } else {
-                console.warn('[DASHBOARD-UI] No internet data provided');
             }
             
             // Server
             if (network.server) {
-                console.log('[DASHBOARD-UI] Updating server data:', network.server);
                 const serverIndicator = this.container.querySelector('[data-server-indicator]');
                 const serverStatus = this.container.querySelector('[data-server-status]');
                 const serverHostname = this.container.querySelector('[data-server-hostname]');
@@ -775,7 +738,6 @@ class DashboardUI {
                                        network.server.status === 'Connecting' ? 'bg-yellow-500' : 'bg-red-500';
                     serverIndicator.className = `w-2 h-2 rounded-full ${statusClass}`;
                 } else if (serverIndicator) {
-                    console.warn('[DASHBOARD-UI] Server indicator found but no status data');
                 }
                 
                 if (serverStatus) serverStatus.textContent = network.server.status || 'Unknown';
@@ -785,12 +747,10 @@ class DashboardUI {
                 if (lastPing) lastPing.textContent = network.server.lastPing || '0 ms';
                 if (sessionDuration) sessionDuration.textContent = network.server.sessionDuration || 'N/A';
             } else {
-                console.warn('[DASHBOARD-UI] No server data provided');
             }
             
             // Connection Type
             if (network.connection) {
-                console.log('[DASHBOARD-UI] Updating connection data:', network.connection);
                 const connectionType = this.container.querySelector('[data-connection-type]');
                 const interfaceName = this.container.querySelector('[data-interface-name]');
                 const macAddress = this.container.querySelector('[data-mac-address]');
@@ -805,7 +765,6 @@ class DashboardUI {
                 if (gatewayIp) gatewayIp.textContent = network.connection.gateway || 'N/A';
                 if (connectionSpeed) connectionSpeed.textContent = network.connection.speed || 'N/A';
             } else {
-                console.warn('[DASHBOARD-UI] No connection data provided');
             }
             
         } catch (error) {
@@ -817,12 +776,10 @@ class DashboardUI {
      * Update cellular status
      */
     updateCellularStatus(cellular) {
-        console.log('[DASHBOARD-UI] Updating cellular status:', cellular);
         
         try {
             // Signal Strength
             if (cellular.signal) {
-                console.log('[DASHBOARD-UI] Updating cellular signal data:', cellular.signal);
                 const signalBars = this.container.querySelector('[data-signal-bars]');
                 const signalStatus = this.container.querySelector('[data-signal-status]');
                 const rssi = this.container.querySelector('[data-rssi]');
@@ -843,7 +800,6 @@ class DashboardUI {
                         }
                     });
                 } else if (signalBars) {
-                    console.warn('[DASHBOARD-UI] Signal bars element found but no bars data');
                 }
                 
                 if (signalStatus) signalStatus.textContent = cellular.signal.status || 'No Signal';
@@ -853,12 +809,10 @@ class DashboardUI {
                 if (sinr) sinr.textContent = cellular.signal.sinr || '0 dB';
                 if (cellId) cellId.textContent = cellular.signal.cellId || 'N/A';
             } else {
-                console.warn('[DASHBOARD-UI] No cellular signal data provided');
             }
             
             // Connection Status
             if (cellular.connection) {
-                console.log('[DASHBOARD-UI] Updating cellular connection data:', cellular.connection);
                 const cellularIndicator = this.container.querySelector('[data-cellular-indicator]');
                 const cellularStatus = this.container.querySelector('[data-cellular-status]');
                 const networkName = this.container.querySelector('[data-network-name]');
@@ -872,7 +826,6 @@ class DashboardUI {
                                        cellular.connection.status === 'Connecting' ? 'bg-yellow-500' : 'bg-neutral-400';
                     cellularIndicator.className = `w-2 h-2 rounded-full ${statusClass}`;
                 } else if (cellularIndicator) {
-                    console.warn('[DASHBOARD-UI] Cellular indicator found but no status data');
                 }
                 
                 if (cellularStatus) cellularStatus.textContent = cellular.connection.status || 'Disconnected';
@@ -882,7 +835,6 @@ class DashboardUI {
                 if (apn) apn.textContent = cellular.connection.apn || 'N/A';
                 if (dataUsage) dataUsage.textContent = cellular.connection.dataUsage || '0 MB';
             } else {
-                console.warn('[DASHBOARD-UI] No cellular connection data provided');
             }
             
         } catch (error) {

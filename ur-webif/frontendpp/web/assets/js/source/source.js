@@ -32,14 +32,12 @@ class SourceManager {
     
     async init() {
         try {
-            console.log('[SOURCE-MANAGER] Initializing source page...');
             
             // Initialize JWT Token Manager first (needed for authentication check)
             this.initializeTokenManager();
             
             // Check if user is authenticated
             if (!this.checkAuthentication()) {
-                console.log('[SOURCE-MANAGER] User not authenticated, redirecting to login');
                 window.location.replace('/login-page.html');
                 return;
             }
@@ -66,7 +64,6 @@ class SourceManager {
                 detail: { sourceManager: this }
             }));
             
-            console.log('[SOURCE-MANAGER] Source page initialized successfully');
             
         } catch (error) {
             console.error('[SOURCE-MANAGER] Initialization failed:', error);
@@ -101,7 +98,6 @@ class SourceManager {
                 }
             });
             
-            console.log('[SOURCE-MANAGER] HTTP client initialized');
         } catch (error) {
             console.error('[SOURCE-MANAGER] Failed to initialize HTTP client:', error);
             throw error;
@@ -114,7 +110,6 @@ class SourceManager {
                 apiBaseUrl: '/api/auth'
             });
             
-            console.log('[SOURCE-MANAGER] JWT Token Manager initialized');
         } catch (error) {
             console.error('[SOURCE-MANAGER] Failed to initialize Token Manager:', error);
             throw error;
@@ -129,7 +124,6 @@ class SourceManager {
                 tokenManager: this.tokenManager
             });
             
-            console.log('[SOURCE-MANAGER] Auth Manager initialized');
         } catch (error) {
             console.error('[SOURCE-MANAGER] Failed to initialize Auth Manager:', error);
             throw error;
@@ -165,7 +159,6 @@ class SourceManager {
             // Set up WebSocket event handlers
             this.setupWebSocketHandlers();
             
-            console.log('[SOURCE-MANAGER] WebSocket client initialized with shared architecture');
         } catch (error) {
             console.error('[SOURCE-MANAGER] Failed to initialize WebSocket client:', error);
             // Don't throw error - WebSocket is optional for basic functionality
@@ -176,7 +169,6 @@ class SourceManager {
         if (!this.wsClient) return;
         
         this.wsClient.on('open', () => {
-            console.log('[SOURCE-MANAGER] ✅ WebSocket connected successfully');
             
             // Dispatch event for UI update
             document.dispatchEvent(new CustomEvent('websocketOpen', {
@@ -192,7 +184,6 @@ class SourceManager {
         });
         
         this.wsClient.on('close', (event) => {
-            console.log(`[SOURCE-MANAGER] ❌ WebSocket disconnected: ${event.code} - ${event.reason}`);
             
             // Dispatch event for UI update
             document.dispatchEvent(new CustomEvent('websocketClose', {
@@ -201,21 +192,13 @@ class SourceManager {
             
             // Provide specific error information
             if (event.code === 1006) {
-                console.log('[SOURCE-MANAGER] 💡 Error 1006: Connection was closed abnormally');
-                console.log('[SOURCE-MANAGER] 💡 This usually indicates:');
-                console.log('[SOURCE-MANAGER]    - Server is not running or not accepting WebSocket connections');
-                console.log('[SOURCE-MANAGER]    - Network connectivity issues');
-                console.log('[SOURCE-MANAGER]    - Firewall blocking the connection');
             } else if (event.code === 1000) {
-                console.log('[SOURCE-MANAGER] 💡 Normal closure');
             } else {
-                console.log(`[SOURCE-MANAGER] 💡 WebSocket close code ${event.code}: https://www.rfc-editor.org/rfc/rfc6455.html#section-7.4.1`);
             }
         });
         
         this.wsClient.on('error', (error) => {
             console.error('[SOURCE-MANAGER] ❌ WebSocket error:', error);
-            console.log('[SOURCE-MANAGER] 💡 Check if WebSocket server is running on port 9002');
             
             // Dispatch event for UI update
             document.dispatchEvent(new CustomEvent('websocketError', {
@@ -224,7 +207,6 @@ class SourceManager {
         });
         
         this.wsClient.on('reconnecting', (info) => {
-            console.log(`[SOURCE-MANAGER] 🔄 WebSocket reconnecting: attempt ${info.attempt}/${this.wsClient.config.reconnectConfig.maxAttempts} (delay: ${info.delay}ms)`);
             
             // Dispatch event for UI update
             document.dispatchEvent(new CustomEvent('websocketReconnecting', {
@@ -234,7 +216,6 @@ class SourceManager {
         
         this.wsClient.on('maxReconnectAttemptsReached', () => {
             console.error('[SOURCE-MANAGER] ❌ WebSocket max reconnection attempts reached - giving up');
-            console.log('[SOURCE-MANAGER] 💡 Please check the WebSocket server status');
             
             // Dispatch event for UI update
             document.dispatchEvent(new CustomEvent('websocketMaxReconnectReached', {
@@ -243,7 +224,6 @@ class SourceManager {
         });
         
         this.wsClient.on('heartbeat', (data) => {
-            console.log('[SOURCE-MANAGER] 💓 WebSocket heartbeat response:', data);
         });
     }
     
@@ -255,7 +235,6 @@ class SourceManager {
                     type: 'auth',
                     token: token
                 });
-                console.log('[SOURCE-MANAGER] WebSocket authenticated');
             }
         } catch (error) {
             console.error('[SOURCE-MANAGER] WebSocket authentication failed:', error);
@@ -263,24 +242,15 @@ class SourceManager {
     }
     
     handleWebSocketMessage(data) {
-        console.log('[SOURCE-MANAGER] ===========================================');
-        console.log('[SOURCE-MANAGER] Received WebSocket message:', JSON.stringify(data, null, 2));
-        console.log('[SOURCE-MANAGER] Message type:', data.type);
-        console.log('[SOURCE-MANAGER] Message category:', data.category);
-        console.log('[SOURCE-MANAGER] Message data:', JSON.stringify(data.data, null, 2));
-        console.log('[SOURCE-MANAGER] ===========================================');
         
         // Handle network priority specific messages
         if (this.isNetworkPriorityData(data)) {
-            console.log('[SOURCE-MANAGER] Network priority data detected, updating UI...');
             this.updateNetworkPriorityFromWebSocket(data);
         }
         // Check if this is dashboard-related data and update dashboard components
         else if (this.isDashboardData(data)) {
-            console.log('[SOURCE-MANAGER] Dashboard data detected, updating components...');
             this.updateDashboardWithData(data);
         } else {
-            console.log('[SOURCE-MANAGER] Not dashboard or network priority data, skipping updates');
         }
         
         // Emit custom event for UI components to handle
@@ -314,7 +284,6 @@ class SourceManager {
      * Update network priority components from WebSocket data
      */
     updateNetworkPriorityFromWebSocket(data) {
-        console.log('[SOURCE-MANAGER] Processing network priority WebSocket update...');
         
         try {
             // Extract network priority data from various message formats
@@ -337,7 +306,6 @@ class SourceManager {
                 };
             }
             
-            console.log('[SOURCE-MANAGER] Extracted network priority data:', networkPriorityData);
             
             // Update the UI through the central update method
             this.updateNetworkPriorityUI(networkPriorityData);
@@ -388,33 +356,25 @@ class SourceManager {
      * Update dashboard components with received data
      */
     updateDashboardWithData(data) {
-        console.log('[SOURCE-MANAGER] ===========================================');
-        console.log('[SOURCE-MANAGER] Updating dashboard with WebSocket data:', JSON.stringify(data, null, 2));
         
         try {
             // Create standardized data structure for both components
             const standardizedData = this.createStandardizedDashboardData(data);
-            console.log('[SOURCE-MANAGER] Standardized data created:', JSON.stringify(standardizedData, null, 2));
             
             if (window.dashboard) {
-                console.log('[SOURCE-MANAGER] Updating dashboard controller...');
                 this.updateDashboardController(standardizedData);
             } else {
-                console.warn('[SOURCE-MANAGER] Dashboard controller not found');
             }
             
             if (window.dashboardUI) {
-                console.log('[SOURCE-MANAGER] Updating dashboard UI...');
                 this.updateDashboardUI(standardizedData);
             } else {
-                console.warn('[SOURCE-MANAGER] Dashboard UI not found');
             }
             
             // Update network priority UI if network priority data is present
             // Note: Network priority updates are now handled separately in handleWebSocketMessage
             // to avoid duplication and ensure source manager is the central authority
             if (false && standardizedData.networkPriority && (standardizedData.networkPriority.interfaces.length > 0 || standardizedData.networkPriority.routingRules.length > 0)) {
-                console.log('[SOURCE-MANAGER] Updating network priority UI via dashboard flow...');
                 this.updateNetworkPriorityUI(standardizedData.networkPriority);
             }
             
@@ -426,14 +386,12 @@ class SourceManager {
             console.error('[SOURCE-MANAGER] Failed to update dashboard with WebSocket data:', error);
         }
         
-        console.log('[SOURCE-MANAGER] ===========================================');
     }
     
     /**
      * Create standardized dashboard data structure from WebSocket data
      */
     createStandardizedDashboardData(data) {
-        console.log('[SOURCE-MANAGER] Creating standardized data from:', data);
         
         const standardized = {
             system: {
@@ -462,46 +420,34 @@ class SourceManager {
             const category = data.category;
             const categoryData = data.data;
             
-            console.log('[SOURCE-MANAGER] Processing backend category update:');
-            console.log('[SOURCE-MANAGER] - Category:', category);
-            console.log('[SOURCE-MANAGER] - Category Data:', JSON.stringify(categoryData, null, 2));
             
             switch (category) {
                 case 'system':
-                    console.log('[SOURCE-MANAGER] -> Handling SYSTEM category (contains CPU data only)');
                     // System category from backend contains ONLY CPU data, not nested system data
                     standardized.system.cpu = this.transformBackendCpuData(categoryData);
                     break;
                 case 'cpu':
-                    console.log('[SOURCE-MANAGER] -> Handling CPU category');
                     standardized.system.cpu = this.transformBackendCpuData(categoryData);
                     break;
                 case 'ram':
-                    console.log('[SOURCE-MANAGER] -> Handling RAM category');
                     standardized.system.ram = this.transformBackendRamData(categoryData);
                     break;
                 case 'swap':
-                    console.log('[SOURCE-MANAGER] -> Handling SWAP category');
                     standardized.system.swap = this.transformBackendSwapData(categoryData);
                     break;
                 case 'network':
-                    console.log('[SOURCE-MANAGER] -> Handling NETWORK category');
                     standardized.network = this.transformBackendNetworkData(categoryData);
                     break;
                 case 'ultima_server':
-                    console.log('[SOURCE-MANAGER] -> Handling ULTIMA_SERVER category');
                     standardized.network.server = this.transformBackendServerData(categoryData);
                     break;
                 case 'signal':
-                    console.log('[SOURCE-MANAGER] -> Handling SIGNAL category');
                     standardized.cellular = this.transformBackendCellularData(categoryData);
                     break;
                 case 'network_priority':
-                    console.log('[SOURCE-MANAGER] -> Handling NETWORK_PRIORITY category');
                     standardized.networkPriority = this.transformBackendNetworkPriorityData(categoryData);
                     break;
                 default:
-                    console.warn('[SOURCE-MANAGER] Unknown dashboard category:', category);
             }
         }
         // Handle nested system data (legacy format)
@@ -549,7 +495,6 @@ class SourceManager {
         if (data.lastUpdate) standardized.lastUpdate = data.lastUpdate;
         if (data.lastLogin) standardized.lastLogin = data.lastLogin;
         
-        console.log('[SOURCE-MANAGER] Standardized data created:', standardized);
         return standardized;
     }
     
@@ -557,8 +502,6 @@ class SourceManager {
      * Transform backend CPU data to frontend format
      */
     transformBackendCpuData(cpuData) {
-        console.log('[SOURCE-MANAGER] --- Transforming CPU Data ---');
-        console.log('[SOURCE-MANAGER] Input CPU data:', JSON.stringify(cpuData, null, 2));
         
         const transformed = {
             usage: cpuData.usage_percent !== undefined ? `${Math.round(cpuData.usage_percent)}%` : '0%',
@@ -568,8 +511,6 @@ class SourceManager {
             boostClock: cpuData.frequency_ghz !== undefined ? `${(cpuData.frequency_ghz * 1.2).toFixed(1)} GHz` : '0 GHz'
         };
         
-        console.log('[SOURCE-MANAGER] Transformed CPU data:', JSON.stringify(transformed, null, 2));
-        console.log('[SOURCE-MANAGER] --- End CPU Transformation ---');
         
         return transformed;
     }
@@ -681,7 +622,6 @@ class SourceManager {
      * Transform backend Network Priority data to frontend format
      */
     transformBackendNetworkPriorityData(networkPriorityData) {
-        console.log('[SOURCE-MANAGER] Transforming network priority data:', networkPriorityData);
         
         // Transform network interfaces data
         const interfaces = (networkPriorityData.networkInterfaces || []).map(iface => ({
@@ -749,7 +689,6 @@ class SourceManager {
      * Setup tab switching listeners
      */
     setupTabSwitchingListeners() {
-        console.log('[SOURCE-MANAGER] Setting up tab switching listeners...');
         
         // Listen for tab change events from UI
         document.addEventListener('tabChanged', (e) => {
@@ -763,14 +702,12 @@ class SourceManager {
             this.requestNavigation(section);
         });
         
-        console.log('[SOURCE-MANAGER] Tab switching listeners setup complete');
     }
     
     /**
      * Handle tab change events
      */
     handleTabChange(newSection, previousSection) {
-        console.log(`[SOURCE-MANAGER] Tab changed from ${previousSection} to ${newSection}`);
         
         // Update current tab tracking
         this.currentTab = newSection;
@@ -795,7 +732,6 @@ class SourceManager {
      * Perform actions specific to certain tabs
      */
     performTabSpecificActions(section) {
-        console.log(`[SOURCE-MANAGER] Performing tab-specific actions for: ${section}`);
         
         switch (section) {
             case 'system-dashboard':
@@ -820,7 +756,6 @@ class SourceManager {
                 this.handleBackupRestoreTab();
                 break;
             default:
-                console.log(`[SOURCE-MANAGER] No specific actions for tab: ${section}`);
         }
     }
     
@@ -828,13 +763,10 @@ class SourceManager {
      * Handle system dashboard tab activation
      */
     handleSystemDashboardTab() {
-        console.log('[SOURCE-MANAGER] System dashboard tab activated');
         
         // Ensure WebSocket data processing is active for dashboard
         if (this.wsClient && this.wsClient.isClientConnected()) {
-            console.log('[SOURCE-MANAGER] WebSocket is connected, dashboard data will be processed');
         } else {
-            console.log('[SOURCE-MANAGER] WebSocket is not connected, dashboard may show stale data');
         }
     }
     
@@ -842,12 +774,10 @@ class SourceManager {
      * Handle network priority tab activation
      */
     handleNetworkPriorityTab() {
-        console.log('[SOURCE-MANAGER] Network priority tab activated');
         
         // Network priority data now comes exclusively from WebSocket
         // No HTTP request needed - data will be pushed via WebSocket
         if (this.wsClient && this.wsClient.isClientConnected()) {
-            console.log('[SOURCE-MANAGER] WebSocket connected - waiting for network priority data...');
             
             // Show loading state while waiting for WebSocket data
             if (window.dataLoadingUI) {
@@ -861,7 +791,6 @@ class SourceManager {
                 timestamp: Date.now()
             });
         } else {
-            console.log('[SOURCE-MANAGER] WebSocket not connected, cannot request network priority data');
             
             // Show error state
             if (window.dataLoadingUI) {
@@ -875,7 +804,6 @@ class SourceManager {
      * Handle network benchmark tab activation
      */
     handleNetworkBenchmarkTab() {
-        console.log('[SOURCE-MANAGER] Network benchmark tab activated');
         // Implementation for network benchmark tab actions
     }
     
@@ -883,13 +811,10 @@ class SourceManager {
      * Handle MAVLink extension tab activation
      */
     handleMavlinkExtensionTab() {
-        console.log('[SOURCE-MANAGER] MAVLink extension tab activated');
         
         // Ensure WebSocket is available for MAVLink extension
         if (this.wsClient && this.wsClient.isClientConnected()) {
-            console.log('[SOURCE-MANAGER] WebSocket is connected, MAVLink extension can communicate with backend');
         } else {
-            console.log('[SOURCE-MANAGER] WebSocket is not connected, MAVLink extension will run in demo mode');
         }
     }
     
@@ -897,7 +822,6 @@ class SourceManager {
      * Handle firmware upgrade tab activation
      */
     handleFirmwareUpgradeTab() {
-        console.log('[SOURCE-MANAGER] Firmware upgrade tab activated');
         
         // Initialize firmware upgrade data refresh if needed
         this.initializeFirmwareUpgradeData();
@@ -907,14 +831,11 @@ class SourceManager {
      * Initialize firmware upgrade data
      */
     initializeFirmwareUpgradeData() {
-        console.log('[SOURCE-MANAGER] Initializing firmware upgrade data...');
         
         // Trigger initial data load if firmware upgrade manager is available
         if (window.firmwareUpgradeManager) {
             // The firmware upgrade manager will handle its own data loading
-            console.log('[SOURCE-MANAGER] Firmware upgrade manager available, data will be loaded automatically');
         } else {
-            console.log('[SOURCE-MANAGER] Firmware upgrade manager not yet available, will be initialized by UI');
         }
     }
     
@@ -922,7 +843,6 @@ class SourceManager {
      * Handle license management tab activation
      */
     handleLicenseManagementTab() {
-        console.log('[SOURCE-MANAGER] License management tab activated');
         // License management specific actions can be added here
         // For example: refresh licence data, validate licence status, etc.
     }
@@ -931,7 +851,6 @@ class SourceManager {
      * Handle backup & restore tab activation
      */
     handleBackupRestoreTab() {
-        console.log('[SOURCE-MANAGER] Backup & restore tab activated');
         
         // Initialize backup & restore data refresh if needed
         this.initializeBackupRestoreData();
@@ -941,7 +860,6 @@ class SourceManager {
      * Initialize backup & restore data
      */
     initializeBackupRestoreData() {
-        console.log('[SOURCE-MANAGER] Initializing backup & restore data...');
         
         // Backup & restore specific data initialization can be added here
         // For example: load backup history, check system state, etc.
@@ -951,7 +869,6 @@ class SourceManager {
      * Update WebSocket subscriptions based on active tab
      */
     updateWebSocketSubscriptions(section) {
-        console.log(`[SOURCE-MANAGER] Updating WebSocket subscriptions for tab: ${section}`);
         
         // Send subscription message to backend if needed
         if (this.wsClient && this.wsClient.isClientConnected()) {
@@ -962,7 +879,6 @@ class SourceManager {
             };
             
             this.wsClient.send(subscriptionData);
-            console.log('[SOURCE-MANAGER] Sent subscription update for section:', section);
         }
     }
     
@@ -970,11 +886,9 @@ class SourceManager {
      * Request navigation to a specific section
      */
     requestNavigation(section) {
-        console.log('[SOURCE-MANAGER] Navigation requested for section:', section);
         
         // Validate section
         if (!this.isValidSection(section)) {
-            console.warn('[SOURCE-MANAGER] Invalid section requested:', section);
             return;
         }
         
@@ -1018,7 +932,6 @@ class SourceManager {
     updateDashboardController(data) {
         if (!window.dashboard) return;
         
-        console.log('[SOURCE-MANAGER] Updating dashboard controller with:', data);
         
         // Update dashboard data structure
         if (window.dashboard.data) {
@@ -1033,7 +946,6 @@ class SourceManager {
         if (window.dashboard.dashboardUI && window.dashboard.dashboardUI.updateData) {
             window.dashboard.dashboardUI.updateData(window.dashboard.data);
         } else {
-            console.warn('[SOURCE-MANAGER] Dashboard UI not available for update');
         }
     }
     
@@ -1097,13 +1009,11 @@ class SourceManager {
     updateDashboardUI(data) {
         if (!window.dashboardUI) return;
         
-        console.log('[SOURCE-MANAGER] Updating dashboard UI directly with:', data);
         
         // Update UI directly with standardized data - add safety check
         if (window.dashboardUI.updateData) {
             window.dashboardUI.updateData(data);
         } else {
-            console.warn('[SOURCE-MANAGER] Dashboard UI updateData method not available');
         }
     }
     
@@ -1111,24 +1021,20 @@ class SourceManager {
      * Update network priority UI components
      */
     updateNetworkPriorityUI(networkPriorityData) {
-        console.log('[SOURCE-MANAGER] Updating network priority UI with data:', networkPriorityData);
         
         // Update network priority manager if available
         if (window.networkPriorityManager) {
-            console.log('[SOURCE-MANAGER] Updating network priority manager...');
             
             // Update interfaces data
             if (networkPriorityData.interfaces && networkPriorityData.interfaces.length > 0) {
                 window.networkPriorityManager.interfaces = networkPriorityData.interfaces;
                 window.networkPriorityManager.updateInterfacesDisplay();
-                console.log('[SOURCE-MANAGER] Updated', networkPriorityData.interfaces.length, 'interfaces');
             }
             
             // Update routing rules data
             if (networkPriorityData.routingRules && networkPriorityData.routingRules.length > 0) {
                 window.networkPriorityManager.routingRules = networkPriorityData.routingRules;
                 window.networkPriorityManager.updateRoutingRulesDisplay();
-                console.log('[SOURCE-MANAGER] Updated', networkPriorityData.routingRules.length, 'routing rules');
             }
             
             // Show priority connection status blinking indicator instead of notification
@@ -1137,7 +1043,6 @@ class SourceManager {
             }
             
         } else {
-            console.warn('[SOURCE-MANAGER] Network priority manager not found - cannot update UI');
         }
         
         // Also emit custom event for network priority components
@@ -1248,7 +1153,6 @@ class SourceManager {
             
             if (response.data && response.data.user) {
                 this.currentUser = response.data.user;
-                console.log('[SOURCE-MANAGER] User info loaded:', this.currentUser.username);
                 // Cache user info for fallback
                 localStorage.setItem('user_info', JSON.stringify(this.currentUser));
             }
@@ -1257,12 +1161,10 @@ class SourceManager {
             
             // Handle 401 Unauthorized - token might be expired
             if (error.message.includes('401') || error.response?.status === 401) {
-                console.log('[SOURCE-MANAGER] Token expired or invalid, attempting refresh...');
                 try {
                     // Try to refresh the token
                     const refreshed = await this.tokenManager.refreshAccessToken();
                     if (refreshed) {
-                        console.log('[SOURCE-MANAGER] Token refreshed, retrying user info request...');
                         // Retry the request with new token
                         const newToken = this.tokenManager.getAccessToken();
                         const response = await this.httpClient.get('/api/auth/user', {
@@ -1273,7 +1175,6 @@ class SourceManager {
                         
                         if (response.data && response.data.user) {
                             this.currentUser = response.data.user;
-                            console.log('[SOURCE-MANAGER] User info loaded after token refresh:', this.currentUser.username);
                             localStorage.setItem('user_info', JSON.stringify(this.currentUser));
                             return;
                         }
@@ -1283,7 +1184,6 @@ class SourceManager {
                 }
                 
                 // If refresh failed, redirect to login
-                console.log('[SOURCE-MANAGER] Authentication failed, redirecting to login');
                 this.handleAuthenticationFailure();
                 return;
             }
@@ -1292,7 +1192,6 @@ class SourceManager {
             const cachedUser = localStorage.getItem('user_info');
             if (cachedUser) {
                 this.currentUser = JSON.parse(cachedUser);
-                console.log('[SOURCE-MANAGER] Using cached user info as fallback');
             } else {
                 // No cached info and request failed - handle authentication failure
                 this.handleAuthenticationFailure();
@@ -1319,7 +1218,6 @@ class SourceManager {
     }
     
     handleAuthenticationFailure() {
-        console.log('[SOURCE-MANAGER] Handling authentication failure...');
         
         // Clear authentication data
         if (this.tokenManager) {
@@ -1388,7 +1286,6 @@ class SourceManager {
     
     async logout() {
         try {
-            console.log('[SOURCE-MANAGER] Logging out...');
             
             // Call logout API
             if (this.httpClient) {

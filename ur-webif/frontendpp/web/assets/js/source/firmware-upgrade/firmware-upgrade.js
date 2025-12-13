@@ -19,7 +19,6 @@ class FirmwareUpgradeManager {
     
     async init() {
         try {
-            console.log('[FIRMWARE-UPGRADE] Initializing firmware upgrade manager...');
             
             // Initialize HTTP client
             this.initializeHttpClient();
@@ -31,7 +30,6 @@ class FirmwareUpgradeManager {
                 detail: { firmwareUpgradeManager: this }
             }));
             
-            console.log('[FIRMWARE-UPGRADE] Firmware upgrade manager initialized successfully');
             
         } catch (error) {
             console.error('[FIRMWARE-UPGRADE] Initialization failed:', error);
@@ -54,7 +52,6 @@ class FirmwareUpgradeManager {
                 }
             });
             
-            console.log('[FIRMWARE-UPGRADE] HTTP client initialized');
         } catch (error) {
             console.error('[FIRMWARE-UPGRADE] Failed to initialize HTTP client:', error);
             throw error;
@@ -63,7 +60,6 @@ class FirmwareUpgradeManager {
     
     async getCurrentFirmwareInfo() {
         try {
-            console.log('[FIRMWARE-UPGRADE] Fetching current firmware information...');
             
             // Use mock data instead of HTTP client to avoid 404 errors
             const mockData = this.getMockFirmwareInfo();
@@ -83,7 +79,6 @@ class FirmwareUpgradeManager {
     
     async checkUpgradeReadiness() {
         try {
-            console.log('[FIRMWARE-UPGRADE] Checking upgrade readiness...');
             
             // Use mock data instead of HTTP client to avoid 404 errors
             const mockReadiness = this.getMockReadinessStatus();
@@ -102,7 +97,6 @@ class FirmwareUpgradeManager {
     
     async verifyFileIntegrity(file) {
         try {
-            console.log('[FIRMWARE-UPGRADE] Verifying file integrity...');
             
             // Use mock verification instead of HTTP client to avoid 404 errors
             const mockVerification = this.getMockFileVerification(file);
@@ -121,7 +115,6 @@ class FirmwareUpgradeManager {
     
     async uploadFirmware(file, progressCallback) {
         try {
-            console.log('[FIRMWARE-UPGRADE] Uploading firmware file...');
             
             // Simulate file upload with progress tracking
             return new Promise((resolve, reject) => {
@@ -163,7 +156,6 @@ class FirmwareUpgradeManager {
     
     async checkForOnlineUpdates() {
         try {
-            console.log('[FIRMWARE-UPGRADE] Checking for online updates...');
             
             // Use mock update info instead of HTTP client to avoid 404 errors
             const mockUpdateInfo = this.getMockUpdateInfo();
@@ -182,7 +174,6 @@ class FirmwareUpgradeManager {
     
     async downloadOnlineUpdate(updateInfo, progressCallback) {
         try {
-            console.log('[FIRMWARE-UPGRADE] Downloading online update...');
             
             // Simulate download progress
             if (progressCallback) {
@@ -214,7 +205,6 @@ class FirmwareUpgradeManager {
     
     async testTftpConnection(tftpConfig) {
         try {
-            console.log('[FIRMWARE-UPGRADE] Testing TFTP connection...');
             
             // Simulate connection test delay
             await new Promise(resolve => setTimeout(resolve, 1500));
@@ -235,7 +225,6 @@ class FirmwareUpgradeManager {
                 throw new Error('Upgrade already in progress');
             }
             
-            console.log('[FIRMWARE-UPGRADE] Starting firmware upgrade...', upgradeConfig);
             
             // Simulate upgrade initialization delay
             await new Promise(resolve => setTimeout(resolve, 1000));
@@ -258,7 +247,6 @@ class FirmwareUpgradeManager {
     
     async cancelUpgrade() {
         try {
-            console.log('[FIRMWARE-UPGRADE] Cancelling firmware upgrade...');
             
             // Simulate cancellation delay
             await new Promise(resolve => setTimeout(resolve, 500));
@@ -274,7 +262,6 @@ class FirmwareUpgradeManager {
     
     async getUpgradeHistory() {
         try {
-            console.log('[FIRMWARE-UPGRADE] Fetching upgrade history...');
             
             // Simulate network delay
             await new Promise(resolve => setTimeout(resolve, 800));
@@ -455,7 +442,6 @@ class FirmwareUpgradeManager {
         this.upgradeInProgress = false;
         this.initialized = false;
         
-        console.log('[FIRMWARE-UPGRADE] Firmware upgrade manager destroyed');
     }
 }
 

@@ -34,7 +34,6 @@ class Dashboard {
      * Initialize dashboard
      */
     async init() {
-        console.log('[DASHBOARD] Initializing dashboard...');
         
         // Create UI instance
         this.dashboardUI = new DashboardUI();
@@ -96,14 +95,12 @@ class Dashboard {
         this.isLoading = true;
         
         try {
-            console.log('[DASHBOARD] Loading dashboard data...');
             
             // Load system monitoring data via HTTP API as fallback
             await this.loadSystemData();
             await this.loadNetworkData();
             await this.loadCellularData();
             
-            console.log('[DASHBOARD] Dashboard data loaded successfully');
             
         } catch (error) {
             console.error('[DASHBOARD] Failed to load dashboard data:', error);
@@ -120,7 +117,6 @@ class Dashboard {
         try {
             // This would be replaced with actual API call
             // For now, keep default values - WebSocket will provide real data
-            console.log('[DASHBOARD] System data will be provided by WebSocket');
         } catch (error) {
             console.error('[DASHBOARD] Failed to load system data:', error);
         }
@@ -133,7 +129,6 @@ class Dashboard {
         try {
             // This would be replaced with actual API call
             // For now, keep default values - WebSocket will provide real data
-            console.log('[DASHBOARD] Network data will be provided by WebSocket');
         } catch (error) {
             console.error('[DASHBOARD] Failed to load network data:', error);
         }
@@ -146,7 +141,6 @@ class Dashboard {
         try {
             // This would be replaced with actual API call
             // For now, keep default values - WebSocket will provide real data
-            console.log('[DASHBOARD] Cellular data will be provided by WebSocket');
         } catch (error) {
             console.error('[DASHBOARD] Failed to load cellular data:', error);
         }
@@ -261,7 +255,6 @@ class Dashboard {
         if (this.dashboardUI && this.dashboardUI.updateData) {
             this.dashboardUI.updateData(data || this.data);
         } else {
-            console.warn('[DASHBOARD] Dashboard UI not available for data update');
         }
     }
 
@@ -269,7 +262,6 @@ class Dashboard {
      * Render the dashboard
      */
     render() {
-        console.log('[DASHBOARD] Rendering dashboard...');
         
         try {
             // Check if dashboardUI is initialized
@@ -292,7 +284,6 @@ class Dashboard {
             if (success) {
                 // Update UI with data
                 this.safeUpdateData();
-                console.log('[DASHBOARD] Dashboard rendered successfully');
             } else {
                 throw new Error('Failed to render dashboard UI');
             }
@@ -322,47 +313,37 @@ class Dashboard {
      * Handle WebSocket messages
      */
     handleWebSocketMessage(message) {
-        console.log('[DASHBOARD] Received WebSocket message:', message);
         
         // Handle backend dashboard_update messages with categories
         if (message.type === 'dashboard_update' && message.category) {
             const category = message.category;
             const data = message.data;
             
-            console.log('[DASHBOARD] Processing backend category update:', category, data);
             
             switch (category) {
                 case 'system':
                     // System category from backend contains ONLY CPU data
-                    console.log('[DASHBOARD] Processing SYSTEM category (CPU data only)');
                     this.handleSystemUpdate({ cpu: data });
                     break;
                 case 'cpu':
-                    console.log('[DASHBOARD] Processing CPU category');
                     this.handleSystemUpdate({ cpu: data });
                     break;
                 case 'ram':
-                    console.log('[DASHBOARD] Processing RAM category');
                     this.handleSystemUpdate({ ram: data });
                     break;
                 case 'swap':
-                    console.log('[DASHBOARD] Processing SWAP category');
                     this.handleSystemUpdate({ swap: data });
                     break;
                 case 'network':
-                    console.log('[DASHBOARD] Processing NETWORK category');
                     this.handleNetworkUpdate(data);
                     break;
                 case 'ultima_server':
-                    console.log('[DASHBOARD] Processing ULTIMA_SERVER category');
                     this.handleNetworkUpdate({ server: data });
                     break;
                 case 'signal':
-                    console.log('[DASHBOARD] Processing SIGNAL category');
                     this.handleCellularUpdate(data);
                     break;
                 default:
-                    console.warn('[DASHBOARD] Unknown backend category:', category);
             }
             return;
         }
@@ -397,7 +378,6 @@ class Dashboard {
      * Handle dashboard data updates from WebSocket
      */
     handleDashboardDataUpdate(detail) {
-        console.log('[DASHBOARD] Received dashboard data update:', detail);
         
         const { data, source } = detail;
         
@@ -410,7 +390,6 @@ class Dashboard {
      * Handle system updates
      */
     handleSystemUpdate(systemData) {
-        console.log('[DASHBOARD] Handling system update:', systemData);
         
         // Update system data
         if (systemData.cpu) this.data.system.cpu = { ...this.data.system.cpu, ...systemData.cpu };
@@ -428,7 +407,6 @@ class Dashboard {
      * Handle network updates
      */
     handleNetworkUpdate(networkData) {
-        console.log('[DASHBOARD] Handling network update:', networkData);
         
         // Update network data
         if (networkData.internet) this.data.network.internet = { ...this.data.network.internet, ...networkData.internet };
@@ -446,7 +424,6 @@ class Dashboard {
      * Handle cellular updates
      */
     handleCellularUpdate(cellularData) {
-        console.log('[DASHBOARD] Handling cellular update:', cellularData);
         
         // Update cellular data
         if (cellularData.signal) this.data.cellular.signal = { ...this.data.cellular.signal, ...cellularData.signal };
@@ -463,7 +440,6 @@ class Dashboard {
      * Handle full dashboard update
      */
     handleFullDashboardUpdate(data) {
-        console.log('[DASHBOARD] Handling full dashboard update:', data);
         
         // Update all data sections
         if (data.system) {
@@ -503,7 +479,6 @@ class Dashboard {
      * Handle project updates
      */
     handleProjectUpdate(projectData) {
-        console.log('[DASHBOARD] Handling project update:', projectData);
         
         // Update projects list
         const projectIndex = this.data.projects.findIndex(p => p.id === projectData.id);
@@ -521,7 +496,6 @@ class Dashboard {
      * Handle task updates
      */
     handleTaskUpdate(taskData) {
-        console.log('[DASHBOARD] Handling task update:', taskData);
         
         // Update stats
         this.data.stats.activeTasks = taskData.activeTasks || this.data.stats.activeTasks;
@@ -534,7 +508,6 @@ class Dashboard {
      * Handle team updates
      */
     handleTeamUpdate(teamData) {
-        console.log('[DASHBOARD] Handling team update:', teamData);
         
         // Update team member count
         this.data.stats.teamMembers = teamData.memberCount || this.data.stats.teamMembers;
@@ -559,7 +532,6 @@ class Dashboard {
      * Handle auto refresh toggle action
      */
     handleAutoRefreshToggle() {
-        console.log('[DASHBOARD] Toggling auto refresh...');
         // This could be implemented to start/stop periodic data requests
         // For now, the UI handles the visual feedback
     }
@@ -568,7 +540,6 @@ class Dashboard {
      * Handle refresh data action
      */
     async handleRefreshData() {
-        console.log('[DASHBOARD] Refreshing dashboard data...');
         try {
             await this.loadDashboardData();
             this.safeUpdateData();
@@ -581,7 +552,6 @@ class Dashboard {
      * Handle cellular configuration action
      */
     handleCellularConfig() {
-        console.log('[DASHBOARD] Opening cellular configuration...');
         
         if (window.popupManager) {
             window.popupManager.showCustom({
@@ -648,7 +618,6 @@ class Dashboard {
                 roaming: formData.get('roaming') === 'on'
             };
             
-            console.log('[DASHBOARD] Saving cellular config:', config);
             
             // Close popup
             if (window.popupManager) {
@@ -669,7 +638,6 @@ class Dashboard {
      * Handle network scan action
      */
     handleNetworkScan() {
-        console.log('[DASHBOARD] Starting network scan...');
         
         if (window.popupManager) {
             window.popupManager.showInfo({
@@ -744,7 +712,6 @@ class Dashboard {
      * Handle firmware update action
      */
     handleUpdateFirmware() {
-        console.log('[DASHBOARD] Checking for firmware updates...');
         
         if (window.popupManager) {
             window.popupManager.showCustom({
@@ -816,7 +783,6 @@ class Dashboard {
      * Handle backup configuration action
      */
     handleBackupConfig() {
-        console.log('[DASHBOARD] Creating configuration backup...');
         
         if (window.popupManager) {
             window.popupManager.showInfo({
@@ -859,7 +825,6 @@ class Dashboard {
      * Refresh dashboard data
      */
     async refresh() {
-        console.log('[DASHBOARD] Refreshing dashboard...');
         await this.loadDashboardData();
         this.render();
     }
@@ -868,7 +833,6 @@ class Dashboard {
      * Destroy dashboard instance
      */
     destroy() {
-        console.log('[DASHBOARD] Destroying dashboard...');
         
         // Remove event listeners
         document.removeEventListener('dashboard:toggleAutoRefresh', this.handleAutoRefreshToggle);

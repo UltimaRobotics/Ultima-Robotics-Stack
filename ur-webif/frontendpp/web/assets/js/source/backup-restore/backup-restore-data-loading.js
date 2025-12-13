@@ -10,7 +10,6 @@ class BackupRestoreDataLoadingUI {
     }
     
     init() {
-        console.log('[BACKUP-RESTORE-LOADING-UI] Initializing backup & restore loading UI component...');
         this.setupLoadingStyles();
     }
     
@@ -407,7 +406,6 @@ class BackupRestoreDataLoadingUI {
      * Cleanup method
      */
     cleanup() {
-        console.log('[BACKUP-RESTORE-LOADING-UI] Cleaning up loading UI component...');
         
         // Clear all loading states
         this.clearAllLoadingStates();
@@ -418,7 +416,6 @@ class BackupRestoreDataLoadingUI {
             style.remove();
         }
         
-        console.log('[BACKUP-RESTORE-LOADING-UI] Loading UI component cleaned up');
     }
 }
 

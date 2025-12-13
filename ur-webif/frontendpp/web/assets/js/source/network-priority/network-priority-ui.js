@@ -13,7 +13,6 @@ class NetworkPriorityUI {
     }
     
     init() {
-        console.log('[NETWORK-PRIORITY-UI] Initializing UI Manager...');
         this.setupUIEventListeners();
         this.createRulePopupHTML();
     }
@@ -33,7 +32,6 @@ class NetworkPriorityUI {
      * Show interface edit popup
      */
     showInterfaceEditPopup(iface) {
-        console.log('[NETWORK-PRIORITY-UI] Showing interface edit popup for:', iface);
         
         // Create popup HTML
         const popupHTML = `
@@ -419,7 +417,6 @@ class NetworkPriorityUI {
     }
     
     showRulePopup(existingRule = null) {
-        console.log('[NETWORK-PRIORITY-UI] Showing rule popup:', existingRule);
         
         const popup = document.getElementById('add-rule-popup');
         if (!popup) return;
@@ -458,7 +455,6 @@ class NetworkPriorityUI {
     }
     
     closeRulePopup() {
-        console.log('[NETWORK-PRIORITY-UI] Closing rule popup...');
         
         if (!this.currentPopup) return;
         
@@ -582,10 +578,8 @@ class NetworkPriorityUI {
     }
     
     saveRule() {
-        console.log('[NETWORK-PRIORITY-UI] Saving rule...');
         
         if (!this.validateForm()) {
-            console.log('[NETWORK-PRIORITY-UI] Form validation failed');
             return;
         }
         
@@ -634,7 +628,6 @@ class NetworkPriorityUI {
     }
     
     previewChanges() {
-        console.log('[NETWORK-PRIORITY-UI] Previewing changes...');
         
         const changes = {
             interfaces: this.networkPriorityManager.interfaces,
@@ -676,7 +669,6 @@ class NetworkPriorityUI {
     }
     
     cancelChanges() {
-        console.log('[NETWORK-PRIORITY-UI] Canceling changes...');
         
         if (confirm('Are you sure you want to discard all changes?')) {
             // Reload original data
@@ -688,7 +680,6 @@ class NetworkPriorityUI {
      * Show add temporary routing rule modal using popup manager
      */
     showAddTempRuleModal() {
-        console.log('[NETWORK-PRIORITY-UI] Showing add temporary rule modal');
         
         if (window.popupManager) {
             // Ensure we have the latest network-priority data before showing modal
@@ -868,7 +859,6 @@ class NetworkPriorityUI {
      * Initialize temporary rule modal after popup manager shows it
      */
     initializeTempRuleModal() {
-        console.log('[NETWORK-PRIORITY-UI] Initializing temporary rule modal');
         
         // Wait a moment for the popup content to be fully rendered (following popup manager rules)
         setTimeout(() => {
@@ -890,7 +880,6 @@ class NetworkPriorityUI {
                 });
             }
             
-            console.log('[NETWORK-PRIORITY-UI] Temporary rule modal initialized with network-priority data');
         }, 150); // Slightly longer delay to ensure popup animation completes
     }
     
@@ -917,7 +906,6 @@ class NetworkPriorityUI {
         // Get available interfaces from network priority manager
         const interfaces = this.networkPriorityManager?.interfaces || [];
         
-        console.log('[NETWORK-PRIORITY-UI] Populating interfaces from network-priority data:', interfaces);
         
         // Clear existing options except the first one
         interfaceSelect.innerHTML = '<option value="">Select an interface</option>';
@@ -949,14 +937,12 @@ class NetworkPriorityUI {
             interfaceSelect.appendChild(option);
         }
         
-        console.log('[NETWORK-PRIORITY-UI] Populated', interfaces.length, 'interfaces in temp rule modal');
     }
     
     /**
      * Submit temporary rule form using popup manager
      */
     submitTempRuleForm() {
-        console.log('[NETWORK-PRIORITY-UI] Submitting temporary rule form');
         
         const form = document.getElementById('temp-rule-form');
         if (!form) return;
@@ -1042,7 +1028,6 @@ class NetworkPriorityUI {
      * Fallback modal when popup manager is not available
      */
     showFallbackTempRuleModal() {
-        console.log('[NETWORK-PRIORITY-UI] Popup manager not available, using fallback modal');
         
         // Create simple fallback modal
         const modalOverlay = document.createElement('div');
@@ -1069,7 +1054,6 @@ class NetworkPriorityUI {
     }
 
     destroy() {
-        console.log('[NETWORK-PRIORITY-UI] Destroying UI Manager...');
         
         // Close any open popups
         if (this.currentPopup) {

@@ -32,7 +32,6 @@ class NetworkBenchmarkUI {
     async initialize(containerId = 'network-benchmark-container') {
         this.container = document.getElementById(containerId);
         if (!this.container) {
-            console.warn(`[NETWORK-BENCHMARK-UI] Container element not found: ${containerId}. Will retry when available.`);
             return false;
         }
 
@@ -61,7 +60,6 @@ class NetworkBenchmarkUI {
         this.attachEventListeners();
         
         this.isInitialized = true;
-        console.log('[NETWORK-BENCHMARK-UI] UI initialized successfully');
         return true;
     }
 
@@ -75,7 +73,6 @@ class NetworkBenchmarkUI {
             this.websocket = new WebSocket(wsUrl);
 
             this.websocket.onopen = () => {
-                console.log('[NETWORK-BENCHMARK-UI] WebSocket connected');
                 this.isConnected = true;
                 this.updateConnectionStatus(true);
                 this.requestServerStatus();
@@ -92,7 +89,6 @@ class NetworkBenchmarkUI {
             };
 
             this.websocket.onclose = () => {
-                console.log('[NETWORK-BENCHMARK-UI] WebSocket disconnected');
                 this.isConnected = false;
                 this.updateConnectionStatus(false);
                 this.handleConnectionClose();
@@ -120,7 +116,6 @@ class NetworkBenchmarkUI {
      * Handle WebSocket messages
      */
     handleWebSocketMessage(data) {
-        console.log('[NETWORK-BENCHMARK-UI] Handling WebSocket message:', data);
         
         switch (data.type) {
             case 'server_status':
@@ -136,7 +131,6 @@ class NetworkBenchmarkUI {
                 this.handleError(data);
                 break;
             default:
-                console.log('[NETWORK-BENCHMARK-UI] Unknown message type:', data.type);
         }
     }
 
@@ -144,7 +138,6 @@ class NetworkBenchmarkUI {
      * Handle server status response
      */
     handleServerStatus(data) {
-        console.log('[NETWORK-BENCHMARK-UI] Received server status:', data);
         
         // Hide loading state
         if (this.loadingUI) {
@@ -767,7 +760,6 @@ class NetworkBenchmarkUI {
         const tbody = document.getElementById('server-table-body');
         
         if (!tbody) {
-            console.warn('[NETWORK-BENCHMARK-UI] Server table body not found');
             return;
         }
         
@@ -861,7 +853,6 @@ class NetworkBenchmarkUI {
                 try {
                     statusDot.setAttribute('class', 'w-2 h-2 bg-green-500 rounded-full');
                 } catch (error) {
-                    console.warn('[NETWORK-BENCHMARK-UI] Could not set status dot class:', error);
                 }
                 statusText.textContent = 'Connected';
                 this.lastUpdateTime = Date.now();
@@ -881,7 +872,6 @@ class NetworkBenchmarkUI {
                 try {
                     statusDot.setAttribute('class', 'w-2 h-2 bg-red-500 rounded-full');
                 } catch (error) {
-                    console.warn('[NETWORK-BENCHMARK-UI] Could not set status dot class:', error);
                 }
                 statusText.textContent = 'Disconnected';
                 
@@ -904,7 +894,6 @@ class NetworkBenchmarkUI {
         const timeSinceLastData = now - (this.lastUpdateTime || 0);
         
         if (timeSinceLastData > 15000) { // 15 seconds without data
-            console.log('[NETWORK-BENCHMARK-UI] Connection appears stale, marking as disconnected');
             this.updateConnectionStatus(false);
         } else {
             // Still receiving data, reset the timeout
@@ -946,14 +935,12 @@ class NetworkBenchmarkUI {
      * Show notification for status changes
      */
     showNotification(message, type = 'info') {
-        console.log(`[NETWORK-BENCHMARK-UI] Notification (${type}): ${message}`);
         
         // If popup manager is available, use it
         if (window.popupManager) {
             window.popupManager.showNotification(message, type);
         } else {
             // Fallback to console
-            console.log(message);
         }
     }
 
@@ -961,7 +948,6 @@ class NetworkBenchmarkUI {
      * Handle WebSocket data update
      */
     handleWebSocketUpdate(data) {
-        console.log('[NETWORK-BENCHMARK-UI] Handling WebSocket update:', data);
         
         // Update connection status
         this.updateConnectionStatus(true);
@@ -1039,7 +1025,6 @@ class NetworkBenchmarkUI {
             this.loadingUI.showInitialLoadingState();
         } else {
             // Fallback to direct implementation
-            console.log('[NETWORK-BENCHMARK-UI] Loading UI not available, using fallback loading states');
             this.showServersLoading();
             
             // Show loading stats

@@ -11,4 +11,3 @@ import { DataLoadingUI } from './data-loading-ui.js';
 // Module exports
 export { NetworkPriorityManager, NetworkPriorityUI, DataLoadingUI };
 
-console.log('[NETWORK-PRIORITY-MODULE] Network priority module loaded');

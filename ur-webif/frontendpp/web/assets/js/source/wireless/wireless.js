@@ -196,7 +196,6 @@ export class WirelessManager {
      */
     async toggleWiFi(enabled) {
         try {
-            console.log('[WIRELESS] Toggling WiFi:', enabled);
             
             this.isWiFiEnabled = enabled;
             
@@ -219,7 +218,6 @@ export class WirelessManager {
      */
     async switchMode(mode) {
         try {
-            console.log('[WIRELESS] Switching mode:', mode);
             
             if (!['accessPoint', 'client'].includes(mode)) {
                 throw new Error('Invalid mode. Must be "accessPoint" or "client"');
@@ -245,7 +243,6 @@ export class WirelessManager {
      */
     async updateAccessPointSettings(settings) {
         try {
-            console.log('[WIRELESS] Updating access point settings:', settings);
             
             this.accessPointSettings = { ...this.accessPointSettings, ...settings };
             
@@ -263,7 +260,6 @@ export class WirelessManager {
      */
     async scanNetworks() {
         try {
-            console.log('[WIRELESS] Scanning for networks...');
             
             this.clientSettings.scanning = true;
             
@@ -295,7 +291,6 @@ export class WirelessManager {
      */
     async connectToNetwork(networkId, password = null) {
         try {
-            console.log('[WIRELESS] Connecting to network:', networkId);
             
             const network = this.availableNetworks.find(n => n.id === networkId);
             if (!network) {
@@ -341,7 +336,6 @@ export class WirelessManager {
      */
     async disconnectFromNetwork() {
         try {
-            console.log('[WIRELESS] Disconnecting from current network...');
             
             if (!this.clientSettings.currentNetwork) {
                 throw new Error('No network currently connected');
@@ -371,7 +365,6 @@ export class WirelessManager {
      */
     async removeSavedNetwork(networkId) {
         try {
-            console.log('[WIRELESS] Removing saved network:', networkId);
             
             const networkIndex = this.savedNetworks.findIndex(n => n.id === networkId);
             if (networkIndex === -1) {
@@ -398,7 +391,6 @@ export class WirelessManager {
      */
     async disconnectDevice(deviceId) {
         try {
-            console.log('[WIRELESS] Disconnecting device:', deviceId);
             
             const deviceIndex = this.connectedDevices.findIndex(d => d.id === deviceId);
             if (deviceIndex === -1) {
@@ -441,7 +433,6 @@ export class WirelessManager {
      */
     async forgetAllNetworks() {
         try {
-            console.log('[WIRELESS] Forgetting all saved networks...');
             
             await new Promise(resolve => setTimeout(resolve, 300));
             

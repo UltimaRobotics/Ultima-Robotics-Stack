@@ -10,7 +10,6 @@ class DataLoadingUI {
     }
     
     init() {
-        console.log('[DATA-LOADING-UI] Initializing data loading UI component...');
         this.setupLoadingStyles();
     }
     
@@ -68,7 +67,6 @@ class DataLoadingUI {
         const container = document.getElementById('interfaces-container');
         if (!container) return;
         
-        console.log('[DATA-LOADING-UI] Showing interfaces loading state...');
         
         container.innerHTML = `
             <div class="space-y-4">
@@ -113,7 +111,6 @@ class DataLoadingUI {
         const tbody = document.getElementById('routing-rules-tbody');
         if (!tbody) return;
         
-        console.log('[DATA-LOADING-UI] Showing routing rules loading state...');
         
         tbody.innerHTML = `
             ${this.createRoutingRuleSkeleton()}
@@ -189,7 +186,6 @@ class DataLoadingUI {
                 statusIndicator.setAttribute('class', 'px-3 py-1 rounded-full text-sm font-medium bg-neutral-100 text-neutral-500 loading-pulse');
                 statusIndicator.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Connecting...';
             } catch (error) {
-                console.warn('[DATA-LOADING-UI] Could not set connection status loading state:', error);
                 // Fallback: just update the text content
                 statusIndicator.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Connecting...';
             }
@@ -203,7 +199,6 @@ class DataLoadingUI {
      */
     hideLoading(component) {
         this.loadingStates.delete(component);
-        console.log(`[DATA-LOADING-UI] Hidden loading state for: ${component}`);
     }
     
     /**
@@ -217,7 +212,6 @@ class DataLoadingUI {
      * Show loading state for all network priority components
      */
     showAllLoadingStates() {
-        console.log('[DATA-LOADING-UI] Showing all loading states...');
         this.showInterfacesLoading();
         this.showRoutingRulesLoading();
         this.showStatisticsLoading();
@@ -228,7 +222,6 @@ class DataLoadingUI {
      * Hide all loading states
      */
     hideAllLoadingStates() {
-        console.log('[DATA-LOADING-UI] Hiding all loading states...');
         this.loadingStates.clear();
     }
     
@@ -313,7 +306,6 @@ class DataLoadingUI {
      * Retry loading interfaces
      */
     retryInterfaces() {
-        console.log('[DATA-LOADING-UI] Retrying interface load...');
         this.showInterfacesLoading();
         // Trigger reload via network priority manager
         if (window.networkPriorityManager) {
@@ -325,7 +317,6 @@ class DataLoadingUI {
      * Retry loading routing rules
      */
     retryRoutingRules() {
-        console.log('[DATA-LOADING-UI] Retrying routing rules load...');
         this.showRoutingRulesLoading();
         // Trigger reload via network priority manager
         if (window.networkPriorityManager) {

@@ -259,7 +259,6 @@ class WebSocketStorage {
           try {
             client.disconnect();
           } catch (error) {
-            console.warn(`Error disconnecting client ${key} during cleanup:`, error);
           }
         }
         
@@ -337,7 +336,6 @@ class WebSocketStorage {
         try {
           client.disconnect();
         } catch (error) {
-          console.warn(`Error disconnecting client ${key} during clear:`, error);
         }
       }
     }

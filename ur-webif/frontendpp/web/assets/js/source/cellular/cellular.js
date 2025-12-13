@@ -242,7 +242,6 @@ export class CellularManager {
     async saveConfiguration() {
         // Simulate API call
         await new Promise(resolve => setTimeout(resolve, 1000));
-        console.log('[CELLULAR] Configuration saved:', this.configuration);
         return true;
     }
     

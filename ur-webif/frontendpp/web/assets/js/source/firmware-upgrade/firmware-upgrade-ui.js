@@ -18,7 +18,6 @@ class FirmwareUpgradeUI {
     }
     
     init() {
-        console.log('[FIRMWARE-UPGRADE-UI] Initializing firmware upgrade UI controller...');
         
         // Wait for firmware upgrade manager to be initialized
         if (this.firmwareUpgradeManager.isInitialized()) {
@@ -35,7 +34,6 @@ class FirmwareUpgradeUI {
         this.setupEventListeners();
         this.loadCurrentFirmwareInfo();
         
-        console.log('[FIRMWARE-UPGRADE-UI] Firmware upgrade UI controller initialized');
     }
     
     createFirmwareUpgradeStructure() {
@@ -471,7 +469,6 @@ class FirmwareUpgradeUI {
         document.getElementById('selected-file').textContent = file.name;
         document.getElementById('upload-firmware-btn').classList.remove('hidden');
         
-        console.log('[FIRMWARE-UPGRADE-UI] File selected:', file.name, 'Size:', file.size);
     }
     
     handleUpgradeSourceChange(source) {
@@ -495,12 +492,10 @@ class FirmwareUpgradeUI {
                 break;
         }
         
-        console.log('[FIRMWARE-UPGRADE-UI] Upgrade source changed to:', source);
     }
     
     async loadCurrentFirmwareInfo() {
         try {
-            console.log('[FIRMWARE-UPGRADE-UI] Loading current firmware information...');
             
             // Always show loading state - this will persist until data is available
             this.loadingUI.showCurrentFirmwareLoading();
@@ -510,7 +505,6 @@ class FirmwareUpgradeUI {
             
             // Update UI with firmware data only if valid data is actually provided
             if (firmwareInfo && (firmwareInfo.version || firmwareInfo.buildDate || firmwareInfo.buildTime || firmwareInfo.uptime)) {
-                console.log('[FIRMWARE-UPGRADE-UI] Valid firmware data received, updating UI...');
                 
                 // Hide loading state only when we have actual data
                 this.loadingUI.hideCurrentFirmwareLoading();
@@ -524,7 +518,6 @@ class FirmwareUpgradeUI {
                 document.getElementById('build-time').textContent = firmwareInfo.buildTime || 'Unknown';
                 document.getElementById('uptime').textContent = firmwareInfo.uptime || 'Unknown';
                 
-                console.log('[FIRMWARE-UPGRADE-UI] Current firmware info loaded:', firmwareInfo);
                 
                 // Stop any retry mechanism since data is now available
                 this.stopDataRetry();
@@ -533,7 +526,6 @@ class FirmwareUpgradeUI {
                 this.showNotification('Firmware information loaded successfully', 'success');
             } else {
                 // No valid data provided - keep loading effect active
-                console.log('[FIRMWARE-UPGRADE-UI] No valid firmware data provided, keeping loading effect...');
                 this.handleNoFirmwareData();
             }
         } catch (error) {
@@ -548,7 +540,6 @@ class FirmwareUpgradeUI {
      * Handle case when no firmware data is available
      */
     handleNoFirmwareData() {
-        console.log('[FIRMWARE-UPGRADE-UI] No firmware data available, keeping loading effect active...');
         
         // Ensure loading skeleton effect is continuously visible
         // The loading effect will remain visible until data becomes available
@@ -572,7 +563,6 @@ class FirmwareUpgradeUI {
         
         // Set up retry every 3 seconds for better responsiveness
         this.dataRetryTimer = setInterval(async () => {
-            console.log('[FIRMWARE-UPGRADE-UI] Retrying to load firmware data...');
             try {
                 // Ensure loading effect is always visible during retry
                 this.loadingUI.showCurrentFirmwareLoading();
@@ -581,7 +571,6 @@ class FirmwareUpgradeUI {
                 
                 // Check if we have valid data now
                 if (firmwareInfo && (firmwareInfo.version || firmwareInfo.buildDate || firmwareInfo.buildTime || firmwareInfo.uptime)) {
-                    console.log('[FIRMWARE-UPGRADE-UI] Firmware data is now available!');
                     
                     // Clear the retry timer
                     clearInterval(this.dataRetryTimer);
@@ -606,7 +595,6 @@ class FirmwareUpgradeUI {
                     this.loadingUI.showCurrentFirmwareLoading();
                 }
             } catch (error) {
-                console.log('[FIRMWARE-UPGRADE-UI] Retry failed, keeping loading effect active...');
                 // Ensure loading effect remains visible even on retry failures
                 this.loadingUI.showCurrentFirmwareLoading();
             }
@@ -620,13 +608,11 @@ class FirmwareUpgradeUI {
         if (this.dataRetryTimer) {
             clearInterval(this.dataRetryTimer);
             this.dataRetryTimer = null;
-            console.log('[FIRMWARE-UPGRADE-UI] Data retry timer stopped');
         }
     }
     
     async refreshFirmwareInfo() {
         try {
-            console.log('[FIRMWARE-UPGRADE-UI] Refreshing firmware information...');
             
             // Show loading state using loading UI
             this.loadingUI.showRefreshLoading();
@@ -639,12 +625,10 @@ class FirmwareUpgradeUI {
                 this.showNotification('Firmware information refreshed successfully', 'success');
             } else {
                 // Data is still loading, don't show any message - the loading effect indicates the status
-                console.log('[FIRMWARE-UPGRADE-UI] Refresh initiated, loading effect active until data arrives');
             }
         } catch (error) {
             console.error('[FIRMWARE-UPGRADE-UI] Failed to refresh firmware info:', error);
             // Don't show error notification - keep loading effect active
-            console.log('[FIRMWARE-UPGRADE-UI] Refresh failed, maintaining loading effect');
         } finally {
             // Hide refresh button loading state
             this.loadingUI.hideRefreshLoading();
@@ -661,7 +645,6 @@ class FirmwareUpgradeUI {
         const originalContent = verifyBtn.innerHTML;
         
         try {
-            console.log('[FIRMWARE-UPGRADE-UI] Verifying file integrity...');
             
             // Show loading state
             this.loadingUI.showFileUploadLoading();
@@ -708,7 +691,6 @@ class FirmwareUpgradeUI {
         const originalContent = uploadBtn.innerHTML;
         
         try {
-            console.log('[FIRMWARE-UPGRADE-UI] Uploading firmware file...');
             
             // Show loading state
             this.loadingUI.showFileUploadLoading();
@@ -1036,7 +1018,6 @@ class FirmwareUpgradeUI {
     async monitorUpgradeProgress() {
         // This would typically involve HTTP polling to monitor progress
         // For now, we'll show a simple progress simulation
-        console.log('[FIRMWARE-UPGRADE-UI] Monitoring upgrade progress...');
         
         // Show upgrade progress modal or notification
         this.showNotification('Firmware upgrade in progress. Do not power off the device.', 'info');
@@ -1110,7 +1091,6 @@ class FirmwareUpgradeUI {
      * Cleanup method to stop timers and clear loading states
      */
     cleanup() {
-        console.log('[FIRMWARE-UPGRADE-UI] Cleaning up firmware upgrade UI...');
         
         // Stop data retry timer
         this.stopDataRetry();

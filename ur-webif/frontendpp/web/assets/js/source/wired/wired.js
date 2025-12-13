@@ -160,7 +160,6 @@ export class WiredManager {
     async updateBasicSettings(settings) {
         try {
             // Simulate API call
-            console.log('[WIRED] Updating basic settings:', settings);
             
             // Update local data
             this.basicSettings = { ...this.basicSettings, ...settings };
@@ -180,7 +179,6 @@ export class WiredManager {
      */
     async updateAdvancedSettings(settings) {
         try {
-            console.log('[WIRED] Updating advanced settings:', settings);
             
             this.advancedSettings = { ...this.advancedSettings, ...settings };
             
@@ -198,7 +196,6 @@ export class WiredManager {
      */
     async switchProfile(profileId) {
         try {
-            console.log('[WIRED] Switching to profile:', profileId);
             
             // Deactivate all profiles
             this.profiles.forEach(profile => profile.isActive = false);
@@ -277,7 +274,6 @@ export class WiredManager {
      */
     async toggleEthernet(enabled) {
         try {
-            console.log('[WIRED] Toggling ethernet:', enabled);
             
             this.isEthernetEnabled = enabled;
             
@@ -307,7 +303,6 @@ export class WiredManager {
      */
     async renewDhcpLease() {
         try {
-            console.log('[WIRED] Renewing DHCP lease');
             
             await new Promise(resolve => setTimeout(resolve, 2000));
             
@@ -326,7 +321,6 @@ export class WiredManager {
      */
     async reconnectInterface() {
         try {
-            console.log('[WIRED] Reconnecting interface');
             
             // Simulate disconnection
             this.connectionStatus.connected = false;
@@ -350,7 +344,6 @@ export class WiredManager {
      */
     async refreshStatus() {
         try {
-            console.log('[WIRED] Refreshing connection status');
             
             await new Promise(resolve => setTimeout(resolve, 500));
             

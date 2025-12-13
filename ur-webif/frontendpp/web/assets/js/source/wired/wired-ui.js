@@ -16,7 +16,6 @@ export class WiredUI {
     }
     
     init() {
-        console.log('[WIRED-UI] Initializing Wired UI');
         this.render();
         this.setupEventListeners();
     }

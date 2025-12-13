@@ -20,7 +20,6 @@ class BackupRestoreManager {
     
     async init() {
         try {
-            console.log('[BACKUP-RESTORE] Initializing backup & restore manager...');
             
             // Initialize HTTP client
             this.initializeHttpClient();
@@ -32,7 +31,6 @@ class BackupRestoreManager {
                 detail: { backupRestoreManager: this }
             }));
             
-            console.log('[BACKUP-RESTORE] Backup & restore manager initialized successfully');
             
         } catch (error) {
             console.error('[BACKUP-RESTORE] Initialization failed:', error);
@@ -55,7 +53,6 @@ class BackupRestoreManager {
                 }
             });
             
-            console.log('[BACKUP-RESTORE] HTTP client initialized');
         } catch (error) {
             console.error('[BACKUP-RESTORE] Failed to initialize HTTP client:', error);
             throw error;
@@ -64,7 +61,6 @@ class BackupRestoreManager {
     
     async createBackup(options = {}) {
         try {
-            console.log('[BACKUP-RESTORE] Creating backup with options:', options);
             
             if (this.backupInProgress) {
                 throw new Error('Backup operation already in progress');
@@ -92,7 +88,6 @@ class BackupRestoreManager {
     
     async restoreFromBackup(file, options = {}) {
         try {
-            console.log('[BACKUP-RESTORE] Restoring from backup file:', file.name);
             
             if (this.restoreInProgress) {
                 throw new Error('Restore operation already in progress');
@@ -123,7 +118,6 @@ class BackupRestoreManager {
     
     async getBackupHistory() {
         try {
-            console.log('[BACKUP-RESTORE] Fetching backup history...');
             
             // Use mock data instead of HTTP client to avoid 404 errors
             const mockHistory = this.getMockBackupHistory();
@@ -143,7 +137,6 @@ class BackupRestoreManager {
     
     async estimateBackupSize(options = {}) {
         try {
-            console.log('[BACKUP-RESTORE] Estimating backup size for options:', options);
             
             // Use mock calculation
             const baseSize = 100 * 1024 * 1024; // 100MB base
@@ -169,7 +162,6 @@ class BackupRestoreManager {
     
     async validateBackupFile(file) {
         try {
-            console.log('[BACKUP-RESTORE] Validating backup file:', file.name);
             
             // Check file extension
             const validExtensions = ['.uhb', '.uhb.enc', '.tar.gz', '.bin'];
@@ -211,7 +203,6 @@ class BackupRestoreManager {
     
     async deleteBackup(backupId) {
         try {
-            console.log('[BACKUP-RESTORE] Deleting backup:', backupId);
             
             // Find and remove from history
             const index = this.backupHistory.findIndex(backup => backup.id === backupId);
@@ -231,7 +222,6 @@ class BackupRestoreManager {
     
     async downloadBackup(backupId) {
         try {
-            console.log('[BACKUP-RESTORE] Downloading backup:', backupId);
             
             const backup = this.backupHistory.find(b => b.id === backupId);
             if (!backup) {
@@ -396,7 +386,6 @@ class BackupRestoreManager {
     
     destroy() {
         try {
-            console.log('[BACKUP-RESTORE] Destroying backup & restore manager...');
             
             // Cancel any ongoing operations
             this.backupInProgress = false;
@@ -408,7 +397,6 @@ class BackupRestoreManager {
             // Reset initialization state
             this.initialized = false;
             
-            console.log('[BACKUP-RESTORE] Backup & restore manager destroyed');
         } catch (error) {
             console.error('[BACKUP-RESTORE] Error during destroy:', error);
         }

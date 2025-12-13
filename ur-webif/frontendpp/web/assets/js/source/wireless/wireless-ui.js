@@ -16,7 +16,6 @@ export class WirelessUI {
     }
     
     init() {
-        console.log('[WIRELESS-UI] Initializing Wireless UI');
         this.render();
         this.setupEventListeners();
     }

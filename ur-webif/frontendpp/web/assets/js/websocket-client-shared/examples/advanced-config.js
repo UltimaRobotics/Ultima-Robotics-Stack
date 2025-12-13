@@ -5,7 +5,6 @@ import { WebSocketClient, WebSocketConfig } from '../src/WebSocketClient.js';
  * Demonstrates various configuration options and features
  */
 
-console.log('=== Advanced Configuration Example ===');
 
 // Example 1: Secure WebSocket with authentication
 const secureConfig = WebSocketConfig.forSecureServer('wss://api.example.com/ws')
@@ -63,26 +62,22 @@ const customClient = new WebSocketClient(customConfig);
 
 // Set up event handlers for secure client
 secureClient.on('open', () => {
-  console.log('Secure client connected');
   
   // Send message with ID and expect response
   secureClient.sendAndWait(
     { type: 'authenticate', token: 'jwt-token' },
     5000
   ).then(response => {
-    console.log('Authentication response:', response);
   }).catch(error => {
     console.error('Authentication failed:', error);
   });
 });
 
 secureClient.on('message', (data) => {
-  console.log('Secure client received:', data);
 });
 
 // Demonstrate message queuing with custom client
 customClient.on('open', () => {
-  console.log('Custom client connected - queued messages will be sent');
 });
 
 // Queue messages before connection (they'll be sent when connected)
@@ -106,7 +101,6 @@ async function demonstrateSending() {
       { type: 'request', data: 'some_data' },
       3000
     );
-    console.log('Response received:', response);
     
   } catch (error) {
     console.error('Send error:', error);
@@ -115,7 +109,6 @@ async function demonstrateSending() {
 
 // Connection management demonstration
 function demonstrateConnectionManagement() {
-  console.log('Connection status:', secureClient.getStats());
   
   // Update configuration dynamically
   secureClient.updateConfig({
@@ -126,22 +119,17 @@ function demonstrateConnectionManagement() {
     }
   });
   
-  console.log('Updated configuration:', secureClient.config.toObject());
 }
 
 // Event handling demonstration
 customClient
   .on('queued', (message) => {
-    console.log('Message queued:', message);
   })
   .on('sent', (message) => {
-    console.log('Message sent:', message);
   })
   .on('heartbeat', (data) => {
-    console.log('Heartbeat response:', data);
   })
   .on('reconnecting', (info) => {
-    console.log(`Reconnecting: attempt ${info.attempt}, delay ${info.delay}ms`);
   });
 
 // Error handling
@@ -151,9 +139,7 @@ customClient.on('error', (error) => {
 
 // Simulate connection and usage
 setTimeout(() => {
-  console.log('Connecting local client manually...');
   localClient.connect().then(() => {
-    console.log('Local client connected');
     demonstrateSending();
   }).catch(error => {
     console.error('Local client connection failed:', error);
@@ -165,18 +151,14 @@ setTimeout(() => {
 }, 2000);
 
 setTimeout(() => {
-  console.log('Storage statistics:', WebSocketClient.getStorageStats());
 }, 3000);
 
 // Cleanup demonstration
 setTimeout(() => {
-  console.log('Cleaning up inactive clients...');
   const cleaned = WebSocketClient.cleanupInactiveClients(0); // Clean all inactive
-  console.log('Cleaned up clients:', cleaned);
 }, 5000);
 
 setTimeout(() => {
-  console.log('Closing all clients...');
   secureClient.close();
   localClient.close();
   customClient.close();

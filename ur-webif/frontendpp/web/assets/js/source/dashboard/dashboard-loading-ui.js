@@ -10,7 +10,6 @@ class DashboardLoadingUI {
     }
     
     init() {
-        console.log('[DASHBOARD-LOADING-UI] Initializing dashboard loading UI component...');
         this.setupLoadingStyles();
     }
     
@@ -84,7 +83,6 @@ class DashboardLoadingUI {
      * Show loading state for system stats (CPU, RAM, Swap)
      */
     showSystemStatsLoading() {
-        console.log('[DASHBOARD-LOADING-UI] Showing system stats loading state...');
         
         // CPU Loading State
         const cpuUsage = document.querySelector('[data-cpu-usage]');
@@ -138,7 +136,6 @@ class DashboardLoadingUI {
      * Show loading state for network status
      */
     showNetworkStatusLoading() {
-        console.log('[DASHBOARD-LOADING-UI] Showing network status loading state...');
         
         // Internet Loading State
         const internetIndicator = document.querySelector('[data-internet-indicator]');
@@ -194,7 +191,6 @@ class DashboardLoadingUI {
      * Show loading state for cellular status
      */
     showCellularStatusLoading() {
-        console.log('[DASHBOARD-LOADING-UI] Showing cellular status loading state...');
         
         // Signal Loading State
         const signalStrength = document.querySelector('[data-signal-strength]');
@@ -229,7 +225,6 @@ class DashboardLoadingUI {
      * Show loading state for update indicators
      */
     showUpdateIndicatorsLoading() {
-        console.log('[DASHBOARD-LOADING-UI] Showing update indicators loading state...');
         
         const lastUpdate = document.querySelector('[data-last-update]');
         const lastLogin = document.querySelector('[data-last-login]');
@@ -247,7 +242,6 @@ class DashboardLoadingUI {
      */
     hideLoading(component) {
         this.loadingStates.delete(component);
-        console.log(`[DASHBOARD-LOADING-UI] Hidden loading state for: ${component}`);
     }
     
     /**
@@ -261,7 +255,6 @@ class DashboardLoadingUI {
      * Show loading state for all dashboard components
      */
     showAllLoadingStates() {
-        console.log('[DASHBOARD-LOADING-UI] Showing all dashboard loading states...');
         this.showSystemStatsLoading();
         this.showNetworkStatusLoading();
         this.showCellularStatusLoading();
@@ -272,7 +265,6 @@ class DashboardLoadingUI {
      * Hide all loading states
      */
     hideAllLoadingStates() {
-        console.log('[DASHBOARD-LOADING-UI] Hiding all dashboard loading states...');
         this.loadingStates.clear();
     }
     
@@ -317,7 +309,6 @@ class DashboardLoadingUI {
      * Retry loading dashboard data
      */
     retryDashboardData() {
-        console.log('[DASHBOARD-LOADING-UI] Retrying dashboard data load...');
         this.showAllLoadingStates();
         // Trigger reload via dashboard manager
         if (window.dashboard) {

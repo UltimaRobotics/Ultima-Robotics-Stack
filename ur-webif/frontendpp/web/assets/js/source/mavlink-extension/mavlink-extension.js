@@ -24,14 +24,12 @@ export class MavlinkExtensionManager {
 
     async init() {
         try {
-            console.log('[MAVLINK-EXTENSION] Initializing MAVLink extension manager...');
             
             // Always try to request data from backend via WebSocket
             // But ensure initialization completes even if it fails
             try {
                 await this.requestMavLinkExtensionData();
             } catch (error) {
-                console.warn('[MAVLINK-EXTENSION] Backend request failed, using demo data:', error);
                 this.loadDemoEndpoints();
                 this._isDataLoaded = true;
                 this.emit('dataLoadTimeout');
@@ -43,7 +41,6 @@ export class MavlinkExtensionManager {
             this._isInitialized = true;
             this.emit('initialized');
             
-            console.log('[MAVLINK-EXTENSION] MAVLink extension manager initialized successfully');
         } catch (error) {
             console.error('[MAVLINK-EXTENSION] Failed to initialize:', error);
             
@@ -67,7 +64,6 @@ export class MavlinkExtensionManager {
                 // Get WebSocket client from source manager
                 const sourceManager = window.sourceManager;
                 if (!sourceManager || !sourceManager.wsClient) {
-                    console.warn('[MAVLINK-EXTENSION] WebSocket client not available, using demo data');
                     this.loadDemoEndpoints();
                     this._isDataLoaded = true;
                     resolve();
@@ -76,18 +72,15 @@ export class MavlinkExtensionManager {
 
                 // Check if WebSocket is connected
                 if (!sourceManager.wsClient.isClientConnected()) {
-                    console.warn('[MAVLINK-EXTENSION] WebSocket not connected, using demo data');
                     this.loadDemoEndpoints();
                     this._isDataLoaded = true;
                     resolve();
                     return;
                 }
 
-                console.log('[MAVLINK-EXTENSION] Requesting MAVLink extension data from backend...');
                 
                 // Set up timeout for 1 second
                 this.requestTimeout = setTimeout(() => {
-                    console.warn('[MAVLINK-EXTENSION] Backend did not respond within 1 second, using demo data');
                     this.loadDemoEndpoints();
                     this._isDataLoaded = true;
                     this.emit('dataLoadTimeout');
@@ -104,12 +97,10 @@ export class MavlinkExtensionManager {
                         document.removeEventListener('websocketMessage', handleResponse);
                         
                         if (data.data) {
-                            console.log('[MAVLINK-EXTENSION] Received MAVLink extension data from backend');
                             this.processBackendData(data.data);
                             this._isDataLoaded = true;
                             this.emit('dataLoaded');
                         } else {
-                            console.warn('[MAVLINK-EXTENSION] No data in response, using demo data');
                             this.loadDemoEndpoints();
                             this._isDataLoaded = true;
                         }
@@ -589,6 +580,5 @@ export class MavlinkExtensionManager {
         this.alerts = [];
         this._isInitialized = false;
         
-        console.log('[MAVLINK-EXTENSION] MAVLink extension manager destroyed');
     }
 }

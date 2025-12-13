@@ -49,7 +49,6 @@ class SourceUI {
     }
     
     init() {
-        console.log('[SOURCE-UI] Initializing UI controller...');
         
         // Wait for source manager to be initialized
         if (this.sourceManager.isInitialized()) {
@@ -68,7 +67,6 @@ class SourceUI {
         this.setupUserInterface();
         this.loadDefaultSection();
         
-        console.log('[SOURCE-UI] UI controller initialized');
     }
     
     createAppStructure() {
@@ -257,7 +255,6 @@ class SourceUI {
     }
     
     setupNavigation() {
-        console.log('[SOURCE-UI] Setting up enhanced navigation...');
         
         // Navigation items
         const navItems = document.querySelectorAll('[data-section]');
@@ -272,7 +269,6 @@ class SourceUI {
                 }
                 
                 const section = target ? target.getAttribute('data-section') : null;
-                console.log('[SOURCE-UI] Navigation clicked:', section, 'target:', target);
                 
                 if (section) {
                     this.switchToTab(section);
@@ -290,7 +286,6 @@ class SourceUI {
         // Setup keyboard navigation
         this.setupKeyboardNavigation();
         
-        console.log('[SOURCE-UI] Navigation setup complete');
     }
     
     setupKeyboardNavigation() {
@@ -312,11 +307,9 @@ class SourceUI {
      * Enhanced tab switching mechanism
      */
     switchToTab(sectionId) {
-        console.log('[SOURCE-UI] Switching to tab:', sectionId);
         
         // Validate section exists
         if (!this.isValidSection(sectionId)) {
-            console.warn('[SOURCE-UI] Invalid section:', sectionId);
             return;
         }
         
@@ -335,7 +328,6 @@ class SourceUI {
         // Emit tab change event
         this.emitTabChangeEvent(sectionId);
         
-        console.log('[SOURCE-UI] Successfully switched to tab:', sectionId);
     }
     
     isValidSection(sectionId) {
@@ -350,7 +342,6 @@ class SourceUI {
     }
     
     cleanupCurrentTab() {
-        console.log('[SOURCE-UI] Cleaning up current tab:', this.currentSection);
         
         // Cleanup dashboard if it's the current tab
         if (this.currentSection === 'system-dashboard' && this.dashboard) {
@@ -487,7 +478,6 @@ class SourceUI {
             return;
         }
         
-        console.log('[SOURCE-UI] Loading content for section:', sectionId);
         
         // Show loading state
         mainContent.innerHTML = this.createLoadingContent();
@@ -516,7 +506,6 @@ class SourceUI {
     }
     
     initializeSection(sectionId) {
-        console.log('[SOURCE-UI] Initializing section:', sectionId);
         
         switch (sectionId) {
             case 'system-dashboard':
@@ -551,7 +540,6 @@ class SourceUI {
                 break;
             // Add more section initializers as needed
             default:
-                console.log('[SOURCE-UI] No specific initialization for section:', sectionId);
         }
     }
     
@@ -564,7 +552,6 @@ class SourceUI {
             }
         });
         document.dispatchEvent(event);
-        console.log('[SOURCE-UI] Tab change event emitted for:', sectionId);
     }
     
     createErrorContent(errorMessage) {
@@ -629,7 +616,6 @@ class SourceUI {
         
         // Update user info in UI if needed
         if (user) {
-            console.log('[SOURCE-UI] User interface setup for:', user.username);
         }
         
         // Setup connection status indicator
@@ -637,7 +623,6 @@ class SourceUI {
     }
     
     initializeDashboard() {
-        console.log('[SOURCE-UI] Initializing dashboard...');
         
         try {
             // Clean up existing dashboard if it exists
@@ -659,7 +644,6 @@ class SourceUI {
                 window.dashboardLoadingUI = this.dashboard.dashboardUI.loadingUI;
             }
             
-            console.log('[SOURCE-UI] Dashboard initialized successfully');
             
         } catch (error) {
             console.error('[SOURCE-UI] Failed to initialize dashboard:', error);
@@ -898,7 +882,6 @@ class SourceUI {
         this.loadSectionContent(sectionId);
         
         this.currentSection = sectionId;
-        console.log('[SOURCE-UI] Navigated to section:', sectionId);
     }
     
     cleanupPreviousSection() {
@@ -920,7 +903,6 @@ class SourceUI {
                     }
                 }
                 
-                console.log(`[SOURCE-UI] Cleaned up section: ${this.currentSection}`);
             } catch (error) {
                 console.error(`[SOURCE-UI] Error cleaning up section ${this.currentSection}:`, error);
             }
@@ -1081,18 +1063,15 @@ class SourceUI {
     }
     
     async initializeMavlinkExtension() {
-        console.log('[SOURCE-UI] Initializing MAVLink Extension section...');
         
         try {
             // Only initialize if this is the currently active section
             if (this.currentSection !== 'mavlink-extension') {
-                console.log('[SOURCE-UI] MAVLink Extension is not the active section, skipping initialization');
                 return;
             }
             
             // Check if MAVLink extension already exists
             if (this.tabComponents.has('mavlink-extension')) {
-                console.log('[SOURCE-UI] MAVLink Extension already exists, reusing existing instance');
                 return;
             }
             
@@ -1108,7 +1087,6 @@ class SourceUI {
             window.mavlinkExtensionManager = mavlinkExtensionComponents.manager;
             window.mavlinkExtensionUI = mavlinkExtensionComponents.ui;
             
-            console.log('[SOURCE-UI] MAVLink Extension section initialized successfully');
         } catch (error) {
             console.error('[SOURCE-UI] Error in initializeMavlinkExtension:', error);
             
@@ -1156,7 +1134,6 @@ class SourceUI {
      * Initialize Wired Configuration section
      */
     initializeWiredConfig() {
-        console.log('[SOURCE-UI] Initializing Wired Configuration section...');
         
         try {
             // Get the wired config container
@@ -1172,7 +1149,6 @@ class SourceUI {
             // Store the module reference for cleanup
             this.tabComponents.set('wired-config', wiredModule);
             
-            console.log('[SOURCE-UI] Wired Configuration section initialized successfully');
         } catch (error) {
             console.error('[SOURCE-UI] Failed to initialize Wired Configuration section:', error);
             
@@ -1193,7 +1169,6 @@ class SourceUI {
      * Initialize Wireless Configuration section
      */
     initializeWirelessConfig() {
-        console.log('[SOURCE-UI] Initializing Wireless Configuration section...');
         
         try {
             // Get the wireless config container
@@ -1209,7 +1184,6 @@ class SourceUI {
             // Store the module reference for cleanup
             this.tabComponents.set('wireless-config', wirelessModule);
             
-            console.log('[SOURCE-UI] Wireless Configuration section initialized successfully');
         } catch (error) {
             console.error('[SOURCE-UI] Failed to initialize Wireless Configuration section:', error);
             
@@ -1230,7 +1204,6 @@ class SourceUI {
      * Initialize Cellular Configuration section
      */
     initializeCellularConfig() {
-        console.log('[SOURCE-UI] Initializing Cellular Configuration section...');
         
         try {
             // Get the cellular config container
@@ -1246,7 +1219,6 @@ class SourceUI {
             // Store the module reference for cleanup
             this.tabComponents.set('cellular-config', cellularModule);
             
-            console.log('[SOURCE-UI] Cellular Configuration section initialized successfully');
         } catch (error) {
             console.error('[SOURCE-UI] Failed to initialize Cellular Configuration section:', error);
             
@@ -1267,12 +1239,10 @@ class SourceUI {
      * Initialize Network Priority section
      */
     initializeNetworkPriority() {
-        console.log('[SOURCE-UI] Initializing Network Priority section...');
         
         // Initialize network benchmark loading UI for shared diagnostic tools
         if (window.networkBenchmarkLoadingUI && !window.networkBenchmarkLoadingUI.isInitialized) {
             window.networkBenchmarkLoadingUI.initialize();
-            console.log('[SOURCE-UI] Network Benchmark Loading UI initialized for shared diagnostics');
         }
         
         // Create data loading UI component first
@@ -1303,7 +1273,6 @@ class SourceUI {
         // Initialize collapsable sections with proper initial states
         this.initializeCollapsibleSections();
         
-        console.log('[SOURCE-UI] Network Priority section initialized with loading UI and shared diagnostics');
     }
     
     /**
@@ -1352,7 +1321,6 @@ class SourceUI {
                 });
             }
             
-            console.log('[SOURCE-UI] Network priority diagnostic handlers added');
         }, 500); // Wait for UI to be rendered
     }
     
@@ -1360,14 +1328,12 @@ class SourceUI {
      * Initialize Network Benchmark section
      */
     initializeNetworkBenchmark() {
-        console.log('[SOURCE-UI] Initializing Network Benchmark section...');
         
         try {
             // Initialize the network benchmark components if they exist
             if (window.networkBenchmark && !window.networkBenchmark.isInitialized) {
                 window.networkBenchmark.initialize().then(success => {
                     if (success) {
-                        console.log('[SOURCE-UI] Network Benchmark initialized successfully');
                     } else {
                         console.error('[SOURCE-UI] Failed to initialize Network Benchmark');
                     }
@@ -1388,18 +1354,15 @@ class SourceUI {
      * Initialize Firmware Upgrade section
      */
     async initializeFirmwareUpgrade() {
-        console.log('[SOURCE-UI] Initializing Firmware Upgrade section...');
         
         try {
             // Only initialize if this is the currently active section
             if (this.currentSection !== 'firmware-upgrade') {
-                console.log('[SOURCE-UI] Firmware Upgrade is not the active section, skipping initialization');
                 return;
             }
             
             // Check if firmware upgrade already exists
             if (this.tabComponents.has('firmware-upgrade')) {
-                console.log('[SOURCE-UI] Firmware Upgrade already exists, reusing existing instance');
                 return;
             }
             
@@ -1415,7 +1378,6 @@ class SourceUI {
             window.firmwareUpgradeManager = firmwareUpgradeComponents.manager;
             window.firmwareUpgradeUI = firmwareUpgradeComponents.ui;
             
-            console.log('[SOURCE-UI] Firmware Upgrade section initialized successfully');
         } catch (error) {
             console.error('[SOURCE-UI] Error in initializeFirmwareUpgrade:', error);
             
@@ -1431,18 +1393,15 @@ class SourceUI {
      * Initialize License Management section
      */
     initializeLicenseManagement() {
-        console.log('[SOURCE-UI] Initializing License Management section...');
         
         try {
             // Only initialize if this is the currently active section
             if (this.currentSection !== 'license-management') {
-                console.log('[SOURCE-UI] License Management is not the active section, skipping initialization');
                 return;
             }
             
             // Check if licence UI already exists
             if (window.licenceUI) {
-                console.log('[SOURCE-UI] Licence UI already exists, reusing existing instance');
                 return;
             }
             
@@ -1455,7 +1414,6 @@ class SourceUI {
                 // Store the component reference for cleanup
                 this.tabComponents.set('license-management', window.licenceUI);
                 
-                console.log('[SOURCE-UI] License Management section initialized successfully');
             } else {
                 console.error('[SOURCE-UI] Licence container not found');
             }
@@ -1465,18 +1423,15 @@ class SourceUI {
     }
     
     async initializeBackupRestore() {
-        console.log('[SOURCE-UI] Initializing Backup & Restore section...');
         
         try {
             // Only initialize if this is the currently active section
             if (this.currentSection !== 'backup-restore') {
-                console.log('[SOURCE-UI] Backup & Restore is not the active section, skipping initialization');
                 return;
             }
             
             // Check if backup restore already exists
             if (this.tabComponents.has('backup-restore')) {
-                console.log('[SOURCE-UI] Backup & Restore already initialized, skipping');
                 return;
             }
             
@@ -1492,7 +1447,6 @@ class SourceUI {
             window.backupRestoreManager = backupRestoreComponents.manager;
             window.backupRestoreUI = backupRestoreComponents.ui;
             
-            console.log('[SOURCE-UI] Backup & Restore section initialized successfully');
             
         } catch (error) {
             console.error('[SOURCE-UI] Error in initializeBackupRestore:', error);
@@ -1719,7 +1673,6 @@ class SourceUI {
             // Get tab buttons and sections from within the modal
             const modal = document.querySelector('#settings-modal');
             if (!modal) {
-                console.warn('Settings modal not found');
                 return;
             }
 
@@ -1731,14 +1684,12 @@ class SourceUI {
             const closeBtn = modal.querySelector('#close-btn');
             const cancelBtn = modal.querySelector('#cancel-btn');
 
-            console.log('Found tab buttons:', tabButtons.length);
 
             // Tab switching functionality
             tabButtons.forEach(button => {
                 button.addEventListener('click', (e) => {
                     e.preventDefault();
                     const tabName = button.getAttribute('data-tab');
-                    console.log('Tab clicked:', tabName);
                     this.switchSettingsTab(tabName);
                 });
             });
@@ -1783,7 +1734,6 @@ class SourceUI {
         // Get the modal context
         const modal = document.querySelector('#settings-modal');
         if (!modal) {
-            console.warn('Settings modal not found for tab switching');
             return;
         }
 
@@ -1794,7 +1744,6 @@ class SourceUI {
         const cloudSection = modal.querySelector('#cloud-section');
         const updateBtn = modal.querySelector('#update-btn');
 
-        console.log('Switching to tab:', tabName);
 
         // Hide all sections
         if (passwordSection) passwordSection.classList.add('hidden');
@@ -1812,7 +1761,6 @@ class SourceUI {
             case 'password':
                 if (passwordSection) {
                     passwordSection.classList.remove('hidden');
-                    console.log('Password section shown');
                 }
                 if (updateBtn) {
                     updateBtn.textContent = 'Update Password';
@@ -1822,7 +1770,6 @@ class SourceUI {
             case 'token':
                 if (tokenSection) {
                     tokenSection.classList.remove('hidden');
-                    console.log('Token section shown');
                 }
                 if (updateBtn) {
                     updateBtn.style.display = 'none'; // Hide update button for token tab
@@ -1831,7 +1778,6 @@ class SourceUI {
             case 'cloud':
                 if (cloudSection) {
                     cloudSection.classList.remove('hidden');
-                    console.log('Cloud section shown');
                 }
                 if (updateBtn) {
                     updateBtn.style.display = 'none'; // Hide update button for cloud tab
@@ -1844,7 +1790,6 @@ class SourceUI {
         if (activeButton) {
             activeButton.classList.remove('text-neutral-600', 'hover:text-neutral-900', 'hover:bg-neutral-50');
             activeButton.classList.add('text-neutral-900', 'border-b-2', 'border-neutral-900', 'bg-neutral-50');
-            console.log('Active button styled:', tabName);
         }
     }
 
@@ -1870,7 +1815,6 @@ class SourceUI {
         }
 
         // Simulate password update (in real app, this would call an API)
-        console.log('Password update requested:', { currentPassword, newPassword });
         
         // Show success message
         if (window.popupManager) {
@@ -1894,7 +1838,6 @@ class SourceUI {
         }
 
         // Simulate key generation (in real app, this would call an API)
-        console.log('Key generation requested:', { keyName });
         
         // Show success message
         if (window.popupManager) {
@@ -1937,7 +1880,6 @@ class SourceUI {
         document.getElementById('app-notifications').checked = true;
         document.getElementById('app-language').value = 'en';
         
-        console.log('Settings reset to defaults');
     }
 
     saveSettings() {
@@ -1968,7 +1910,6 @@ class SourceUI {
         // Apply settings
         this.applySettings(settings);
         
-        console.log('Settings saved:', settings);
         
         // Show success message
         if (window.popupManager) {
@@ -1986,7 +1927,6 @@ class SourceUI {
             const wsClient = this.sourceManager.getWebSocketClient();
             if (wsClient && settings.websocket) {
                 // Update WebSocket client configuration
-                console.log('Applying WebSocket settings:', settings.websocket);
             }
         }
 
@@ -2040,7 +1980,6 @@ Application Settings:
         const chevron = document.getElementById(sectionId + '-chevron');
         
         if (!section || !content || !chevron) {
-            console.warn(`[SOURCE-UI] Section elements not found for: ${sectionId}`);
             return;
         }
         
@@ -2051,13 +1990,11 @@ Application Settings:
             content.classList.remove('hidden');
             chevron.classList.remove('fa-chevron-right');
             chevron.classList.add('fa-chevron-down');
-            console.log(`[SOURCE-UI] Opened section: ${sectionId}`);
         } else {
             // Close section
             content.classList.add('hidden');
             chevron.classList.remove('fa-chevron-down');
             chevron.classList.add('fa-chevron-right');
-            console.log(`[SOURCE-UI] Closed section: ${sectionId}`);
         }
     }
     
@@ -2091,7 +2028,6 @@ Application Settings:
             tempRoutingChevron.classList.remove('fa-chevron-down');
         }
         
-        console.log('[SOURCE-UI] Initialized collapsable sections');
     }
 }
 

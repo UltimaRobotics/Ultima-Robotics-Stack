@@ -10,7 +10,6 @@ class LicenceDataLoadingUI {
     }
     
     init() {
-        console.log('[LICENCE-LOADING-UI] Initializing licence loading UI component...');
         this.setupLoadingStyles();
     }
     
@@ -117,7 +116,6 @@ class LicenceDataLoadingUI {
      * Show loading state for licence status overview
      */
     showLicenceStatusLoading() {
-        console.log('[LICENCE-LOADING-UI] Showing licence status loading state...');
         
         // License Information Loading State
         const licenseType = document.getElementById('license-type');
@@ -163,7 +161,6 @@ class LicenceDataLoadingUI {
      * Show loading state for licence features
      */
     showLicenceFeaturesLoading() {
-        console.log('[LICENCE-LOADING-UI] Showing licence features loading state...');
         
         const featuresList = document.getElementById('license-features-list');
         if (featuresList) {
@@ -198,7 +195,6 @@ class LicenceDataLoadingUI {
      * Show loading state for licence configuration
      */
     showLicenceConfigurationLoading() {
-        console.log('[LICENCE-LOADING-UI] Showing licence configuration loading state...');
         
         // Validation interval loading
         const validationInterval = document.getElementById('validation-interval-input');
@@ -237,7 +233,6 @@ class LicenceDataLoadingUI {
      * Show loading state for licence events
      */
     showLicenceEventsLoading() {
-        console.log('[LICENCE-LOADING-UI] Showing licence events loading state...');
         
         const eventsContainer = document.getElementById('license-events-container');
         const noEvents = document.getElementById('license-no-events');
@@ -278,7 +273,6 @@ class LicenceDataLoadingUI {
      * Show loading state for licence activation forms
      */
     showLicenceActivationLoading() {
-        console.log('[LICENCE-LOADING-UI] Showing licence activation loading state...');
         
         // License key input loading
         const licenseKeyInput = document.getElementById('license-key-input');
@@ -315,7 +309,6 @@ class LicenceDataLoadingUI {
      * Show loading state for refresh button
      */
     showRefreshButtonLoading() {
-        console.log('[LICENCE-LOADING-UI] Showing refresh button loading state...');
         
         const refreshBtn = document.getElementById('license-refresh-btn');
         if (refreshBtn) {
@@ -333,7 +326,6 @@ class LicenceDataLoadingUI {
      * Hide loading state for refresh button
      */
     hideRefreshButtonLoading() {
-        console.log('[LICENCE-LOADING-UI] Hiding refresh button loading state...');
         
         const refreshBtn = document.getElementById('license-refresh-btn');
         if (refreshBtn) {
@@ -351,7 +343,6 @@ class LicenceDataLoadingUI {
      * Show loading state for all licence components
      */
     showAllLoadingStates() {
-        console.log('[LICENCE-LOADING-UI] Showing all licence loading states...');
         this.showLicenceStatusLoading();
         this.showLicenceFeaturesLoading();
         this.showLicenceConfigurationLoading();
@@ -364,7 +355,6 @@ class LicenceDataLoadingUI {
      * Hide loading state for licence status
      */
     hideLicenceStatusLoading() {
-        console.log('[LICENCE-LOADING-UI] Hiding licence status loading state...');
         this.loadingStates.set('licenceStatus', false);
     }
     
@@ -372,7 +362,6 @@ class LicenceDataLoadingUI {
      * Hide loading state for licence features
      */
     hideLicenceFeaturesLoading() {
-        console.log('[LICENCE-LOADING-UI] Hiding licence features loading state...');
         this.loadingStates.set('licenceFeatures', false);
     }
     
@@ -380,7 +369,6 @@ class LicenceDataLoadingUI {
      * Hide loading state for licence configuration
      */
     hideLicenceConfigurationLoading() {
-        console.log('[LICENCE-LOADING-UI] Hiding licence configuration loading state...');
         this.loadingStates.set('licenceConfiguration', false);
     }
     
@@ -388,7 +376,6 @@ class LicenceDataLoadingUI {
      * Hide loading state for licence events
      */
     hideLicenceEventsLoading() {
-        console.log('[LICENCE-LOADING-UI] Hiding licence events loading state...');
         this.loadingStates.set('licenceEvents', false);
     }
     
@@ -396,7 +383,6 @@ class LicenceDataLoadingUI {
      * Hide loading state for licence activation
      */
     hideLicenceActivationLoading() {
-        console.log('[LICENCE-LOADING-UI] Hiding licence activation loading state...');
         this.loadingStates.set('licenceActivation', false);
     }
     
@@ -404,7 +390,6 @@ class LicenceDataLoadingUI {
      * Hide all loading states
      */
     hideAllLoadingStates() {
-        console.log('[LICENCE-LOADING-UI] Hiding all licence loading states...');
         this.hideLicenceStatusLoading();
         this.hideLicenceFeaturesLoading();
         this.hideLicenceConfigurationLoading();
@@ -431,7 +416,6 @@ class LicenceDataLoadingUI {
      * Show error state for licence components
      */
     showErrorState(component, message = 'Failed to load licence data') {
-        console.log(`[LICENCE-LOADING-UI] Showing error state for ${component}: ${message}`);
         
         switch (component) {
             case 'licenceStatus':
@@ -447,7 +431,6 @@ class LicenceDataLoadingUI {
                 this.showLicenceEventsError(message);
                 break;
             default:
-                console.warn(`[LICENCE-LOADING-UI] Unknown component: ${component}`);
         }
     }
     
@@ -545,7 +528,6 @@ class LicenceDataLoadingUI {
      * Retry loading licence data
      */
     retryLicenceData() {
-        console.log('[LICENCE-LOADING-UI] Retrying licence data load...');
         this.showAllLoadingStates();
         // Trigger reload via licence UI manager
         if (window.licenceUI) {

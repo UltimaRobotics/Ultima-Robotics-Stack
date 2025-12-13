@@ -53,7 +53,6 @@ class NetworkBenchmark {
             this.setupWebSocketListeners();
             
             this.isInitialized = true;
-            console.log('[NETWORK-BENCHMARK] Component initialized successfully');
             return true;
             
         } catch (error) {
@@ -96,7 +95,6 @@ class NetworkBenchmark {
                 this.handleError(data);
                 break;
             default:
-                console.log('[NETWORK-BENCHMARK] Unknown message type:', data.type);
         }
     }
 
@@ -271,7 +269,6 @@ class NetworkBenchmark {
      */
     startTraceroute() {
         if (this.currentTest) {
-            console.warn('[NETWORK-BENCHMARK] Test already in progress');
             return;
         }
 
@@ -382,7 +379,6 @@ class NetworkBenchmark {
             this.handleDataReceived(e.detail.data);
         });
         
-        console.log('[NETWORK-BENCHMARK] WebSocket listeners setup complete');
     }
 
     /**
@@ -390,11 +386,9 @@ class NetworkBenchmark {
      */
     async loadInitialData() {
         try {
-            console.log('[NETWORK-BENCHMARK] Loading initial network benchmark data...');
             
             // Don't load mock data - wait for real WebSocket data
             // The loading UI will show skeleton screens until data arrives
-            console.log('[NETWORK-BENCHMARK] Waiting for real WebSocket data...');
             
             // Initialize empty data arrays - will be populated by WebSocket messages
             this.servers = [];
@@ -407,10 +401,8 @@ class NetworkBenchmark {
             if (window.networkBenchmarkUI && window.networkBenchmarkUI.isInitialized) {
                 window.networkBenchmarkUI.showInitialLoadingState();
             } else {
-                console.log('[NETWORK-BENCHMARK] UI not yet initialized, skipping UI updates');
             }
             
-            console.log('[NETWORK-BENCHMARK] Initial data setup complete - waiting for WebSocket data');
             
         } catch (error) {
             console.error('[NETWORK-BENCHMARK] Failed to initialize:', error);
@@ -422,11 +414,9 @@ class NetworkBenchmark {
      * Handle WebSocket network benchmark updates
      */
     handleNetworkBenchmarkUpdate(data) {
-        console.log('[NETWORK-BENCHMARK] Received network benchmark update:', data);
         
         // Ensure DOM is ready before processing
         if (!this.isDOMReady()) {
-            console.log('[NETWORK-BENCHMARK] DOM not ready, retrying in 50ms...');
             setTimeout(() => {
                 this.handleNetworkBenchmarkUpdate(data);
             }, 50);
@@ -440,7 +430,6 @@ class NetworkBenchmark {
         
         // Update servers if provided
         if (data.servers) {
-            console.log('[NETWORK-BENCHMARK] Processing servers update:', data.servers);
             const oldServers = [...this.servers];
             
             // Check if servers data actually changed
@@ -448,7 +437,6 @@ class NetworkBenchmark {
             
             if (serversChanged) {
                 this.servers = data.servers;
-                console.log('[NETWORK-BENCHMARK] Servers data changed, updating display');
                 
                 // Apply current filters and update display
                 this.applyFilters();
@@ -473,17 +461,14 @@ class NetworkBenchmark {
                     });
                 }
                 
-                console.log('[NETWORK-BENCHMARK] Servers updated via WebSocket:', this.servers.length, 'servers');
                 hasUpdates = true;
             } else {
-                console.log('[NETWORK-BENCHMARK] Servers data unchanged, skipping update');
             }
         }
         
         // Update test results if provided
         if (data.testResults) {
             this.testResults = data.testResults;
-            console.log('[NETWORK-BENCHMARK] Test results updated via WebSocket:', this.testResults.length, 'results');
             hasUpdates = true;
         }
         
@@ -503,7 +488,6 @@ class NetworkBenchmark {
      * Handle generic data received event
      */
     handleDataReceived(data) {
-        console.log('[NETWORK-BENCHMARK] Data received:', data);
         
         // Update connection status to connected since we're receiving data
         this.updateConnectionStatus(true);
@@ -606,7 +590,6 @@ class NetworkBenchmark {
      */
     updateStatistics(statistics) {
         // Update any statistics displays
-        console.log('[NETWORK-BENCHMARK] Statistics updated:', statistics);
     }
 
     /**
@@ -627,7 +610,6 @@ class NetworkBenchmark {
      * Show notification
      */
     showNotification(message, type = 'info') {
-        console.log(`[NETWORK-BENCHMARK] Notification (${type}): ${message}`);
         
         // If popup manager is available, use it
         if (window.popupManager) {
@@ -643,7 +625,6 @@ class NetworkBenchmark {
      */
     async refreshServerStatus() {
         try {
-            console.log('[NETWORK-BENCHMARK] Requesting server status refresh...');
             
             if (window.networkBenchmarkUI) {
                 window.networkBenchmarkUI.showTestingStatus(true, 0, this.servers.length);
@@ -658,16 +639,13 @@ class NetworkBenchmark {
                         action: 'refresh_server_status',
                         timestamp: Date.now()
                     });
-                    console.log('[NETWORK-BENCHMARK] Server status refresh request sent via WebSocket');
                 } else {
-                    console.warn('[NETWORK-BENCHMARK] WebSocket not connected, cannot refresh server status');
                     this.showNotification('WebSocket not connected. Please check your connection.', 'error');
                     if (window.networkBenchmarkUI) {
                         window.networkBenchmarkUI.showTestingStatus(false);
                     }
                 }
             } else {
-                console.warn('[NETWORK-BENCHMARK] Source manager or WebSocket client not available');
                 this.showNotification('Unable to refresh server status. Please try again later.', 'error');
                 if (window.networkBenchmarkUI) {
                     window.networkBenchmarkUI.showTestingStatus(false);
@@ -688,7 +666,6 @@ class NetworkBenchmark {
      */
     async testAllServers() {
         try {
-            console.log('[NETWORK-BENCHMARK] Requesting test for all servers...');
             
             if (window.networkBenchmarkUI) {
                 window.networkBenchmarkUI.showTestingStatus(true, 0, this.servers.length);
@@ -704,16 +681,13 @@ class NetworkBenchmark {
                         servers: this.servers.map(s => s.id),
                         timestamp: Date.now()
                     });
-                    console.log('[NETWORK-BENCHMARK] Test all servers request sent via WebSocket');
                 } else {
-                    console.warn('[NETWORK-BENCHMARK] WebSocket not connected, cannot test servers');
                     this.showNotification('WebSocket not connected. Please check your connection.', 'error');
                     if (window.networkBenchmarkUI) {
                         window.networkBenchmarkUI.showTestingStatus(false);
                     }
                 }
             } else {
-                console.warn('[NETWORK-BENCHMARK] Source manager or WebSocket client not available');
                 this.showNotification('Unable to test servers. Please try again later.', 'error');
                 if (window.networkBenchmarkUI) {
                     window.networkBenchmarkUI.showTestingStatus(false);
@@ -734,7 +708,6 @@ class NetworkBenchmark {
      */
     async testServer(serverId) {
         try {
-            console.log(`[NETWORK-BENCHMARK] Requesting test for server: ${serverId}`);
             
             // Send WebSocket request for testing individual server
             if (this.sourceManager && this.sourceManager.getWebSocketClient) {
@@ -746,13 +719,10 @@ class NetworkBenchmark {
                         serverId: serverId,
                         timestamp: Date.now()
                     });
-                    console.log(`[NETWORK-BENCHMARK] Test server request sent via WebSocket for: ${serverId}`);
                 } else {
-                    console.warn('[NETWORK-BENCHMARK] WebSocket not connected, cannot test server');
                     this.showNotification('WebSocket not connected. Please check your connection.', 'error');
                 }
             } else {
-                console.warn('[NETWORK-BENCHMARK] Source manager or WebSocket client not available');
                 this.showNotification('Unable to test server. Please try again later.', 'error');
             }
             
@@ -773,7 +743,6 @@ class NetworkBenchmark {
         }
         
         // Show server configuration modal or details
-        console.log('Server Configuration:', server);
         alert(`Server Configuration:\n\nName: ${server.name}\nRegion: ${server.region}\nHost: ${server.host}\nPorts: ${server.ports}\nStatus: ${server.status.toUpperCase()}\nPing: ${server.ping || 'N/A'}ms\nSpeed: ${server.speed}Mbps`);
     }
 

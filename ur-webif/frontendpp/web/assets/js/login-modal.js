@@ -10,7 +10,6 @@ class LoginModal {
     }
 
     init() {
-        console.log('[LOGIN-MODAL] Modal manager initialized');
     }
 
     showWrongfulLoginPopup(remainingAttempts) {
@@ -26,7 +25,6 @@ class LoginModal {
             closeOnEscape: remainingAttempts > 0,
             showCloseButton: remainingAttempts > 0
         }).then((result) => {
-            console.log('[LOGIN-MODAL] Wrongful login modal closed:', result);
             if (result === 'forgot-password') {
                 this.showForgotPasswordModal();
             }
@@ -107,7 +105,6 @@ class LoginModal {
             closeOnEscape: false,
             showCloseButton: false
         }).then((result) => {
-            console.log('[LOGIN-MODAL] Banned modal closed:', result);
             this.clearCountdown('ban');
         });
 
@@ -243,7 +240,6 @@ class LoginModal {
             closeOnEscape: true,
             showCloseButton: true
         }).then((result) => {
-            console.log('[LOGIN-MODAL] Forgot password modal closed:', result);
         });
 
         // Add event listener for modal shown to bind buttons
@@ -334,7 +330,6 @@ class LoginModal {
                     sendBtn.disabled = false;
                     sendBtn.textContent = 'Send recovery email';
                     this.showEmailSentSuccess(email);
-                    console.log('[LOGIN-MODAL] Demo: Recovery email sent to:', email);
                 }, 1500);
             });
             
@@ -360,7 +355,6 @@ class LoginModal {
             closeOnEscape: true,
             showCloseButton: true
         }).then((result) => {
-            console.log('[LOGIN-MODAL] Email sent success modal closed:', result);
             if (result === 'try-again') {
                 setTimeout(() => {
                     this.showForgotPasswordModal();
@@ -429,9 +423,7 @@ class LoginModal {
             closeOnEscape: true,
             showCloseButton: true
         }).then((result) => {
-            console.log('[LOGIN-MODAL] Sign up modal closed:', result);
             if (result === 'back-to-login') {
-                console.log('[LOGIN-MODAL] User returned to login from sign up');
             }
         });
 
@@ -487,7 +479,6 @@ class LoginModal {
         if (platformBtn) {
             platformBtn.addEventListener('click', () => {
                 window.open('https://ultima-robotics.com/signup', '_blank');
-                console.log('[LOGIN-MODAL] Opening sign up platform');
             });
         }
     }

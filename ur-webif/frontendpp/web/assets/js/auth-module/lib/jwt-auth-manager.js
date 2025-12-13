@@ -23,7 +23,6 @@ class JwtAuthManager {
     }
     
     init() {
-        console.log('[JWT-AUTH-MANAGER] JWT Authentication Manager initialized');
     }
     
     /**
@@ -76,7 +75,6 @@ class JwtAuthManager {
             } else {
                 this.storage.setAuthData(accessToken, refreshToken, user);
             }
-            console.log('[JWT-AUTH-MANAGER] Authentication data stored successfully');
         } catch (error) {
             console.error('[JWT-AUTH-MANAGER] Failed to store auth data:', error);
             throw error;
@@ -92,7 +90,6 @@ class JwtAuthManager {
                 this.tokenManager.clearAuthData();
             }
             this.storage.clearAuthData();
-            console.log('[JWT-AUTH-MANAGER] Authentication data cleared');
         } catch (error) {
             console.error('[JWT-AUTH-MANAGER] Failed to clear auth data:', error);
         }
@@ -127,7 +124,6 @@ class JwtAuthManager {
                 throw new Error('No refresh token available');
             }
             
-            console.log('[JWT-AUTH-MANAGER] Refreshing access token...');
             
             const response = await this.httpClient.post(`${this.apiBaseUrl}/refresh`, {
                 refresh_token: refreshToken
@@ -140,7 +136,6 @@ class JwtAuthManager {
                 
                 await this.storeAuthData(newAccessToken, newRefreshToken, user);
                 
-                console.log('[JWT-AUTH-MANAGER] Token refreshed successfully');
                 return newAccessToken;
             } else {
                 throw new Error('Invalid refresh response');
@@ -189,7 +184,6 @@ class JwtAuthManager {
         const status = error.response?.status;
         const message = error.response?.data?.message || error.message;
         
-        console.log(`[JWT-AUTH-MANAGER] Handling auth error: ${status} - ${message}`);
         
         switch (status) {
             case 401:
@@ -208,7 +202,6 @@ class JwtAuthManager {
                 
             case 403:
                 // Insufficient permissions
-                console.warn('[JWT-AUTH-MANAGER] Insufficient permissions');
                 return false;
                 
             default:
@@ -267,7 +260,6 @@ class JwtAuthManager {
                 if (accessToken && this.utils.isTokenExpiringSoon(accessToken)) {
                     try {
                         await this.refreshToken();
-                        console.log('[JWT-AUTH-MANAGER] Token auto-refreshed');
                     } catch (error) {
                         console.error('[JWT-AUTH-MANAGER] Auto-refresh failed:', error);
                     }

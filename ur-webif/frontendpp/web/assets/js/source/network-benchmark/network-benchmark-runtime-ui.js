@@ -38,7 +38,6 @@ class NetworkBenchmarkRuntimeUI {
             this.websocket = new WebSocket(wsUrl);
 
             this.websocket.onopen = () => {
-                console.log('Network benchmark WebSocket connected');
                 this.requestServerStatus();
             };
 
@@ -53,7 +52,6 @@ class NetworkBenchmarkRuntimeUI {
             };
 
             this.websocket.onclose = () => {
-                console.log('Network benchmark WebSocket disconnected');
                 this.handleConnectionClose();
             };
 
@@ -93,7 +91,6 @@ class NetworkBenchmarkRuntimeUI {
                 this.handleError(data);
                 break;
             default:
-                console.log('Unknown message type:', data.type);
         }
     }
 

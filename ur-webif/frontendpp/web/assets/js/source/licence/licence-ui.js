@@ -22,7 +22,6 @@ class LicenceUI {
     }
     
     init() {
-        console.log('[LICENCE-UI] Initializing licence UI controller...');
         
         // Wait for licence manager to be initialized
         if (this.licenceManager.isInitialized()) {
@@ -49,7 +48,6 @@ class LicenceUI {
         this.loadingUI.showAllLoadingStates();
         
         this.initialized = true;
-        console.log('[LICENCE-UI] Licence UI controller initialized');
     }
     
     createLicenceContent() {
@@ -814,7 +812,6 @@ class LicenceUI {
     // UI update methods (now use loading states)
     updateLicenceStatus() {
         // Keep loading state as we don't have actual data
-        console.log('[LICENCE-UI] Licence status updated - keeping loading state');
     }
     
     updateConfigurationUI() {

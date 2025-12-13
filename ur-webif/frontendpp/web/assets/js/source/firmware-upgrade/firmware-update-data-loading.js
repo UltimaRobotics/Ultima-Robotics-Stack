@@ -10,7 +10,6 @@ class FirmwareUpdateDataLoadingUI {
     }
     
     init() {
-        console.log('[FIRMWARE-UPDATE-LOADING-UI] Initializing firmware update loading UI component...');
         this.setupLoadingStyles();
     }
     
@@ -108,7 +107,6 @@ class FirmwareUpdateDataLoadingUI {
      * Show loading state for current firmware section
      */
     showCurrentFirmwareLoading() {
-        console.log('[FIRMWARE-UPDATE-LOADING-UI] Showing current firmware loading state (persistent until data arrives)...');
         
         // Current version loading state
         const currentVersionElement = document.getElementById('current-version');
@@ -160,7 +158,6 @@ class FirmwareUpdateDataLoadingUI {
      * Hide loading state for current firmware section
      */
     hideCurrentFirmwareLoading() {
-        console.log('[FIRMWARE-UPDATE-LOADING-UI] Hiding current firmware loading state (data is now available)...');
         
         // Clear loading states
         const loadingElements = document.querySelectorAll('.firmware-skeleton, .firmware-skeleton-text, .firmware-skeleton-text-sm, .firmware-skeleton-badge');
@@ -182,7 +179,6 @@ class FirmwareUpdateDataLoadingUI {
      * Show loading state for firmware file upload
      */
     showFileUploadLoading() {
-        console.log('[FIRMWARE-UPDATE-LOADING-UI] Showing file upload loading state...');
         
         const uploadArea = document.getElementById('file-upload-area');
         if (uploadArea) {
@@ -197,7 +193,6 @@ class FirmwareUpdateDataLoadingUI {
      * Hide loading state for firmware file upload
      */
     hideFileUploadLoading() {
-        console.log('[FIRMWARE-UPDATE-LOADING-UI] Hiding file upload loading state...');
         
         const uploadArea = document.getElementById('file-upload-area');
         if (uploadArea) {
@@ -212,7 +207,6 @@ class FirmwareUpdateDataLoadingUI {
      * Show loading state for online updates
      */
     showOnlineUpdateLoading() {
-        console.log('[FIRMWARE-UPDATE-LOADING-UI] Showing online update loading state...');
         
         const checkBtn = document.getElementById('check-updates-btn');
         if (checkBtn) {
@@ -238,7 +232,6 @@ class FirmwareUpdateDataLoadingUI {
      * Hide loading state for online updates
      */
     hideOnlineUpdateLoading() {
-        console.log('[FIRMWARE-UPDATE-LOADING-UI] Hiding online update loading state...');
         
         const checkBtn = document.getElementById('check-updates-btn');
         if (checkBtn) {
@@ -253,7 +246,6 @@ class FirmwareUpdateDataLoadingUI {
      * Show loading state for TFTP connection test
      */
     showTftpTestLoading() {
-        console.log('[FIRMWARE-UPDATE-LOADING-UI] Showing TFTP test loading state...');
         
         const testBtn = document.getElementById('test-tftp-btn');
         if (testBtn) {
@@ -268,7 +260,6 @@ class FirmwareUpdateDataLoadingUI {
      * Hide loading state for TFTP connection test
      */
     hideTftpTestLoading() {
-        console.log('[FIRMWARE-UPDATE-LOADING-UI] Hiding TFTP test loading state...');
         
         const testBtn = document.getElementById('test-tftp-btn');
         if (testBtn) {
@@ -283,7 +274,6 @@ class FirmwareUpdateDataLoadingUI {
      * Show loading state for upgrade process
      */
     showUpgradeLoading() {
-        console.log('[FIRMWARE-UPDATE-LOADING-UI] Showing upgrade loading state...');
         
         const startBtn = document.getElementById('start-upgrade-btn');
         if (startBtn) {
@@ -302,7 +292,6 @@ class FirmwareUpdateDataLoadingUI {
      * Hide loading state for upgrade process
      */
     hideUpgradeLoading() {
-        console.log('[FIRMWARE-UPDATE-LOADING-UI] Hiding upgrade loading state...');
         
         const startBtn = document.getElementById('start-upgrade-btn');
         if (startBtn) {
@@ -393,7 +382,6 @@ class FirmwareUpdateDataLoadingUI {
      * Clear all loading states
      */
     clearAllLoadingStates() {
-        console.log('[FIRMWARE-UPDATE-LOADING-UI] Clearing all loading states including persistent ones...');
         
         this.hideCurrentFirmwareLoading();
         this.hideFileUploadLoading();

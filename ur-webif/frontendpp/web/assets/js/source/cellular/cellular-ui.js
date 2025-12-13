@@ -17,7 +17,6 @@ export class CellularUI {
     }
     
     init() {
-        console.log('[CELLULAR-UI] Initializing Cellular UI');
         this.render();
         this.setupEventListeners();
         this.startDataUpdates();
@@ -692,7 +691,6 @@ export class CellularUI {
         try {
             this.cellularManager.toggleCellular();
             this.updateConnectionStatus();
-            console.log('[CELLULAR-UI] Cellular interface', enabled ? 'enabled' : 'disabled');
         } catch (error) {
             console.error('[CELLULAR-UI] Failed to toggle cellular:', error);
         }
@@ -887,6 +885,5 @@ export class CellularUI {
             delete window.cellularUI;
         }
         
-        console.log('[CELLULAR-UI] Cellular UI destroyed');
     }
 }

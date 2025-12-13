@@ -11,7 +11,6 @@ class LoginUI {
     init() {
         this.cacheElements();
         this.bindEvents();
-        console.log('[LOGIN-UI] UI handlers initialized');
     }
 
     cacheElements() {
@@ -130,15 +129,12 @@ class LoginUI {
 
     // Event handlers to be set by external modules
     onForgotPassword() {
-        console.log('[LOGIN-UI] Forgot password clicked');
     }
 
     onSignUp() {
-        console.log('[LOGIN-UI] Sign up clicked');
     }
 
     onFormSubmit() {
-        console.log('[LOGIN-UI] Form submitted');
     }
 }
 

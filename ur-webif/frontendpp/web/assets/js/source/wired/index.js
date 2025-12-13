@@ -10,7 +10,6 @@ import { WiredUI } from './wired-ui.js';
  * Initialize wired configuration module
  */
 export function initializeWired(httpClient, container) {
-    console.log('[WIRED] Initializing wired configuration module');
     
     const wiredUI = new WiredUI(httpClient, container);
     
@@ -22,7 +21,6 @@ export function initializeWired(httpClient, container) {
          * Cleanup wired configuration module
          */
         destroy() {
-            console.log('[WIRED] Cleaning up wired configuration module');
             if (wiredUI) {
                 wiredUI.destroy();
             }

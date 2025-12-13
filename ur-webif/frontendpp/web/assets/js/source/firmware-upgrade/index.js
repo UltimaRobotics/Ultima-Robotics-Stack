@@ -33,7 +33,6 @@ export const MODULE_INFO = {
 // Initialize function for integration with main application
 export async function initializeFirmwareUpgrade(sourceManager) {
     try {
-        console.log('[FIRMWARE-UPGRADE-MODULE] Initializing firmware upgrade module...');
         
         // Initialize firmware upgrade manager
         const firmwareUpgradeManager = new FirmwareUpgradeManager();
@@ -50,7 +49,6 @@ export async function initializeFirmwareUpgrade(sourceManager) {
             }
         });
         
-        console.log('[FIRMWARE-UPGRADE-MODULE] Firmware upgrade module initialized successfully');
         
         return {
             manager: firmwareUpgradeManager,
@@ -65,7 +63,6 @@ export async function initializeFirmwareUpgrade(sourceManager) {
 // Cleanup function
 export function cleanupFirmwareUpgrade(firmwareUpgradeComponents) {
     try {
-        console.log('[FIRMWARE-UPGRADE-MODULE] Cleaning up firmware upgrade module...');
         
         if (firmwareUpgradeComponents) {
             // Cleanup UI controller first (stops timers, loading states)
@@ -79,7 +76,6 @@ export function cleanupFirmwareUpgrade(firmwareUpgradeComponents) {
             }
         }
         
-        console.log('[FIRMWARE-UPGRADE-MODULE] Firmware upgrade module cleaned up successfully');
     } catch (error) {
         console.error('[FIRMWARE-UPGRADE-MODULE] Error during cleanup:', error);
     }

@@ -13,7 +13,6 @@ export class MavlinkExtensionUI {
 
     async init() {
         try {
-            console.log('[MAVLINK-EXTENSION-UI] Initializing UI controller...');
             
             // Step 1: Show loading state immediately
             this.showLoadingState();
@@ -23,7 +22,6 @@ export class MavlinkExtensionUI {
             if (this.manager && typeof this.manager.isInitialized === 'function') {
                 try {
                     const managerTimeout = setTimeout(() => {
-                        console.warn('[MAVLINK-EXTENSION-UI] Manager initialization timeout (1s)');
                     }, 1000);
                     
                     if (!this.manager._isInitialized) {
@@ -53,7 +51,6 @@ export class MavlinkExtensionUI {
                         managerReady = true;
                     }
                 } catch (error) {
-                    console.warn('[MAVLINK-EXTENSION-UI] Manager initialization failed:', error);
                 }
             }
             
@@ -63,7 +60,6 @@ export class MavlinkExtensionUI {
             
             if (managerReady && this.manager) {
                 try {
-                    console.log('[MAVLINK-EXTENSION-UI] Making WebSocket request...');
                     
                     // Calculate remaining time (max 1 second total)
                     const remainingTime = Math.max(0, 1000 - (Date.now() - startTime));
@@ -80,19 +76,15 @@ export class MavlinkExtensionUI {
                     
                     if (this.manager.isDataLoaded()) {
                         dataReceived = true;
-                        console.log('[MAVLINK-EXTENSION-UI] Data received from backend');
                     }
                 } catch (error) {
-                    console.warn('[MAVLINK-EXTENSION-UI] WebSocket request failed:', error);
                 }
             }
             
             // Step 4: Render appropriate UI based on results
             if (dataReceived) {
-                console.log('[MAVLINK-EXTENSION-UI] Rendering data UI');
                 this.render();
             } else {
-                console.log('[MAVLINK-EXTENSION-UI] No data received, rendering no-data UI');
                 this.showNoDataState();
             }
             
@@ -101,7 +93,6 @@ export class MavlinkExtensionUI {
             this.bindManagerEvents();
             
             this.isInitialized = true;
-            console.log('[MAVLINK-EXTENSION-UI] UI controller initialized successfully');
             
         } catch (error) {
             console.error('[MAVLINK-EXTENSION-UI] Failed to initialize UI controller:', error);
@@ -114,67 +105,50 @@ export class MavlinkExtensionUI {
     }
 
     bindEventListeners() {
-        console.log('[MAVLINK-EXTENSION-UI] Binding event listeners...');
         
         // Debug: Check if modals exist in DOM
         const importModal = document.getElementById('import-modal');
         const stopAllModal = document.getElementById('stop-all-modal');
         const deleteModal = document.getElementById('delete-endpoint-modal');
         
-        console.log('[MAVLINK-EXTENSION-UI] Modal availability check:');
-        console.log('  - import-modal:', importModal ? '✅ Found' : '❌ Not found');
-        console.log('  - stop-all-modal:', stopAllModal ? '✅ Found' : '❌ Not found');
-        console.log('  - delete-endpoint-modal:', deleteModal ? '✅ Found' : '❌ Not found');
 
         // Header controls
         const refreshBtn = document.getElementById('refresh-all-btn');
         if (refreshBtn) {
             refreshBtn.addEventListener('click', () => this.handleRefresh());
-            console.log('[MAVLINK-EXTENSION-UI] Bound refresh button');
         } else {
-            console.warn('[MAVLINK-EXTENSION-UI] Refresh button not found');
         }
 
         // Quick action buttons
         const addEndpointBtn = document.getElementById('add-endpoint-btn');
         if (addEndpointBtn) {
             addEndpointBtn.addEventListener('click', () => this.showAddEndpointModal());
-            console.log('[MAVLINK-EXTENSION-UI] Bound add endpoint button');
         } else {
-            console.warn('[MAVLINK-EXTENSION-UI] Add endpoint button not found');
         }
 
         const exportConfigBtn = document.getElementById('export-config-btn');
         if (exportConfigBtn) {
             exportConfigBtn.addEventListener('click', () => this.exportConfiguration());
-            console.log('[MAVLINK-EXTENSION-UI] Bound export config button');
         } else {
-            console.warn('[MAVLINK-EXTENSION-UI] Export config button not found');
         }
 
         const importConfigBtn = document.getElementById('import-config-btn');
         if (importConfigBtn) {
             importConfigBtn.addEventListener('click', () => this.showImportModal());
-            console.log('[MAVLINK-EXTENSION-UI] Bound import config button');
         } else {
-            console.warn('[MAVLINK-EXTENSION-UI] Import config button not found');
         }
 
         // Endpoint list controls
         const startAllBtn = document.getElementById('start-all-btn');
         if (startAllBtn) {
             startAllBtn.addEventListener('click', () => this.startAllEndpoints());
-            console.log('[MAVLINK-EXTENSION-UI] Bound start all button');
         } else {
-            console.warn('[MAVLINK-EXTENSION-UI] Start all button not found');
         }
 
         const stopAllBtn = document.getElementById('stop-all-btn');
         if (stopAllBtn) {
             stopAllBtn.addEventListener('click', () => this.showStopAllConfirmation());
-            console.log('[MAVLINK-EXTENSION-UI] Bound stop all button');
         } else {
-            console.warn('[MAVLINK-EXTENSION-UI] Stop all button not found');
         }
 
         // Modal controls
@@ -204,7 +178,6 @@ export class MavlinkExtensionUI {
         // Toggle switches
         this.bindToggleSwitches();
         
-        console.log('[MAVLINK-EXTENSION-UI] Event listeners binding complete');
     }
 
     bindModalControls() {
@@ -349,12 +322,9 @@ export class MavlinkExtensionUI {
     }
 
     showImportModal() {
-        console.log('[MAVLINK-EXTENSION-UI] showImportModal called');
         const modal = document.getElementById('import-modal');
-        console.log('[MAVLINK-EXTENSION-UI] import modal element:', modal);
         if (modal) {
             modal.classList.remove('hidden');
-            console.log('[MAVLINK-EXTENSION-UI] import modal shown, classes:', modal.className);
         } else {
             console.error('[MAVLINK-EXTENSION-UI] import modal not found in DOM');
         }
@@ -368,12 +338,9 @@ export class MavlinkExtensionUI {
     }
 
     showStopAllConfirmation() {
-        console.log('[MAVLINK-EXTENSION-UI] showStopAllConfirmation called');
         const modal = document.getElementById('stop-all-modal');
-        console.log('[MAVLINK-EXTENSION-UI] stop all modal element:', modal);
         if (modal) {
             modal.classList.remove('hidden');
-            console.log('[MAVLINK-EXTENSION-UI] stop all modal shown, classes:', modal.className);
         } else {
             console.error('[MAVLINK-EXTENSION-UI] stop all modal not found in DOM');
         }
@@ -464,7 +431,6 @@ export class MavlinkExtensionUI {
                 isResolved = true;
                 this.manager.off('dataLoaded', onDataLoaded);
                 this.manager.off('dataLoadTimeout', onDataTimeout);
-                console.warn('[MAVLINK-EXTENSION-UI] Data loading timeout, showing no data state');
                 this.showNoDataState();
                 resolve();
             }, 2000); // 2 second timeout as fallback
@@ -480,7 +446,6 @@ export class MavlinkExtensionUI {
                         this.manager.off('dataLoaded', onDataLoaded);
                         this.manager.off('dataLoadTimeout', onDataTimeout);
                         clearTimeout(timeoutId);
-                        console.warn('[MAVLINK-EXTENSION-UI] Manager initialized but no data events, proceeding with demo data');
                         this.showNoDataState();
                         resolve();
                     }
@@ -509,7 +474,6 @@ export class MavlinkExtensionUI {
             emptyState.classList.add('hidden');
         }
         
-        console.log('[MAVLINK-EXTENSION-UI] Showing loading state');
     }
 
     /**
@@ -550,11 +514,9 @@ export class MavlinkExtensionUI {
             emptyState.classList.add('hidden');
         }
         
-        console.log('[MAVLINK-EXTENSION-UI] Showing no data state');
     }
 
     render() {
-        console.log('[MAVLINK-EXTENSION-UI] Rendering UI...');
         this.updateStatistics();
         this.renderEndpoints();
         this.updateSystemStatus();
@@ -725,7 +687,6 @@ export class MavlinkExtensionUI {
 
     // Action methods
     handleRefresh() {
-        console.log('[MAVLINK-EXTENSION-UI] Refresh requested');
         
         // Show loading state
         this.showLoadingState();
@@ -744,34 +705,28 @@ export class MavlinkExtensionUI {
                     // Wait a moment for data to be processed
                     setTimeout(() => {
                         if (this.manager.isDataLoaded()) {
-                            console.log('[MAVLINK-EXTENSION-UI] Refresh: Data received');
                             this.render();
                             this.bindEventListeners();
                         } else {
-                            console.log('[MAVLINK-EXTENSION-UI] Refresh: No data loaded');
                             this.showNoDataState();
                             this.bindEventListeners();
                         }
                     }, 100);
                 }).catch((error) => {
-                    console.warn('[MAVLINK-EXTENSION-UI] Refresh failed:', error);
                     this.showNoDataState();
                     this.bindEventListeners();
                 });
             } catch (error) {
-                console.warn('[MAVLINK-EXTENSION-UI] Manager refresh failed:', error);
                 this.showNoDataState();
                 this.bindEventListeners();
             }
         } else {
-            console.warn('[MAVLINK-EXTENSION-UI] No manager available for refresh');
             this.showNoDataState();
             this.bindEventListeners();
         }
     }
 
     addDemoEndpoint() {
-        console.log('[MAVLINK-EXTENSION-UI] Adding demo endpoint');
         
         if (this.manager) {
             // Delegate to manager
@@ -1125,13 +1080,11 @@ export class MavlinkExtensionUI {
 
     // Delete confirmation modal methods
     showDeleteConfirmationModal(endpointId) {
-        console.log('[MAVLINK-EXTENSION-UI] showDeleteConfirmationModal called for endpoint:', endpointId);
         const endpoint = this.manager.getEndpoint(endpointId);
         if (!endpoint) return;
 
         this.currentDeletingEndpoint = endpointId;
         const modal = document.getElementById('delete-endpoint-modal');
-        console.log('[MAVLINK-EXTENSION-UI] delete modal element:', modal);
         
         if (modal) {
             // Update modal content with endpoint details
@@ -1153,7 +1106,6 @@ export class MavlinkExtensionUI {
             }
             
             modal.classList.remove('hidden');
-            console.log('[MAVLINK-EXTENSION-UI] delete modal shown, classes:', modal.className);
         } else {
             console.error('[MAVLINK-EXTENSION-UI] delete modal not found in DOM');
         }
@@ -1258,7 +1210,6 @@ export class MavlinkExtensionUI {
         this.currentDeletingEndpoint = null;
         this.isInitialized = false;
         
-        console.log('[MAVLINK-EXTENSION-UI] UI controller cleaned up');
     }
 
     /**

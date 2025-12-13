@@ -17,7 +17,6 @@ class BackupRestoreUI {
     }
     
     init() {
-        console.log('[BACKUP-RESTORE-UI] Initializing backup & restore UI controller...');
         
         // Wait for backup restore manager to be initialized
         if (this.backupRestoreManager && this.backupRestoreManager.isInitialized && this.backupRestoreManager.isInitialized()) {
@@ -34,7 +33,6 @@ class BackupRestoreUI {
         this.setupEventListeners();
         this.loadRecentBackups();
         
-        console.log('[BACKUP-RESTORE-UI] Backup & restore UI controller initialized');
     }
     
     createBackupRestoreStructure() {
@@ -535,7 +533,6 @@ class BackupRestoreUI {
     
     updateRestoreProgress(progress, status) {
         // Similar implementation for restore progress
-        console.log(`[BACKUP-RESTORE-UI] Restore progress: ${progress}% - ${status}`);
     }
     
     // Helper methods
@@ -616,7 +613,6 @@ class BackupRestoreUI {
         
         if (restoreBtn) restoreBtn.disabled = false;
         
-        console.log('[BACKUP-RESTORE-UI] File selected:', file.name, 'Size:', this.formatFileSize(file.size));
     }
     
     clearFileSelection() {
@@ -686,15 +682,12 @@ class BackupRestoreUI {
             }
             
             options.password = password;
-            console.log('[BACKUP-RESTORE-UI] Creating encrypted backup');
         } else {
-            console.log('[BACKUP-RESTORE-UI] Creating standard backup');
         }
         
         // Call the manager to create the backup
         this.backupRestoreManager.createBackup(options)
             .then(result => {
-                console.log('[BACKUP-RESTORE-UI] Backup created successfully:', result);
                 this.showMessage(`${options.encrypted ? 'Encrypted backup' : 'Backup'} created successfully!`, 'success');
                 this.loadRecentBackups();
             })
@@ -771,7 +764,6 @@ class BackupRestoreUI {
     startRestore() {
         if (this.restoreInProgress || !this.selectedFile) return;
         
-        console.log('[BACKUP-RESTORE-UI] Restoring from backup');
         this.showMessage('Starting restore process...', 'info');
         
         // Here you would implement the actual restore logic
@@ -850,7 +842,6 @@ class BackupRestoreUI {
      * Cleanup method to remove event listeners and clear states
      */
     cleanup() {
-        console.log('[BACKUP-RESTORE-UI] Cleaning up backup & restore UI controller...');
         
         // Clear file selection
         this.clearFileSelection();
@@ -865,7 +856,6 @@ class BackupRestoreUI {
             this.loadingUI.cleanup();
         }
         
-        console.log('[BACKUP-RESTORE-UI] Backup & restore UI controller cleaned up');
     }
 }
 

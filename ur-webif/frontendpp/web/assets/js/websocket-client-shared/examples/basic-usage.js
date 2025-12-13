@@ -4,7 +4,6 @@ import { WebSocketClient } from '../src/WebSocketClient.js';
  * Basic WebSocket Client Usage Example
  */
 
-console.log('=== Basic WebSocket Client Example ===');
 
 // Create a basic WebSocket client
 const client = new WebSocketClient({
@@ -15,18 +14,15 @@ const client = new WebSocketClient({
 
 // Set up event listeners
 client.on('open', () => {
-  console.log('Connected to WebSocket server');
   
   // Send a message
   client.send({ type: 'greeting', message: 'Hello Server!' });
 });
 
 client.on('message', (data) => {
-  console.log('Received message:', data);
 });
 
 client.on('close', (event) => {
-  console.log('Connection closed:', event.code, event.reason);
 });
 
 client.on('error', (error) => {
@@ -43,7 +39,6 @@ setTimeout(() => {
 // Disconnect after 10 seconds
 setTimeout(() => {
   client.disconnect();
-  console.log('Client disconnected');
 }, 10000);
 
 export { client };

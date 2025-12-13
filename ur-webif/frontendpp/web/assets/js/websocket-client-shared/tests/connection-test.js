@@ -11,7 +11,6 @@ class WebSocketConnectionTest {
     }
 
     async runTests() {
-        console.log('=== WebSocket Connection Tests ===');
         
         // Test 1: Basic connection to localhost:9002
         await this.testBasicConnection();
@@ -32,7 +31,6 @@ class WebSocketConnectionTest {
     }
 
     async testBasicConnection() {
-        console.log('\n--- Test 1: Basic Connection ---');
         
         return new Promise((resolve) => {
             const startTime = Date.now();
@@ -49,7 +47,6 @@ class WebSocketConnectionTest {
             client.on('open', () => {
                 connected = true;
                 const duration = Date.now() - startTime;
-                console.log(`✅ Connected in ${duration}ms`);
                 this.testResults.push({ test: 'Basic Connection', status: 'PASS', duration });
                 client.disconnect();
                 resolve();
@@ -57,14 +54,12 @@ class WebSocketConnectionTest {
 
             client.on('error', (err) => {
                 error = err;
-                console.log('❌ Connection error:', err);
                 this.testResults.push({ test: 'Basic Connection', status: 'FAIL', error: err.message });
                 resolve();
             });
 
             client.on('close', (event) => {
                 if (!connected && !error) {
-                    console.log(`❌ Connection closed without success: ${event.code} - ${event.reason}`);
                     this.testResults.push({ test: 'Basic Connection', status: 'FAIL', error: `Closed: ${event.code}` });
                 }
                 resolve();
@@ -74,7 +69,6 @@ class WebSocketConnectionTest {
             try {
                 client.connect();
             } catch (err) {
-                console.log('❌ Connection failed immediately:', err);
                 this.testResults.push({ test: 'Basic Connection', status: 'FAIL', error: err.message });
                 resolve();
             }
@@ -82,7 +76,6 @@ class WebSocketConnectionTest {
             // Force resolve after timeout
             setTimeout(() => {
                 if (!connected && !error) {
-                    console.log('❌ Connection timeout');
                     this.testResults.push({ test: 'Basic Connection', status: 'FAIL', error: 'Timeout' });
                     client.disconnect();
                     resolve();
@@ -92,7 +85,6 @@ class WebSocketConnectionTest {
     }
 
     async testProtocolConnection() {
-        console.log('\n--- Test 2: Protocol Connection ---');
         
         return new Promise((resolve) => {
             const client = new WebSocketClient({
@@ -107,21 +99,18 @@ class WebSocketConnectionTest {
 
             client.on('open', () => {
                 connected = true;
-                console.log('✅ Connected with protocol');
                 this.testResults.push({ test: 'Protocol Connection', status: 'PASS' });
                 client.disconnect();
                 resolve();
             });
 
             client.on('error', (err) => {
-                console.log('❌ Protocol connection error:', err);
                 this.testResults.push({ test: 'Protocol Connection', status: 'FAIL', error: err.message });
                 resolve();
             });
 
             client.on('close', (event) => {
                 if (!connected) {
-                    console.log(`❌ Protocol connection closed: ${event.code} - ${event.reason}`);
                     this.testResults.push({ test: 'Protocol Connection', status: 'FAIL', error: `Closed: ${event.code}` });
                 }
                 resolve();
@@ -130,14 +119,12 @@ class WebSocketConnectionTest {
             try {
                 client.connect();
             } catch (err) {
-                console.log('❌ Protocol connection failed:', err);
                 this.testResults.push({ test: 'Protocol Connection', status: 'FAIL', error: err.message });
                 resolve();
             }
 
             setTimeout(() => {
                 if (!connected) {
-                    console.log('❌ Protocol connection timeout');
                     this.testResults.push({ test: 'Protocol Connection', status: 'FAIL', error: 'Timeout' });
                     client.disconnect();
                     resolve();
@@ -147,7 +134,6 @@ class WebSocketConnectionTest {
     }
 
     async testNoProtocolConnection() {
-        console.log('\n--- Test 3: No Protocol Connection ---');
         
         return new Promise((resolve) => {
             const client = new WebSocketClient({
@@ -162,21 +148,18 @@ class WebSocketConnectionTest {
 
             client.on('open', () => {
                 connected = true;
-                console.log('✅ Connected without protocol');
                 this.testResults.push({ test: 'No Protocol Connection', status: 'PASS' });
                 client.disconnect();
                 resolve();
             });
 
             client.on('error', (err) => {
-                console.log('❌ No protocol connection error:', err);
                 this.testResults.push({ test: 'No Protocol Connection', status: 'FAIL', error: err.message });
                 resolve();
             });
 
             client.on('close', (event) => {
                 if (!connected) {
-                    console.log(`❌ No protocol connection closed: ${event.code} - ${event.reason}`);
                     this.testResults.push({ test: 'No Protocol Connection', status: 'FAIL', error: `Closed: ${event.code}` });
                 }
                 resolve();
@@ -185,14 +168,12 @@ class WebSocketConnectionTest {
             try {
                 client.connect();
             } catch (err) {
-                console.log('❌ No protocol connection failed:', err);
                 this.testResults.push({ test: 'No Protocol Connection', status: 'FAIL', error: err.message });
                 resolve();
             }
 
             setTimeout(() => {
                 if (!connected) {
-                    console.log('❌ No protocol connection timeout');
                     this.testResults.push({ test: 'No Protocol Connection', status: 'FAIL', error: 'Timeout' });
                     client.disconnect();
                     resolve();
@@ -202,7 +183,6 @@ class WebSocketConnectionTest {
     }
 
     async testHostFormats() {
-        console.log('\n--- Test 4: Host Formats ---');
         
         const hosts = [
             'ws://localhost:9002',
@@ -216,7 +196,6 @@ class WebSocketConnectionTest {
     }
 
     async testHostFormat(host) {
-        console.log(`Testing ${host}...`);
         
         return new Promise((resolve) => {
             const client = new WebSocketClient({
@@ -230,21 +209,18 @@ class WebSocketConnectionTest {
 
             client.on('open', () => {
                 connected = true;
-                console.log(`✅ Connected to ${host}`);
                 this.testResults.push({ test: `Host: ${host}`, status: 'PASS' });
                 client.disconnect();
                 resolve();
             });
 
             client.on('error', (err) => {
-                console.log(`❌ Error connecting to ${host}:`, err.message);
                 this.testResults.push({ test: `Host: ${host}`, status: 'FAIL', error: err.message });
                 resolve();
             });
 
             client.on('close', (event) => {
                 if (!connected) {
-                    console.log(`❌ Connection to ${host} closed: ${event.code}`);
                     this.testResults.push({ test: `Host: ${host}`, status: 'FAIL', error: `Closed: ${event.code}` });
                 }
                 resolve();
@@ -253,14 +229,12 @@ class WebSocketConnectionTest {
             try {
                 client.connect();
             } catch (err) {
-                console.log(`❌ Failed to connect to ${host}:`, err.message);
                 this.testResults.push({ test: `Host: ${host}`, status: 'FAIL', error: err.message });
                 resolve();
             }
 
             setTimeout(() => {
                 if (!connected) {
-                    console.log(`❌ Timeout connecting to ${host}`);
                     this.testResults.push({ test: `Host: ${host}`, status: 'FAIL', error: 'Timeout' });
                     client.disconnect();
                     resolve();
@@ -270,7 +244,6 @@ class WebSocketConnectionTest {
     }
 
     async testConnectionTimeout() {
-        console.log('\n--- Test 5: Connection Timeout ---');
         
         return new Promise((resolve) => {
             const client = new WebSocketClient({
@@ -285,7 +258,6 @@ class WebSocketConnectionTest {
 
             client.on('open', () => {
                 connected = true;
-                console.log('❌ Unexpected connection to non-existent port');
                 this.testResults.push({ test: 'Connection Timeout', status: 'FAIL', error: 'Unexpected success' });
                 client.disconnect();
                 resolve();
@@ -293,7 +265,6 @@ class WebSocketConnectionTest {
 
             client.on('error', (err) => {
                 if (!timedOut) {
-                    console.log('Expected error for timeout test:', err.message);
                 }
             });
 
@@ -302,11 +273,9 @@ class WebSocketConnectionTest {
             } catch (err) {
                 if (err.message.includes('timeout')) {
                     timedOut = true;
-                    console.log('✅ Connection timeout working correctly');
                     this.testResults.push({ test: 'Connection Timeout', status: 'PASS' });
                     resolve();
                 } else {
-                    console.log('❌ Unexpected error:', err.message);
                     this.testResults.push({ test: 'Connection Timeout', status: 'FAIL', error: err.message });
                     resolve();
                 }
@@ -314,7 +283,6 @@ class WebSocketConnectionTest {
 
             setTimeout(() => {
                 if (!connected && !timedOut) {
-                    console.log('✅ Connection timeout working correctly');
                     this.testResults.push({ test: 'Connection Timeout', status: 'PASS' });
                     client.disconnect();
                     resolve();
@@ -324,43 +292,29 @@ class WebSocketConnectionTest {
     }
 
     printResults() {
-        console.log('\n=== Test Results ===');
         
         const passed = this.testResults.filter(r => r.status === 'PASS').length;
         const failed = this.testResults.filter(r => r.status === 'FAIL').length;
         
-        console.log(`Total: ${this.testResults.length}, Passed: ${passed}, Failed: ${failed}`);
         
         this.testResults.forEach(result => {
             const icon = result.status === 'PASS' ? '✅' : '❌';
-            console.log(`${icon} ${result.test}: ${result.status}${result.error ? ` - ${result.error}` : ''}`);
         });
 
         // Recommendations
-        console.log('\n=== Recommendations ===');
         if (failed === 0) {
-            console.log('✅ All tests passed! WebSocket connection is working correctly.');
         } else {
-            console.log('❌ Some tests failed. Check the following:');
             
             const failedTests = this.testResults.filter(r => r.status === 'FAIL');
             failedTests.forEach(test => {
                 if (test.test.includes('Host:')) {
-                    console.log(`- Try using a different host format than ${test.test.split(': ')[1]}`);
                 }
                 if (test.error && test.error.includes('1006')) {
-                    console.log('- Error 1006 indicates connection was closed abnormally - check server logs');
                 }
                 if (test.error && test.error.includes('Timeout')) {
-                    console.log('- Connection timeout - server may not be responding or firewall blocking');
                 }
             });
             
-            console.log('\nSuggested fixes:');
-            console.log('1. Try using ws://localhost:9002 instead of ws://0.0.0.0:9002');
-            console.log('2. Check if WebSocket server is running and accepting connections');
-            console.log('3. Verify no firewall is blocking port 9002');
-            console.log('4. Try connecting without protocols first');
         }
     }
 }
@@ -372,7 +326,6 @@ if (typeof window !== 'undefined') {
         const tester = new WebSocketConnectionTest();
         return tester.runTests();
     };
-    console.log('WebSocket tests loaded. Run window.runWebSocketTests() to start.');
 }
 
 export { WebSocketConnectionTest };

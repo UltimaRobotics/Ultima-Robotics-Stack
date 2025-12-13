@@ -489,7 +489,6 @@ class WebSocketClient {
    */
   debugLog(...args) {
     if (this.config.debug) {
-      console.log(`[WEBSOCKET-CLIENT-${this.storageKey}]`, ...args);
     }
   }
 

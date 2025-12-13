@@ -231,4 +231,3 @@ describe('HttpStorage', () => {
   });
 });
 
-console.log('All HTTP client tests completed!');

@@ -10,7 +10,6 @@ import { CellularUI } from './cellular-ui.js';
  * Initialize cellular configuration module
  */
 export function initializeCellular(httpClient, container) {
-    console.log('[CELLULAR] Initializing cellular configuration module');
     
     const cellularUI = new CellularUI(httpClient, container);
     
@@ -22,7 +21,6 @@ export function initializeCellular(httpClient, container) {
          * Cleanup cellular configuration module
          */
         destroy() {
-            console.log('[CELLULAR] Cleaning up cellular configuration module');
             if (cellularUI) {
                 cellularUI.destroy();
             }

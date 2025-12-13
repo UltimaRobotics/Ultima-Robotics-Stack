@@ -591,4 +591,3 @@ describe('AuthStorage', () => {
   });
 });
 
-console.log('All JWT auth manager tests completed!');

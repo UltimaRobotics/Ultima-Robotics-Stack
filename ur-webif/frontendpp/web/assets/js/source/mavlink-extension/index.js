@@ -32,7 +32,6 @@ export const MODULE_INFO = {
 // Initialize function for integration with main application
 export async function initializeMavlinkExtension(sourceManager) {
     try {
-        console.log('[MAVLINK-EXTENSION-MODULE] Initializing MAVLink extension module...');
         
         // Initialize MAVLink extension manager
         const mavlinkExtensionManager = new MavlinkExtensionManager();
@@ -54,13 +53,10 @@ export async function initializeMavlinkExtension(sourceManager) {
         modalContainer.innerHTML = mavlinkExtensionUI.generateModalHTML();
         const modalElement = modalContainer.firstElementChild; // This is now the container with all modals
         document.body.appendChild(modalElement);
-        console.log('[MAVLINK-EXTENSION-MODULE] Modal container HTML injected into DOM:', modalElement);
-        console.log('[MAVLINK-EXTENSION-MODULE] Available modals:', modalElement.querySelectorAll('[id$="-modal"]').length);
         
         // Wait for UI to be initialized (now modals exist in DOM)
         await mavlinkExtensionUI.init();
         
-        console.log('[MAVLINK-EXTENSION-MODULE] MAVLink extension module initialized successfully');
         
         return {
             manager: mavlinkExtensionManager,
@@ -83,7 +79,6 @@ export function getMavlinkExtensionContentHTML() {
 // Cleanup function
 export function cleanupMavlinkExtension(mavlinkExtensionComponents) {
     try {
-        console.log('[MAVLINK-EXTENSION-MODULE] Cleaning up MAVLink extension module...');
         
         if (mavlinkExtensionComponents) {
             // Cleanup UI controller first (stops timers, loading states)
@@ -112,7 +107,6 @@ export function cleanupMavlinkExtension(mavlinkExtensionComponents) {
             });
         }
         
-        console.log('[MAVLINK-EXTENSION-MODULE] MAVLink extension module cleaned up successfully');
     } catch (error) {
         console.error('[MAVLINK-EXTENSION-MODULE] Error during cleanup:', error);
     }

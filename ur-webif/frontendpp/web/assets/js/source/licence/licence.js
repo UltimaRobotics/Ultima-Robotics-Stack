@@ -23,7 +23,6 @@ class LicenceManager {
     
     async init() {
         try {
-            console.log('[LICENCE-MANAGER] Initializing licence page...');
             
             // Use the source manager's authentication if available
             if (this.sourceManager) {
@@ -36,7 +35,6 @@ class LicenceManager {
             this.initializeDefaultData();
             
             this.initialized = true;
-            console.log('[LICENCE-MANAGER] Licence manager initialized successfully');
             
         } catch (error) {
             console.error('[LICENCE-MANAGER] Initialization failed:', error);
@@ -68,7 +66,6 @@ class LicenceManager {
     // Licence activation methods (simulated without HTTP requests)
     async activateWithKey(licenseKey) {
         try {
-            console.log('[LICENCE-MANAGER] Simulating license key activation for:', licenseKey);
             
             // Simulate processing time
             await new Promise(resolve => setTimeout(resolve, 1500));
@@ -86,7 +83,6 @@ class LicenceManager {
     
     async activateWithFile(file) {
         try {
-            console.log('[LICENCE-MANAGER] Simulating license file activation for:', file.name);
             
             // Simulate processing time
             await new Promise(resolve => setTimeout(resolve, 2000));
@@ -104,7 +100,6 @@ class LicenceManager {
     
     async activateOnline(productCode, email) {
         try {
-            console.log('[LICENCE-MANAGER] Simulating online activation for:', productCode, email);
             
             // Simulate processing time
             await new Promise(resolve => setTimeout(resolve, 3000));
@@ -123,7 +118,6 @@ class LicenceManager {
     // Configuration management (simulated without HTTP requests)
     async updateConfiguration(config) {
         try {
-            console.log('[LICENCE-MANAGER] Simulating configuration update:', config);
             
             // Simulate processing time
             await new Promise(resolve => setTimeout(resolve, 1000));
@@ -141,7 +135,6 @@ class LicenceManager {
     
     async resetConfiguration() {
         try {
-            console.log('[LICENCE-MANAGER] Simulating configuration reset');
             
             // Simulate processing time
             await new Promise(resolve => setTimeout(resolve, 1000));
@@ -186,7 +179,6 @@ class LicenceManager {
     
     async clearEvents() {
         try {
-            console.log('[LICENCE-MANAGER] Simulating clearing events');
             
             // Simulate processing time
             await new Promise(resolve => setTimeout(resolve, 500));
@@ -203,7 +195,6 @@ class LicenceManager {
     // Utility methods (simulated without HTTP requests)
     async refreshLicenceStatus() {
         try {
-            console.log('[LICENCE-MANAGER] Simulating licence status refresh');
             
             // Simulate processing time
             await new Promise(resolve => setTimeout(resolve, 2000));

@@ -21,7 +21,6 @@ class NetworkPriorityManager {
     }
     
     init() {
-        console.log('[NETWORK-PRIORITY] Initializing Network Priority Manager...');
         this.setupEventListeners();
         this.loadInitialData();
     }
@@ -47,17 +46,14 @@ class NetworkPriorityManager {
             }
         });
         
-        console.log('[NETWORK-PRIORITY] Event listeners setup complete');
     }
     
     async loadInitialData() {
         try {
-            console.log('[NETWORK-PRIORITY] Loading initial network priority data...');
             this.setLoading(true);
             
             // Don't load mock data - wait for real WebSocket data
             // The loading UI will show skeleton screens until data arrives
-            console.log('[NETWORK-PRIORITY] Waiting for real WebSocket data...');
             
             // Initialize empty data arrays - will be populated by WebSocket messages
             this.interfaces = [];
@@ -72,7 +68,6 @@ class NetworkPriorityManager {
                 window.dataLoadingUI.showAllLoadingStates();
             }
             
-            console.log('[NETWORK-PRIORITY] Initial data setup complete - waiting for WebSocket data');
             
         } catch (error) {
             console.error('[NETWORK-PRIORITY] Failed to initialize:', error);
@@ -92,7 +87,6 @@ class NetworkPriorityManager {
     async loadInterfacesData() {
         try {
             // This method is no longer used - data comes from WebSocket
-            console.log('[NETWORK-PRIORITY] loadInterfacesData() deprecated - using WebSocket data');
             return this.interfaces;
         } catch (error) {
             console.error('[NETWORK-PRIORITY] Failed to load interfaces data:', error);
@@ -103,7 +97,6 @@ class NetworkPriorityManager {
     async loadRoutingRules() {
         try {
             // This method is no longer used - data comes from WebSocket
-            console.log('[NETWORK-PRIORITY] loadRoutingRules() deprecated - using WebSocket data');
             return this.routingRules;
         } catch (error) {
             console.error('[NETWORK-PRIORITY] Failed to load routing rules:', error);
@@ -123,11 +116,9 @@ class NetworkPriorityManager {
     }
     
     handleNetworkPriorityUpdate(data) {
-        console.log('[NETWORK-PRIORITY] Received network priority update:', data);
         
         // Ensure DOM is ready before processing
         if (!this.isDOMReady()) {
-            console.log('[NETWORK-PRIORITY] DOM not ready, retrying in 50ms...');
             setTimeout(() => {
                 this.handleNetworkPriorityUpdate(data);
             }, 50);
@@ -142,7 +133,6 @@ class NetworkPriorityManager {
         
         // Update interfaces if provided
         if (data.interfaces) {
-            console.log('[NETWORK-PRIORITY] Processing interfaces update:', data.interfaces);
             const oldInterfaces = [...this.interfaces];
             
             // Check if interfaces data actually changed
@@ -150,7 +140,6 @@ class NetworkPriorityManager {
             
             if (interfacesChanged) {
                 this.interfaces = data.interfaces;
-                console.log('[NETWORK-PRIORITY] Interfaces data changed, updating display');
                 
                 // Update interfaces section only
                 this.updateInterfacesDisplay();
@@ -169,18 +158,14 @@ class NetworkPriorityManager {
                     });
                 }
                 
-                console.log('[NETWORK-PRIORITY] Interfaces updated via WebSocket:', this.interfaces.length, 'interfaces');
                 hasUpdates = true;
             } else {
-                console.log('[NETWORK-PRIORITY] Interfaces data unchanged, skipping update');
             }
         } else {
-            console.log('[NETWORK-PRIORITY] No interfaces data in this update');
         }
         
         // Update routing rules if provided
         if (data.routingRules) {
-            console.log('[NETWORK-PRIORITY] Processing routing rules update:', data.routingRules);
             const oldRules = [...this.routingRules];
             
             // Check if routing rules data actually changed
@@ -188,7 +173,6 @@ class NetworkPriorityManager {
             
             if (rulesChanged) {
                 this.routingRules = data.routingRules;
-                console.log('[NETWORK-PRIORITY] Routing rules data changed, updating display');
                 
                 // Update routing rules section only
                 this.updateRoutingRulesDisplay();
@@ -207,24 +191,19 @@ class NetworkPriorityManager {
                     });
                 }
                 
-                console.log('[NETWORK-PRIORITY] Routing rules updated via WebSocket:', this.routingRules.length, 'rules');
                 hasUpdates = true;
             } else {
-                console.log('[NETWORK-PRIORITY] Routing rules data unchanged, skipping update');
             }
         } else {
-            console.log('[NETWORK-PRIORITY] No routing rules data in this update');
         }
         
         // Update statistics if provided
         if (data.statistics) {
-            console.log('[NETWORK-PRIORITY] Processing statistics update:', data.statistics);
             
             // Check if statistics data actually changed
             const statsChanged = this.hasStatisticsChanged(this.currentStatistics, data.statistics);
             
             if (statsChanged) {
-                console.log('[NETWORK-PRIORITY] Statistics data changed, updating display');
                 this.currentStatistics = data.statistics;
                 
                 // Update statistics section only
@@ -232,7 +211,6 @@ class NetworkPriorityManager {
                 this.updateSectionLastUpdate('statistics', data.lastUpdated);
                 hasUpdates = true;
             } else {
-                console.log('[NETWORK-PRIORITY] Statistics data unchanged, skipping update');
             }
         }
         
@@ -258,9 +236,7 @@ class NetworkPriorityManager {
                 lastUpdateElement.classList.add('text-neutral-500');
             }, 2000);
             
-            console.log(`[NETWORK-PRIORITY] ${section} section last updated: ${formattedTime}`);
         } else {
-            console.warn(`[NETWORK-PRIORITY] Last update element not found for section: ${section}`);
         }
     }
     
@@ -404,7 +380,6 @@ class NetworkPriorityManager {
     }
     
     handleDataReceived(data) {
-        console.log('[NETWORK-PRIORITY] Data received:', data);
         
         // Update connection status to connected since we're receiving data
         this.updateConnectionStatus(true);
@@ -431,7 +406,6 @@ class NetworkPriorityManager {
     updateInterfacesDisplay() {
         const container = document.getElementById('interfaces-container');
         if (!container) {
-            console.warn('[NETWORK-PRIORITY] Interfaces container not found');
             return;
         }
         
@@ -469,7 +443,6 @@ class NetworkPriorityManager {
         // Restore scroll position after DOM update
         window.scrollTo(0, scrollPosition);
         
-        console.log('[NETWORK-PRIORITY] Interface display updated:', totalInterfaces, 'interfaces');
     }
     
     createInterfaceHTML(iface, index) {
@@ -580,7 +553,6 @@ class NetworkPriorityManager {
      * Edit interface configuration
      */
     editInterface(interfaceId) {
-        console.log('[NETWORK-PRIORITY] Editing interface:', interfaceId);
         const iface = this.interfaces.find(i => i.id === interfaceId);
         if (iface) {
             // Show interface edit popup
@@ -592,7 +564,6 @@ class NetworkPriorityManager {
      * Show interface edit popup
      */
     showInterfaceEditPopup(iface) {
-        console.log('[NETWORK-PRIORITY] Showing interface edit popup for:', iface);
         // This will be implemented in network-priority-ui.js
         if (window.networkPriorityUI) {
             window.networkPriorityUI.showInterfaceEditPopup(iface);
@@ -603,17 +574,14 @@ class NetworkPriorityManager {
      * Force refresh routing rules display
      */
     forceRefreshRoutingRules() {
-        console.log('[NETWORK-PRIORITY] Force refreshing routing rules display...');
         
         // Ensure we have data
         if (this.routingRules.length === 0) {
-            console.log('[NETWORK-PRIORITY] No routing rules data to refresh');
             return;
         }
         
         // Force DOM check and update
         if (!this.isDOMReady()) {
-            console.log('[NETWORK-PRIORITY] DOM not ready for force refresh, retrying...');
             setTimeout(() => {
                 this.forceRefreshRoutingRules();
             }, 100);
@@ -625,11 +593,9 @@ class NetworkPriorityManager {
     }
     
     updateRoutingRulesDisplay() {
-        console.log('[NETWORK-PRIORITY] Updating routing rules display...');
         
         const tbody = document.getElementById('routing-rules-tbody');
         if (!tbody) {
-            console.warn('[NETWORK-PRIORITY] Routing rules tbody not found - retrying in 100ms...');
             // Retry after a short delay to allow DOM to be ready
             setTimeout(() => {
                 this.updateRoutingRulesDisplay();
@@ -655,11 +621,9 @@ class NetworkPriorityManager {
             return;
         }
         
-        console.log('[NETWORK-PRIORITY] Rendering', this.routingRules.length, 'routing rules');
         
         // Update routing rules without fade effect to prevent blinking
         const rulesHTML = this.routingRules.map(rule => this.createRoutingRuleHTML(rule)).join('');
-        console.log('[NETWORK-PRIORITY] Generated HTML for rules:', rulesHTML.substring(0, 200) + '...');
         tbody.innerHTML = rulesHTML;
         
         // Re-attach event listeners for new elements
@@ -668,7 +632,6 @@ class NetworkPriorityManager {
         // Restore scroll position after DOM update
         window.scrollTo(0, scrollPosition);
         
-        console.log('[NETWORK-PRIORITY] Routing rules display updated successfully');
     }
     
     attachInterfaceEventListeners() {
@@ -702,7 +665,6 @@ class NetworkPriorityManager {
     showInterfaceDetails(interfaceId) {
         const iface = this.interfaces.find(i => i.id === interfaceId);
         if (iface) {
-            console.log('[NETWORK-PRIORITY] Interface details requested:', iface);
             // Could show a modal or expand details
             this.showNotification(`Interface ${iface.name} (${iface.type}) - Status: ${iface.status}`, 'info');
         }
@@ -718,7 +680,6 @@ class NetworkPriorityManager {
         } else {
             if (this.selectedRules) this.selectedRules.delete(ruleId);
         }
-        console.log('[NETWORK-PRIORITY] Rule selection updated:', ruleId, selected);
     }
     
     createRoutingRuleHTML(rule) {
@@ -874,7 +835,6 @@ class NetworkPriorityManager {
      * Toggle rule status
      */
     toggleRuleStatus(ruleId) {
-        console.log('[NETWORK-PRIORITY] Toggling rule status:', ruleId);
         const rule = this.routingRules.find(r => r.id === ruleId);
         if (rule) {
             rule.status = rule.status === 'active' ? 'inactive' : 'active';
@@ -887,7 +847,6 @@ class NetworkPriorityManager {
      * Update statistics display
      */
     updateStatistics(statistics) {
-        console.log('[NETWORK-PRIORITY] Updating statistics display:', statistics);
         
         // Update statistics with animation
         this.updateStat('total', statistics.total || 0);
@@ -905,7 +864,6 @@ class NetworkPriorityManager {
      * Update last updated time
      */
     updateLastUpdated(lastUpdated) {
-        console.log('[NETWORK-PRIORITY] Updating last updated time:', lastUpdated);
         
         const lastUpdatedElement = document.querySelector('[data-last-updated]');
         if (lastUpdatedElement) {
@@ -930,7 +888,6 @@ class NetworkPriorityManager {
                 try {
                     statusDot.setAttribute('class', 'w-2 h-2 bg-green-500 rounded-full');
                 } catch (error) {
-                    console.warn('[NETWORK-PRIORITY] Could not set status dot class:', error);
                 }
                 statusText.textContent = 'Connected';
                 this.lastDataReceived = Date.now();
@@ -950,7 +907,6 @@ class NetworkPriorityManager {
                 try {
                     statusDot.setAttribute('class', 'w-2 h-2 bg-red-500 rounded-full');
                 } catch (error) {
-                    console.warn('[NETWORK-PRIORITY] Could not set status dot class:', error);
                 }
                 statusText.textContent = 'Disconnected';
                 
@@ -963,7 +919,6 @@ class NetworkPriorityManager {
         }
         
         this.isConnected = connected;
-        console.log('[NETWORK-PRIORITY] Connection status updated:', connected ? 'Connected' : 'Disconnected');
     }
     
     /**
@@ -974,7 +929,6 @@ class NetworkPriorityManager {
         const timeSinceLastData = now - this.lastDataReceived;
         
         if (timeSinceLastData > 15000) { // 15 seconds without data
-            console.log('[NETWORK-PRIORITY] Connection appears stale, marking as disconnected');
             this.updateConnectionStatus(false);
             this.setLoading(true);
         } else {
@@ -997,7 +951,6 @@ class NetworkPriorityManager {
                     refreshIcon.setAttribute('class', 'fa-solid fa-refresh');
                 }
             } catch (error) {
-                console.warn('[NETWORK-PRIORITY] Could not set loading icon class:', error);
                 // Fallback: try direct className assignment
                 try {
                     if (loading) {
@@ -1006,7 +959,6 @@ class NetworkPriorityManager {
                         refreshIcon.className = 'fa-solid fa-refresh';
                     }
                 } catch (fallbackError) {
-                    console.warn('[NETWORK-PRIORITY] Could not set loading icon class with fallback:', fallbackError);
                 }
             }
         }
@@ -1050,7 +1002,6 @@ class NetworkPriorityManager {
     }
     
     deleteRule(ruleId) {
-        console.log('[NETWORK-PRIORITY] Deleting rule:', ruleId);
         const ruleIndex = this.routingRules.findIndex(r => r.id === ruleId);
         if (ruleIndex !== -1) {
             this.routingRules.splice(ruleIndex, 1);
@@ -1062,7 +1013,6 @@ class NetworkPriorityManager {
      * Duplicate an existing routing rule
      */
     duplicateRule(ruleId) {
-        console.log('[NETWORK-PRIORITY] Duplicating rule:', ruleId);
         const rule = this.routingRules.find(r => r.id === ruleId);
         if (rule) {
             const duplicatedRule = {
@@ -1079,7 +1029,6 @@ class NetworkPriorityManager {
     }
     
     editRule(ruleId) {
-        console.log('[NETWORK-PRIORITY] Editing rule:', ruleId);
         const rule = this.routingRules.find(r => r.id === ruleId);
         if (rule) {
             this.showRulePopup(rule);
@@ -1087,7 +1036,6 @@ class NetworkPriorityManager {
     }
     
     deleteRule(ruleId) {
-        console.log('[NETWORK-PRIORITY] Deleting rule:', ruleId);
         if (confirm('Are you sure you want to delete this routing rule?')) {
             this.routingRules = this.routingRules.filter(rule => rule.id !== ruleId);
             this.updateRoutingRulesDisplay();
@@ -1095,7 +1043,6 @@ class NetworkPriorityManager {
     }
     
     showRulePopup(existingRule = null) {
-        console.log('[NETWORK-PRIORITY] Showing rule popup...');
         // This will be implemented in network-priority-ui.js
         if (window.networkPriorityUI) {
             window.networkPriorityUI.showRulePopup(existingRule);
@@ -1103,7 +1050,6 @@ class NetworkPriorityManager {
     }
     
     refreshData() {
-        console.log('[NETWORK-PRIORITY] Refreshing data...');
         
         // Force refresh displays if we have data
         if (this.interfaces.length > 0) {
@@ -1116,13 +1062,11 @@ class NetworkPriorityManager {
         
         // If no data, wait for WebSocket
         if (this.interfaces.length === 0 && this.routingRules.length === 0) {
-            console.log('[NETWORK-PRIORITY] No data to refresh, waiting for WebSocket...');
             this.showNotification('Waiting for data from server...', 'info');
         }
     }
     
     exportRules() {
-        console.log('[NETWORK-PRIORITY] Exporting rules...');
         const data = {
             interfaces: this.interfaces,
             routingRules: this.routingRules,
@@ -1139,7 +1083,6 @@ class NetworkPriorityManager {
     }
     
     applyChanges() {
-        console.log('[NETWORK-PRIORITY] Applying changes...');
         
         // Send changes to backend
         if (this.sourceManager && this.sourceManager.httpClient) {
@@ -1150,7 +1093,6 @@ class NetworkPriorityManager {
             
             this.sourceManager.httpClient.post('/api/network/priority/update', data)
                 .then(response => {
-                    console.log('[NETWORK-PRIORITY] Changes applied successfully:', response);
                     this.showNotification('Changes applied successfully', 'success');
                 })
                 .catch(error => {
@@ -1161,7 +1103,6 @@ class NetworkPriorityManager {
     }
     
     resetToDefaults() {
-        console.log('[NETWORK-PRIORITY] Resetting to defaults...');
         if (confirm('Are you sure you want to reset all network priority settings to defaults?')) {
             this.loadInitialData();
         }
@@ -1191,7 +1132,6 @@ class NetworkPriorityManager {
      * Show dialog to add temporary routing rule
      */
     showAddTempRuleDialog() {
-        console.log('[NETWORK-PRIORITY] Showing add temporary rule dialog');
         
         // Create a simple prompt for now (can be enhanced with a proper modal)
         const destination = prompt('Enter destination (e.g., 192.168.1.0/24):');
@@ -1222,14 +1162,13 @@ class NetworkPriorityManager {
      * Refresh network priority data before showing modal
      */
     async refreshNetworkPriorityData() {
-        console.log('[NETWORK-PRIORITY] Refreshing network-priority data for modal');
         
         if (this) {
             // Don't trigger full data reload - just ensure we have current data
             try {
                 // If we already have interfaces, use them instead of clearing and reloading
                 if (this.interfaces && this.interfaces.length > 0) {
-                    console.log('[NETWORK-PRIORITY] Using existing interfaces data:', {
+                    console.log({
                         interfacesCount: this.interfaces.length,
                         interfaces: this.interfaces
                     });
@@ -1237,28 +1176,24 @@ class NetworkPriorityManager {
                 }
                 
                 // Only load initial data if we don't have any interfaces
-                console.log('[NETWORK-PRIORITY] No interfaces available, loading initial data...');
                 if (typeof this.loadInitialData === 'function') {
                     await this.loadInitialData();
                 }
                 
-                console.log('[NETWORK-PRIORITY] Network-priority data refreshed:', {
+                console.log({
                     interfacesCount: this.interfaces?.length || 0,
                     interfaces: this.interfaces
                 });
             } catch (error) {
-                console.warn('[NETWORK-PRIORITY] Failed to refresh network-priority data:', error);
                 // Return empty array on error to prevent modal from breaking
                 return [];
             }
         } else {
-            console.warn('[NETWORK-PRIORITY] Network priority manager not available');
             return [];
         }
     }
 
     destroy() {
-        console.log('[NETWORK-PRIORITY] Destroying Network Priority Manager...');
         // Cleanup event listeners and resources
         this.interfaces = [];
         this.routingRules = [];
@@ -1280,7 +1215,6 @@ class NetworkPriorityManager {
      * Add temporary routing rule
      */
     addTempRoutingRule(rule) {
-        console.log('[NETWORK-PRIORITY] Adding temporary routing rule:', rule);
         const tempRule = {
             ...rule,
             id: `temp_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
@@ -1294,14 +1228,12 @@ class NetworkPriorityManager {
         // Show notification
         this.showNotification('Temporary routing rule added successfully', 'success');
         
-        console.log('[NETWORK-PRIORITY] Temporary rule added:', tempRule);
     }
     
     /**
      * Remove temporary routing rule
      */
     removeTempRoutingRule(ruleId) {
-        console.log('[NETWORK-PRIORITY] Removing temporary routing rule:', ruleId);
         const index = this.tempRoutingRules.findIndex(rule => rule.id === ruleId);
         
         if (index !== -1) {
@@ -1311,7 +1243,6 @@ class NetworkPriorityManager {
             this.updateTempRuleSelection();
             
             this.showNotification('Temporary routing rule removed', 'info');
-            console.log('[NETWORK-PRIORITY] Temporary rule removed:', ruleId);
         }
     }
     
@@ -1319,7 +1250,6 @@ class NetworkPriorityManager {
      * Convert selected temporary rules to static rules
      */
     convertTempRulesToStatic() {
-        console.log('[NETWORK-PRIORITY] Converting selected temporary rules to static');
         
         if (this.selectedTempRules.size === 0) {
             this.showNotification('No temporary rules selected for conversion', 'warning');
@@ -1358,7 +1288,6 @@ class NetworkPriorityManager {
             'success'
         );
         
-        console.log('[NETWORK-PRIORITY] Converted rules to static:', rulesToConvert.length);
     }
     
     /**
@@ -1369,7 +1298,6 @@ class NetworkPriorityManager {
         const countElement = document.getElementById('temp-rules-count');
         
         if (!tbody) {
-            console.warn('[NETWORK-PRIORITY] Temp routing rules tbody not found');
             return;
         }
         
@@ -1409,7 +1337,6 @@ class NetworkPriorityManager {
         // Restore scroll position after DOM update
         window.scrollTo(0, scrollPosition);
         
-        console.log('[NETWORK-PRIORITY] Temp routing rules display updated:', this.tempRoutingRules.length, 'rules');
     }
     
     /**
@@ -1503,7 +1430,6 @@ class NetworkPriorityManager {
             selectAllCheckbox.indeterminate = this.selectedTempRules.size > 0 && this.selectedTempRules.size < totalCheckboxes;
         }
         
-        console.log('[NETWORK-PRIORITY] Temp rule selection updated:', this.selectedTempRules.size, 'selected');
     }
 }
 

@@ -10,7 +10,6 @@ import { WirelessUI } from './wireless-ui.js';
  * Initialize wireless configuration module
  */
 export function initializeWireless(httpClient, container) {
-    console.log('[WIRELESS] Initializing wireless configuration module');
     
     const wirelessUI = new WirelessUI(httpClient, container);
     
@@ -22,7 +21,6 @@ export function initializeWireless(httpClient, container) {
          * Cleanup wireless configuration module
          */
         destroy() {
-            console.log('[WIRELESS] Cleaning up wireless configuration module');
             if (wirelessUI) {
                 wirelessUI.destroy();
             }

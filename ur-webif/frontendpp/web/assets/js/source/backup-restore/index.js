@@ -34,7 +34,6 @@ export const MODULE_INFO = {
 // Initialize function for integration with main application
 export async function initializeBackupRestore(sourceManager) {
     try {
-        console.log('[BACKUP-RESTORE-MODULE] Initializing backup & restore module...');
         
         // Initialize backup restore manager
         const backupRestoreManager = new BackupRestoreManager();
@@ -51,7 +50,6 @@ export async function initializeBackupRestore(sourceManager) {
             }
         });
         
-        console.log('[BACKUP-RESTORE-MODULE] Backup & restore module initialized successfully');
         
         return {
             manager: backupRestoreManager,
@@ -66,7 +64,6 @@ export async function initializeBackupRestore(sourceManager) {
 // Cleanup function
 export function cleanupBackupRestore(backupRestoreComponents) {
     try {
-        console.log('[BACKUP-RESTORE-MODULE] Cleaning up backup & restore module...');
         
         if (backupRestoreComponents) {
             // Cleanup UI controller first (stops timers, loading states)
@@ -80,7 +77,6 @@ export function cleanupBackupRestore(backupRestoreComponents) {
             }
         }
         
-        console.log('[BACKUP-RESTORE-MODULE] Backup & restore module cleaned up successfully');
     } catch (error) {
         console.error('[BACKUP-RESTORE-MODULE] Error during cleanup:', error);
     }

@@ -5,7 +5,6 @@ import { WebSocketClient } from '../src/WebSocketClient.js';
  * Demonstrates how multiple parts of an application can share the same WebSocket connection
  */
 
-console.log('=== Shared WebSocket Client Example ===');
 
 // Configuration for the shared client
 const config = {
@@ -28,11 +27,9 @@ const sharedClient = WebSocketClient.getSharedClient(config);
 
 // Module 1: Chat functionality
 function setupChatModule(client) {
-  console.log('Setting up chat module...');
   
   client.on('message', (data) => {
     if (data.type === 'chat') {
-      console.log(`[CHAT] ${data.user}: ${data.message}`);
     }
   });
   
@@ -46,11 +43,9 @@ function setupChatModule(client) {
 
 // Module 2: Notifications
 function setupNotificationModule(client) {
-  console.log('Setting up notification module...');
   
   client.on('message', (data) => {
     if (data.type === 'notification') {
-      console.log(`[NOTIFICATION] ${data.title}: ${data.body}`);
     }
   });
   
@@ -63,11 +58,9 @@ function setupNotificationModule(client) {
 
 // Module 3: Real-time data
 function setupDataModule(client) {
-  console.log('Setting up data module...');
   
   client.on('message', (data) => {
     if (data.type === 'data_update') {
-      console.log(`[DATA] Update received:`, data.payload);
     }
   });
   
@@ -85,7 +78,6 @@ const data = setupDataModule(sharedClient);
 
 // Shared client event listeners
 sharedClient.on('open', () => {
-  console.log('Shared client connected');
   
   // Initialize modules
   notifications.subscribeToNotifications();
@@ -93,7 +85,6 @@ sharedClient.on('open', () => {
 });
 
 sharedClient.on('reconnecting', (info) => {
-  console.log(`Reconnecting... Attempt ${info.attempt}/${sharedClient.config.reconnectConfig.maxAttempts}`);
 });
 
 sharedClient.on('maxReconnectAttemptsReached', () => {
@@ -118,8 +109,6 @@ function anotherPartOfApp() {
   // This will return the existing client instance
   const sameClient = WebSocketClient.getSharedClient(config);
   
-  console.log('Same client instance?', sameClient === sharedClient); // true
-  console.log('Client stats:', sameClient.getStats());
   
   // Send a message from this part of the app
   setTimeout(() => {
@@ -131,13 +120,11 @@ anotherPartOfApp();
 
 // Show storage statistics
 setTimeout(() => {
-  console.log('Storage stats:', WebSocketClient.getStorageStats());
 }, 6000);
 
 // Clean up after 15 seconds
 setTimeout(() => {
   sharedClient.close();
-  console.log('Shared client closed and removed from storage');
 }, 15000);
 
 export { sharedClient, chat, notifications, data };
